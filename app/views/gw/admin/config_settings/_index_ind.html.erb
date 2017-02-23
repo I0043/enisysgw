@@ -1,0 +1,88 @@
+<div class="entry_subHeader">
+  <h3><%= t("rumi.config_settings.scheduler.scheduler.name") %></h3>
+</div>
+
+<table class="settingTable">
+  <tr>
+    <th><%= link_to t("rumi.config_settings.scheduler.scheduler.name"), setting_ind_schedules_gw_schedules_path %></th>
+    <td><%= t("rumi.config_settings.scheduler.scheduler.message") %></td>
+  </tr>
+  <tr>
+    <th><%= link_to t("rumi.config_settings.scheduler.import.name"), import_gw_schedule_settings_path %></th>
+    <td><%= t("rumi.config_settings.scheduler.import.message") %></td>
+  </tr>
+  <tr>
+    <th><%= link_to t("rumi.config_settings.scheduler.export.name"), export_gw_schedule_settings_path %></th>
+    <td><%= t("rumi.config_settings.scheduler.export.message") %></td>
+  </tr>
+</table>
+
+<hr>
+
+<div class="entry_subHeader">
+  <h3><%= t("rumi.config_settings.custom_group.setting.name") %></h3>
+</div>
+
+<table class="settingTable">
+  <tr>
+    <th><%= link_to t("rumi.config_settings.custom_group.setting.name"), system_custom_groups_path %></th>
+    <td><%= t("rumi.config_settings.custom_group.setting.message") %></td>
+  </tr>
+</table>
+
+<hr>
+
+<div class="entry_subHeader">
+  <h3><%= t("rumi.config_settings.user_passwords.name") %></h3>
+</div>
+
+<table class="settingTable">
+  <tr>
+    <th><%= link_to t("rumi.config_settings.user_passwords.action.edit.name"), edit_gw_user_password_path(Core.user.id) %></th>
+    <td><%= t("rumi.config_settings.user_passwords.action.edit.message.help") %></td>
+  </tr>
+</table>
+
+<% if Core.user.present? && Core.user.try(:email).present? %>
+  <% mail_url = Enisys::Config.application["webmail.root_url"] %>
+  <% if mail_url.present? %>
+  <hr>
+  <div class="entry_subHeader">
+    <h3><%= t("rumi.config_settings.mail.header") %></h3>
+  </div>
+  <table class="settingTable">
+    <tr>
+      <th><%= link_to t("rumi.config_settings.mail.setting.list"), mail_url + '/_admin/gw/webmail/mail_list/settings', class: 'MailSetting disabledLink' %></th>
+      <td><%= t("rumi.config_settings.mail.explain.list") %></td>
+    </tr>
+    <tr>
+      <th><%= link_to t("rumi.config_settings.mail.setting.read"), mail_url + '/_admin/gw/webmail/mail_detail/settings', class: 'MailSetting disabledLink' %></th>
+      <td><%= t("rumi.config_settings.mail.explain.read")  %></td>
+    </tr>
+    <tr>
+      <th><%= link_to t("rumi.config_settings.mail.setting.send"), mail_url + '/_admin/gw/webmail/mail_form/settings', class: 'MailSetting disabledLink' %></th>
+      <td><%= t("rumi.config_settings.mail.explain.send")  %></td>
+    </tr>
+    <tr>
+      <th><%= link_to t("rumi.config_settings.mail.setting.receive"), mail_url + '/_admin/gw/webmail/mail_pop/settings', class: 'MailSetting disabledLink' %></th>
+      <td><%= t("rumi.config_settings.mail.explain.receive")  %></td>
+    </tr>
+    <tr>
+      <th><%= link_to t("rumi.config_settings.mail.setting.label"), mail_url+ '/_admin/gw/webmail/mail_label/settings', class: 'MailSetting disabledLink' %></th>
+      <td><%= t("rumi.config_settings.mail.explain.label")  %></td>
+    </tr>
+    <tr>
+      <th><%= link_to t("rumi.config_settings.mail.setting.private_address"), mail_url + '/_admin/gw/webmail/address/settings', class: 'MailSetting disabledLink' %></th>
+      <td><%= t("rumi.config_settings.mail.explain.private_address")  %></td>
+    </tr>
+    <tr>
+      <th><%= link_to t("rumi.config_settings.mail.setting.public_address"), mail_url + '/_admin/gw/webmail/public_address_book/settings', class: 'MailSetting disabledLink' %></th>
+      <td><%= t("rumi.config_settings.mail.explain.public_address")  %></td>
+    </tr>
+    <tr>
+      <th><%= link_to t("rumi.config_settings.mail.setting.switch_user"), mail_url + '/_admin/gw/webmail/switch_user/settings', class: 'MailSetting disabledLink' %></th>
+      <td><%= t("rumi.config_settings.mail.explain.switch_user")  %></td>
+    </tr>
+  </table>
+  <% end %>
+<% end %>

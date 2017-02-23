@@ -1,0 +1,23 @@
+<% disabled = @count == 0 ? true : false %>
+<%= render partial: 'header', locals: {new: false} %>
+
+<!-- コンテンツここから -->
+<div class="main">
+  <%= render partial: 'csv_menu' %>
+  <%= div_notice %>
+  
+  <div class="output_csv_note">
+    <%=raw t("rumi.csv.feature.save.message.note") %>
+  </div>
+
+  <%= form_for :item, url: csvset_system_users_path(do: "synchro"), html: {method: :post, multipart: true, id: 'itemForm'} do |f| %>
+    <%= hidden_field_tag('item[csv]','set') %>
+    <%= f.error_messages %>
+    <div class="submitters">
+      <%= submit_tag t("rumi.csv.feature.save.name"),
+            onclick: "return confirm('#{t("rumi.csv.feature.save.message.help")}');",
+            disabled: disabled, disable_with: t("rumi.message.disable_with") %>
+    </div>
+  <% end %>
+</div>
+<!-- コンテンツここまで -->

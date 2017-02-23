@@ -1,0 +1,83 @@
+<%
+  this_uri = "/gwcircular/"
+
+  str_tab1_class = 'tab'
+  str_tab2_class = 'tab'
+  str_tab3_class = 'tab'
+  str_tab4_class = 'tab'
+  str_tab5_class = 'tab'
+  str_tab1_class += ' current' if params[:cond].blank?
+  str_tab1_class += ' current' if params[:cond] == 'unread'
+  str_tab2_class += ' current' if params[:cond] == 'already'
+  str_tab3_class += ' current' if params[:cond] == 'owner'
+  str_tab4_class += ' current' if params[:cond] == 'void'
+  str_tab5_class += ' current' if params[:cond] == 'admin'
+%>
+<div id="sidebar">
+  <p class="sideDate">Today <%= @today %></p>
+  <!-- サブメニュー -->
+  <div class="subMenu">
+    <ul>
+      <li class="<%=raw(str_tab1_class)%>"><%=link_to t("rumi.gwcircular.side.menu.unread"), "#{this_uri}" %></li>
+      <li class="<%=raw(str_tab2_class)%>"><%=link_to t("rumi.gwcircular.side.menu.already"), "#{this_uri}?cond=already" %></li>
+      <li class="<%=raw(str_tab3_class)%>"><%=link_to t("rumi.gwcircular.side.menu.owner"), "#{this_uri}?cond=owner" %></li>
+      <%if @gw_admin%>
+        <li class="<%=raw(str_tab5_class)%>"><%=link_to t("rumi.gwcircular.side.menu.admin"), "#{this_uri}?cond=admin" %></li>
+      <% end %>
+    </ul>
+  </div>
+  <!-- // .subMenu -->
+
+  <div class="sideSearch">
+    <form accept-charset="UTF-8" action="/gwcircular/menus" method="get">
+      <input name="utf8" type="hidden" value="">
+      <p class="required"><%= t("rumi.gwcircular.side.search.message") %></p>
+      <dl>
+        <dt><%= t("rumi.gwcircular.side.search.kwd") %></dt>
+        <dd class="kwd">
+          <%= text_field_tag 'kwd', params[:kwd], :size => '10' %>
+        </dd>
+        <dt><%= t("rumi.gwcircular.side.search.grp") %></dt>
+        <dd class="sideGroup">
+          <%= select_tag('grp' , options_for_select(@piece_group_names, params[:grp]), :include_blank => true) %>
+        </dd>
+        <dt><%= t("rumi.gwcircular.side.search.creator") %></dt>
+        <dd class="creator">
+          <%= text_field_tag 'creator', params[:creator], :size => '10' %>
+        </dd>
+        <dt><%= t("rumi.gwcircular.side.search.expirydate") %></dt>
+        <dd class="dateTime">
+          <p>
+            <%= text_field_tag :expirydate_start, params[:expirydate_start], size: '7', onclick: "new CalendarDateSelect( $(this), {time:false, year_range:10} );", style: "ime-mode: disabled", onkeydown: "return rumi.BlockKeyCode(event);", onpaste: "return false", oncontextmenu: "return false" %> <%= t("rumi.gwcircular.side.search.start") %>
+            <img src="/images/icon/calendar-side.png" alt="<%= t("rumi.button.calendar") %>" class="calendar_date_select_popup_icon" onclick="new CalendarDateSelect( $(this).previous(), {time:false, year_range:10} );">
+          </p>
+          <p>
+            <%= text_field_tag :expirydate_end, params[:expirydate_end], size: '7', onclick: "new CalendarDateSelect( $(this), {time:false, year_range:10} );", style: "ime-mode: disabled", onkeydown: "return rumi.BlockKeyCode(event);", onpaste: "return false", oncontextmenu: "return false" %> <%= t("rumi.gwcircular.side.search.end") %>
+            <img src="/images/icon/calendar-side.png" alt="<%= t("rumi.button.calendar") %>" class="calendar_date_select_popup_icon" onclick="new CalendarDateSelect( $(this).previous(), {time:false, year_range:10} );">
+          </p>
+        </dd>
+        <dt><%= t("rumi.gwcircular.side.search.createdate") %></dt>
+        <dd class="dateTime">
+          <p>
+            <%= text_field_tag :createdate_start, params[:createdate_start], size: '7', onclick: "new CalendarDateSelect( $(this), {time:false, year_range:10} );", style: "ime-mode: disabled", onkeydown: "return rumi.BlockKeyCode(event);", onpaste: "return false", oncontextmenu: "return false" %> <%= t("rumi.gwcircular.side.search.start") %>
+            <img src="/images/icon/calendar-side.png" alt="<%= t("rumi.button.calendar") %>" class="calendar_date_select_popup_icon" onclick="new CalendarDateSelect( $(this).previous(), {time:false, year_range:10} );">
+          </p>
+          <p>
+            <%= text_field_tag :createdate_end, params[:createdate_end], size: '7', onclick: "new CalendarDateSelect( $(this), {time:false, year_range:10} );", style: "ime-mode: disabled", onkeydown: "return rumi.BlockKeyCode(event);", onpaste: "return false", oncontextmenu: "return false" %> <%= t("rumi.gwcircular.side.search.end") %>
+            <img src="/images/icon/calendar-side.png" alt="<%= t("rumi.button.calendar") %>" class="calendar_date_select_popup_icon" onclick="new CalendarDateSelect( $(this).previous(), {time:false, year_range:10} );">
+          </p>
+          <input type="hidden" name="cond" value='<%= params[:cond] %>' />
+          <input type="hidden" name="title_id" value='<%= params[:title_id] %>' />
+          <input type="hidden" name="limit" value='<%= params[:limit] %>' />
+        </dd>
+        <dd class="submit">
+          <input name="search" onclick="return my_search_submit();" type="submit" value="<%= t("rumi.button.search") %>" />
+          <input name="reset" type="submit" value="<%= t("rumi.button.reset") %>" />
+        </dd>
+        <%= raw(render(:partial => 'gwcircular/admin/menus/form_script')) %>
+      </dl>
+    </form>
+  </div>
+  <!-- // .sideSearch -->
+
+</div>

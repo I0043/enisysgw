@@ -1,0 +1,90 @@
+<%
+  images_s = ''
+  @item.images.each do |img|
+    images_s += %Q(<img src="#{img.path}" alt="#{img.note}" />)
+  end
+  reserved_state = Gw.yaml_to_array_for_select("gw_prop_other_reserved_states")
+%>
+<%= render partial: '/gw/admin/prop_others/piece_header', locals: {new: true} %>
+
+<!-- コンテンツここから -->
+<div class="main">
+  <%= div_notice %>
+  <%= render partial: 'bt_box' %>
+  <div class="imgBox<%= @item.images.length == 0 ? " noImage" : "" %>">
+    <%= raw(images_s) -%>
+  </div>
+  <div class="tableBox">
+    <table class="defaultTable rentDetails">
+      <tr>
+        <th><%= t("rumi.prop_other.th.state") %></th>
+        <td><%= reserved_state[@item.reserved_state][0] -%></td>
+      </tr>
+      <tr>
+        <th><%= t("rumi.prop_other.th.sort_no") %></th>
+        <td><%= @item.sort_no -%></td>
+      </tr>
+      <tr>
+        <th><%= t("rumi.prop_other.th.name") %></th>
+        <td><%= @item.name -%></td>
+      </tr>
+      <tr>
+        <th><%= t("rumi.prop_other.th.type") %></th>
+        <td><%= safe{@item.prop_type.name} -%></td>
+      </tr>
+      <tr>
+        <th><%= t("rumi.prop_other.th.comment") %></th>
+        <td><%= br(@item.comment) -%></td>
+      </tr>
+      <tr>
+        <th><%= t("rumi.prop_other.th.d_load_st") %></th>
+        <td><%= @item.d_load_st.strftime(t("rumi.strftime.date2")) if @item.d_load_st.present? -%></td>
+      </tr>
+      <tr>
+        <th><%= t("rumi.prop_other.th.d_load_ed") %></th>
+        <td><%= @item.d_load_ed.strftime(t("rumi.strftime.date2")) if @item.d_load_ed.present? -%></td>
+      </tr>
+      <tr>
+        <th><%= t("rumi.prop_other.th.limit_month") %></th>
+        <% if @item.limit_month %>
+          <td><%= @item.limit_month %><%= t("rumi.prop_other.th.limit_month_tail") %></td>
+        <% else %>
+          <td></td>
+        <% end %>
+      </tr>
+      <tr>
+        <th><%= t("rumi.prop_other.th.created_at") %></th>
+        <td><%= I18n.l @item.created_at if @item.created_at.present? -%></td>
+      </tr>
+      <tr>
+        <th><%= t("rumi.prop_other.th.updated_at") %></th>
+        <td><%= I18n.l @item.updated_at if @item.updated_at.present? -%></td>
+      </tr>
+      <tr>
+        <th><%= t("rumi.prop_other.th.admin") %></th>
+        <td><%= raw(Gw.join [@item.admin(:show)], '<br />') -%></td>
+      </tr>
+      <tr>
+        <th><%= t("rumi.prop_other.th.editor") %></th>
+        <td><%= raw(Gw.join [@item.editor(:show)], '<br />') -%></td>
+      </tr>
+      <tr>
+        <th><%= t("rumi.prop_other.th.reader") %></th>
+        <td><%= raw(Gw.join [@item.reader(:show)], '<br />') -%></td>
+      </tr>
+    </table>
+  </div>
+  <% if @gw_admin %>
+  <div style="width: 100%;display: table;">
+    <br />
+  </div>
+  <div class="backlink paginationSingle">
+    <ul>
+      <li>
+        <%= link_to t("rumi.back_link.return"), gw_prop_others_path %>
+      </li>
+    </ul>
+  </div>
+<% end %>
+</div>
+<!-- コンテンツここまで -->

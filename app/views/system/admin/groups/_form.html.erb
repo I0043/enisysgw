@@ -1,0 +1,95 @@
+<%= raw(gw_js_include_full) %>
+<%= Gw.required_head %>
+
+<table class="defaultTable rentDetails inputTable">
+  <tr>
+    <th><%= t("rumi.group.th.state") %><%= Gw.required %></th>
+    <td><%= f.radio_buttons :state, @item.states, :class => 'status' %></td>
+  </tr>
+  <tr>
+    <th><%= t("rumi.group.th.category") %><%= Gw.required %></th>
+    <td><%= f.radio_buttons :category, Gw.yaml_to_array_for_select('system_groups_categories'), :class => 'status' %></td>
+  </tr>
+  <tr>
+    <th><%= t("rumi.group.th.ldap") %><%= Gw.required %></th>
+    <td><%= f.radio_buttons :ldap, @item.ldaps, :class => 'status' %></td>
+  </tr>
+  <% if params[:action] == "new" || params[:action] == "create" %>
+    <tr>
+      <th><%= t("rumi.group.th.group_id") %><%= required %></th>
+      <td><%= f.text_field :code, :class => 'num name' %></td>
+    </tr>
+  <% else %>
+    <tr>
+      <th><%= t("rumi.group.th.group_id") %></th>
+      <td><%= @item.code %></td>
+    </tr>
+  <% end %>
+  <tr>
+    <th><%= t("rumi.group.th.name") %><%= Gw.required %></th>
+    <td><%= f.text_field :name, :class => 'name' %></td>
+  </tr>
+  <tr>
+    <th><%= t("rumi.group.th.name_en") %></th>
+    <td><%= f.text_field :name_en, :class => 'name' %></td>
+  </tr>
+  <tr>
+    <th><%= t("rumi.group.th.sort_no") %><%= Gw.required %></th>
+    <td><%= f.text_field :sort_no, :class => 'num' %></td>
+  </tr>
+  <tr>
+    <th><%= t("rumi.group.th.start_at") %><%= Gw.required %></th>
+    <td>
+      <%= f.text_field(:start_at, value: @item.start_at.try(:strftime, t("rumi.strftime.date2")), onclick: "new CalendarDateSelect( $(this), {time:false, year_range:10} );", style: "ime-mode: disabled", onkeydown: "return rumi.BlockKeyCode(event);", onpaste: "return false", oncontextmenu: "return false") %>
+      <% img = "/images/icon/calendar_bla.png" %>
+      <img src="<%= img %>" alt="Calendar" class="calendar_date_select_popup_icon" onclick="new CalendarDateSelect( $(this).previous(), {time: false, year_range:10} );" style="cursor:pointer;">
+    </td>
+  </tr>
+  <tr>
+    <th><%= t("rumi.group.th.end_at") %></th>
+    <td>
+      <%= f.text_field(:end_at, value: @item.end_at.try(:strftime, t("rumi.strftime.date2")), onclick: "new CalendarDateSelect( $(this), {time:false, year_range:10} );", style: "ime-mode: disabled", onkeydown: "return rumi.BlockKeyCode(event);", onpaste: "return false", oncontextmenu: "return false") %>
+      <% img = "/images/icon/calendar_bla.png" %>
+      <img src="<%= img %>" alt="Calendar" class="calendar_date_select_popup_icon" onclick="new CalendarDateSelect( $(this).previous(), {time: false, year_range:10} );" style="cursor:pointer;">
+    </td>
+  </tr>
+  <tr>
+    <th><%= t("rumi.group.th.level_no") %></th>
+    <% if params[:action] == "new" || params[:action] == "create" %>
+      <td><%= f.select :level_no, @level_no, {}, {selected: @item.level_no, onchange: "change_parent_group(); return false;"} %></td>
+    <% else %>
+      <td><%= @item.level_no %></td>
+    <% end %>
+  </tr>
+  <tr>
+    <th><%= t("rumi.group.th.parent") %></th>
+    <% if params[:action] == "new" || params[:action] == "create" %>
+      <td id="parent_group_select_l2">
+        <%= f.select :parent_id_l2, @parent_group_l2.map{|x| [x.code.to_s + x.name.to_s, x.id]}, :selected => @parent.id %>
+      </td>
+      <td id="parent_group_select_l3" style="display: none;">
+        <%= f.select :parent_id_l3, @parent_group_l3.map{|x| [x.code.to_s + x.name.to_s, x.id]}, :selected => @parent.id %>
+      </td>
+    <% else %>
+      <td>
+        <%= f.select :parent_id, @parent_group.map{|x| [x.code.to_s + x.name.to_s, x.id]}, :selected => @parent.id %>
+      </td>
+    <% end %>
+  </tr>
+</table>
+
+<script language = "JavaScript" type="text/javascript">
+  <!--
+  var change_parent_group = function () {
+    id = $('item_level_no').value;
+    
+    if (id == 2) {
+      $('parent_group_select_l2').style.display = "block";
+      $('parent_group_select_l3').style.display = "none";
+    } else {
+      $('parent_group_select_l2').style.display = "none";
+      $('parent_group_select_l3').style.display = "block";
+    }
+  }
+  -->
+</script>

@@ -1,0 +1,12 @@
+<!-- コンテンツ内小見出し -->
+<div class="entry_subHeader">
+  <% unless @parent.blank? %>
+    <h4>
+      <% mark_f = ''%>
+      <% tree = @parent.parent_tree; tree.each_with_index do |c, k| %>
+        <%= "#{mark_f}" %><%= link_to "#{c.name}", url_for(c.link_list_path) %>
+        <% mark_f = '> ' %>
+      <% end %>
+    </h4>
+  <% end %>
+</div>

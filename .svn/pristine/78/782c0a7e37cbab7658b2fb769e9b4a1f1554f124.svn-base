@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <%= render :partial => 'layouts/admin/gw/smart_header_tag' %>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="robots" content="noindex,nofollow">
+    <title><%= Page.title || @page_title %> - <%= Site.title -%></title>
+    <link rel="stylesheet" href="/_common/themes/gw/css/smart_base.css">
+    <link rel="apple-touch-icon" href="icon.png">
+    <link rel="shortcut icon" href="/images/favicon.ico">
+    <script type="text/jscript" src="/js/jquery-1.11.1.min.js"></script>
+    <%= javascript_tag "jQuery.noConflict();" %>
+    <script type="text/jscript" src="/js/sliding-panel.js"></script>
+    <script type="text/jscript" src="/js/scrolltop.js"></script>
+  </head>
+  <body>
+    <!-- ここからヘッダー -->
+    <%= render :partial => 'gw/admin/piece/header_menus/smart_index' %>
+    <!-- // ここまでヘッダー -->
+    <article role="main">
+      <section>
+        <!-- ページの見出し -->
+        <%= raw(render(:partial => '/gw/admin/smart_schedules/piece_header')) -%>
+        <!-- // ここまでページの見出し -->
+        <!-- ここからコンテンツ -->
+        <div id="content">
+          <div id="FreezePane" class="FreezePaneOff">
+            <div id="InnerFreezePane" class="InnerFreezePane"> </div>
+          </div>
+          <%= yield %>
+        </div>
+        <!-- // ここまでコンテンツ -->
+      </section>
+    </article>
+
+    <!-- ここからフッター -->
+    <%= render :partial => 'layouts/admin/gw/smart_footer' %>
+    <!-- // ここまでフッター -->
+  </body>
+</html>

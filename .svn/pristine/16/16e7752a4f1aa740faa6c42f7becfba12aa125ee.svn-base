@@ -1,0 +1,29 @@
+<%= render partial: 'header', locals: {new: true} %>
+
+<!-- コンテンツここから -->
+<div class="main">
+  <%= raw div_notice %>
+  <table class="defaultTable listTable">
+    <tr>
+      <th></th>
+      <th><%= t("rumi.config_settings.schedule_role.th.user") %></th>
+      <th><%= t("rumi.config_settings.schedule_role.th.auth_group") %></th>
+      <th><%= t("rumi.config_settings.schedule_role.th.auth_user") %></th>
+    </tr>
+    <% for item in @items %>
+      <tr class="<%= cycle '', 'cycle' %>">
+        <td><%= link_to t("rumi.link.show"), action: :show, id: item.id %></td>
+        <td><%= item.target %></td>
+        <td><%= truncate_group_names(item.groups) %></td>
+        <td><%= truncate_group_names(item.users) %></td>
+      </tr>
+    <% end %>
+  </table>
+
+  <div class="backlink paginationSingle">
+    <ul>
+      <li><%= link_to t("rumi.back_link.admin"), gw_config_settings_path %></li>
+    </ul>
+  </div>
+</div>
+<!-- コンテンツここまで -->

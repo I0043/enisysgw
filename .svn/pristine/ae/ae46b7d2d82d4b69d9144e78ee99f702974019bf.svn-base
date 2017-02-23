@@ -1,0 +1,80 @@
+<%
+  edit = t("rumi.button.edit")
+  delete = t("rumi.button.delete")
+  delete_confirm = t("rumi.message.confirm.delete")
+%>
+<%= render partial: 'header', locals: {new: true} %>
+
+<!-- コンテンツここから -->
+<div class="main">
+  <%= div_notice %>
+  <div class="area_contentsNav">
+    <div class="navBlock">
+      <div class="contentsNav">
+        <ul>
+          <li><%= link_to image_tag("/images/icon/add.png", alt: edit) + edit, edit_system_group_path(@item.id) %></li>
+          <% if @role_admin %>
+            <li><%= link_to image_tag("/images/icon/dele.png", alt: delete) + delete, system_group_path(@item.id), data: {confirm: delete_confirm, method: :delete} %></li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  </div>
+  
+  <div><%=raw t("rumi.group.message.destroy") %></div>
+  <table class="defaultTable rentDetails">
+    <tr>
+      <th><%= t("rumi.group.th.state") %></th>
+      <td><%= System::UsersGroup.state_show(@item.state) %></td>
+    </tr>
+    <tr>
+      <th><%= t("rumi.group.th.category") %></th>
+      <td><%= System::Group.category_show(@item.category) %></td>
+    </tr>
+    <tr>
+      <th><%= t("rumi.group.th.ldap") %></th>
+      <td><%= System::Group.ldap_show(@item.ldap) %></td>
+    </tr>
+    <tr>
+      <th><%= t("rumi.group.th.group_id") %></th>
+      <td><%= @item.code %></td>
+    </tr>
+    <tr>
+      <th><%= t("rumi.group.th.name") %></th>
+      <td><%= @item.name %></td>
+    </tr>
+    <tr>
+      <th><%= t("rumi.group.th.name_en") %></th>
+      <td><%= @item.name_en %></td>
+    </tr>
+    <tr>
+      <th><%= t("rumi.group.th.sort_no") %></th>
+      <td><%= @item.sort_no %></td>
+    </tr>
+    <tr>
+      <th><%= t("rumi.group.th.start_at") %></th>
+      <td><%= Gw.date_str2(@item.start_at) %></td>
+    </tr>
+    <tr>
+      <th><%= t("rumi.group.th.end_at") %></th>
+      <td><%= Gw.date_str2(@item.end_at) %></td>
+    </tr>
+    <tr>
+      <th><%= t("rumi.group.th.level_no") %></th>
+      <td><%= @item.level_no %></td>
+    </tr>
+    <tr>
+      <th><%= t("rumi.group.th.parent") %></th>
+      <td><%= safe{@item.parent.ou_name} %></td>
+    </tr>
+  </table>
+
+  <div class="backlink paginationSingle">
+    <ul>
+      <li>
+        <%= link_to t("rumi.back_link.return"), system_groups_path %>
+      </li>
+    </ul>
+  </div>
+</div>
+<!-- コンテンツここまで -->

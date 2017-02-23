@@ -1,0 +1,20 @@
+<dl class="scheduleTable">
+  <% 7.times do |i| %>
+    <%
+      week_add_day = @calendar_first_day + i
+      day_link = %Q(/gw/smart_schedule_props/show_day?s_date=#{(week_add_day).strftime('%Y%m%d')}&prop_id=#{@prop.id})
+      class_str = smart_create_month_class(week_add_day, @st_date, @holidays, params)
+    %>
+    <dt class="<%= class_str -%>">
+      <span class="scheduleDay"><%= link_to(date_format(@format, week_add_day), day_link) %></span>
+      <span class="add-new">
+        <% if @gw_admin || @prop_edit_id.index(@prop.id) %>
+          <%= link_to image_tag("/images/btn_add.png", {:border => "0", :alt => "新規作成"}), new_gw_smart_schedule_path(s_date: (week_add_day).strftime('%Y%m%d'), uid: params[:uid], prop_id: @prop.id, s_genre: "other") %>
+        <% end %>
+      </span>
+    </dt>
+    <dd>
+      <%= smart_show_prop_one(i, week_add_day) %>
+    </dd>
+  <% end %>
+</dl>

@@ -1,0 +1,28 @@
+<header id="header" role="banner">
+  <div class="area_gnav">
+    <div class="gnavContainer">
+      <div class="gnavinner">
+        <%=raw @header_menus_items %>
+        <nav id="header-users">
+          <table style="width: 100%;">
+            <tr>
+              <td class="userNames">
+                <p class="logout"><a href="/_admin/logout"><%= t("rumi.logout.name") %></a></p>
+              </td>
+            </tr>
+            <tr>
+              <td class="user">
+                <% if Core.user %>
+                  <%= link_to_show_profile(Core.user.name, Core.user.code) %>
+                <% end %>
+              </td>
+            </tr>
+          </table>
+        </nav>
+      </div>
+    </div>
+    <div class="sysLogo">
+      <%= link_to "", root_path, class: "header_img" %>
+    </div>
+  </div>
+</header>

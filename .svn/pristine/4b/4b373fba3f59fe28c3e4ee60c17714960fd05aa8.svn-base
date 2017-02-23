@@ -1,0 +1,20 @@
+<%= render partial: '/gw/admin/schedules/piece_header', locals: {piece_head_title: @piece_head_title, new: false} %>
+
+<!-- コンテンツここから -->
+<div class="main">
+  <%= div_notice %>
+  <%= p_required t("rumi.item_delete.message.cron") %>
+  <%= form_for :item, url: edit_admin_deletes_gw_schedule_settings_path, html: {method: :put, multipart: true} do |f| %>
+    <table class="defaultTable rentDetails inputTable">
+      <tr>
+        <th><%= t("rumi.item_delete.th.limit_date") %></th>
+        <td>
+          <%= select_by_list(f, :schedules_admin_delete, Gw.yaml_to_array_for_select('gw_schedules_admin_delete_term', for_select_by_list: 1),
+      {}, @item[:schedules_admin_delete].to_i) %>　<%= t("rumi.item_delete.schedule.th.limit_date_message") %>
+        </td>
+      </tr>
+    </table>
+    <%= submit_for_update f %>
+  <% end %>
+</div>
+<!-- コンテンツここまで -->

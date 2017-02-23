@@ -1,0 +1,46 @@
+<%
+  unread_comments = Gw::Reminder.where(category: 'bbs', action: "reply", user_id: Core.user.id)
+                                .where(item_id: @item.id, title_id: @item.title_id)
+                                .where("seen_at is null")
+  unread_comment_ids = unread_comments.map(&:sub_category)
+  destroy_confirm = t("rumi.message.confirm.delete")
+%>
+<% if unread_comments.present? %>
+  <div class="buttonlink">
+    <ul>
+      <li><%= link_to t('rumi.link.comment_seen'), gwbbs_doc_path(@item, comment_read: "comment_read", title_id: params[:title_id], state: params[:state]), class: 'btCommentread' %></li>
+    </ul>
+  </div>
+<% end %>
+
+<% if @comments.size > 0 %>
+  <table class="defaultTable listTable">
+    <tr>
+      <th class="comment"><%= t('rumi.gwbbs.show.comment') %></th>
+      <th class="manager"><%= t('rumi.gwbbs.show.creator') %></th>
+      <th class="update"><%= t('rumi.gwbbs.show.creat_date') %></th>
+      <th class="delete"></th>
+    </tr>
+    <% for item in @comments %>
+      <tr>
+        <td class="docTitle">
+          <% if unread_comment_ids.find{|x| x == item.id.to_s} %>
+            <span class='new'>new</span>
+          <% end %>
+          <%=item.body%>
+        </td>
+        <td>
+          <%=item.editordivision %>
+          <%=' : ' %>
+          <%=item.editor %>
+        </td>
+        <td><%= I18n.l item.created_at %></td>
+        <td class = "delete"><span class="btComment del">
+          <%if is_comment_delete(@item.section_code, item.editor_id, @gw_admin)%>
+            <%=link_to t('rumi.link.delete'), "#{gwbbs_comment_path(item,{:title_id=>@item.title_id})}#{gwbbs_params_set}", data: {confirm: "#{destroy_confirm}", method: :delete} %>
+          <%end%>
+        </span></td>
+      </tr>
+    <% end %>
+  </table>
+<% end %>

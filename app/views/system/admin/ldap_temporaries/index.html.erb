@@ -1,0 +1,25 @@
+<%= render partial: 'header' %>
+
+<!-- コンテンツここから -->
+<div class="main">
+  <%= div_notice %>
+  <%= render partial: 'menu' %>
+
+  <% if params[:do] == 'preview' %>
+    <p><%= @text %></p>
+    <%= render partial: 'preview' %>
+  <% else %>
+    <% if @items.blank? %>
+      <%= Gw.div_notice(t("rumi.message.empty.list")) %>
+    <% else %>
+      <%= render partial: 'list' %>
+    <% end %>
+  <% end %>
+
+  <div class="backlink paginationSingle">
+    <ul>
+      <li><%= link_to t("rumi.back_link.admin"), gw_config_settings_path %></li>
+    </ul>
+  </div>
+</div>
+<!-- コンテンツここまで -->

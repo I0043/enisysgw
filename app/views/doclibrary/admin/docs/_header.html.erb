@@ -1,0 +1,74 @@
+<%
+params[:state] = @title.default_folder.to_s if params[:state].blank?#フォルダ表示初期値
+
+folder_path = '/doclibrary/folders'
+strparam = ""
+strcat = strparam
+strparam = "&state=#{params[:state]}#{strparam}" unless params[:state] == 'DRAFT' unless params[:state].blank?
+strparam += "&gcd=#{params[:gcd]}" unless params[:gcd].blank?
+strparam += "&cat=#{params[:cat]}" unless params[:cat].blank?
+strparam = "?title_id=#{params[:title_id]}#{strparam}"
+fileparam = "?title_id=#{params[:title_id]}"
+str_state = "&state=#{params[:state]}" unless params[:state] == 'DRAFT' unless params[:state].blank?
+
+folder_edit_path = ''
+folder_edit_path = "/doclibrary/folders/#{params[:cat]}/edit?title_id=#{@title.id}&state=CATEGORY&cat=#{params[:cat]}" unless params[:cat].to_s == '1' unless params[:cat].blank?
+folder_destroy_path = ''
+folder_destroy_path ="/doclibrary/folders/#{params[:cat]}/?title_id=#{@title.id}&state=CATEGORY&cat=#{params[:cat]}" unless params[:cat].to_s == '1' unless params[:cat].blank?
+d_confirm_1 = t("rumi.doclibrary.message.destroy_confirm1")
+d_confirm_2 = t("rumi.doclibrary.message.destroy_confirm2")
+d_confirm_3 = t("rumi.doclibrary.message.destroy_confirm3")
+if @parent.present?
+  d_confirm_4 = t("rumi.doclibrary.message.destroy_confirm4", parent: @parent.name)
+else
+  d_confirm_4 = ""
+end
+d_confirm_5 = t("rumi.doclibrary.message.destroy_confirm5")
+destroy_confirm = d_confirm_1 + d_confirm_2 + d_confirm_3 + d_confirm_4 + d_confirm_5
+
+  new_file = t("rumi.doclibrary.button.new_file")
+  new_folder = t("rumi.doclibrary.button.new_folder")
+  edit_folder = t("rumi.doclibrary.button.edit_folder")
+  delete_folder = t("rumi.doclibrary.button.delete_folder")
+  edit = t("rumi.button.edit")
+  delete = t("rumi.button.delete")
+  destroy_confirm_s = t("rumi.message.confirm.delete")
+%>
+
+<% case params[:state] %>
+<% when 'CATEGORY', 'DATE' %>
+  <%= render :partial => 'folder_name' if @title.form_name != 'form002' %>
+<% else %>
+  <div class="navi"></div>
+<% end %>
+
+<% if @has_some_folder_admin %>
+  <div class="area_contentsNav">
+    <div class="navBlock">
+      <div class="contentsNav paginationSingle">
+        <ul>
+          <li><%= link_to image_tag("/images/icon/add5.png", alt: new_file) + new_file, "/doclibrary/docs/new" + strparam %></li>
+          <% if params[:state] == 'CATEGORY' %>
+            <% if @parent.admin_user? %>
+              <li><%= link_to image_tag("/images/icon/add6.png", alt: new_folder) + new_folder, "#{folder_path}/new#{strparam}" %></li>
+            <% end %>
+            <% if folder_edit_path.present? && @parent.editable? && @parent.parent.admin_user? %>
+              <li><%= link_to image_tag("/images/icon/pen.png", alt: edit_folder) + edit_folder, "#{folder_edit_path}" %></li>
+            <% end %>
+            <% if folder_destroy_path.present? && @parent.deletable? && @parent.parent.admin_user? %>
+              <li><%= link_to image_tag("/images/icon/dele.png", alt: delete_folder) + delete_folder, "#{folder_destroy_path}", data: {confirm: "#{destroy_confirm}", method: :delete} %></li>
+            <% end %>
+          <% end %>
+        </ul>
+      </div>
+      <!-- // .contentsNav -->
+    </div>
+    <!-- // .navBlock -->
+  </div>
+<% end%>
+
+<!-- 検索結果の見出しは表示しない
+<div class="search-title">
+  <%#= raw ret_str_doclibrary_search_title_lbl %>
+</div>
+-->

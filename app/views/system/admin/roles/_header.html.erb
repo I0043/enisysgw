@@ -1,0 +1,10 @@
+<header class="entryHeader">
+  <h2><%= @piece_head_title %></h2>
+  <% if new %>
+    <span class="navBlock">
+      <div class="newEdit">
+        <%= link_to image_tag("/images/icon/add.png", alt: "#{t("rumi.button.new")}") + " #{t("rumi.button.new")}", new_system_role_path %>
+      </div>
+    </span>
+  <% end %>
+</header>

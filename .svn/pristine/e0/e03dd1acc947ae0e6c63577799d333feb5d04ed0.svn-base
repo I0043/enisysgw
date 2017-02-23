@@ -1,0 +1,68 @@
+<%= render partial: 'gwcircular/admin/menus/piece_header', locals: {piece_head_title: @piece_head_title} %>
+<div class="main">
+  <div class="contentHeader bbs_infoHeader gwcircularHeader">
+    <p>
+      <span><%= t("rumi.gwcircular.th.creator") %>：</span>
+      <span>
+        <%= @parent.createrdivision %>
+        <td class="space"></td>
+        <%= @parent.creater %>
+      </span>
+      <span><%= I18n.l @parent.created_at if @parent.created_at.present?  %></span>
+    </p>
+    <p>
+      <span><%= t("rumi.gwcircular.th.expiry_date") %>：</span>
+      <span><%= I18n.l @parent.expiry_date unless @parent.expiry_date.blank? %></span>
+    </p>
+  </div>
+  <!-- // .contentHeader -->
+
+  <div class="docsInnerBox">
+    <div class="bssTitle"><%= raw(hbr(@parent.title)) %></div>
+    <div class="bssEntry"><%= raw(@parent.body) %></div>
+  </div>
+  <!-- // .docsInnerBox -->
+
+  <table class="defaultTable bbs_attachlistTable">
+    <tbody>
+      <tr>
+        <th><%= t("rumi.gwcircular.th.spec_config") %></th>
+        <td><%= @item.spec_config_name_status %></td>
+      </tr>
+      <tr>
+        <th><%= t("rumi.gwcircular.th.circular_limit") %></th>
+        <td><%= I18n.l @parent.expiry_date unless @parent.expiry_date.blank? %></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <table class="defaultTable bbs_attachlistTable">
+    <tbody>
+      <tr>
+        <th><%= t("rumi.gwcircular.th.state") %></th>
+          <td><%= raw(status_name_show(@item)) %></td>
+        </tr>
+        <tr>
+          <th><%= t("rumi.gwcircular.th.target_user") %></th>
+          <td><%= @item.target_user_name %></td>
+        </tr>
+        <tr>
+          <th><%= t("rumi.gwcircular.th.comment") %></th>
+          <td><%= simple_format(h(@item.body)) %></td>
+        </tr>
+        <tr>
+          <th><%= t("rumi.gwcircular.th.editdate") %></th>
+          <td><%=@item.display_editdate %></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <%=render(:partial => 'library_index')%>
+
+  <!--戻るボタン-->
+  <div class="backlink paginationSingle">
+    <ul>
+      <li><%= link_to t("rumi.back_link.return_show"), "#{show_path(@myitem)}#{cond_param(params[:cond])}" %></li>
+    </ul>
+  </div>
+</div>

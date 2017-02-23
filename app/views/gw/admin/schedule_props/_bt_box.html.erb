@@ -1,0 +1,31 @@
+<%
+  name = "calendar_move_#{:header}"
+  tag_name = "#{:item}[#{name}]" rescue name
+  @schedule_move_url_directive = %Q(#{request.path_translated}#{mode == 'day' ? '%d?%q' :
+    @sp_mode == :schedule ? '?s_date=%d&%q' :
+    @sp_mode == :event ? 'event_week?s_date=%d' : mode == '2week' ? 'show_2week?s_date=%d&%q' : 'show_week?s_date=%d&%q'})
+%>
+<%= raw(hidden_field_tag('my_url', @schedule_move_url_directive.sub('%q', "#{@schedule_move_qs}"))) %>
+<div class="area_contentsNav">
+  <div class="navBlock">
+    <div class="contentsNav">
+      <ul>
+        <li><%= link_to t("rumi.schedule.button.day"), {:controller=> :schedule_props, :action => :show, :id => d.strftime("%Y%m%d"), :cls =>"other", :s_genre =>"other", :type_id => params[:type_id], :s_other_admin_gid => params[:s_other_admin_gid]} %></li>
+        <li><%= link_to t("rumi.schedule.button.week"), {:controller=> :schedule_props, :action => :show_week, :s_data => d.strftime("%Y%m%d"), :cls =>"other", :s_genre =>"other", :type_id => params[:type_id], :s_other_admin_gid => params[:s_other_admin_gid]} %></li>
+        <li class="cal">
+          <input type="hidden" name="item[calendar_move_header]" id="item_calendar_move_header" value="<%= "#{d}" %>" onchange="calendar_schedule_redirect($F(this));">
+          <a href="#" onclick="new CalendarDateSelect( $(this).previous(), {clear_button:false, hidden:1, popup_by:this, time:false, year_range:10} );" style="border:0px; cursor:pointer;" class="calendar_date_select_popup_icon">
+            <img src="/images/icon/calendar.png" alt=<%= t("rumi.schedule.button.calendar") %>><%= t("rumi.schedule.button.calendar") %>
+          </a>
+        </li>
+        <li>
+          <%= link_to '２週表示', {:controller=> :schedule_props, :action => :show_2week, :s_data => d.strftime("%Y%m%d"), :cls =>"other", :s_genre =>"other", :type_id => params[:type_id], :s_other_admin_gid => params[:s_other_admin_gid]} -%>
+        </li>
+        <li>
+          <%= link_to 'WB表示', {:controller=> :schedule_props, :action => :show_wb, :id => d.strftime("%Y%m%d"), :cls =>"other", :s_genre =>"other", :type_id => params[:type_id], :s_other_admin_gid => params[:s_other_admin_gid]} -%>
+        </li/
+      </ul>
+    </div>
+  </div>
+</div>
+

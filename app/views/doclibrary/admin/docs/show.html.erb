@@ -1,0 +1,11 @@
+<%= render partial: 'piece_header', locals: {piece_head_title: @piece_head_title} %>
+<div class="main">
+  <%= render :partial => 'show_doc' %>
+
+  <div class="backlink paginationSingle">
+    <ul>
+      <li><%= link_to t('rumi.back_link.return'), "#{doclibrary_docs_path({:title_id=>@title.id})}#{doclib_params_set}" %></li>
+    </ul>
+  </div>
+</div>
+

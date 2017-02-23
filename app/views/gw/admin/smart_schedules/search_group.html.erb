@@ -1,0 +1,24 @@
+<!-- ページ遷移ボタン -->
+<div class="headBtn">
+  <ul class="headBtn-1">
+    <li><%= link_to '自分のスケジュール', gw_smart_schedules_path(uid: Core.user.id) %></li>
+  </ul>
+</div>
+
+<!-- 該当ページタイトル -->
+<div class="groupHeader">グループ選択</div>
+
+<ul class="groupList">
+  <% @groups.each do |item| %>
+    <%
+      group = item.id.split('_')
+      name = item.name
+      if group[0] == "group"
+        target_group = System::Group.where(id: group[1]).first
+        parent = System::Group.where(id: target_group.parent_id).first
+        name = parent.present? ? parent.name + "-" + item.name : item.name
+      end
+    %>
+    <li><%= link_to name, search_user_gw_smart_schedules_path(group: item.id) %></li>
+  <% end %>
+</ul>

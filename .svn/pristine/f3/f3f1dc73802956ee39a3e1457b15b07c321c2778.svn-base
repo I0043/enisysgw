@@ -1,0 +1,17 @@
+<thead>
+  <tr class="schedule-head">
+    <th style="width: 150px;"><%= @title %></th>
+    <% 7.times do |i| %>
+      <%
+        week_add_day = @calendar_first_day + i
+        class_str = create_month_class(week_add_day, @st_date, @holidays, params)
+      %>
+      <th class="<%= class_str %>">
+        <%= link_to day_link(week_add_day, mode) do %>
+          <span class="day"><%= Gw.weekday(week_add_day.wday) %></span>
+          <span class="date"><%= week_add_day.day %></span>
+        <% end %>
+      </th>
+    <% end %>
+  </tr>
+</thead>

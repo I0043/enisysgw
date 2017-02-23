@@ -1,0 +1,68 @@
+<%= render partial: 'piece_header', locals: {piece_head_title: @piece_head_title} %>
+<div class="main">
+  <%=render :partial => 'subheader' %>
+  <%= form_for :item, :url => "#{gwbbs_doc_path(@item)}#{gwbbs_params_set}", :html => {:method => :put, :id => 'itemForm'} do |f| %>
+    <%= f.error_messages %>
+
+    <%= raw(%Q(<div class="notice">#{required(flash.now[:notice])}</div>)) unless flash.now[:notice].blank? %>
+    <p class="required"><%= required_head %></p>
+
+    <%= render :partial => @title.gwbbs_form_name + 'form', :locals => {:f => f} %>
+    <%= render :partial => 'form', :locals => {:f => f} %>
+
+    <%= gwboard_recognizer_form(f, @item) if @title.recognize.to_s == '1' %>
+    <%= gwboard_recognizer_form_type2(f, @item) if @title.recognize.to_s == '2' %>
+
+    <div class="submitters">
+      <% if @title.use_free_public %>
+        <div id="item_recog_select3" style="display:inline;" >
+          <input id="<%= f.object_name %>_submit_public" name="commit" onclick="return my_submit('public', 'new');" type="submit" value=<%= t("rumi.button.publish") %> />
+        </div>
+      <% end %>
+      <% if @title.recognize.to_s == '1' %>
+        <input id="<%= f.object_name %>_submit_recognize" name="commit" onclick="return my_submit('recognize', 'new');" type="submit" value=<%= t("rumi.button.recognize") %> />
+      <% end %>
+
+      <% if @title.recognize.to_s == '2' %>
+        <div id="item_recog_select2" style="display:none;" >
+          <input id="<%= f.object_name %>_submit_recognize" name="commit" onclick="return my_submit('recognize', 'new');" type="submit" value=<%= t("rumi.button.recognize") %> />
+        </div>
+      <% end %>
+
+      <% unless @title.draft_forbidden %>
+        <input id="<%= f.object_name %>_submit_draft" name="commit" onclick="return my_submit('draft', 'new');" type="submit" value=<%= t("rumi.button.draftsave") %> />
+      <% end %>
+      <% if request.path_info.include?("forward") %>
+        <%= hidden_field_tag :request_path, request.path_info %>
+        <input id="<%= f.object_name %>_submit_close" name="commit" onclick="return my_submit('close', 'new');" type="submit" value=<%= t("rumi.button.close") %> />
+      <% end %>
+      <input id="<%= f.object_name %>_state" name="<%= f.object_name %>[state]" type="hidden" value="" />
+    </div>
+
+    <%= hidden_field_tag :message, t("rumi.message.notice.create") %>
+    <%= render :partial => 'hidden_form' %>
+  <% end %>
+</div>
+
+<% if @title.recognize.to_s == '2' %>
+  <script language = "JavaScript" type="text/javascript">
+  <!--
+    var sel_class1 = function() {
+      idx =  radio_selected('item[category4_id]')
+      switch (idx) {
+      case 1:
+        $('item_recog_select1').setStyle("display : none;");
+        $('item_recog_select2').setStyle("display : none;");
+        $('item_recog_select3').setStyle("display : inline;");
+        break;
+      case 2:
+        $('item_recog_select1').setStyle("display : inline;");
+        $('item_recog_select2').setStyle("display : inline;");
+        $('item_recog_select3').setStyle("display : none;");
+      break;
+      }
+    }
+  sel_class1();
+  -->
+  </script>
+<% end %>

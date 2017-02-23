@@ -1,0 +1,67 @@
+<%= required_head %>
+<table class="defaultTable inputTable">
+<tr>
+<th class="blueIndex"><%= t("rumi.gwboard.th.status") %></th>
+<td><%= f.radio_buttons :state, @item.state_list, :class => 'state' %></td>
+</tr>
+</table>
+<table class="defaultTable inputTable">
+<tr>
+<th class="blueIndex">
+ <%= t("rumi.gwboard.list.doclibtitle_name") %><%= required('※') %>
+</th>
+<td><%= f.text_field :title, :size=>50, :class => 'boardtitle' %></td>
+</tr>
+<tr>
+<th class="blueIndex"><%= t("rumi.gwboard.th.listlines") %></th>
+<td><%= f.select :default_limit, @item.default_limit_line , :class => 'select default_limit'%></td>
+</tr>
+</table>
+<table class="defaultTable inputTable">
+<tr>
+ <th class="blueIndex"><%= t("rumi.gwboard.th.image_limit") %><%= required('※') %></th>
+<td>
+<%= f.text_field :upload_graphic_file_size_capacity, :size=>3 %>
+<%= f.select :upload_graphic_file_size_capacity_unit, @item.size_unit_name %>
+<%= @image_message%>
+  &nbsp;
+  <%= raw(t("rumi.gwboard.message.image_limit"))%>
+</td>
+</tr>
+<tr>
+ <th class="blueIndex"><%= t("rumi.gwboard.th.temp_limit") %><%= required('※') %></th>
+<td>
+<%= f.text_field :upload_document_file_size_capacity, :size=>3 %>
+<%= f.select :upload_document_file_size_capacity_unit, @item.size_unit_name %>
+<%= @document_message%>
+  &nbsp;
+  <%= raw(t("rumi.gwboard.message.temp_limit"))%>
+</td>
+</tr>
+<tr>
+<th class="blueIndex"><%= t("rumi.gwboard.th.image_size_limit") %><%= required('※') %></th>
+<td><%= f.text_field :upload_graphic_file_size_max, :size=>3 %> MB
+  &nbsp;
+  <%= raw(t("rumi.gwboard.message.image_size_limit"))%></td>
+</tr>
+<tr>
+<th class="blueIndex"><%= t("rumi.gwboard.th.temp_size_limit") %><%= required('※') %></th>
+<td><%= f.text_field :upload_document_file_size_max, :size=>3 %> MB
+  &nbsp;
+  <%= raw(t("rumi.gwboard.message.temp_size_limit"))%></td>
+</tr>
+</table>
+<table class="defaultTable inputTable">
+<tr>
+<th class="blueIndex">
+  <%= t("rumi.gwboard.th.order") %>
+</th>
+<td><%= f.text_field :sort_no, :size=>6 %><span>&nbsp;</span><%= t("rumi.gwboard.message.order_description") %></td>
+</tr>
+<tr>
+<th class="blueIndex"><%= t("rumi.gwboard.th.use_description1") %><br /><%= t("rumi.gwboard.th.use_description2") %></th>
+<td><%= f.text_area :caption , :cols => 50, :rows => 2 , :class => 'string caption'%></td>
+</tr>
+</table>
+
+<%= render :partial => 'form_s' %>

@@ -1,0 +1,18 @@
+<div class="area_contentsNav">
+  <div class="navBlock">
+    <div class="contentsNav">
+      <ul>
+        <% unless @target_user_disable_flg %>
+          <li>
+            <% edit = t("rumi.button.edit") %>
+            <%= link_to image_tag("/images/icon/add.png", alt: edit) + edit, edit_system_schedule_role_path(@items.id) %>
+          </li>
+        <% end %>
+        <li>
+          <% del = t("rumi.button.delete") %>
+          <%= link_to image_tag("/images/icon/dele.png", alt: del) + del, system_schedule_role_path(@items.id), data: {confirm: t("rumi.message.confirm.delete"), method: 'delete'} %>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

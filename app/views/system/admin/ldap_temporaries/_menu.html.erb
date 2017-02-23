@@ -1,0 +1,27 @@
+<%
+  temporary = params[:do].blank? ? " current" : ""
+  test = params[:do] == "preview" ? " current" : ""
+%>
+<table class="tabtable" style="margin-bottom: 10px;">
+  <tr>
+    <td class="<%= temporary %>">
+      <% if temporary.present? %>
+        <%= t("rumi.ldap_temporary.menu.temporary") %>
+      <% else %>
+        <%= link_to t("rumi.ldap_temporary.menu.temporary"), system_ldap_temporaries_path %>
+      <% end %>
+    </td>
+    <td class="<%= test %>">
+      <% if test.present? %>
+        <%= t("rumi.ldap_temporary.menu.test") %>
+      <% else %>
+        <%= link_to t("rumi.ldap_temporary.menu.test"), system_ldap_temporaries_path + '?do=preview' %>
+      <% end %>
+    </td>
+    <% if params[:action] == "show" %>
+      <td>
+        <%= link_to t("rumi.ldap_temporary.menu.synchro"), '?do=synchro', class: 'sync', data: {confirm: t("rumi.ldap_temporary.message.synchro_start")} %>
+      </td>
+    <% end %>
+  </tr>
+</table>

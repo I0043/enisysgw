@@ -1,0 +1,32 @@
+<%
+  #本来は一ヶ所で判別するのが良いが、変更の過渡期なのでわけてある。
+  files_uri = gwcircular_attachments_path(item.id) + "?partial_use_form=#{partial_use_form}"
+  class_mode = ""
+  is_requied = false
+  if mode.present?
+    class_mode = " bbs_attachlistTable"
+    is_requied = true
+  end
+%>
+<% if request.path_info.include?("gwcircular/forward") || params[:request_path].present? %>
+  <table class="defaultTable bbs_attachlistTable" style="width: 100%;">
+<% else %>
+  <table class="defaultTable bbs_attachlistTable<%= class_mode %>">
+<% end %>
+  <tr>
+    <% if is_requied %>
+      <th><%= t("rumi.gwcircular.th.attachment") %><%= raw(required('<br/>' + t("rumi.circular.file_notice"))) %></th>
+    <% else %>
+      <th><%= t("rumi.gwcircular.th.attachment") %></th>
+    <% end %>
+    <td>
+      <a href="#" onclick="chageDisp(this,'attach_form');return false;"><%= t("rumi.attach_list.open") %></a>
+    </td>
+  </tr>
+  <tr id="attach_form" border="0" class="show defaultTable" style="display: none;">
+    <th><%= t("rumi.gwcircular.th.attachment") %></th>
+    <td>
+      <iframe src="<%= files_uri %>" frameborder="0"></iframe>
+    </td>
+  </tr>
+</table>

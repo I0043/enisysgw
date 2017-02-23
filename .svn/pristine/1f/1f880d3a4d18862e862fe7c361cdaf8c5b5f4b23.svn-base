@@ -1,0 +1,77 @@
+<%
+  str_tab1_class = 'tab'
+  str_tab2_class = 'tab'
+  str_tab3_class = 'tab'
+  str_tab4_class = 'tab'
+
+  str_tab1_class += ' current' if params[:state].blank?
+  str_tab1_class += ' current' if params[:state] == 'TODAY'
+  str_tab1_class += ' current' if params[:state] == 'DATE'
+  str_tab1_class += ' current' if params[:state] == 'GROUP'
+  str_tab1_class += ' current' if params[:state] == 'CATEGORY'
+
+  str_tab2_class += ' current' if params[:state] == 'DRAFT'
+  str_tab3_class += ' current' if params[:state] == 'NEVER'
+  str_tab4_class += ' current' if params[:state] == 'VOID'
+
+%>
+<div id="sidebar">
+  <p class="sideDate">Today <%= @today %></p>
+  <!-- サブメニュー -->
+  <div class="subMenu">
+    <ul>
+      <% unless params[:controller].include?("menus")  %>
+        <li class="<%=raw(str_tab1_class)%>"><%=link_to t('rumi.gwbbs.side.list_date'), gwbbs_docs_path({:title_id=>@title.id}) %></li>
+        <%if @is_writable%>
+          <li class="<%=raw(str_tab2_class)%>"><%=link_to t('rumi.gwbbs.side.list_draft'), gwbbs_docs_path({:title_id=>@title.id,:state=>"DRAFT"}) %></li>
+          <li class="<%=raw(str_tab3_class)%>"><%=link_to t('rumi.gwbbs.side.list_never'), gwbbs_docs_path({:title_id=>@title.id,:state=>"NEVER"}) %></li>
+          <li class="<%=raw(str_tab4_class)%>"><%=link_to t('rumi.gwbbs.side.list_void'), gwbbs_docs_path({:title_id=>@title.id,:state=>"VOID"}) %></li>
+        <% end %>
+      <% end %>
+    </ul>
+  </div>
+  <!-- // .subMenu -->
+
+  <% unless params[:controller].include?("menus")  %>
+    <div class="sideSearch">
+      <%= form_tag "#{@title.docs_path}", method: :get do %>
+        <%# 検索対象を絞り込み範囲内に制限する パラメータの持ち回り %>
+        <%= hidden_field_tag 'title_id'   ,params[:title_id]  -%>
+        <%= hidden_field_tag 'state'      ,params[:state]     -%>
+        <%= hidden_field_tag 'limit'      ,params[:limit]     -%><%# 行数　 param -%>
+        <%= hidden_field_tag 'grp'        ,params[:grp]       -%><%# 所属別 param -%>
+        <%= hidden_field_tag 'yyyy'       ,params[:yyyy]      -%><%# 月別　 param -%>
+        <%= hidden_field_tag 'mm'         ,params[:mm]        -%><%# 月別　 param -%>
+        <dl>
+          <dt><%= t('rumi.gwbbs.side.search.kwd') %></dt>
+          <dd class="kwd">
+            <%= text_field_tag 'kwd', params[:kwd], :size => '10' %>
+          </dd>
+          <dt><%= t('rumi.gwbbs.side.search.group') %></dt>
+          <dd class="sideGroup">
+            <%= select_tag('grp' , options_for_select(@piece_group_names, params[:grp]), :include_blank => true) %>
+          </dd>
+          <dt><%= t('rumi.gwbbs.side.search.creator') %></dt>
+          <dd class="creator">
+            <%= text_field_tag 'creater', params[:creater], :size => '10' %>
+          </dd>
+          <dt><%= t('rumi.gwbbs.side.search.startdate') %></dt>
+          <dd class="dateTime">
+            <p><%= text_field_tag :startdate, params[:startdate], size: '7', onclick: "new CalendarDateSelect( $(this), {time:false, year_range:10} );", style: "ime-mode: disabled", onkeydown: "return rumi.BlockKeyCode(event);", onpaste: "return false", oncontextmenu: "return false" %> <%= t('rumi.gwbbs.search_start')  %><img src="/images/icon/calendar-side.png" alt="カレンダー" class="calendar_date_select_popup_icon" onclick="new CalendarDateSelect( $(this).previous(), {time:false, year_range:10} );"></p>
+            <p><%= text_field_tag :enddate, params[:enddate], size: '7', onclick: "new CalendarDateSelect( $(this), {time:false, year_range:10} );", style: "ime-mode: disabled", onkeydown: "return rumi.BlockKeyCode(event);", onpaste: "return false", oncontextmenu: "return false" %> <%= t('rumi.gwbbs.search_end')  %><img src="/images/icon/calendar-side.png" alt="カレンダー" class="calendar_date_select_popup_icon" onclick="new CalendarDateSelect( $(this).previous(), {time:false, year_range:10} );"></p>
+            <input type="hidden" name="cond" value='<%= params[:cond] %>' />
+            <input type="hidden" name="title_id" value='<%= params[:title_id] %>' />
+            <input type="hidden" name="limit" value='<%= params[:limit] %>' />
+          </dd>
+          <dd class="submit">
+            <input name="search" onclick="return my_search_submit();" type="submit" value=<%= t('rumi.button.search') %> />
+            <input name="reset" type="submit" value=<%= t('rumi.button.reset') %> />
+          </dd>
+           <%= raw(render(:partial => 'gwbbs/admin/docs/form_script')) %>
+        </dl>
+      <% end %><!--form_tag-->
+    </div>
+    <!-- // .sideSearch -->
+  <% end %>
+</div>
+

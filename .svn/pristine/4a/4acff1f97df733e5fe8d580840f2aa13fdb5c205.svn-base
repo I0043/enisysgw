@@ -1,0 +1,21 @@
+<% mode = 'list' %>
+<%= render :partial => '/gw/admin/schedules/piece_header', locals: {piece_head_title: @piece_head_title, new: true} %>
+
+<!-- コンテンツここから -->
+<div class="main">
+  <!-- フォーム切替ボタン等 -->
+  <%= render partial: '/gw/admin/schedules/schedule_bt_box', locals: {d: @st_date, mode: mode} %>
+  <!-- フォーム切替ボタン等ここまで -->
+
+  <%= div_notice %>
+  <% if @motion == :user_delete %>
+    <%= render partial: 'user_delete' %>
+  <% end %>
+  
+  <% if @items.blank? %>
+    <div class="notice"><%= t("rumi.message.empty.list") %></div>
+  <% else %>
+    <%= render partial: 'list' %>
+  <% end %>
+</div>
+<!-- コンテンツここまで -->

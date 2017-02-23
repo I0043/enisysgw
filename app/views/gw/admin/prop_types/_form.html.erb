@@ -1,0 +1,10 @@
+<table class="defaultTable rentDetails">
+  <tr>
+    <th><%= t("rumi.prop_type.th.type") %><%= required %></th>
+    <td><%= f.text_field :name, :size => 50 %></td>
+  </tr>
+  <tr>
+    <th><%= t("rumi.prop_type.th.sort_no") %><%= required %></th>
+    <td><%= f.text_field :sort_no, :size => 50 %> <%= t("rumi.message.sort_message") %></td>
+  </tr>
+</table>

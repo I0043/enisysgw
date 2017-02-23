@@ -1,0 +1,37 @@
+<table class="defaultTable bbs_attachlistTable">
+  <tr>
+    <th><%= t("rumi.gwbbs.th.comment") %></th>
+  </tr>
+  <tr>
+    <td>
+      <div class="comment_body"><%= f.text_field :body, size: '50', style: 'width:100%; margin-bottom:20px;'%></div>
+      <div class="submitters circularsubmit">
+        <input id="<%= f.object_name %>_submit" name="commit" onclick="return my_comment_submit('public');" type="submit" value=<%= t('rumi.submit.create') %> />
+        <input id="<%= f.object_name %>_state" name="<%= f.object_name %>[state]" type="hidden" value="" />
+        <%= render :partial => '/gwbbs/admin/comments/hidden_form' %>
+      </div>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+//<![CDATA[
+var my_comment_submit = function(state) {
+
+  var st = $('comment_state');
+  st.value = state;
+
+  var comment_body = document.getElementById('comment_body').value;
+  comment_body = comment_body.gsub(/　|\s/, '');
+  // コメントチェック
+  if (comment_body == "") {
+    alert('<%= I18n.t('rumi.gwbbs.message.comment') %>');
+    return false;
+  }
+  
+  FreezeScreen('<%= I18n.t('rumi.gwbbs.submit.comment') %>');
+  
+  $('comment_field_form').submit();
+}
+//]]>
+</script>

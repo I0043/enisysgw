@@ -1,0 +1,21 @@
+<%
+  edit = t("rumi.button.edit")
+%>
+<div class="area_contentsNav">
+  <div class="navBlock">
+    <div class="contentsNav paginationSingle">
+      <ul>
+        <li class="btEdit">
+          <%= link_to image_tag("/images/icon/pen.png", alt: edit) + edit, edit_gwcircular_basic_path %>
+        </li>
+      </ul>
+    </div>
+    <!-- // .contentsNav -->
+  </div>
+  <!-- // .navBlock -->
+  <span class="docLinkRight">
+    <%=link_to(t("rumi.gwboard.list.public_display"), "/gwcircular/") %>
+  </span>
+</div>
+<div class="notice"><%= flash.now[:notice] %></div>
+<!-- // .area_contentsNav -->

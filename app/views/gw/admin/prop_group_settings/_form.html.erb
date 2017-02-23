@@ -1,0 +1,41 @@
+<%
+  _params = params.dup
+  _defalut_props = Gw::PropGroupSetting.getajax _params
+  defalut_props = _defalut_props.collect{|x| [x[2], x[1]]}
+%>
+<%= hidden_field_tag('init[prop_id]', params[:prop_id]) %>
+<%= hidden_field_tag('init[prop_group_settings_json]',
+  (params[:item] && params[:item][:prop_group_settings_json] ? params[:item][:prop_group_settings_json] : nz(@prop_group_settings_json) )) %>
+
+<table class="defaultTable rentDetails inputTable">
+  <tr>
+    <th><%= t("rumi.prop_group_setting.th.name") %></th>
+    <td><%= @item.name %></td>
+  </tr>
+  <tr>
+    <th><%= t("rumi.prop_group_setting.th.related_facility") %></th>
+    <td>
+      <table border="0">
+        <tr>
+          <td>
+            <%= select_tag("item[prop_group_settings][prop_type_id]", options_from_collection_for_select(@prop_types, :id, :name, 100), :onchange=>'update_prop_cand();') %>
+            <br />
+            <%= select_tag("item[prop_group_settings][prop_id]", Gw.options_for_select(defalut_props, nil, :title=>'other'), :size=>10, :style => 'width:280px;', :ondblclick => 'add_prop()', :multiple => true) %>
+          </td>
+          <td>
+            <input onclick="add_prop(); return false;" type="button" value="<%= t("rumi.config_settings.user_and_group.add.name") %>" />
+            <br /><br />
+            <input onclick="del_prop(); return false;" type="button" value="<%= t("rumi.config_settings.user_and_group.remove.name") %>" />
+          </td>
+          <td>
+            <%= select_tag("item[prop_group_settings_add_buf]", '', :size=>10, :style => 'width:280px;', :ondblclick => 'del_prop()', :multiple => true) %>
+            <%= hidden_field_tag 'item[prop_group_settings_json]', '' -%>
+          </td>
+        </tr>
+      </table>
+      <%= raw(Gw.div_notice '', id: 'notice_ajax_prop') %>
+    </td>
+  </tr>
+</table>
+
+<%= raw(render(:partial => 'form_script')) %>

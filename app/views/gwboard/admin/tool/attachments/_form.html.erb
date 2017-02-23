@@ -1,0 +1,30 @@
+<%
+  #本来は一ヶ所で判別するのが良いが、変更の過渡期なのでわけてある。
+  files_uri = files_uri = gwboard_attachments_path(item.id) + "?system=#{item.system_name}&title_id=#{item.title_id}&partial_use_form=#{partial_use_form}"
+%>
+<% if request.path_info.include?("gwbbs/docs/forward") || params[:request_path].present? %>
+  <table class="defaultTable bbs_attachlistTable" style="width: 100%;">
+<% else %>
+  <table class="defaultTable bbs_attachlistTable">
+<% end %>
+  <tr>
+    <th><%= t('rumi.gwbbs.th.tmpfile') %></th>
+    <td>
+      <a href="#" id="attachment_link" onclick="chageDisp(this,'attach_form');return false;"><%= t("rumi.gwboard.attach_list.open") %></a>
+    </td>
+  </tr>
+  <tr id="attach_form" border="0" class="show defaultTable" style="display: none;">
+    <th><%= t('rumi.gwbbs.th.tmpfile') %></th>
+    <td>
+      <iframe src="<%= files_uri %>" frameborder="0"></iframe>
+    </td>
+  </tr>
+  <% if request.path_info.include?("gwbbs") %>
+    <% unless @title.one_line_use == 0 %>
+      <tr>
+        <th><%= t('rumi.gwbbs.th.oneline_comment') %></th>
+        <td><%= f.select :one_line_note, @item.one_line_states , :class => 'select one_line_note'%></td>
+      </tr>
+    <% end %>
+  <% end %>
+</table>

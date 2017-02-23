@@ -1,0 +1,39 @@
+<%= render partial: 'header_str', locals: {piece_head_title: @piece_head_title, new: true} %>
+
+<!-- コンテンツここから -->
+<div class="main">
+  <%= raw(div_notice) %>
+  <div class="explain">
+    <p><%= t("rumi.config_settings.admin_message.explain") %></p>
+  </div>
+
+  <% if @items.length == 0 %>
+    <div class="notice"><%= t("rumi.message.empty.list") %></div>
+  <% else %>
+    <table class="defaultTable listTable">
+      <tr>
+        <th></th>
+        <th><%= t("rumi.config_settings.admin_message.th.view") %></th>
+        <th><%= t("rumi.config_settings.admin_message.th.sort_no") %></th>
+        <th><%= t("rumi.config_settings.admin_message.th.message") %></th>
+        <th class="update"><%= t("rumi.config_settings.admin_message.th.updated_at") %></th>
+      </tr>
+      <% @items.each do |item| %>
+      <tr>
+        <td><%= link_to t("rumi.link.show"), gw_admin_message_path(item.id) %></td>
+        <td><%= t("rumi.config_settings.admin_message.view#{item.state.to_s}") %></td>
+        <td><%= item.sort_no %></td>
+        <td><%= item.body %></td>
+        <td><%= I18n.l item.updated_at if item.updated_at.present? %></td>
+      </tr>
+      <% end %>
+    </table>
+  <% end %>
+
+  <div class="backlink paginationSingle">
+    <ul>
+      <li><%= link_to t("rumi.back_link.admin"), gw_config_settings_path %></li>
+    </ul>
+  </div>
+</div>
+<!-- コンテンツここまで -->

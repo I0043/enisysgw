@@ -1,0 +1,71 @@
+<%= render :partial => 'folder_name' unless @title.form_name == 'form002' %>
+
+<%
+params_set = ""
+state = params[:state]
+if state=='GROUP'
+  params_set = "&state=#{state}&grp=#{params[:grp]}&gcd=#{params[:gcd]}"
+else
+  params_set = "&state=#{state}&cat=#{params[:cat]}"
+end
+edit = t("rumi.button.edit")
+edit_recognize = t("rumi.doclibrary.button.edit_recognize")
+recognize = t("rumi.doclibrary.button.recognize")
+open = t("rumi.doclibrary.button.open")
+delete = t("rumi.button.delete")
+destroy_confirm = t("rumi.message.confirm.delete")
+%>
+<div class="area_contentsNav">
+  <% is_admin = (@item.parent.admin_user?)? true : false %>
+  <div class="navBlock">
+    <div class="contentsNav">
+      <ul>
+        <% if is_admin %>
+          <% unless @title.use_recognize %>
+            <li><%= link_to image_tag("/images/icon/pen.png", alt: edit) + edit, edit_doclibrary_doc_path(@item,{:title_id => @title.id}) + params_set %></li>
+          <% else %>
+            <% if @item.category4_id == 1 %>
+              <li><%= link_to image_tag("/images/icon/pen.png", alt: edit_recognize) + edit_recognize, edit_doclibrary_doc_path(@item, {:title_id => @title.id}) + params_set %></li>
+            <% else %>
+              <li><%= link_to image_tag("/images/icon/pen.png", alt: edit) + edit, edit_doclibrary_doc_path(@item,{:title_id => @title.id}) + params_set %></li>
+            <% end %>
+          <% end %>
+          <li><%= link_to image_tag("/images/icon/dele.png", alt: delete) + delete, doclibrary_doc_path(@item, {:title_id => @title.id}) + params_set, data: {confirm: "#{destroy_confirm}", method: :delete} %></li>
+        <% end %>
+        <% if @item.unseen?(Core.user.id) %>
+          <li><%= link_to image_tag("/images/icon/pen.png", alt: recognize) + recognize, "#{recognize_update_doclibrary_doc_path(@item,{:title_id=>@title.id})}#{gwbbs_params_set}" %></li>
+        <% end %>
+        <% if @is_publish %>
+          <li><%= link_to image_tag("/images/icon/pen.png", alt: open) + open, "#{publish_update_doclibrary_doc_path(@item,{:title_id=>@title.id})}#{gwbbs_params_set}" %></li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="contentHeader bbs_infoHeader gwcircularHeader">
+  <p>
+    <span><%= t('rumi.doclibrary.th.detail_creator') %></span>
+    <span><%= @item.createrdivision %></span>
+    <span><%= @item.creater %></span>
+    <span><%= I18n.l @item.createdate.to_time if @item.createdate.present? %></span>
+  </p>
+  <p>
+    <span><%= t('rumi.doclibrary.th.detail_editor') %></span>
+    <span><%= @item.editordivision %></span>
+    <span><%= @item.editor %></span>
+    <span><%= I18n.l @item.editdate.to_time if @item.editdate.present? %></span>
+  </p>
+</div>
+
+<div class="docsInnerBox">
+  <%= render :partial => @title.doclib_form_name + 'show' %>
+
+  <%= render :partial => '/gwboard/admin/docs/library_index' %>
+
+  <% if @title.use_recognize %>
+    <%= render :partial => 'recognize_users' if @item.state == 'draft'%>
+    <%= render :partial => 'recognize_users' if @item.state == 'recognize'%>
+    <%= render :partial => 'recognize_users' if @item.state == 'recognized'%>
+  <% end %>
+</div>

@@ -1,0 +1,109 @@
+<%= required_head %>
+<%= f.hidden_field :recognize %>
+<%= f.hidden_field :importance %>
+<%= f.hidden_field :category %>
+<%= f.hidden_field :one_line_use %>
+<%= f.hidden_field :notification %>
+<%= f.hidden_field :categoey_view %>
+<table class="defaultTable inputTable">
+  <tr>
+    <th><%= t("rumi.gwboard.th.status") %></th>
+    <td><%= f.radio_buttons :state, @item.state_list, :class => 'state'  %></td>
+  </tr>
+</table>
+<table class="defaultTable inputTable">
+  <tr>
+    <th><%= t("rumi.gwboard.list.bbstitle_name") %><%= required('※') %></th>
+    <td><%= f.text_field :title, :size => 50, :class => 'boardtitle' %></td>
+  </tr>
+  <tr>
+    <th><%= t("rumi.gwboard.th.listlines") %></th>
+    <td><%= f.select :default_limit, @item.default_limit_line , :class => 'select default_limit'%></td>
+  </tr>
+</table>
+<table class="defaultTable inputTable">
+  <tr>
+    <th><%= t("rumi.gwboard.th.postperiod") %><%= required('※') %></th>
+    <td class="IMEoff"><%= f.text_field :default_published, :size=>3 %><%= t("rumi.gwbbs.message.postperiod_word") %></td>
+  </tr>
+  <tr>
+    <th><%= t("rumi.gwboard.th.expirationdelete") %></th>
+    <td><%= f.select :limit_date, @item.delete_date_name , :class => 'limit_date'%></td>
+  </tr>
+  <tr>
+    <th><%= t("rumi.gwboard.th.body_limit") %><%= required('※') %></th>
+    <td class="IMEoff">
+      <%= f.text_field :doc_body_size_capacity, :size=>3 %> MB<%= admin_doc_size_usage_rate%>
+      &nbsp;
+      <%= raw(t("rumi.gwbbs.message.body_limit"))%>
+    </td>
+  </tr>
+  <tr>
+    <th><%= t("rumi.gwboard.th.image_limit") %><%= required('※') %></th>
+    <td class="IMEoff">
+      <%= f.text_field :upload_graphic_file_size_capacity, :size=>3 %>
+      <%= f.select :upload_graphic_file_size_capacity_unit, @item.size_unit_name %>
+      <%= @image_message%>&nbsp;
+      <%= raw(t("rumi.gwboard.message.image_limit"))%>
+    </td>
+  </tr>
+  <tr>
+    <th><%= t("rumi.gwboard.th.temp_limit") %><%= required('※') %></th>
+    <td class="IMEoff">
+      <%= f.text_field :upload_document_file_size_capacity, :size=>3 %>
+      <%= f.select :upload_document_file_size_capacity_unit, @item.size_unit_name %>
+      <%= @document_message%>
+      &nbsp;
+      <%= raw(t("rumi.gwboard.message.temp_limit"))%>
+    </td>
+  </tr>
+  <tr>
+    <th><%= t("rumi.gwboard.th.image_size_limit") %><%= required('※') %></th>
+    <td class="IMEoff">
+      <%= f.text_field :upload_graphic_file_size_max, :size=>3 %> MB
+      &nbsp;
+      <%= raw(t("rumi.gwboard.message.image_size_limit"))%>
+    </td>
+  </tr>
+  <tr>
+    <th><%= t("rumi.gwboard.th.temp_size_limit") %><%= required('※') %></th>
+    <td class="IMEoff">
+      <%= f.text_field :upload_document_file_size_max, :size=>3 %> MB
+      &nbsp;
+      <%= raw(t("rumi.gwboard.message.temp_size_limit"))%>
+    </td>
+  </tr>
+</table>
+<table class="defaultTable inputTable">
+  <tr>
+    <th><%= t("rumi.gwboard.th.order") %></th>
+    <td class="IMEoff"><%= f.text_field :sort_no, :size=>6 %><span>&nbsp;</span><%= t("rumi.gwboard.message.order_description") %></td>
+  </tr>
+  <tr>
+    <th><%= t("rumi.gwboard.th.use_description1") %><br /><%= t("rumi.gwboard.th.use_description2") %></th>
+    <td><%= f.text_area :caption , :cols => 50, :rows => 2 , :class => 'string caption'%></td>
+  </tr>
+</table>
+
+<script language = "JavaScript" type="text/javascript">
+<!--
+  var sel_bg_select = function() {
+    idx =  radio_selected('item[banner_position]')
+    switch (idx) {
+    case 0:
+      $('item_bgselect_type1').setStyle("display : inline;");
+      $('item_bgselect_type2').setStyle("display : none;");
+      break;
+    case 1:
+      $('item_bgselect_type1').setStyle("display : none;");
+      $('item_bgselect_type2').setStyle("display : inline;");
+    break;
+    }
+  }
+sel_bg_select();
+-->
+</script>
+<!--タイトル装飾関連 -->
+
+<%= render :partial => '/gwboard/admin/adms/form_s' %>
+

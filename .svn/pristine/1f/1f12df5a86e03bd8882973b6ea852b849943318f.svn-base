@@ -1,0 +1,117 @@
+<% parent_group_id = Core.user_group.parent_id %>
+<% group_child_groups = build_select_parent_groups(System::Group.child_groups_to_select_option(parent_group_id)) %>
+<% no_limit_group_child_groups = build_select_parent_groups(
+     System::Group.child_groups_to_select_option(System::Group.no_limit_group_id)) %>
+
+<% affiliated_group_id = Core.user_group.id %>
+<% user_child_group = build_select_users(System::UsersGroup.affiliated_users_to_select_option(affiliated_group_id)) %>
+
+<%
+  if @item.system_name == 'gwbbs'
+    sysname = t('rumi.bbs.name')
+  elsif @item.system_name == 'gwcircular'
+    sysname = t('rumi.circular.name')
+  elsif @item.system_name == 'doclibrary'
+    sysname = t('rumi.doclibrary.name')
+  end
+  editGroupInfo = '<br />' + sysname + t('rumi.message.board_auth.editor1') + '<br /><br />' + t('rumi.message.board_auth.editor2')
+  editInfo = '<br />' + t('rumi.message.board_auth.editor3') + '<br /><br />' + t('rumi.message.board_auth.editor2')
+  readInfo = '<br />' + t('rumi.message.board_auth.reader1')
+%>
+
+<table class="defaultTable inputTable">
+  <tr>
+    <th class="blueIndex"><%= t('rumi.label.editor_group_setting') %><%= raw(detail(editGroupInfo)) %></th>
+    <td>
+      <%= render partial: "shared/select_group", locals: {
+        parent_group_selected: parent_group_id, child_groups: group_child_groups,
+        hidden_item_name: "item[editors_json]", values: @item.editors_json,
+        ui_mode: ui_mode_groups_include_no_limit
+      } %>
+    </td>
+  </tr>
+  <tr>
+    <th class="blueIndex"><%= t('rumi.label.editor_setting') %><%= raw(detail(editInfo)) %></th>
+    <td>
+      <%= render partial: "shared/select_group", locals: {
+        parent_group_selected: affiliated_group_id, child_groups: user_child_group,
+        hidden_item_name: "item[sueditors_json]", values: @item.sueditors_json,
+        ui_mode: ui_mode_users_default
+      } %>
+    </td>
+  </tr>
+</table>
+
+<table class="defaultTable inputTable">
+  <tr>
+    <th class="blueIndex"><%= t('rumi.label.reader_group_setting') %></th>
+    <td>
+      <%= render partial: "shared/select_group", locals: {
+        parent_group_selected: System::Group.no_limit_group_id, child_groups: no_limit_group_child_groups,
+        hidden_item_name: "item[readers_json]", values: @item.readers_json,
+        ui_mode: ui_mode_groups_include_no_limit
+      } %>
+    </td>
+  </tr>
+  <tr>
+    <th class="blueIndex"><%= t('rumi.label.reader_setting') %><%= raw(detail(readInfo)) %></th>
+    <td>
+      <%= render partial: "shared/select_group", locals: {
+        parent_group_selected: affiliated_group_id, child_groups: user_child_group,
+        hidden_item_name: "item[sureaders_json]", values: @item.sureaders_json,
+        ui_mode: ui_mode_users_default
+      } %>
+    </td>
+  </tr>
+</table>
+
+<script>
+var my_submit = function() {
+  var editor_g = $('item_editors_json');
+  var editor = $('item_sueditors_json');
+  var reader_g = $('item_readers_json');
+  var reader = $('item_sureaders_json');
+
+  var editor_auth = JSON.parse(editor_g.value).length == 0 && JSON.parse(editor.value).length == 0
+  var reader_auth = editor_auth && JSON.parse(reader_g.value).length == 0 && JSON.parse(reader.value).length == 0
+
+  if (editor_auth) {
+    alert("<%= t("rumi.gwboard.message.editor_choice") %>");
+    return false;
+  }
+  if (reader_auth) {
+    alert("<%= t("rumi.gwboard.message.reader_choice") %>");
+    return false;
+  }
+  
+  var count_editor = 0;
+  var no_limit_editor = false;
+  var edit_groups = JSON.parse(editor_g.value);
+  for (var i=0; i< edit_groups.length; i++){
+    count_editor += 1;
+    if (edit_groups[i][1] == "0"){
+      no_limit_editor = true;
+    }
+  }
+  if (no_limit_editor && count_editor > 1){
+    alert("<%= t('rumi.label.editor_group_setting') %>" + "<%= I18n.t("rumi.error.prop_other.with_no_limit_group") %>");
+    return false;
+  }
+  
+  var count_reader = 0;
+  var no_limit_reader = false;
+  var read_groups = JSON.parse(reader_g.value);
+  for (var i=0; i< read_groups.length; i++){
+    count_reader += 1;
+    if (read_groups[i][1] == "0"){
+      no_limit_reader = true;
+    }
+  }
+  if (no_limit_reader && count_reader > 1){
+    alert("<%= t('rumi.label.reader_group_setting') %>" + "<%= I18n.t("rumi.error.prop_other.with_no_limit_group") %>");
+    return false;
+  }
+
+  $('itemForm').submit();
+};
+</script>

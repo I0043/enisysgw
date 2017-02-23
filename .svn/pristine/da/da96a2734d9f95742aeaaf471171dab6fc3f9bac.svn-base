@@ -1,0 +1,138 @@
+<script type="text/javascript">
+//<![CDATA[
+var my_submit = function(state, action) {
+  supressBeforeUnload = true;
+  var st = $('item_state');
+  st.value = state;
+
+  if(st.value == "close"){
+    window.close();
+    return false;
+  }
+
+  var item_able_date_text = document.getElementById('item_able_date').value;
+  var item_expiry_date_text = document.getElementById('item_expiry_date').value;
+  if ('<%= I18n.default_locale.to_s %>' == 'ja'){
+    var regex = /^\d{4}[\-\/]\d{1,2}[\-\/]\d{1,2}( +\d{1,2}\:\d{1,2}(:\d{1,2})?)?$/;
+  } else{
+    var regex = /^\d{1,2}[\ \/][A-Za-z]{3}[\ \/]\d{4}( +\d{1,2}\:\d{1,2}(:\d{1,2})?)?$/;
+  }
+  // 終了日を設定しないフラグの設定
+  if (item_expiry_date_text == "") {
+    $("item_inpfld_001").value = "1";
+  }
+  else {
+    $("item_inpfld_001").value = null;
+  }
+
+  // 公開開始日の日付チェック
+  if (item_able_date_text == "") {
+    alert('<%= I18n.t('rumi.gwbbs.message.able_date') %>');
+    return false;
+  }
+  if (!item_able_date_text.match(regex)) {
+    alert('<%= I18n.t('rumi.gwbbs.message.incorrect_able_date') %>');
+    return false;
+  }
+
+  // 公開終了日の日付チェック
+  if (item_expiry_date_text != "" && !item_expiry_date_text.match(regex)) {
+    alert('<%= I18n.t('rumi.gwbbs.message.expiry_date') %>');
+    return false;
+  }
+  
+  switch (state) {
+  case "public":
+    if (action == 'edit') {
+      if ($('request_path')){
+        var res = confirm('<%= I18n.t('rumi.gwbbs.submit.public_confirm') %>');
+      }else{
+        var res = confirm('<%= raw I18n.t('rumi.gwbbs.submit.public_update_confirm') %>');
+      }
+    }else {
+      var res = confirm('<%= I18n.t('rumi.gwbbs.submit.public_confirm') %>');
+    }
+    if(res == true ){
+      FreezeScreen('<%= I18n.t('rumi.gwbbs.submit.send') %>');
+    } else {
+      return false;
+    }
+    break;
+  case "recognize":
+    var res = confirm('<%= I18n.t('rumi.gwbbs.submit.recognize_confirm') %>');
+    if(res == true ){
+      FreezeScreen('<%= I18n.t('rumi.gwbbs.submit.recognize') %>');
+    } else {
+      return false;
+    }
+    break;
+  case "draft":
+    var res = confirm('<%= I18n.t('rumi.gwbbs.submit.draft_confirm') %>');
+    if(res == true ){
+      FreezeScreen('<%= I18n.t('rumi.gwbbs.submit.draft') %>');
+    } else {
+      return false;
+    }
+    break;
+  default:
+    FreezeScreen('<%= I18n.t('rumi.freezescreen.default') %>');
+    break;
+  }
+  $('item_submit_public').disabled = true;
+  if($('item_submit_recognize')){
+    $('item_submit_recognize').disabled = true;
+  }
+  $('item_submit_draft').disabled = true;
+  if($('item_submit_close')){
+    $('item_submit_close').disabled = true;
+  }
+  $('itemForm').submit();
+}
+
+var my_search_submit = function() {
+  var item_startdate_text = document.getElementById('startdate').value;
+  var item_enddate_text = document.getElementById('enddate').value;
+  if ('<%= I18n.default_locale.to_s %>' == 'ja'){
+    var regex = /^\d{4}[\-\/]\d{1,2}[\-\/]\d{1,2}$/;
+  }else {
+    var regex = /^\d{1,2}[\ \/][A-Za-z]{3}[\ \/]\d{4}$/;
+  }
+  
+  // 公開開始日の日付チェック
+  if (item_startdate_text != "" && !item_startdate_text.match(regex)) {
+    alert('<%= I18n.t('rumi.gwbbs.message.startdate') %>');
+    return false;
+  }
+  // 公開終了日の日付チェック
+  if (item_enddate_text != "" && !item_enddate_text.match(regex)) {
+    alert('<%= I18n.t('rumi.gwbbs.message.enddate') %>');
+    return false;
+  }
+  return true;
+}
+var BlockEnter = function (evt) {
+    evt = (evt) ? evt : event;
+    var charCode=(evt.charCode) ? evt.charCode :
+          ((evt.which) ? evt.which : evt.keyCode);
+    if ( Number(charCode) == 13 || Number(charCode) == 3) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+function FreezeScreen(msg) {
+  scroll(0,0);
+  var outerPane = document.getElementById('FreezePane');
+  var innerPane = document.getElementById('InnerFreezePane');
+  if (outerPane) {
+    outerPane.className = 'FreezePaneOn';
+    var h = Math.max.apply( null, [document.body.clientHeight ,
+                                   document.body.scrollHeight,
+                                   document.documentElement.scrollHeight,
+                                   document.documentElement.clientHeight] )  + 'px';
+    outerPane.style.height = h;
+  }
+  if (innerPane) innerPane.innerHTML = msg;
+}
+//]]>
+</script>

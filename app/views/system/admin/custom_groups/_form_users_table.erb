@@ -1,0 +1,32 @@
+<div id="item_schedule_users_add_buf_list">
+  <script type="text/javascript">
+    function changeUserIcon(id) {
+      var sel = $(id);
+        var elem = $('preview-'+id);
+        elem.className = 'userIcon'+sel.options[sel.selectedIndex].value;
+    }
+  </script>
+  <table class="defaultTable rentDetails inputTable">
+    <tr>
+      <th><%= t("rumi.custom_group.th.associate_user.th.sort_no") %></th>
+      <th><%= t("rumi.custom_group.th.associate_user.th.name") %></th>
+      <th><%= t("rumi.custom_group.th.associate_user.th.delete") %></th>
+    </tr>
+    <%
+      if params[:item] && @users_json
+        users = ::JsonParser.new.parse(@users_json)
+        @users = []
+        users.each do |user|
+          @users.push [nil, user[1], user[2],params['title_'+user[1].to_s], params['icon_'+user[1].to_s], params['sort_no_'+user[1].to_s]]
+        end
+      end
+    %>
+    <% @users.each do |user| %>
+      <tr>
+        <td><input type="text" name="sort_no_<%=user[1]%>" value="<%= user[5] %>" size="2" maxlength="10" /></td>
+        <td><%= user[2] %></td>
+        <td><%= submit_to_remote "", t("rumi.button.delete"),:update => "item_schedule_users_add_buf_list" ,:before => "select_options_delete($('item_schedule_users_add_buf'), '#{user[1]}');set_users_json();",	:submit => "schedule_users_table", :url => "/system/custom_groups/get_users.xml" %></td>
+      </tr>
+    <% end %>
+  </table>
+</div>

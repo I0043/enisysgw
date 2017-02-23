@@ -1,0 +1,17 @@
+<!-- ページ遷移ボタン -->
+<div class="headBtn">
+  <ul class="headBtn-2 noArrow">
+    <li><%= link_to 'グループ選択', search_group_gw_smart_schedules_path %></li>
+    <li><%= link_to '自分のスケジュール', gw_smart_schedules_path(uid: Core.user.id) %></li>
+  </ul>
+</div>
+<!-- // ページ遷移ボタン -->
+
+<!-- 該当ページタイトル -->
+<div class="groupHeader">ユーザー選択</div>
+
+<ul class="groupList">
+  <% @users.each do |item| %>
+    <li><%= link_to item.name, gw_smart_schedules_path(uid: item.id) %></li>
+  <% end %>
+</ul>

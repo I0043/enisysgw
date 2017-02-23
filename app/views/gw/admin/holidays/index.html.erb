@@ -1,0 +1,34 @@
+<%= render partial: 'header', locals: {new: true} %>
+
+<!-- コンテンツここから -->
+<div class="main">
+  <%= div_notice %>
+
+  <table class="defaultTable listTable">
+    <tbody>
+      <tr>
+        <th></th>
+        <th></th>
+        <th><%= t("rumi.config_settings.holiday.table.date") %></th>
+        <th><%= t("rumi.config_settings.holiday.table.name") %></th>
+      </tr>
+      <% @items.each do |item| %>
+        <tr class="<%= cycle '', 'cycle' %>">
+          <td><%= link_to t("rumi.link.edit"), edit_gw_holiday_path(item.id) %></td>
+          <td><%= link_to t("rumi.link.delete"), gw_holiday_path(item.id), data: {confirm: t("rumi.message.confirm.delete")}, :method => 'delete' %></td>
+          <td><%= I18n.l item.st_at.to_date if item.st_at.present? %></td>
+          <td><%= html_escape(item.title) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <%= paginate @items %>
+
+  <div class="backlink paginationSingle">
+    <ul>
+      <li><%= link_to t("rumi.back_link.admin"), gw_config_settings_path %></li>
+    </ul>
+  </div>
+</div>
+<!-- コンテンツここまで -->

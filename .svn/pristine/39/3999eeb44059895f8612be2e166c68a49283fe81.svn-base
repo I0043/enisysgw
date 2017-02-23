@@ -1,0 +1,19 @@
+<table class="defaultTable inputTable">
+<tr>
+<th><%= t("rumi.doclibrary.th.public") %></th>
+<td>
+  <%= f.radio_buttons :state, @item.status_select, :class => 'state' %>
+  <span>&nbsp;</span><%= t("rumi.doclibrary.message.private") %>
+</td>
+</tr>
+<tr>
+<th><%= t('activerecord.attributes.doclibrary/folder.sort_no') %></th>
+<td><%= f.text_field :sort_no, :class => 'num sort_no' %><span>&nbsp;</span><%= t('rumi.gwboard.message.order_description') %></td>
+</tr>
+<tr>
+<th><%= t("rumi.doclibrary.th.foldername") %><%= required %></th>
+<td><%= f.text_field :name, :class => 'string name', :style => 'width: 200px;' %></td>
+</tr>
+</table>
+<%= render :partial => 'doclibrary/admin/doc_adms/form', :locals=>{:f => f} %>
+<%= render :partial => 'doclibrary/admin/docs/hidden_form', :locals=>{:f => f} %>

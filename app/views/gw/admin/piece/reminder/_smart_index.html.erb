@@ -1,0 +1,69 @@
+<div id="content">
+  <% @reminders.each do |category, reminder| %>
+    <% total_count = reminder[:total_count] %>
+    <div class="reminder-category-title <%= reminder[:div_class] %>">
+      <!-- 機能名 全N件 -->
+      <%= link_to_reminders_feature(reminder[:title], reminder[:url]) %>
+      <%= t("rumi.reminder.total_count", total_count: total_count) %>
+      <!-- // 機能名 全N件 -->
+    </div>
+    <!-- ソートボタン -->
+    <div class="reminder-datetime">
+      <!-- 日時 -->
+      <div>
+        <p><%= t("rumi.reminder.datetime") %></p>
+        <!-- ▲ -->
+        <p><%= link_to t("rumi.reminder.sort_asc"), gw_smart_portal_index_path(sort_key: "datetime", order: "asc") %></p>
+        <!-- ▼ -->
+        <p><%= link_to t("rumi.reminder.sort_desc"), gw_smart_portal_index_path(sort_key: "datetime", order: "desc") %></p>
+      </div>
+      <!-- 概要 -->
+      <div>
+        <p><%= t("rumi.reminder.title") %></p>
+          <!-- ▲ -->
+          <p><%= link_to t("rumi.reminder.sort_asc"), gw_smart_portal_index_path(sort_key: "title", order: "asc") %></p>
+          <!-- ▼ -->
+          <p><%= link_to t("rumi.reminder.sort_desc"), gw_smart_portal_index_path(sort_key: "title", order: "desc") %></p>
+      </div>
+    </div>
+    <!-- // ソートボタン -->
+    <ul class="reminder-ul">
+      <% cnt = 0%>
+      <% reminder[:factors].each do |remind| %>
+        <li>
+          <!-- 日時 -->
+          <p class="datetime"><%= remind[:datetime].to_datetime.strftime("%m/%d %H:%M") %> </p>
+          <!-- 概要 -->
+          <%
+            #レコードにはPC版のURLが保存されているため、スマホ版用にURLを作り直す（スケジュール・施設予約のみ）
+            if remind[:category] == "schedule" || remind[:category] == "schedule_prop"
+              _url = remind[:url].split('/')
+              url = "/" + _url[1] + "/smart_" + _url[2] + "/" + _url[3] + "/" + _url[4]
+            else
+              url = remind[:url]
+            end
+          %>
+          <p>
+            <% if remind[:action] == 'reply' %>
+              <%= link_to truncate_reply_remind_title(category, remind[:action], remind[:title], reminder[:reply_count][cnt]), remind[:url], class: category %>
+            <% else %>
+              <%= link_to truncate_remind_title(category, remind[:action], remind[:title]), remind[:url], class: category %>
+            <% end %>
+          </p>
+        </li>
+        <% cnt += 1 %>
+      <% end %>
+      <% overflow_count = total_count - 20 %>
+      <% if overflow_count > 0 %>
+        <!-- 他N件 -->
+        <tr>
+        <% if @all_seen_category.include?("#{category}") %>
+          <td colspan="3"><%= t("rumi.reminder.overflow_count", overflow_count: overflow_count) %></td>
+        <% else %>
+          <td colspan="2"><%= t("rumi.reminder.overflow_count", overflow_count: overflow_count) %></td>
+        <% end %>
+        </tr>
+      <% end %>
+    </ul>
+  <% end %>
+</div>

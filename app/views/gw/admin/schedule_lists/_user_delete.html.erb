@@ -1,0 +1,26 @@
+<%= form_for :item, url: "#{gw_schedule_lists_path}/user_delete#{@params_set}" ,action: :search , method: :post ,
+  html: {id: "listForm", style: 'border:2px solid #FF0000;margin: 15px; padding: 15px;', multipart: true} do |f| %>
+  <table>
+    <tr>
+      <td>
+        <% @ids.each do |id| %>
+        <%= hidden_field_tag('ids[]', id) %>
+        <% end %>
+        <%= hidden_field_tag(:uid, params[:uid]) %>
+        <%= hidden_field_tag(:s_year, params[:s_year]) %>
+        <%= hidden_field_tag(:s_month, params[:s_month]) %>
+      </td>
+      <td>
+        「<%= @target_user.display_name_only %>」 <%= t("rumi.schedule_list.delete_confirm") %>
+        <%= hidden_field_tag(:delete_user_id, @target_user.id) %>
+      </td>
+      <td>
+        <% confirm = t("rumi.message.confirm.delete") %>
+        <%= submit_tag t("rumi.button.delete"), {onclick: "return confirm('#{confirm}');", name: :delete_submit} %>
+      </td>
+      <td>
+        <%= submit_tag t("rumi.button.cancel"), {name: :cancel} %>
+      </td>
+    </tr>
+  </table>
+<% end %>

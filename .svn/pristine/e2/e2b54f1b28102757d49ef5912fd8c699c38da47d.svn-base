@@ -1,0 +1,95 @@
+<%
+  mode = 'list'
+  number = @items.blank? ? 0 : @items.length
+%>
+<%= render :partial => '/gw/admin/schedules/piece_header', locals: {piece_head_title: @piece_head_title, new: true} %>
+
+<!-- コンテンツここから -->
+<div class="main">
+  <!-- フォーム切替ボタン等 -->
+  <%= render partial: '/gw/admin/schedules/schedule_bt_box', locals: {d: @st_date, mode: mode} %>
+  <!-- フォーム切替ボタン等ここまで -->
+
+  <div class="titleLine">
+    <span class="linkSpace">
+    <% if !@uid_equal %>
+      <%= "#{@list_group.display_name} #{@list_user.display_name_only}" %>
+    <% else %>
+      <%= t("rumi.schedule_list.output.count") %>：<%= number %> <%= t("rumi.schedule_list.output.count_num") %>
+      <%= link_to t("rumi.schedule_list.output.csv"), csvput_gw_schedule_lists_path(s_year: @s_year, s_month: @s_month), class: "borderButton" if number > 0 %>
+      <%= link_to t("rumi.schedule_list.output.ical"), icalput_gw_schedule_lists_path(s_year: @s_year, s_month: @s_month), class: "borderButton" if number > 0 %>
+    <% end %>
+    </span>
+  </div>
+
+  <div class="pieceBodyBody">
+    <% unless flash.now[:notice].blank? %>
+      <div style="border:2px solid #FF0000;margin: 15px;">
+        <%= div_notice %>
+      </div>
+    <% end %>
+    <% if @items.blank? %>
+      <div class="notice"><%= t("rumi.message.empty.list") %></div>
+    <% else %>
+      <%= form_for :item, url: user_select_gw_schedule_lists_path + @params_set, action: :select , method: :post , html: {id: "listForm", multipart: true} do |f| %>
+        <% if @ids_show_flg %>
+          <table>
+            <tr>
+              <td><%= submit_tag t("rumi.schedule_list.user_out"), {name: :user_delete} %></td>
+            </tr>
+          </table>
+        <% end %>
+
+        <%= render partial: 'list' %>
+        <% if @ids_show_flg %>
+          <table>
+            <tr>
+              <td><%= submit_tag t("rumi.schedule_list.user_out"), {name: :user_delete} %></td>
+            </tr>
+          </table>
+        <% end %>
+      <% end %>
+    <% end %>
+    <script language = "JavaScript" type="text/javascript">
+      //<![CDATA[
+      var select_box_true_false = function () {
+        if ($('s_year').selectedIndex == 0) {
+          $('s_month').selectedIndex = 0;
+          $('s_month').value = "0";
+          $('s_month').disabled = true;
+        } else {
+          $('s_month').disabled = false;
+        }
+      }
+
+      var select_year = function () {
+        select_box_true_false();
+        search_submit();
+      }
+      var select_month = function () {
+        search_submit();
+      }
+      var search_submit = function () {
+        document.forms['search'].submit();
+      }
+
+      var my_load = function() {
+          select_box_true_false();
+      }
+
+      window.onload = my_load;
+
+      var all_check = function(formId, itemId, obj) {
+        form = document.getElementById(formId);
+        for (var i = 0; i < form.elements.length; i++) {
+          pattern = new RegExp('^' + itemId + '\\[.*\\]');
+          if (form.elements[i].name.match(pattern)) {
+            form.elements[i].checked = obj.checked;
+          }
+        }
+      }
+      //]]>
+    </script>
+  </div>
+</div>
+<!-- コンテンツここまで -->

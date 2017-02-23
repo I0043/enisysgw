@@ -1,0 +1,49 @@
+<%
+  edit = t("rumi.button.edit")
+  count = current_count_group_props_each(@item.gid, @prop_types)
+%>
+<%= render partial: 'piece_header' %>
+
+<!-- コンテンツここから -->
+<div class="main">
+  <%= div_notice %>
+
+  <div class="area_contentsNav">
+    <div class="navBlock">
+      <div class="contentsNav">
+        <ul>
+          <li><%= link_to image_tag("/images/icon/add.png", alt: edit) + edit, edit_gw_prop_other_limit_path(@item.id) %></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  
+  <table class="defaultTable rentDetails">
+    <tr>
+      <th><%= t("rumi.prop_other_limit.th.group") %></th>
+      <td><%= @item.group.name %></td>
+    </tr>
+    <tr>
+      <th><%= t("rumi.prop_other_limit.th.limit") %></th>
+      <td><%= @item.limit %></td>
+    </tr>
+    <tr>
+      <th><%= t("rumi.prop_other_limit.th.sum") %></th>
+      <td><%= count[@prop_types.size] %></td>
+    </tr>
+    <% @prop_types.each_with_index do |type, i| %>
+    <tr>
+      <th class="item"><%= type.name %></th>
+      <td><%= count[i] %></td>
+    </tr>
+    <% end %>
+  </table>
+  <div class="backlink paginationSingle">
+    <ul>
+      <li>
+        <%= link_to t("rumi.back_link.return"), gw_prop_other_limits_path %>
+      </li>
+    </ul>
+  </div>
+</div>
+<!-- コンテンツここまで -->

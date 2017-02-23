@@ -1,0 +1,11 @@
+<%= render partial: 'header', locals: {new: false} %>
+
+<!-- コンテンツここから -->
+<div class="main">
+  <%= form_for :item, url: system_roles_path do |f| %>
+    <%= f.error_messages %>
+    <%= render partial: 'form', locals: {f: f} %>
+    <%= submit_for(f, {caption: t("rumi.submit.create")}) %>
+  <% end %>
+</div>
+<!-- コンテンツここまで -->

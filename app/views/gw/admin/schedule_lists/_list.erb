@@ -1,0 +1,108 @@
+<table class="defaultTable">
+  <tr>
+<%
+=begin
+%>
+    <% if @ids_show_flg %>
+      <th class="id" style="text-align:center; width: 30px;">
+        <%= check_box_tag(:idall, value = "all", false, {onclick: "all_check('listForm', 'ids', this);"}) %>
+      </th>
+    <% end %>
+<%
+=end
+%>
+    <th><%= t("rumi.schedule_list.th.day") %></th>
+    <th><%= t("rumi.schedule_list.th.st_at") %></th>
+    <th><%= t("rumi.schedule_list.th.ed_at") %></th>
+    <th><%= t("rumi.schedule_list.th.title") %></th>
+<%
+=begin
+%>
+    <th><%= t("rumi.schedule_list.th.public") %></th>
+<%
+=end
+%>
+    <th><%= t("rumi.schedule_list.th.memo") %></th>
+    <th><%= t("rumi.schedule_list.th.place") %></th>
+    <th><%= t("rumi.schedule_list.th.users") %></th>
+    <th class="users"> 施設</th>
+  </tr>
+  <% now = Time.now %>
+  <% @items.each do |item| %>
+    <%
+      public =  item.is_public_auth?(@gw_admin)
+      after_schedule = false
+      st_at_str = I18n.l item.st_at.to_date, format: :date5 if item.st_at.present?
+      
+      # 日をまたいでいる
+      ed_at_str1 = I18n.l item.ed_at.to_date, format: :date5 if item.stepped_over?
+      
+      if item.allday.blank?
+        st_at_time = item.st_at.strftime("%H:%M")
+        ed_at_str2 = item.ed_at.strftime("%H:%M")
+        after_schedule = true if item.st_at > now
+      else
+        after_schedule = true if item.st_at.beginning_of_day > now
+        case item.allday
+        when 1
+          st_at_time = t("rumi.schedule.schedule_title.time_undecided")
+        when 2
+          st_at_time = t("rumi.schedule.schedule_title.time_all")
+        end
+      end
+      user_names = item.get_usernames
+
+ # 件名カテゴリ※長島追記
+title_category = Gw.yaml_to_array_for_select('gw_schedules_title_categories', :include_blank=>1).to_a.rassoc(item.title_category_id)
+
+  #施設  長島追記
+  prop_names = item.get_propnames
+  public =  item.is_public_auth?(@is_gw_admin)
+    %>
+    <tr>
+<%
+=begin
+%>
+      <% if @ids_show_flg %>
+        <td align="center">
+          <% if public && after_schedule %>
+            <%= check_box_tag "ids[]", "#{item.id}" %>
+          <% end %>
+        </td>
+      <% end %>
+<%
+=end
+%>
+      <td>
+        <%= st_at_str %>
+        <% if ed_at_str1.present? %>
+        <br />～ <%= ed_at_str1 %>
+        <% end %>
+      </td>
+      <td><%= st_at_time %></td>
+      <td><%= ed_at_str2 %></td>
+      <% if public %>
+        <td><%="【#{title_category[0]}】" unless title_category.blank? %><%= link_to(nz(item.title), "/gw/schedules/#{item.id}/show_one") -%></td>
+<%
+=begin
+%>
+        <td><%= link_to(nz(item.title), "/gw/schedules/#{item.id}/show_one") %></td>
+        <td><%= t("rumi.schedule_list.public.state_" + item.is_public.to_s) %></td>
+<%
+=end
+%>
+        <td><%= item.memo %></td>
+        <td><%= item.place %></td>
+        <td><%= user_names %></td>
+        <td><%= prop_names -%></td>
+      <% else %>
+        <td><%= Gw.required("#{t('rumi.schedule.private')}") %></td>
+        <td>-</td>
+        <td>-</td>
+        <td>-</td>
+      <% end %>
+    </tr>
+  <% end %>
+</table>
+<br />
+<%= paginate @items %>

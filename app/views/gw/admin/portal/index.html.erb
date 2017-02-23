@@ -1,0 +1,24 @@
+<div class="main" style="padding-top: 10px;">
+  <!-- ここからナビ -->
+  <div id="navi">
+    <div id="naviBody">
+      <%= render :partial => 'gw/admin/piece/admin_messages/index' %>
+    </div>
+  </div>
+  <!-- ここまでナビ -->
+  <!-- ここからナビ2 -->
+  <div id="navi2">
+    <div id="navi2Body">
+      <% if @schedule_display == 1 %>
+        <%= render :partial => 'gw/admin/piece/schedules/index', locals: { s_date: params[:s_date] } %>
+      <% end %>
+    </div>
+  </div>
+  <!-- ここまでナビ2 -->
+  <!-- ここからナビ3 -->
+  <div class="infoContainer">
+    <h2><%= t("rumi.reminder.name") %></h2>
+    <%= "#{t("rumi.reminder.name")}#{t("rumi.message.getting")}" %>
+  </div>
+  <!-- ここまでナビ3 -->
+</div>

@@ -1,0 +1,66 @@
+<%
+  delete_flg = @item.delete_state == 1 ? true : false
+  quote_flg = get_quote_flg
+  destroy_confirm_s = t("rumi.message.confirm.delete")
+  if @item.schedule_props.length > 1
+    destroy_confirm_s += "\n" + t("rumi.message.confirm.schedule_prop_delete")
+  end
+  if @item.schedule_users.collect{|x|[x.class_id, x.uid]}.reject{|x| x[0] == 1 && x[1] == Core.user.id }.length > 0
+    destroy_confirm_s += "\n" + t("rumi.message.confirm.other_user_delete")
+  end
+  if @repeated
+    destroy_confirm_repeat_s = destroy_confirm_s + "\n" + t("rumi.message.confirm.repeat_delete")
+  end
+
+  edit = t("rumi.button.edit")
+  repeat_edit = t("rumi.button.repeat_edit")
+  delete = t("rumi.button.delete")
+  repeat_delete = t("rumi.button.repeat_delete")
+  quote = t("rumi.button.quote")
+%>
+<div class="area_contentsNav">
+  <div class="navBlock">
+    <div class="contentsNav">
+      <ul>
+        <% if @schedule_edit_flg %>
+          <% if @item.unseen?(Core.user.id) %>
+            <li><%= link_to '', {action: :finish, id: @item.id} %></li>
+          <% end %>
+          <% if @auth_level[:edit_level] == 1 && !delete_flg %>
+            <li>
+              <%= link_to image_tag("/images/icon/add.png", alt: edit) + edit, edit_gw_schedule_path(@item.id) %>
+            </li>
+          <% end %>
+          <% if @auth_level[:edit_level] == 1 && @repeated && !delete_flg && @auth_flg %>
+            <li>
+              <%= link_to image_tag("/images/icon/add.png", alt: repeat_edit) + repeat_edit, edit_gw_schedule_path(@item.id, repeat: 1) %>
+            </li>
+          <% end %>
+          <% if quote_flg && @prop_edit && !delete_flg %>
+            <li>
+              <%= link_to image_tag("/images/icon/add.png", alt: quote) + quote, quote_gw_schedule_path(@item.id) %>
+            </li>
+          <% end %>
+          <% if @auth_level[:delete_level] == 1 && !delete_flg %>
+            <li>
+              <%= link_to image_tag("/images/icon/dele.png", alt: delete) + delete, delete_schedule_gw_schedule_path(@item.id), data: {confirm: destroy_confirm_s} %>
+            </li>
+            <% if @repeated && !delete_flg && @auth_flg %>
+              <li>
+                <%= link_to image_tag("/images/icon/dele.png", alt: repeat_delete) + repeat_delete, delete_schedule_repeat_gw_schedule_path(@item.id), data: {confirm: destroy_confirm_repeat_s} %>
+              </li>
+            <% end %>
+          <% end %>
+        <% else %>
+          <div>※<%= t("rumi.schedule.no_auth.head") %>（<%= @target_user %>）<%= t("rumi.schedule.no_auth.tail") %></div>
+          <br>
+          <% if @item.unseen?(Core.user.id) %>
+            <div class="btReadLarge">
+              <%= link_to '', {:action => :finish, :id => @item.id} %>
+            </div>
+          <% end %>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>

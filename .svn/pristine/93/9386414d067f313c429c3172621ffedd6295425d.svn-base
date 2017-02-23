@@ -1,0 +1,11 @@
+<%= render partial: 'header_str', locals: {piece_head_title: @piece_head_title, new: false} %>
+
+<!-- コンテンツここから -->
+<div class="main">
+  <%= form_for :item, url: "/gw/admin_messages?#{@qs}", html: {method: :post} do |f| %>
+    <%= f.error_messages %>
+    <%= render partial: 'form', locals: {f: f} %>
+    <%= submit_for f, {caption: t("rumi.submit.create")} %>
+  <% end %>
+</div>
+<!-- コンテンツここまで -->

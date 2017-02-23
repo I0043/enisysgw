@@ -1,0 +1,289 @@
+<%
+  params[:item] = {} if params[:item].blank?
+  params[:init] = {} if params[:init].blank?
+  repeat_mode = get_repeat_mode params
+  allday_radio_id = repeat_allday_radio_id = nz(@item.allday, 0).to_i
+
+  case params[:action]
+  when 'edit', 'quote'
+    if repeat_mode == 1
+      d_load_st = @item.st_at
+      d_load_ed = @item.ed_at
+    else
+      @item.repeat.attributes.reject{|k,v| /_at$/ =~ k || 'id' == k}.each{|k,v|
+        params[:item]["repeat_#{k}".to_sym] = v
+      }
+      d_load_st = Gw.datetime_merge(@item.repeat.st_date_at, @item.repeat.st_time_at)
+      d_load_ed = Gw.datetime_merge(@item.repeat.ed_date_at, @item.repeat.ed_time_at)
+    end
+  when 'new'
+    d_load_st, d_load_ed = get_d_load(params[:s_date])
+  when 'create', 'update'
+    if repeat_mode == 1
+      d_load_st = Time.parse(params[:item][:st_at])
+      d_load_ed = Time.parse(params[:item][:ed_at])
+    else
+      d_load_st = Time.parse("#{params[:item][:repeat_st_date_at]} #{params[:item][:repeat_st_time_at]}")
+      d_load_ed = Time.parse("#{params[:item][:repeat_ed_date_at]} #{params[:item][:repeat_ed_time_at]}")
+    end
+  else
+    raise t("rumi.message.incorrect_call") + "(action=#{params[:action]})"
+  end
+%>
+<%= get_hidden_field(params[:action]) %>
+<% if ["new", "create", "quote"].index(params[:action]).present? %>
+  <table class="tabtable">
+    <tbody>
+      <tr>
+        <td><%= raw get_tab_box_radio(f, params) %></td>
+      </tr>
+    </tbody>
+  </table>
+<% end %>
+<%= raw(hidden_field_tag('init[repeat_mode]', "#{repeat_mode}")) %>
+
+<table id="inputDatetimeNormal" class="defaultTable inputTable">
+  <tr>
+    <th><%= t("rumi.schedule.th.st_at") %><%= raw(required) %></th>
+    <td>
+      <%= raw(date_picker_prop_switch f, 'st_at', :errors=>@item.errors, :mode=>:datetime, :value=>d_load_st, :minute_interval=>'5') %>
+    </td>
+  </tr>
+  <tr>
+    <th><%= t("rumi.schedule.th.ed_at") %><%= raw(required) %></th>
+    <td>
+      <%= raw(date_picker_prop_switch f, 'ed_at', :errors=>@item.errors, :mode=>:datetime, :value=>d_load_ed, :minute_interval=>'5') %>
+      <br />
+      <p class="required"><%= t("rumi.schedule.message.check_ed_at") %></p>
+      <div class="otherSelect" id="otherSelect">
+        <%= raw(f.check_box('allday_radio_id', {:multiple => true, :checked => allday_radio_id == 1 , :onclick=>'allday_radio_click(this)'}, "1", nil)) %><%= t("rumi.schedule.th.undecided") %>
+        <%= raw(f.check_box('allday_radio_id', {:multiple => true, :checked => allday_radio_id == 2 , :onclick=>'allday_radio_click(this)'}, "2", nil)) %><%= t("rumi.schedule.th.allday") %>
+        </div>
+    </td>
+  </tr>
+</table>
+
+<table id="inputDatetimeRepeat" class="defaultTable inputTable" style="display: none;">
+  <tr>
+    <th><%= t("rumi.schedule.th.repeat") %><%= raw(required) %></th>
+    <td>
+      <%= raw(date_picker_prop_switch f, 'repeat_st_date_at', :errors=>@item.errors, :mode=>:date, :value=>d_load_st) %>
+      ～<%= raw(date_picker_prop_switch f, 'repeat_ed_date_at', :errors=>@item.errors, :mode=>:date, :value=>d_load_ed) %>
+    </td>
+  </tr>
+  <%= raw repeat_radio_s f, repeat_mode, params %>
+  <tr>
+    <th><%= t("rumi.schedule.th.repeat_time") %><%= raw(required) %></th>
+    <td>
+      <%= raw(date_picker_prop_switch f, 'repeat_st_time_at', :errors=>@item.errors, :mode=>:time, :value=>d_load_st, :minute_interval=>'5') %>
+      ～<%= raw(date_picker_prop_switch f, 'repeat_ed_time_at', :errors=>@item.errors, :mode=>:time, :value=>d_load_ed, :minute_interval=>'5') %>
+      <p class="required"><%= t("rumi.schedule.message.check_ed_at") %></p>
+      <div class="otherSelect" id="otherSelectRepeat">
+        <%= raw(f.check_box('repeat_allday_radio_id', {:multiple => true, :checked => repeat_allday_radio_id == 1 , :onclick=>'repeat_allday_radio_click(this)'}, "1", "")) %><%= t("rumi.schedule.th.undecided") %>
+        <%= raw(f.check_box('repeat_allday_radio_id', {:multiple => true, :checked => repeat_allday_radio_id == 2 , :onclick=>'repeat_allday_radio_click(this)'}, "2", "")) %><%= t("rumi.schedule.th.allday") %>
+      </div>
+    </td>
+  </tr>
+</table>
+<%= render(:partial => t("rumi.schedule.use_form_at_script")) %>
+
+<table class="defaultTable inputTable">
+  <tr>
+    <th><%= t("rumi.schedule.th.title") %></th>
+    <td>
+      <%= f.select(:title_category_id, Gw.yaml_to_array_for_select('gw_schedules_title_categories', :include_blank=>1),
+        {:selected=>@item.title_category_id}, {:onchange=>'title_category_id_selected();'}) %>
+      <br />
+      <%= f.text_field :title, :style => 'width:33em;' %><%= raw(required) %>
+    </td>
+  </tr>
+  <tr>
+    <th><%= t("rumi.schedule.th.place") %></th>
+    <td><%= f.text_field :place, :style => 'width:33em;' %></td>
+  </tr>
+  <tr>
+    <th><%= t("rumi.schedule.th.memo") %></th>
+    <td><%= f.text_area :memo, style: "width:33em; ime-mode: active;", cols: 60, rows: 5 %>
+    </td>
+  </tr>
+  <%= hidden_field_tag(:title_category_text, "") %>
+</table>
+<%= render partial: '/gw/admin/schedules/form_participant', locals: {f: f} %>
+
+<% if (["new", "create"].index(params[:action]).present? && params[:sender_action] != 'quote') || (["quote", "edit", "update"].index(params[:action]).present? || params[:sender_action] == 'quote') %>
+  <table class="defaultTable inputTable">
+    <tr>
+      <th><%= t("rumi.schedule.th.prop") %></th>
+      <td>
+        <%= raw get_form_kind_radio(f, params) %>
+      </td>
+    </tr>
+    <%= render :partial => '/gw/admin/schedules/form_prop', :locals => {:f => f} %>
+  </table>
+<% end %>
+
+<table class="defaultTable inputTable">
+  <tr>
+    <th><%= t("rumi.schedule.th.public") %><%= raw(required) %></th>
+    <td>
+      <%= raw(radio f, 'is_public', Gw::Schedule.is_public_select, :onclick=>'is_public_click();') %>
+    </td>
+  </tr>
+  <%= raw(render :partial => 'form_public', :locals => {:f => f}) %>
+</table>
+
+<%= raw(render(:partial => t("rumi.schedule.use_form_script"))) %>
+
+<script type="text/javascript">
+//<![CDATA[
+
+function title_category_id_selected() {
+  var category_item = $('item_title_category_id');
+  if (($("item_title").value == $("title_category_text").value) || $("item_title").value == "") {
+    if (category_item.options[category_item.selectedIndex].value == "") {
+      $("item_title").value = "";
+    }
+    else {
+      $("item_title").value = category_item.options[category_item.selectedIndex].text;
+    }
+  }
+  $("title_category_text").value = category_item.options[category_item.selectedIndex].text;
+}
+
+var my_submit = function(state) {
+  var fr = $('item_schedule_users_json');
+  if ( $('item_form_kind_id_1').checked == true) {
+    // 通常予約でfr.valueが無い、もしくはJSONが空の場合はalertを出す
+    if (!fr.value || JSON.parse(fr.value).length == 0) {
+      alert('<%= I18n.t('rumi.schedule.message.no_users') %>');
+      return false;
+    }
+  } else {
+    // 施設予約で施設が未選択、かつ、fr.valueが無いもしくはJSONが空の場合はalertを出す
+    institution_flg = institution_item_selected();
+    if (!institution_flg && (!fr.value || JSON.parse(fr.value).length == 0)) {
+      alert('<%= I18n.t('rumi.schedule.message.no_users_or_props') %>');
+      return false;
+    }
+  }
+
+  // prop
+  var fr = $('item_schedule_props_add_buf');
+  var ary = [];
+  for (var i = 0; i < fr.options.length; i++)
+    ary.push([fr[i].title, fr[i].value, fr[i].innerHTML]);
+  var to = $('item_schedule_props_json');
+  to.value = Object.toJSON(ary);
+  fr.selectedIndex = -1; // fr の送信を抑止
+  $('item_is_public_1').disabled = false; //公開項目の[公開（誰でも閲覧可]のみdisabledを解除
+
+  var kind_id = radio_selected('item[form_kind_id]')
+  var prop_item = $('item_schedule_props_json');
+  switch (state) {
+  case "schedule_new":
+    if(kind_id == 1 || JSON.parse(prop_item.value).length == 0){
+      var res = confirm('<%= I18n.t('rumi.schedule.submit.new_confirm') %>');
+      if(res == true ){
+        FreezeScreen('<%= I18n.t('rumi.schedule.submit.create') %>');
+      } else {
+        return false;
+      }
+    } else {
+      var res = confirm('<%= I18n.t('rumi.schedule_prop.submit.new_confirm') %>');
+      if(res == true ){
+        FreezeScreen('<%= I18n.t('rumi.schedule_prop.submit.create') %>');
+      } else {
+        return false;
+      }
+    }
+    break;
+  case "schedule_edit":
+    if(kind_id == 0 || JSON.parse(prop_item.value).length == 0){
+      var res = confirm('<%= I18n.t('rumi.schedule.submit.edit_confirm') %>');
+      if(res == true ){
+        FreezeScreen('<%= I18n.t('rumi.schedule.submit.edit') %>');
+      } else {
+        return false;
+      }
+    } else {
+      var res = confirm('<%= I18n.t('rumi.schedule_prop.submit.edit_confirm') %>');
+      if(res == true ){
+        FreezeScreen('<%= I18n.t('rumi.schedule_prop.submit.edit') %>');
+      } else {
+        return false;
+      }
+    }
+    break;
+  case "schedule_repeat_edit":
+    if(kind_id == 0 || JSON.parse(prop_item.value).length == 0){
+      var res = confirm('<%= I18n.t('rumi.schedule.submit.repeat_edit_confirm') %>');
+      if(res == true ){
+        FreezeScreen('<%= I18n.t('rumi.schedule.submit.repeat_edit') %>');
+      } else {
+        return false;
+      }
+    } else {
+      var res = confirm('<%= I18n.t('rumi.schedule_prop.submit.repeat_edit_confirm') %>');
+      if(res == true ){
+        FreezeScreen('<%= I18n.t('rumi.schedule_prop.submit.repeat_edit') %>');
+      } else {
+        return false;
+      }
+    }
+    break;
+  default:
+    FreezeScreen('<%= I18n.t('rumi.freezescreen.default') %>');
+    break;
+  }
+  $('item_submit').disabled = true;
+  $('itemForm').submit(); // 送信
+
+}
+
+var my_load = function() {
+  switchRepeat("load");
+  switchRepeatClass();
+  <% if params[:action] == 'new' %>
+  load_at_set();
+  <% end %>
+  my_load_core('user');
+  my_load_core('prop');
+  props_flg = props_item_selected();
+  institution_flg = institution_item_selected();
+  props_min_selectbox_change(props_flg);
+  props_item_change(institution_flg);
+  <% if params[:s_genre].present? %>
+  form_kind_id_0_or_1(true);
+  <% else -%>
+  form_kind_id_0_or_1(institution_flg);
+  <% end -%>
+  form_kind_id_switch();
+  FreezeScreen_off();
+}
+function FreezeScreen(msg) {
+  scroll(0,0);
+  var outerPane = document.getElementById('FreezePane');
+  var innerPane = document.getElementById('InnerFreezePane');
+  if (outerPane) {
+    outerPane.className = 'FreezePaneOn';
+    var h = Math.max.apply( null, [document.body.clientHeight ,
+                                   document.body.scrollHeight,
+                                   document.documentElement.scrollHeight,
+                                   document.documentElement.clientHeight] )  + 'px';
+    outerPane.style.height = h;
+  }
+  if (innerPane) innerPane.innerHTML = msg;
+}
+function FreezeScreen_off() {
+  scroll(0,0);
+  var outerPane = document.getElementById('FreezePane');
+  if (outerPane) {
+    outerPane.className = 'FreezePaneOff';
+    var h = Math.max.apply( null, [0,0,0,0] )  + 'px';
+    outerPane.style.height = h;
+  }
+}
+
+window.onload = my_load;
+//]]>
+</script>

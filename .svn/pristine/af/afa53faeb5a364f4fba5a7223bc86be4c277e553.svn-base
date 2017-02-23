@@ -1,0 +1,45 @@
+<% @key = 'schedules' %>
+<%= render partial: '/gw/admin/schedules/piece_header', locals: {piece_head_title: @piece_head_title, new: false} -%>
+<% placeInfo = t('rumi.config_settings.scheduler.schedule.view_place_info') %>
+<!-- コンテンツここから -->
+<div class="main">
+  <%= form_for :item, :url => "/gw/schedules/edit_ind_#{@key}", :html => {:method=>:put, :multipart => true} do |f| %>
+    <table class="defaultTable inputTable">
+      <tr>
+        <th><%= t("rumi.config_settings.scheduler.schedule.month_start") %></th>
+        <td>
+          <%= raw(radio(f, :month_view_leftest_weekday, Gw.yaml_to_array_for_select('gw_schedules_month_view_leftest_weekday'),
+        {:force_tag => 1, :selected => @item[:month_view_leftest_weekday].to_i})) %>
+        </td>
+      </tr>
+      <tr>
+        <th><%= t("rumi.config_settings.scheduler.schedule.view_place") %></th>
+        <td>
+          <%= raw(radio(f, :view_place_display, [[t("rumi.config_settings.scheduler.schedule.view"), 1], [t("rumi.config_settings.scheduler.schedule.not_view"), 0]],
+              {:force_tag => 1, :selected => nz(@item[:view_place_display], 0).to_i})) %>
+          &nbsp;
+          <%= raw(placeInfo) %>
+        </td>
+      </tr>
+      <tr>
+        <th><%=  t("rumi.config_settings.scheduler.toppage_display_setting.name") %></th>
+        <td>
+          <%= raw(radio(f, :view_portal_schedule_display,
+              {'1'=>t("rumi.config_settings.scheduler.toppage_display_setting.view"), '0'=>t("rumi.config_settings.scheduler.toppage_display_setting.not_view")},
+              {:force_tag => 1, :selected => @item[:view_portal_schedule_display].to_i})) %>
+        </td>
+      </tr>
+      <tr>
+        <th><%=  t("rumi.config_settings.scheduler.title_display_setting.name") %></th>
+        <td>
+          <%= raw(radio(f, :view_schedule_title_display,
+                  {'0' => t("rumi.config_settings.scheduler.title_display_setting.display_all"),
+                    '1' => t("rumi.config_settings.scheduler.title_display_setting.display_not_all")},
+          {:force_tag => 1, :selected => @item[:view_schedule_title_display].to_i})) %>
+        </td>
+      </tr>
+    </table>
+    <%= raw(submit_for(f, {caption: t("rumi.rumi_helper.submit.update"), id: "item_submit_#{@key}"})) %>
+  <% end %>
+</div>
+<!-- コンテンツここまで -->

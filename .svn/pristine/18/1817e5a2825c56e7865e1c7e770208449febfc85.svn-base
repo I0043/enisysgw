@@ -1,0 +1,8 @@
+<footer id="footer" role="contentinfo">
+    <p>
+      <%= link_to image_tag("/images/btn_top.png", {:border => "0", :alt => "Page Top"}), "#header" %>
+      <%= link_to image_tag("/images/btn_home.png", {:border => "0", :alt => "Home"}), "/gw/smart_portal" %>
+      <%= link_to image_tag("/images/btn_reload.png", {:border => "0", :alt => "Reload"}), "javascript:location.reload();" %>
+    </p>
+    <p class="copy">MATSUE Ruby GW ENISYS</p>
+</footer>

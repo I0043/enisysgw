@@ -1,0 +1,27 @@
+<% cnt = 1 %>
+<% if @files.size > 0 %>
+  <table class="defaultTable downloadTable attachTable">
+    <tbody>
+      <tr>
+        <th><%= t("rumi.gwcircular.attachment_name") %></th>
+        <td>
+          <% for item in @files %>
+            <% download_url = "#{item.file_uri(item.system_name)}" %>
+            <div class="attachSet">
+              <span class="attachIcon"><%= link_to '', download_url, class: item.icon_type %></span>
+              <% if item.is_image %>
+                <span class="attachName"><%= link_to "#{item.filename} (#{item.eng_unit})", download_url, :target => '_blank' %></span>
+              <% else %>
+                <span class="attachName"><%= link_to "#{item.filename} (#{item.eng_unit})", download_url %></span>
+              <% end %>
+              <% unless cnt == @files.size %>
+                <span>, </span>
+              <% end %>
+              <% cnt = cnt + 1 %>
+            </div>
+          <% end %>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+<% end %>

@@ -1,0 +1,41 @@
+<!-- ページ遷移ボタン -->
+<div class="headBtn">
+  <ul class="headBtn-5">
+    <%= render(:partial => '/gw/admin/smart_schedules/schedule_header', :locals=>{:d=>@st_date, :mode=>'week', :show_flg => @show_flg}) -%>
+  </ul>
+
+  <ul class="headBtn-1">
+    <li><%= link_to '別のユーザーのスケジュールを見る', search_group_gw_smart_schedules_path %></li>
+  </ul>
+</div>
+<!-- // ページ遷移ボタン -->
+<!-- today -->
+<%= raw(div_notice) -%>
+<%
+  date_format_name = 'week'
+  user_name_s = Gw::Model::Schedule.get_uname(:uid=>@uid)
+%>
+<div class="dayInformation dateShow today">
+  <%= I18n.l @st_date, format: date_format_name == 'week' ? :date2 : :date3 %>
+</div>
+<!-- ユーザー選択の時 -->
+<% if @uid != Core.user.id %>
+  <div class="dayInformation dateShow today"><%= raw(user_name_s) -%></div>
+<% end %>
+<%
+  @format ||= schedule_settings["#{@view}_view_dayhead_format"]
+  show_week = render(:partial => '/gw/admin/smart_schedules/show_week')
+%>
+<div class="piece schedulePiece weekview">
+  <div class="pieceBody">
+    <div class="pieceBodyBody">
+      <dl class="scheduleTable">
+        <% if @show_flg %>
+          <% @users.each_with_index do |user, user_cnt| %>
+            <%= show_week -%>
+          <% end %>
+        <% end %>
+      </dl>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,11 @@
+<%= render partial: 'header' %>
+
+<!-- コンテンツここから -->
+<div class="main">
+  <%= form_for :item, url: system_users_group_path(@item.rid), html: {method: :put} do |f| %>
+    <%= f.error_messages %>
+    <%= render partial: 'form', locals: {f: f} %>
+    <%= submit_for_update f %>
+  <% end %>
+</div>
+<!-- コンテンツここまで -->

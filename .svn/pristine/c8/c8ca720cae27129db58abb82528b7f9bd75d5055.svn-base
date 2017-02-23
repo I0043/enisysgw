@@ -1,0 +1,10 @@
+<%= p_required t("rumi.item_delete.message.cron") %>
+<table class="defaultTable rentDetails inputTable">
+  <tr>
+    <th><%= t("rumi.item_delete.th.limit_date") %></th>
+    <td>
+      <%= f.select(:limit_date, @item.limit_line, :include_blank => false , :class => 'select limit')%>
+      <%= t("rumi.item_delete.gwcircular.th.limit_date_message") %>
+    </td>
+  </tr>
+</table>

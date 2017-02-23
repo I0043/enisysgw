@@ -1,0 +1,137 @@
+<%= render partial: 'header', locals: {new: false} %>
+
+<!-- コンテンツここから -->
+<div class="main">
+  <%= div_notice %>
+  <table class="defaultTable listTable configTable">
+    <tr><th><%= t("rumi.user.th.name") %></th></tr>
+    <tr><td><%= @item.name %></td></tr>
+  </table>
+
+  <p><%=raw t("rumi.user.profile.upload_message") %></p>
+
+  <%= form_for :profile_image, url: image_create_system_users_path, html: {multipart: true, id: 'itemForm'} do |f| %>
+    <%= f.hidden_field :user_id %>
+    <%= f.hidden_field :user_code %>
+    <p>
+      <label for="item_upload"><%= t("rumi.user.profile.upload_item") %></label>
+      <%= f.file_field :upload %>
+    </p>
+    <p>
+      <label for="item_note"><%= t("rumi.user.profile.upload_note") %></label>
+      <%= text_field_tag('profile_image[note]', '', size: '60') %>
+    </p>
+    <p>
+      <%= submit_tag t("rumi.button.upload") %>
+    </p>
+  <% end %>
+
+  <hr />
+
+  <table class="defaultTable listTable configTable">
+    <tr>
+      <th></th>
+      <th><%= t("rumi.user.profile.th.path") %></th>
+      <th><%= t("rumi.user.profile.th.file_name") %></th>
+      <th><%= t("rumi.user.profile.th.note") %></th>
+      <th><%= t("rumi.user.profile.th.type") %></th>
+      <th><%= t("rumi.user.profile.th.size") %></th>
+    </tr>
+    <% if @is_profile_image %>
+      <tr>
+        <td class="action">
+          <%= link_to t("rumi.link.delete"), image_destroy_system_user_path(@item.id), data: {confirm: t("rumi.message.confirm.delete")} %>
+        </td>
+        <td class="path">
+          <%= @item.user_profile_image.path %>
+        </td>
+        <td class="orig_filename">
+          <%= @item.user_profile_image.orig_filename %>
+        </td>
+        <td class="note">
+          <%= @item.user_profile_image.note %>
+        </td>
+        <td class="content_type">
+          <%= @item.user_profile_image.content_type %>
+        </td>
+        <td class="_size">
+          <%= @item.user_profile_image._size %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+
+  <hr />
+
+  <table class="defaultTable rentDetails">
+    <% if @model.column_used?('name') %>
+      <tr>
+        <th><%= t("rumi.user.th.name") %></th>
+        <td><%= @item.name %></td>
+      </tr>
+    <% end %>
+    <% if @model.column_used?('name_en') %>
+      <tr>
+        <th><%= t("rumi.user.th.name_en") %></th>
+        <td><%= @item.name_en %></td>
+      </tr>
+    <% end %>
+    <% if @model.column_used?('email') %>
+      <tr>
+        <th><%= t("rumi.user.th.email") %></th>
+        <td><%= @item.email %></td>
+      </tr>
+    <% end %>
+    <% if @model.column_used?('official_position') %>
+      <tr>
+        <th><%= t("rumi.user.th.official_position") %></th>
+        <td><%= @item.official_position %></td>
+      </tr>
+    <% end %>
+    <% if @model.column_used?('assigned_job') %>
+      <tr>
+        <th><%= t("rumi.user.th.assigned_job") %></th>
+        <td><%= @item.assigned_job %></td>
+      </tr>
+    <% end %>
+    <% if @model.column_used?('add_column1') && @model.get_column_name('add_column1').present? %>
+      <tr>
+        <th><%= @model.get_column_name('add_column1') %></th>
+        <td><%= @item.user_profile.add_column1 if @is_profile %></td>
+      </tr>
+    <% end %>
+    <% if @model.column_used?('add_column2') && @model.get_column_name('add_column2').present? %>
+      <tr>
+        <th><%= @model.get_column_name('add_column2') %></th>
+        <td><%= @item.user_profile.add_column2 if @is_profile %></td>
+      </tr>
+    <% end %>
+    <% if @model.column_used?('add_column3') && @model.get_column_name('add_column3').present? %>
+      <tr>
+        <th><%= @model.get_column_name('add_column3') %></th>
+        <td><%= @item.user_profile.add_column3 if @is_profile %></td>
+      </tr>
+    <% end %>
+    <% if @model.column_used?('add_column4') && @model.get_column_name('add_column4').present? %>
+      <tr>
+        <th><%= @model.get_column_name('add_column4') %></th>
+        <td><%= @item.user_profile.add_column4 if @is_profile %></td>
+      </tr>
+    <% end %>
+    <% if @model.column_used?('add_column5') && @model.get_column_name('add_column5').present? %>
+      <tr>
+        <th><%= @model.get_column_name('add_column5') %></th>
+        <td><%= @item.user_profile.add_column5 if @is_profile %></td>
+      </tr>
+    <% end %>
+  </table>
+
+  <div class="backlink paginationSingle">
+    <ul>
+      <li>
+        <%= link_to t("rumi.back_link.profile"), show_profile_system_user_path %>
+      </li>
+    </ul>
+  </div>
+</div>
+<!-- コンテンツここまで -->

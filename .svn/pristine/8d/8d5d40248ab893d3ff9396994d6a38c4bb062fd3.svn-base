@@ -1,0 +1,27 @@
+<%= form_tag '', method: :get, class: 'search' do %>
+  <table class="defaultTable listTable configTable">
+    <tr>
+      <th rowspan="2"><%= t("rumi.user.search.condition") %></th>
+      <th>
+        <% search_target_names = 
+          [t("rumi.user.search.user_id"), t("rumi.user.search.name"), t("rumi.user.search.email")].join("・") %>
+        <%= search_target_names %>
+        <%= text_field_tag('s_keyword', params[:s_keyword] , :size => 30 ) %>
+      </th>
+      <th rowspan="2" class="submitters">
+        <%= submit_tag t("rumi.button.search"), name: :search %>
+        <%= submit_tag t("rumi.button.reset"), name: :reset %>
+      </th>
+    </tr>
+    <tr>
+      <th>
+        <%= t("rumi.user.search.state") %>
+        <%= filter_select_tag :state, 'system_states', params, :default => :enabled %>
+        <%= t("rumi.user.search.ldap") %>
+        <%= filter_select_tag :ldap, 'system_users_ldaps', params, :default => :all %>
+        <%= t("rumi.user.search.group") %>
+        <%= select_tag( 'group' ,options_for_select(@groups, params[:group] || 0) ) %>
+      </th>
+    </tr>
+  </table>
+<% end %>

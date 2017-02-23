@@ -1,0 +1,1892 @@
+ja: 
+  activerecord: 
+    models: 
+    attributes: 
+    errors:
+      models:
+        system/users_groups_csvdata:
+          attributes:
+            data_type:
+              inclusion: は「group」、「user」のみ入力可能です。
+            parent_id:
+              blank: 所属グループまたは所属グループの親グループが見つかりません。
+              parent_group_disabled: 所属グループの状態が「無効」のため配属させることができません。
+            state:
+              inclusion: は「有効」、「無効」のみ入力可能です。
+              child_group_enabled: は子グループの状態が「有効」または、所属するユーザーが存在する場合は「有効」を入力してください。
+              parent_group_disabled: は所属グループの状態が「無効」の場合は「無効」を入力してください。
+            ldap:
+              inclusion: は「同期」、「非同期」のみ入力可能です。
+            level_no:
+              inclusion: は「2」、「3」のみ入力可能です。
+            category:
+              inclusion: は「組織」、「任意」のみ入力可能です。
+            job_order:
+              inclusion: は「本務」、「兼務」、「仮所属」のみ入力可能です。
+              uniqueness: :rumi.system.user.job_order_0.message.unique
+            password:
+              blank: はLDAPが「非同期」の場合は必ず入力してください。
+            end_at:
+              blank: は状態が「無効」の場合は「yyyy-mm-dd」、「yyyy/mm/dd」のフォーマットで入力してください。
+              invalid: 状態が「有効」の場合は空欄とし、開始日より後、かつ本日以前の日付を入力してください。
+            start_at:
+              invalid: は本日以前の日付を入力してください。
+              blank: は「yyyy-mm-dd」、「yyyy/mm/dd」のフォーマットで入力してください。
+      template:
+        header:
+          one: "入力内容に誤りがあります。"
+          other: "%{count}個の入力内容に誤りがあります。"
+        body: "次の項目を確認してください。"
+  activemodel:
+    attributes:
+      rumi_helper/csv_form:
+        nkf: 文字コード
+        file: ファイル
+    errors:
+      models:
+        rumi_helper/csv_form:
+          attributes:
+            nkf: :activerecord.errors.messages
+            file: :activerecord.errors.messages
+  will_paginate:
+    page_gap: …
+  rumi:
+    button:
+      new: 新規作成
+      edit: 編集
+      repeat_edit: 繰り返し編集
+      delete: 削除
+      repeat_delete: 繰返一括削除
+      all_delete: 一括削除
+      all_download: 一括ダウンロード
+      quote: 引用作成
+      read: 既読にする
+      search: 検索
+      print: 印刷
+      picture: 写真を登録する
+      update: 更新
+      delivery: 配信
+      draft: 下書き
+      csv: CSV出力
+      calendar: カレンダー
+      upload: アップロード
+      import: インポート
+      reset: リセット
+      cancel: キャンセル
+      close: 閉じる
+      copy: 複製
+      save: 保存
+      forward: 転送
+      forward_circular: 転送（回覧板）
+      forward_bbs: 転送（掲示板）
+      forward_mail: 転送（メール）
+      publish: 公開
+      recognize: 承認待ち
+      draftsave: 下書き保存
+    link:
+      new: 新規作成
+      show: 詳細
+      edit: 編集
+      delete: 削除
+      index: 一覧
+      reply: 返信
+      reply_all: 全員に返信
+      gwcircular_forward: 転送（回覧板）
+      gwbbs_forward: 転送（掲示板）
+      mail_forward: 転送（メール）
+      copy: 複製
+      download: 保存
+      print: 印刷
+      open: 展開
+      publish: 公開
+      close: 非公開
+      recognize: 承認
+      enabale: 有効化
+      disable: 無効化
+      up: 上へ
+      sort_asc: ▲
+      sort_desc: ▼
+      comment_seen: コメントを既読にする
+    back_link:
+      return: 一覧に戻る
+      return_show: 詳細に戻る
+      config: 個人設定に戻る
+      admin: 管理者設定に戻る
+      gwboard_admin: 管理一覧に戻る
+      user: ユーザー詳細に戻る
+      select: 処理選択に戻る
+      profile: プロフィールに戻る
+      show: 詳細に戻る
+    submit:
+      create: 登録する
+      update: 確定する
+      delete: 削除する
+      add: 追加する
+      edit: 編集する
+      change: 変更する
+    state:
+      enabled: 有効
+      disabled: 無効
+      parmit: 許可
+      improper: 不可
+      synchro: 同期
+      asynchro: 非同期
+      unread: 未読
+      already: 既読
+      open: 公開
+      close: 非公開
+      deleted: 削除済
+      use: する
+      unuse: しない
+      internal: 内部
+      external: 外部
+      view: 表示
+      hidden: 非表示
+      draft: 下書き
+      recognize: 承認待ち
+      recognized: 公開待ち
+      completed: 完了
+      public: 配信済み
+      public_end: 期限終了
+      public_limit: 期限切れ
+      preparation: 非通知
+      still: 配信予定
+      need: 必須
+      unneed: 不要
+      optional: 任意
+    search:
+      all: 全て
+      result: 検索結果
+    select:
+      all: :rumi.search.all
+      no_limit: 制限なし
+    attach_list:
+      open: 開く▼
+      close: 閉じる▲
+    calender_date_select:
+      format_js: "format_db.js"
+      locale_js: "ja.js"
+    strftime:
+      date2: "%Y-%m-%d"
+      date3: "%m-%d"
+      schedule_weekday_mode: j
+      year: 年
+      month: 月
+      day: 日
+      hour: 時
+      min: 分
+    week:
+      sun: 日
+      mon: 月
+      tue: 火
+      wed: 水
+      thu: 木
+      fri: 金
+      sat: 土
+      sunday: 日曜日
+      monday: 月曜日
+      tuesday: 火曜日
+      wednesday: 水曜日
+      thursday: 木曜日
+      friday: 金曜日
+      saturday: 土曜日
+    ajax:
+      message:
+        no_hit: 該当する候補がありません
+        error: 不明なエラーが発生しました
+    message:
+      required: ※は必須項目です。
+      confirm:
+        delete: 削除をすると元に戻せません。削除しますか
+        schedule_prop_delete: ※複数の施設が予約されています。全ての施設予約が削除されます。
+        other_user_delete: ※この予定は、あなた以外の参加者が登録されています。参加者全員のスケジュールから削除されます。
+        repeat_delete: ※なお、本スケジュールを含む、[繰り返しあり]で登録した全てのスケジュールが削除されますので、ご注意ください。
+        group_no_select: 所属が選択されていません。
+        user_no_select: ユーザーが選択されていません。
+        board_page_move: 保存していない場合、編集中の内容は失われます
+        copy: この記事を複製しますか
+      notice:
+        create: 登録処理が完了しました
+        create_fail: 登録処理に失敗しました
+        update: 更新処理が完了しました
+        update_fail: 更新処理に失敗しました
+        delete: 削除処理が完了しました
+        delete_fail: 削除処理に失敗しました
+        delete_setting: 削除設定が完了しました
+        publish: 公開処理が完了しました
+        publish_fail: 公開処理に失敗しました
+        close: 非公開処理が完了しました
+        close_fail: 非公開処理に失敗しました
+        rebuild: 再構築処理が完了しました
+        rebuild_fail: 再構築処理に失敗しました
+        recognize: 承認処理が完了しました
+        recognize_fail: 承認処理に失敗しました
+        copy_fail: 複製に失敗しました
+      getting: "を取得中です。"
+      empty:
+        list: 表示する内容はありません。
+      disable_with: 処理中
+      all_delete_valid: 既読する対象にチェックを入れてください。
+      forward_message:
+        gwcircular:
+          mail_forward_message_1: 転送（回覧板→メール）処理中です。
+          mail_forward_message_2: 添付ファイルがある場合、時間がかかることがあります。
+          mail_forward_message_3: しばらくお待ちください。
+          gwbbs_forward_message_1: 転送（回覧板→掲示板）処理中です。
+          gwbbs_forward_message_2: 添付ファイルがある場合、時間がかかることがあります。
+          gwbbs_forward_message_3: しばらくお待ちください。
+          title: タイトル：
+          create_date: 作成日時：
+          creator: 作成者：
+          forward: 転送：
+        gwbbs:
+          gwcircular_forward_message_1: 転送（掲示板→回覧板）処理中です。
+          gwcircular_forward_message_2: 添付ファイルがある場合、時間がかかることがあります。
+          gwcircular_forward_message_3: しばらくお待ちください。
+          mail_forward_message_1: 転送（掲示板→メール）処理中です。
+          mail_forward_message_2: 添付ファイルがある場合、時間がかかることがあります。
+          mail_forward_message_3: しばらくお待ちください。
+          title: タイトル：
+          create_date: 作成日時：
+          creator: 作成者：
+          forward: 転送：
+      board_auth:
+        admin1: 所属する全ての人が管理者になります
+        admin2: 指定された個人が管理者になります
+        editor1: 記事の新規作成/編集が行えます
+        editor2: 自動的に閲覧権限も付与されます
+        editor3: 指定された個人に編集権限が付与されます
+        reader1: 指定された個人に閲覧権限が付与されます
+      sort_message: ※数値の小さい順に表示されます。
+      ldap_use_password: ※LDAP同期を行う場合は不要です。
+      incorrect_call: 呼び出しが不正です
+      schedule_header:
+        d_nil: piece_header 呼び出し前に d/@st_date を設定してください。
+        s_genre_nil: piece_header 呼び出し前に params[:s_genre] を設定してください。
+      freeze_screen:
+        loading: 読込中
+      image:
+        no_image: 画像以外はアップロードできません。
+        no_jpeg_image: jpeg画像以外はアップロードできません。
+        fail_mkdir: ディレクトリの作成に失敗しました。
+        no_file: 添付画像ファイルを選択してください。
+      site_yml: site.yml の設定を見直してください。
+      data_error: データが異常です
+    label:
+      all_check: 全選択
+      all_uncheck: 解除
+      delete: 削除
+      marker_example: 凡例：
+      marker_important: 重要必読
+      marker_link: 添付ファイルあり
+      marker_comment: コメント可
+      admin_group_setting: 管理所属
+      admin_setting: 管理者
+      editor_group_setting: 編集所属
+      editor_setting: 編集者
+      reader_group_setting: 閲覧所属
+      reader_setting: 閲覧者
+      other: 他
+    paginate:
+      back_page: 前のページ
+      next_page: 次のページ
+    upload:
+      file_select: ファイル指定
+      drag_and_drop_fail_ie8: この機能を Internet Explorer 8 で使用することはできません。
+    login:
+      title: ログイン - 縁sys
+      name: ログイン
+      th:
+        user_id: ユーザーID
+        password: パスワード
+      message:
+        login_fail: ユーザーID・パスワードを正しく入力してください
+    logout:
+      name: ログアウト
+    portal:
+      link: リンク
+    reminder:
+      name: 新着情報
+      count: 件
+      total_count: " 全%{total_count}件"
+      overflow_count: "他%{overflow_count}件"
+      delimiter: ・
+      feature:
+        bbs:
+          name: 掲示板
+          action:
+            open: が公開されました。
+            update: が更新されました。
+            reply:
+              comment: のコメントが
+              add: 追加されました。
+        circular:
+          name: 回覧板
+          action:
+            create: が作成されました。
+            update: が更新されました。
+            reply:
+              comment: のコメントが
+              add: 追加されました。
+        mail:
+          name: メール
+          action:
+            receive: を受信しました。
+        schedule:
+          name: スケジュール
+          action:
+            create: が作成されました。
+            update: が更新されました。
+            delete: が削除されました。
+        schedule_prop:
+          name: 施設予約
+          action:
+            create: が作成されました。
+            update: が更新されました。
+            delete: が削除されました。
+        doclibrary:
+          name: ドキュメント管理
+          action:
+            approve: が承認されました。
+            request: の承認依頼が届きました。
+      datetime: 日時
+      title: 概要
+      sort_asc: ▲
+      sort_desc: ▼
+      all_seen: 一括既読
+    top_page:
+      name: トップページ
+    link_piece:
+      name: :rumi.config_settings.top_page.link_piece.name
+    link_piece_css:
+      name: リンクピース適用CSS編集
+    bbs:
+      name: :rumi.reminder.feature.bbs.name
+      expiry_date_message: 公開終了日時を設定しない場合は、公開終了日時の日付を手動で空にしてください。
+      csv_fields:
+        record_id: レコードid
+        title: 件名
+        doc_id: 返信id
+        status: 状態
+        section_code: 所属コード
+        section_name: 所属名
+        category_code: 分類コード
+        category_name: 分類名
+    circular:
+      name: :rumi.reminder.feature.circular.name
+      file_notice: 添付ファイルの状態は、「登録する」ボタンを押下しなくても保持されます。
+      search_description: 選択されている区分（未読・既読等）の回覧を検索します。
+      comment: コメント
+      sort_asc: ▲
+      sort_desc: ▼
+      spec_config_state:
+        only: 本人以外の受信者を表示しない
+        other_name: 全ての受信者の名前を表示する
+        other_all: 全ての受信者の名前とコメント内容を表示する
+      csv_fields:
+        parent_id: 回覧id
+        title: タイトル
+        doc_id: 返信id
+        status: 状態
+        section_code: 返信者所属コード
+        section_name: 返信者所属名
+        user_code: 返信者コード
+        user_name: 返信者名
+        body: コメント
+        editdate: 返信日時
+      custom_group:
+        name: 回覧板宛先リスト設定
+        message:
+          sort_update_success: 宛先リストの並び順更新処理が完了しました
+        th:
+          sort_no: 並び順
+          name: 名称
+          last_updated_at: 最終更新日時
+          state: 状態
+          delivery_destination: 配信先設定
+    schedule:
+      table_title: ユーザー
+      name: :rumi.reminder.feature.schedule.name
+      private: 予定有り
+      button:
+        day: 日
+        week: 週
+        month: 月
+        list: 一覧
+        print: 印刷
+        calendar: カレンダー
+      link:
+        day: 日表示
+        week: 週表示
+        month: 月表示
+        list: 一覧
+      side:
+        group: グループ
+        prop: 施設
+        search: 所属検索
+      line_box:
+        last_year: 前年
+        last_month: 前月
+        last_week: 前週
+        today: 今日
+        now_month: 今月
+        next_week: 翌週
+        next_month: 翌月
+        next_year: 翌年
+      th:
+        st_at: 開始日時
+        ed_at: 終了日時
+        title: 件名（用務名等）
+        place: 場所
+        memo: メモ
+        creator: 作成者
+        created_at: 作成日
+        updater: 最終更新者
+        updated_at: 最終更新日
+        inquire_to: 連絡先電話番号
+        public: 公開
+        public_group: 公開所属
+        users: 参加者
+        time_tbt: 時間未定
+        undecided: 未定
+        allday: 終日
+        repeat: 繰り返し期間
+        repeat_time: 時間
+        prop: :rumi.reminder.feature.schedule_prop.name
+        prop_name: 施設名
+        inquire_to: 連絡先電話番号
+        owner_uid: 予約担当者に設定 →
+      no_auth:
+        head: 参加者
+        tail: に対するスケジュール権限がないため、編集・引用作成・削除等を行えません。
+      repeat:
+        head: 繰り返し予定です。
+        body: ～
+        tail: まで繰り返されてます。
+      print: 印刷
+      summary: スケジュール詳細
+      schedule_user:
+        state: 状態
+        state_unread: :rumi.state.unread
+        state_already: :rumi.state.already
+        add_user: 参加者名
+        already_at: 確認日時
+      schedule_title:
+        time_no_set: （時未）
+        time_all: 終日
+        time_undecided: 未定
+      public_group:
+        no_limit: :rumi.select.no_limit
+        delete_group: 削除所属
+      public:
+        open: 公開（誰でも閲覧可）
+        group: 所属内（参加者の所属および公開所属）
+        close: 非公開（参加者のみ）
+      tooltip:
+        title: 件名
+        place: :rumi.schedule.th.place
+        memo: :rumi.schedule.th.memo
+        inquire_to: 連絡先
+        public: 公開範囲
+        users: :rumi.schedule.th.users
+        prop: 施設
+      message:
+        valid: 指定がおかしいです
+        fraud: 不正な呼び出しです
+        check_ed_at: 保存前に、終了時刻を確認してください
+        deleted_schedule: このスケジュールは削除されたスケジュールです。
+        no_users: 参加者が選択されていません。
+        no_users_or_props: 参加者、又は、施設が選択されていません。
+        use_prop_time_select: 施設を予約するには時間を指定してください
+        ed_at_valid: 終了日時は、開始日時より後の日時を入力してください。
+        select_st_at: 開始日時を指定してください
+        select_ed_at: 終了日時を指定してください
+        blank: 空きがあります
+        dup: 以下の予定が入っています
+        repeat_select: 繰り返す曜日をチェックしてください
+        rule: 規則
+        multiple:
+          prop: 複数の施設が予約されています。
+          prop_edit: 全てを削除しない場合は編集を行ってください。
+          user: 複数の参加者が予約されています。全てを削除しない場合は編集を行ってください。
+        success:
+          action:
+            create: 予定を登録しました。
+            update: 予定を編集しました。
+            update_repeat: 繰り返し予定を一括編集しました。
+            delete: 予定を削除しました。
+            delete_no_auth: 参加者にスケジュール登録に権限が必要なユーザーを含むため、予定の削除は行えません。
+            delete_repeat: 繰り返し予定を一括削除しました。
+            delete_repeat_no_auth: 参加者にスケジュール登録に権限が必要なユーザーを含むため、予定の繰返し一括削除は行えません。
+            already: 予定を既読にしました。
+        address_format: アドレスフォーマットが独自フォーマットになっているため、転送されない場合があります。
+      error_message:
+        prop_other_reservation_conflict_datetime: "終了日時は他の予定と競合しています。別の予定時間を入力してください。"
+        prop_other_reservation_conflict_date: "終了日は他の予定と競合しています。別の予定時間を入力してください。"
+      submit:
+        new_confirm: スケジュールを作成します。よろしいですか？
+        edit_confirm: スケジュールを編集します。よろしいですか？
+        repeat_edit_confirm: 繰り返しスケジュールを一括編集します。よろしいですか？
+        create: スケジュール作成中です
+        edit: スケジュール編集中です
+        repeat_edit: スケジュール一括編集中です
+      setting_ind:
+        name: 個人設定メニュー
+        update: スケジュール設定を変更しました。
+      import:
+        name: スケジュールインポート
+        value:
+          no_title: 件名なし
+        message:
+          file: ファイル名を入力してください
+          no_end_at_repeat: 終了日指定のない繰り返し予定は登録できません。
+          blank_repeat: 間隔ありの繰り返し予定は登録できません。
+          fail_repeat: 毎日、毎週以外の繰り返し予定は登録できません。
+          success: インポート処理が完了しました。
+          result: ------結果-----
+          invalid_result: ------無効内容-----
+          effectiveness: 有効
+          invalid: 無効
+          effectiveness_tail: 件を登録し、
+          invalid_tail: 件は無視しました。
+          ical:
+            not_extname: 拡張子がical形式のものと異なります。拡張子が「ics」のファイルを指定してください。
+            not_read: iCal形式の解析に失敗しました。
+            not_calendar: カレンダーデータが見つかりませんでした。
+            overlap: 既に同一スケジュールが登録されているため、登録できません。
+          csv:
+            not_extname: 拡張子がCSV形式のものと異なります。拡張子が「csv」のファイルを指定してください。
+            create_fail: 行目の予定は登録できませんでした。
+            mismatched: このCSVファイルは、インポートするには不適正です。
+      use_form_at_script: form_at_script
+      use_form_script: form_script
+    schedule_list:
+      name: スケジュール一覧
+      search:
+        all: :rumi.search.all
+        later_this_month: 今月以降すべて
+        year: 年
+        month: 月
+      list:
+        title: スケジュール一覧
+      output:
+        count: 出力件数
+        count_num: 件
+        csv: CSV (MS Outlook)形式エクスポート
+        ical: iCal形式エクスポート
+      user_out: 参加者から外す
+      th:
+        day: 日付
+        st_at: 開始時刻
+        ed_at: 終了時刻
+        title: 件名
+        public: 公開
+        memo: メモ（備考）
+        place: 場所
+        users: 参加者
+      public:
+        state_1: 公開
+        state_2: 所属内
+        state_3: 非公開
+      delete_confirm: を、以下の予定の参加者から削除します。
+      message:
+        no_target: 対象が選択されていません。
+        delete_error: 削除できません。再度、作業を実施してください。
+        past_schedule: 過去の予定があります。
+        retry: 再度、作業を実施してください。
+        system_error: システムに異常があります。管理者に連絡をしてください。
+        show_list: 一覧の表示から確認して下さい。
+        delete:
+          body: 件中、
+          tail: 件の予定から削除しました。
+        no_delete:
+          message: 件の予定からは、削除されませんでした。
+          no_editor: ※スケジュール権限がないユーザーに対する予定からは削除できません。
+          one_user: ※参加者が１人の予定からは削除できません。
+      csv:
+        title: 件名
+        st_at: 開始日
+        st_time: 開始時刻
+        ed_at: 終了日
+        ed_time: 終了時刻
+        all_day: 終日イベント
+        memo: 内容
+        place: 場所
+        alarm: アラーム オン/オフ
+        alarm_date: アラーム日付
+        alarm_time: アラーム時刻
+    schedule_prop:
+      name: :rumi.reminder.feature.schedule_prop.name
+      th:
+        name: 名称
+        admin_group: 管理所属
+      form:
+        add_user_comment: 施設予約時任意
+        add_prop_comment: 「開始日時」から「終了日時」の時間帯で予約可能なものを表示しています。
+      submit:
+        new_confirm: 施設予約を登録します。よろしいですか？
+        edit_confirm: 施設予約を編集します。よろしいですか？
+        repeat_edit_confirm: 繰り返し施設予約を一括編集します。よろしいですか？
+        create: 施設予約登録中です
+        edit: 施設予約編集中です
+        repeat_edit: 施設予約一括編集中です
+      message:
+        valid: :rumi.schedule.message.valid
+        date_valid: 日付が異常です
+    schedule_user:
+      view:
+        all: :rumi.search.all
+        user: ユーザー
+        group: 所属
+    prop: 施設
+    prop_other:
+      name: 施設マスタ
+      menu:
+        prop_other: :rumi.prop_other.name
+        prop_other_limit: 施設マスタ件数制限
+        prop_type: 施設種別マスタ
+        prop_admin_setting: 連続予約可能期間・時間設定
+        import: 施設マスタインポート
+        export: 施設マスタエクスポート
+        prop_group_setting: 施設グループ設定
+        prop_group: 施設グループマスタ
+      search:
+        all: :rumi.search.all
+        type_group: 種別・グループ
+        admin: 施設管理所属
+      th:
+        state: 予約
+        sort_no: 並び順
+        type: 種別
+        name: 名称
+        comment: 備考
+        d_load_st: 利用開始日
+        d_load_ed: 利用終了日
+        limit_month: 予約可能期日
+        limit_month_tail: ヶ月先まで予約可能
+        created_at: 作成日
+        updated_at: 更新日
+        admin: 施設管理所属
+        editor: 予約可能所属
+        reader: 照会可能所属
+      upload:
+        message: この施設に画像を添付します。
+        file_select: :rumi.upload.file_select
+        file_comment: ファイル備考
+        th:
+          image: 画像
+          name: ファイル名
+          comment: 備考
+          type: ファイル種別
+          size: サイズ（幅x高さ）
+      import:
+        message: CSVファイルのインポートにより、施設マスタを登録できます。
+        file_select: 対象ファイル
+      message:
+        limit_month: ※指定した月数の月末まで、予約が可能となります。
+        csv:
+          file: ファイル名を入力してください
+          type_error: 拡張子がCSV形式のものと異なります。拡張子が「csv」のファイルを指定してください。
+          undefined_type: 存在しない施設種別が指定されています。
+          col_count_error: 項目数に誤りがあります。
+          success: :rumi.schedule.import.message.success
+          result: :rumi.schedule.import.message.result
+          effectiveness: :rumi.schedule.import.message.effectiveness
+          invalid: :rumi.schedule.import.message.invalid
+          effectiveness_tail: :rumi.schedule.import.message.effectiveness_tail
+          invalid_tail: :rumi.schedule.import.message.invalid_tail
+        errors:
+          inport_limit_over: で設定された所属あたりの制限数を超えて登録しようとしています。制限数を増やしてください。
+          input_limit_over: は、施設マスタ件数制限で設定された所属あたりの制限数を超えて登録しようとしています。所属（%{group_names}）の制限数を増やしてから登録を行ってください。
+    prop_other_limit:
+      name: :rumi.prop_other.menu.prop_other_limit
+      th:
+        group: 所属
+        limit: 制限数
+        sum: 合計
+      synchro: 同期処理
+      message:
+        valid_new: 新規登録はできません。
+        synchro_success: 同期処理は終了しました。
+    prop_type:
+      name: :rumi.prop_other.menu.prop_type
+      th:
+        type: 種別
+        sort_no: 並び順
+    prop_admin_setting:
+      name: :rumi.prop_other.menu.prop_admin_setting
+      th:
+        name: 設定名称
+        type: 種別
+        span_limit: 連続予約可能期間
+        span_hour: 連続予約可能時間
+        group: 所属
+        limitless: 無制限
+        day: 日
+        hour: 時間
+      message:
+        span_limit: 1回のスケジュール登録で繰り返し予約可能な期間の上限
+        span_hour: 1スケジュールで予約可能な時間の上限
+    prop_group:
+      name: :rumi.prop_other.menu.prop_group
+      th:
+        name: 施設グループ名
+        parent_group: 親施設グループ名
+        sort_no: 並び順
+    prop_group_setting:
+      name: :rumi.prop_other.menu.prop_group_setting
+      th:
+        name: 名称
+        related_facility: 関連施設
+    holiday:
+      name: 休日管理
+    user:
+      name: ユーザー管理
+      th:
+        user_id: ユーザーID
+        ldap: LDAP同期
+        state: 状態
+        name: 名前
+        kana: フリガナ
+        name_en: 名前（英）
+        password: パスワード
+        email: メールアドレス
+        sort_no: 並び順
+        official_position: 役職
+        assigned_job: 担当
+        group: 所属
+      search:
+        condition: 検索条件
+        group: :rumi.user.th.group
+        ldap: :rumi.user.th.ldap
+        state: :rumi.user.th.state
+        user_id: :rumi.user.th.user_id
+        name: :rumi.user.th.name
+        email: :rumi.user.th.email
+      message:
+        message: ユーザー情報の閲覧、登録及び編集を行います。
+        destroy: 削除はユーザーと所属情報の状態を「無効」にし、ログイン不可とします。
+        new: :rumi.users_group.message.note
+        affiliation_situation: 現在の所属状況
+        group_select: 登録するユーザーの所属を指定してください
+      profile:
+        user_profile:
+        name: プロフィール
+        upload_name: プロフィール写真
+        upload_title_name: プロフィール写真アップロード
+        upload_message: このユーザーのプロフィールに表示する写真を添付します。<br />既に写真が存在した場合、写真を差し替えます。
+        upload_item: ファイル指定：
+        upload_note: ファイル備考：
+        upload_size: サイズ（幅x高さ）
+        success_message:
+          upload_create: の追加に成功しました。
+          upload_delete: の削除に成功しました。
+        th:
+          path: 画像
+          file_name: ファイル名
+          note: 備考
+          type: ファイル種別
+          size: サイズ（幅x高さ）
+    group:
+      name: 所属管理
+      th:
+        group_id: 所属ID
+        name: 所属名
+        name_en: 所属名（英）
+        email: :rumi.user.th.email
+        sort_no: 並び順
+        category: 組織・任意
+        start_at: 適用開始日
+        end_at: 適用終了日
+        level_no: 階層レベル
+        ldap: LDAP同期
+        state: 状態
+        parent: 上位所属
+      message:
+        message: 所属情報の閲覧、登録及び編集を行います。
+        destroy: 削除はユーザーが所属しているか、下位に有効な所属があるときは、できません。<br />また、削除は、終了日を設定し、状態を「無効」に変更するだけです。IDの再利用はできませんので、注意してください。
+        delete_fail: ユーザーが所属しているか、下位に有効な所属があるときは、無効にできません
+    users_group:
+      name: ユーザー・所属管理
+      th:
+        user_id: ユーザー
+        group: :rumi.user.th.group
+        official_position: :rumi.user.th.official_position
+        start_at: 配属開始日
+        end_at: 配属終了日
+        job_order: 本務・兼務
+        state: 状態
+      message:
+        destroy: 削除はユーザーの所属情報を削除します。
+        edit: 編集はユーザーの状態が無効の場合は編集画面を表示できますが所属情報の更新はできません。
+        note: スケジュールなどでユーザー選択できるのは、「組織所属であれば階層レベル3の所属に配属されている」又は<br />「任意所属であれば階層レベル2、3の所属に配属されている」、かつ状態が有効のユーザーに限ります。
+        unregistered_user: 未登録ユーザー
+        unregistered_grup: 未登録所属
+      button:
+        new: 所属情報の追加
+    csv:
+      name: ユーザー・所属一括登録
+      message:
+        message: ユーザー及び所属情報の一括登録をCSVで行います。
+        error_file: エラー箇所追記
+        import: 正常にインポートされました。
+        error: 予期せぬエラーが発生しました。ファイル内容と文字コードを確認してください。
+        inadequacy: CSV情報に不備があります。
+      th:
+        id: ID
+        level_no: 階層レベル
+        type: 種別
+        ldap: LDAP同期
+        state: 状態
+        name: 名前
+        name_en: 名前（英）
+        parent: :rumi.group.th.group_id
+        category: :rumi.group.th.category
+        job_order: :rumi.users_group.th.job_order
+        password: :rumi.user.th.password
+        email: :rumi.user.th.email
+        sort_no: :rumi.user.th.sort_no
+        official_position: :rumi.user.th.official_position
+        assigned_job: :rumi.user.th.assigned_job
+        start_at: 開始日
+        end_at: 終了日
+        add_column1: 追加項目1
+        add_column2: 追加項目2
+        add_column3: 追加項目3
+        add_column4: 追加項目4
+        add_column5: 追加項目5
+      csv_type:
+        utf8: UTF8
+        sjis: SJIS
+      data_type:
+        group: 所属
+        user: ユーザー
+      feature:
+        output:
+          name: CSV出力
+          message:
+            note: 出力対象を、指定の文字コードで出力します。文字コードを選択して実行してください。
+        input:
+          name: CSV仮登録
+          message:
+            note: CSVデータを仮登録します。<br />この時点では、実際にデータは登録されません。CSV本登録を実行すると反映されます。<br />なお、この操作を実行すると、現在のCSV仮データは全て削除されますので、ご注意ください。<br />CSVファイル内容に不備があった場合、エラー情報を記載したCSVファイルをダウンロードします。<br />仮登録対象CSVファイルと文字コードを選択して実行してください。
+        index:
+          name: CSV仮データ確認
+        save:
+          name: CSV本登録
+          message:
+            note: CSV仮データについて、ユーザーおよびグループの情報として正式に登録します。現在のユーザーおよびグループの情報は上書きされます。<br />また、現在のユーザーの中で、CSV仮データには存在しないユーザーおよびグループは、無効化されますので、ご注意ください。<br />現在のユーザー情報はバックアップをお願いします。
+            help: CSV仮データを実際のユーザー情報として登録します。現在のユーザー情報は上書きされます。
+            errors:
+              not_included_system_admin_user: 状態が有効な管理画面の管理者権限を持つユーザーが仮データに含まれていません。
+      file_name: ユーザー・所属情報
+    user_profile:
+      name: プロフィール項目管理
+      message:
+        message: プロフィール項目の設定を行います。
+    ldap:
+      name: LDAP参照
+      message:
+        message: 現在登録されているLDAP情報の参照を行います。
+        connect: LDAPサーバへの接続を確認しました。接続可能です。
+        connect_fail: LDAPサーバに接続できません。
+      th:
+        group: 所属
+        user: ユーザー
+    ldap_temporary:
+      name: LDAP同期
+      menu:
+        temporary: 中間データ
+        test: 通信テスト
+        synchro: 同期処理
+      th:
+        version: バージョン
+        created_at: 作成日
+      message:
+        message: LDAP同期の中間データの作成を行います。
+        connect: :rumi.ldap.message.connect
+        connect_fail: :rumi.ldap.message.connect_fail
+        before_create: 中間データを作成します
+        create: 中間データを作成しました
+        delete: 中間データを削除しました
+        synchro_start: 現在表示している中間データで同期処理を開始します
+        synchro: 同期処理が完了しました
+    role:
+      name: 管理者ユーザー設定
+      setting:
+        name: :rumi.role.name
+        message: 管理者ユーザーの設定を行います。
+      th:
+        user: ユーザー
+        group: 所属
+      message:
+        overlap: が登録済みのものと重複しています。
+    priv_name:
+      name: 対象権限設定
+      th:
+        state: ステータス
+        display_name: 権限対象名
+        priv_name: 権限コード
+        sort_no: 並び順
+    role_developer:
+      name: 開発者権限設定
+      class_id:
+        all: :rumi.select.all
+        user: ユーザー
+        group: 所属
+    role_name_priv:
+      name: 機能権限設定
+    role_name:
+      name: 機能名設定
+    custom_group:
+      name: カスタムグループ設定
+      name_admin: カスタムグループ設定（管理）
+      message:
+        sort_update_success: カスタムグループの並び順更新処理が完了しました
+        synchro: カスタムグループの同期が完了しました
+      th:
+        state: 状態
+        default: デフォルト
+        default_message: デフォルトグループに設定する
+        name: 名称
+        name_en: 名称（英語）
+        sort_no: 並び順
+        edit_group: 管理所属
+        editor: 管理者
+        schedule_read_group: 閲覧所属
+        schedule_reader: 閲覧者
+        associate: 表示するユーザー
+        associate_user:
+          th:
+            sort_no: 並び順
+            name: 氏名
+            delete: 削除
+    item_delete:
+      message:
+        cron: ※削除処理を行うには、cronの設定が必要です。
+      th:
+        limit_date: 削除対象
+      gwcircular:
+        name: 回覧板 削除設定
+        th:
+          limit_date_message: 経過した期限切れの回覧を削除
+      gwbbs:
+        name: 掲示板記事削除設定
+        th:
+          id: 管理番号
+          sort_no: 並び順
+          title: タイトル
+          status: ステータス
+          view: 一覧表示
+          public: 公開記事
+          void: 期限切れ
+          auto: 自動削除
+          delete: 削除
+          use: する
+          limit_date_message: 経過した期限切れの記事を削除
+        link:
+          cron: 削除設定
+          now: 直接削除
+        message:
+          cron: 削除対象期間を設定します。
+          now: 管理者が、即時で期限切れとなっている記事の削除を行います。
+      schedule:
+        name: スケジュール削除設定
+        th:
+          limit_date_message: 経過したスケジュールを削除
+    access_log:
+      name: アクセス解析
+      th:
+        start_at: 絞込開始日時
+        end_at: 絞込終了日時
+        date: アクセス日時
+        ip_address: IPアドレス
+        user_id: ユーザーID
+        user_name: ユーザー名
+        feature_name: 機能名
+      category:
+        login: ログイン
+        logout: ログアウト
+      at: から
+      functional_access: 機能別 アクセス量
+      date_select_miss: 絞込開始日時と絞込終了日時の指定が間違っています。
+      use_form_at_script: form_at_script
+    login_image:
+      name: ログイン画面背景画像設定
+      message: ログイン画面の背景画像を設定します。
+    config_settings:
+      base:
+        setting:
+          name: 基本設定
+        ind: 個人設定
+        admin: 管理者設定
+        header: 設定
+      mail:
+        header: メール設定
+        setting:
+          list: メール一覧表示設定
+          read: メールプレビュー設定
+          send: メール送信設定
+          receive: メール受信設定
+          label: ラベル設定
+          sys_address: 組織アドレス帳設定
+          private_address: 個人アドレス帳設定
+          public_address: 共有アドレス帳設定
+          switch_user: 切替ユーザー設定
+          admin:
+            addresses: 個人・共有アドレス帳設定
+            address_control: 共有アドレス帳管理権限設定
+            attack_mail: 標的型攻撃メール設定
+            all_webmail_setting: 受信メール表示設定
+        explain:
+          list: メール一覧画面での表示方法を変更することができます。
+          read: メールを開封した時の表示形式を変更することができます。
+          send: メール送信時の設定を変更することができます。
+          receive: メール受信画面での新着メールの自動チェック間隔を変更することができます。
+          sys_address: 組織アドレス帳の並び順を変更することができます。
+          private_address: 個人アドレス帳の並び順を変更することができます。
+          public_address: 共有アドレス帳の並び順を変更することができます。
+          label: ラベルの変更・追加をすることができます。
+          switch_user: 切替ユーザーの変更・追加をすることができます。
+          admin:
+            addresses: 連絡先登録時の一覧項目の利用・表示を変更することができます。
+            address_control: 共有アドレス帳の管理者設定を変更することができます。
+            attack_mail: 標的型攻撃メールと見なすドメイン、添付ファイルの拡張子の設定、及び警告メッセージが設定できます。
+            all_webmail_setting: 受信メールの初期表示設定を変更することができます。
+      role:
+        setting:
+          name: :rumi.role.name
+          message: :rumi.role.setting.message
+      admin_message:
+        header: お知らせ設定
+        explain: 表示対象となるお知らせは２つまでです。　並び順が同じときは、更新日時の降順で表示します。
+        th:
+          view: 表示
+          sort_no: 並び順
+          message: お知らせ内容
+          updated_at: 更新日
+        view1: する
+        view2: しない
+        sort_no:
+          explain: ※数値の小さい順に表示されます。
+      edit_link_piece:
+        th:
+          published: 公開
+          state: 状態
+          sort: 並び順
+          name: 表示名
+          link_url: リンク先URL
+          class_external: 接続先区分
+          class_sso: SSO利用
+          field_account: アカウント項目名
+          field_pass: パスワード項目名
+        level_no:
+          l1: TOP
+          l2: ピース
+          l3: ブロック
+          l4: リンク
+      user_and_group:
+        add:
+          name: 追加 →
+          smart_name: 追加　↓
+        remove:
+          name: ← 削除
+          smart_name: ↑ 削除
+      user_profile_setting:
+        name: プロフィール項目管理
+        title_item: 項目名
+        title_used: 使用する
+      auto_delete:
+        setting:
+          name: 削除設定
+        schedule:
+          name: スケジュール削除設定
+          message: 過去スケジュールの自動削除設定を行います。
+        gwbbs:
+          name: 掲示板記事削除設定
+          message: 掲示板にある期限切れ記事の自動削除設定を行います。掲示板を選択しての削除も可能です。
+        gwcircular:
+          name: 回覧板削除設定
+          message: 回覧板にある期限切れ記事の自動削除設定を行います。
+      access_log:
+        setting:
+          name: アクセス解析
+          message: 指定期間の機能別アクセス量を表示します。
+      scheduler:
+        holiday:
+          name: 休日管理
+          message: 祝祭日の設定を行います。
+        pref_executive:
+          name: 市長・副市長在庁表示設定
+          message: 市長・副市長の在庁表示の設定を行います。
+          page_title: 市長・副市長在庁表示管理
+        pref_director:
+          name: 教育長在庁表示設定
+          message: 教育長の在庁表示の設定を行います。
+          page_title: 教育長在庁表示管理
+        scheduler:
+          name: スケジュール設定
+          message: 週初めの変更（日曜日or月曜日）、場所の表示の有無、トップページ画面での表示の有無、表示方法の変更（全部表示or一部表示）を設定できます。
+        schedule:
+          month_start: 月表示の開始曜日
+          view_place: 場所の表示
+          view_place_info: 日・週・月表示及びツールチップに表示します。
+          view: 表示する
+          not_view: 表示しない
+        custom_group:
+          name: カスタムグループ設定
+          message: 個人毎にスケジュールに表示させるグループの設定ができます。
+          admin_message: 共通で利用するカスタムグループを設定します。
+        import:
+          name: インポート
+          side_name: :rumi.schedule.import.name
+          message: CSV (MS Outlook)形式、およびiCalendar形式のファイルをインポートできます。
+          view_message: CSVファイルのインポートでは、エラー結果をCSVで出力します。エラーを修正すれば再登録できます。
+          file: 対象ファイル
+          file_type: ファイル形式
+          csv: CSV形式
+          ical: iCal形式
+          csv_message: 「CSV形式」は、スケジュール一覧画面の「CSV (MS Outlook)形式エクスポート」および、Yahoo!カレンダーのCSVエクスポートで取得したCSVにのみ対応しています。
+          ical_message: 「iCal形式」の拡張子は「.ics」です。
+        export:
+          name: エクスポート
+          side_name: スケジュールエクスポート
+          message: iCalendar形式のファイルをエクスポートできます。
+          confirm: エクスポートしますか？
+        toppage_display_setting:
+          name: トップページ表示設定
+          view: 表示する
+          not_view: 表示しない
+        title_display_setting:
+          name: スケジュール件名表示設定
+          display_all: 全部表示
+          display_not_all: 一部表示
+        schedule_role:
+          name: スケジュール権限設定
+          message: 指定ユーザーに対するスケジュールの登録・編集・引用作成・削除権限の設定を行います。
+      prop:
+        title: 施設予約設定
+        prop_other:
+          name: :rumi.prop_other.menu.prop_other
+          message: 施設の設定を行います。
+        prop_other_limit:
+          name: :rumi.prop_other.menu.prop_other_limit
+          message: 所属毎の管理できる施設数の設定を行います。
+        prop_type:
+          name: :rumi.prop_other.menu.prop_type
+          message: 施設種別の設定を行います。
+        prop_admin_setting:
+          name: :rumi.prop_other.menu.prop_admin_setting
+          message: 連続予約可能期間・時間の設定を行います。
+        import:
+          name: :rumi.prop_other.menu.import
+          message: CSV形式で施設マスタのインポートを行います。
+        export:
+          name: :rumi.prop_other.menu.export
+          message: CSV形式で施設マスタのエクスポートを行います。
+        prop_group_setting:
+          name: :rumi.prop_other.menu.prop_group_setting
+          message: 施設グループと施設を関連付ける設定を行います。
+        prop_group:
+          name: :rumi.prop_other.menu.prop_group
+          message: 施設グループの設定を行います。
+      holiday:
+        table:
+          date: 年月日
+          name: 休日名
+      schedule_role:
+        name: スケジュール権限設定
+        th:
+          user: 対象ユーザー
+          user_group: 対象ユーザー所属
+          auth_group: 権限付与所属
+          auth_user: 権限付与者
+        message:
+          auth_group: 所属する全ての人に権限付与されます。
+          auth_user: 指定された個人に権限付与されます。<br /><br /> ※対象ユーザーは設定不要
+          disable_user: 無効なユーザー
+          no_select: 権限付与所属もしくは権限付与者が選択されていません。
+      board:
+        setting:
+          name: 掲示板等設定
+      gwbbs:
+        setting:
+          name: 掲示板設定
+          message: 掲示板の設定を行います。
+      gwcircular:
+        setting:
+          name: 回覧板設定
+          message: 回覧板の設定を行います。
+        custom_group:
+          name: 回覧板宛先リスト設定
+          message: 個人毎に宛先リストの雛形が登録できます。
+      doclibrary:
+        setting:
+          name: ドキュメント管理設定
+          message: ドキュメント管理の設定を行います。
+      custom_group:
+        setting:
+          name: カスタムグループ設定
+          message: 個人毎にスケジュールおよび回覧板の宛先リストに表示させるグループの設定ができます。
+      top_page:
+        name: トップページ設定
+        message:
+          name: :rumi.config_settings.admin_message.header
+          message: トップページに表示するお知らせを設定します。表示するお知らせは２つまで設定できます。
+        link_piece:
+          name: 共有リンク設定
+          message: トップページ画面の共有リンクの設定を行います。
+      user_passwords:
+        name: ログインパスワード設定
+        action:
+          edit:
+            name: パスワード変更
+            message:
+              help: ログインパスワードを変更することができます。
+              note: 半角英大文字・英小文字・数字・記号から３種類以上混在8文字以上<br />※パスワード変更を行うとログイン画面に遷移します。変更後のパスワードでログインしてください。
+              errors:
+                confirmation: と確認用パスワードが一致しません。
+      config:
+        setting:
+          name: 基本設定
+    rumi_helper:
+      state:
+        enabled: :rumi.state.enabled
+        disabled: :rumi.state.disabled
+      preview: プレビュー
+      edit: 編集
+      submit:
+        update: 確定する
+      csv_form:
+        file:
+          message:
+            invalid: は拡張子が「csv」のファイルを指定してください。
+        nkf:
+          message:
+            invalid: はファイルの文字コードと同じにしてください。
+    system:
+      user:
+        state:
+          message:
+            invalid: は管理グループではないグループにユーザーが所属しているときは、無効にできません。
+            has_uneditable_users_group: 管理グループではないグループにユーザーが所属しているときは、無効にできません。
+        job_order_0:
+          name: 本務
+          message:
+            unique: はユーザーの本務は既に登録されているため兼務または仮所属を入力してください。
+        job_order_1:
+          name: 兼務
+        code:
+          message:
+            invalid: は半角英数字、半角ピリオドおよび半角アンダーバーのみのデータとしてください。
+      group:
+        state:
+          message:
+            has_enable_child_or_users_group: はユーザーが所属しているか、下位に有効な所属があるときは、無効にできません。
+      custom_group:
+        view_name: カスタムグループ
+        sort_no: 並び順
+        name: 名称
+        owner_group: 作成所属
+        owner_user: 作成者
+        updater: 最終更新者
+        updated_at: 最終更新日時
+        state: 状態
+        search: 検索
+        reset: リセット
+        setting:
+          name: カスタムグループ設定
+        error:
+          head: カスタムグループは
+          tail: 件までしか作成できません。
+          sort: は数値を入力してください。
+          relation: 関連ユーザーの並び順 は数値を入力してください。
+          users: 表示するユーザーを選択してください。
+    gwboard:
+      no_limit:
+        name: :rumi.select.no_limit
+        all_name: 全ての所属
+      message:
+        attached_file_not_found: 添付ファイルが見つかりませんでした。
+        image_limit: 添付ファイルの拡張子がGIF|JPEG|PNGのものの総容量です。
+        temp_limit: 画像ファイルを除く添付ファイルの総容量です。
+        image_size_limit: 記事に添付できる１つあたりの画像ファイルサイズです。
+        temp_size_limit: 記事に添付できる１つあたりの添付ファイルサイズです。
+        order_description: 数値の小さい順に表示されます。
+        attached_word: を選択してください。
+        admin_choice: 管理所属、もしくは管理者を選択してください。
+        editor_choice: 編集所属、もしくは編集者を選択してください。
+        reader_choice: 閲覧所属、もしくは閲覧者を選択してください。
+        title_limit: は140文字以内で入力してください
+        capacity_message1: "利用可能容量は%{capacity}です。現在約%{used}利用しています。利用率は約%{availability}です。"
+        capacity_message2: 制限を超過しています。不要なファイルを削除するか、管理者にご連絡ください。
+        image_capacity_message1: "画像ファイルの利用可能容量は%{capacity}です。現在約%{used}利用しています。利用率は約%{availability}です。"
+        image_capacity_message2: "画像ファイルの利用可能容量は%{capacity}です。現在約%{used}利用しています。"
+        max_file_message: "１ファイル%{file_size_max}MBまで登録可能です。"
+        image_max_file_message: "画像ファイルは、１ファイル%{file_size_max}MBまで登録可能です。"
+        tmp_capacity_message1: "添付ファイルの利用可能容量は%{capacity}です。現在約%{used}利用しています。利用率は約%{availability}です。"
+        tmp_capacity_message2: "添付ファイルの利用可能容量は%{capacity}です。現在約%{used}利用しています。"
+        tmp_max_file_message: "添付ファイルは、１ファイル%{file_size_max}MBまで登録可能です。"
+        packet: ※パケット定額サービスに入っていない場合、高額の通信料が発生する場合があります。
+        for_admin_form: "現在約%{used}利用しています。利用率は約%{availability}%です。"
+      list:
+        bbstitle: 掲示板
+        doclibtitle: ドキュメント管理
+        titles: 説明
+        manager: 管理所属
+        update: 更新日時
+        doc_no: 管理番号
+        bbstitle_name: 掲示板タイトル
+        doclibtitle_name: ドキュメント管理名
+        update_date: 更新日
+        sort_no: 並び順
+        status: ステータス
+        detail_show: 詳細確認
+        public_display: 公開画面 >>
+        show_public_design: 公開デザイン確認 >>
+      th:
+        status: 状態
+        recognize: 承認機能
+        listlines: 一覧表示行数
+        postperiod: 掲載期間 初期値
+        default_published: 回覧期限日初期値
+        commission_limit: 回覧記事同時送信数
+        expirationdelete: 期限切れ削除設定
+        body_limit: 記事本文総容量制限
+        image_limit: 画像 総容量制限
+        temp_limit: 添付 総容量制限
+        image_size_limit: 画像サイズ制限
+        temp_size_limit: 添付サイズ制限
+        order: 並び順指定
+        use_description1: 利用説明
+        use_description2: (HTML形式可)
+        admin_group: 管理所属
+        admin: 管理者
+        editor_group: 編集所属
+        editor: 編集者
+        reader_group: 閲覧所属
+        reader: 閲覧者
+        between_day: 日後
+        people: 人
+      attach_list:
+        open: :rumi.attach_list.open
+        close: :rumi.attach_list.close
+        upload_item: ファイル指定：
+        upload_note: ファイル備考：
+        regist: ファイルを登録する
+        message:
+          isIE8: この機能を Internet Explorer 8 で使用することはできません。
+    doclibrary:
+      name: :rumi.reminder.feature.doclibrary.name
+      docFileTitle: ドキュメント一覧
+      tmpFileTitle: 添付ファイル一覧
+      rootfolder: ルートフォルダ
+      side:
+        public_list: 内容一覧
+        draft_list: 下書一覧
+        recognize_list: 承認待ち
+        recognized_list: 承認済み
+        keyword: キーワード
+        group: 所属
+        creator: 作成者
+        created_at: 作成日
+        search_start: から
+        search_end: まで
+      th:
+        detail_creator: 作成者：
+        detail_editor: 編集者：
+        update_at: 更新日時
+        tmpfile: 添付ファイル名
+        remarks: 備考
+        recognizer: 承認者
+        download: 一括ダウンロード
+        folder_selector: フォルダ選択
+        public: 公開
+        foldername: フォルダ名称
+        adminGroup: 所属管理権限設定
+        adminUser: 個人管理権限設定
+        readGroup: 所属閲覧権限設定
+        readUser: 個人閲覧権限設定
+        section_code: 発行元所属
+        category1_id: フォルダ
+        title: タイトル
+        description: 説明
+        not_recognize: 未承認
+        recognize_date: 承認日時
+        line_limit: 表示行数
+      category_order:
+        folder: ﾌｫﾙﾀﾞ順 ↓
+        section: 所属順 ↓
+        date: 日付順
+      button:
+        new_file: ファイル追加
+        new_folder: フォルダ追加
+        edit_folder: フォルダ編集
+        delete_folder: フォルダ削除
+        edit_recognize: 承認あり編集
+        recognize: 承認
+        open: 公開
+      submit:
+        public: 公開
+        draft_save: 下書き保存
+        recognize_wait: 承認待ち
+        public_confirm: 公開します。よろしいですか？
+        recognize_confirm: 承認依頼します。よろしいですか？
+        draft_confirm: 下書き保存します。よろしいですか？
+        f_create_confirm: フォルダ登録します。よろしいですか？
+        f_edit_confirm: フォルダ修正します。よろしいですか？
+        send: 公開中です
+        recognize: 承認依頼中です
+        draft: 下書き保存中です
+        f_create: フォルダ登録中です
+        f_edit: フォルダ修正中です
+        save: 保存
+      file_folder_option:
+        label: ファイル／フォルダ操作
+        move: 移動
+        copy: コピー
+        open: 展開
+        status_select:
+          public: 公開
+          closed: 非公開
+      message:
+        attached_file_not_selected: ダウンロードするファイルを選択してください。
+        attached_file_not_found: 添付ファイルが見つかりませんでした。
+        file_name_too_long: フォルダ名、またはファイル名が長すぎるため、zipファイルが作成できませんでした。
+        cannot_create_zip_file: zipファイルが作成できませんでした。
+        concurrent_editing: 他の利用者が編集中のため更新を行うことができませんでした。
+        private: 「非公開」に変更すると、下位フォルダも合わせて非公開となります
+        admin_group: 所属する全ての人に管理権限が設定されます
+        admin_users: 指定された個人に管理権限が設定されます
+        read_group1: 所属する全ての人に閲覧権限が設定されます
+        read_group2: 設定が無ければ無条件に閲覧可能になります
+        read_user1: 指定された個人に閲覧権限が設定されます
+        invalid_user: "の%{error_user}は無効になっています。削除するか、または有効なユーザーを選択してください。"
+        validate_title: を入力してください。
+        validate_section_code: を設定してください。
+        validate_category1_id: が見つかりません。
+        validate_category_admin: への管理権限がありません。
+        tree_level_limit: "は%{tree_level_no}階層までしか作成できません。"
+        destroy_confirm1: "----------------------------------------------------------\n"
+        destroy_confirm2: "【注意】この操作は元に戻せません！\n必要なデータは必ず事前に保存しておいてください！\n"
+        destroy_confirm3: "----------------------------------------------------------\n\n"
+        destroy_confirm4: "%{parent}フォルダを削除します。\n配下のファイルやフォルダも全て削除されます。よろしいですか？\n\n"
+        destroy_confirm5: "※配下のファイルを個別に削除する場合は、いったん「キャンセル」し、\n各ファイルのタイトルをクリックした後に表示される「削除する」ボタンをクリックしてください。"
+        valid_recognizer: には閲覧権限を持つユーザーのみ選択してください
+        valide_admin_auth: グループ管理権限、もしくは個人管理権限を設定してください。
+        valide_reader_auth: グループ閲覧権限、もしくは個人閲覧権限を設定してください。
+      drag_and_drop:
+        message:
+          move_file: ファイルの移動に成功しました。
+          copy_file: ファイルのコピーに成功しました。
+          move_folder: フォルダの移動に成功しました。
+          copy_folder: フォルダのコピーに成功しました。
+          file_move_error: ファイルを移動できませんでした。
+          file_copy_error: ファイルをコピーできませんでした。
+          folder_move_error: フォルダを移動できませんでした。
+          folder_copy_error: フォルダをコピーできませんでした。
+          no_authority_to_edit_folder: フォルダへの編集権限がありません。
+          src_move_file_not_found: 移動元ファイルが見つかりませんでした。
+          src_move_folder_not_found: 移動元フォルダが見つかりませんでした。
+          dst_move_folder_not_found: 移動先フォルダが見つかりませんでした。
+          src_copy_file_not_found: コピー元ファイルが見つかりませんでした。
+          src_copy_folder_not_found: コピー元フォルダが見つかりませんでした。
+          dst_copy_folder_not_found: コピー先フォルダが見つかりませんでした。
+          attached_file_not_found: 添付ファイルが見つかりませんでした。
+          has_exceeded_capacity: ファイルの利用可能容量を超過しています。
+          cannot_move_folder: 指定フォルダへフォルダを移動できません。
+          cannot_copy_folder: 指定フォルダへフォルダをコピーできません。
+          no_movement: 移動元と移動先が同じフォルダです。
+          over_level_move: 作成可能な階層の上限を超えるため移動できません。
+          over_level_copy: 作成可能な階層の上限を超えるためコピーできません。
+    gwbbs:
+      th:
+        doctitle: 記事件名
+        docmanager: 発行元所属
+        createor_user: 作成者
+        doccreatedate: 登録日時
+        docreleasedate: 公開日時
+        docupdate: 最終更新日時
+        comment: コメント作成
+        able_date: 公開開始日時
+        expiry_date: 公開終了日時
+        section_code: 発行元所属
+        name_type: 表示する名称
+        name_editor_section_id: 表示する所属
+        importance: ステータス
+        tmpfile: 添付ファイル
+        oneline_comment: 1行コメント
+        body: 本文
+        recognize: 記事の承認
+      show:
+        section_code: 発行元所属：
+        detail_creator: 作成者：
+        detail_editor: 編集者：
+        status: ステータス：
+        expiry_date: 公開終了日：
+        move_show: 一覧
+        comment: コメント
+        creator: 登録者
+        creat_date: 登録日時
+      side:
+        admin: 管理者
+        general: 設定
+        list_date: 公開記事一覧
+        list_draft: 下書一覧
+        list_never: 公開前一覧
+        list_void: 期限切れ
+        search:
+          kwd: キーワード
+          group: 所属
+          creator: 作成者
+          startdate: 公開日
+      search_start:  から
+      search_end:  まで
+      submit:
+        public_confirm: 公開します。よろしいですか？
+        public_update_confirm: 受信者の状態が全て未読に戻ります。\n編集された内容で再公開してよろしいですか？
+        recognize_confirm: 承認依頼します。よろしいですか？
+        draft_confirm: 下書き保存します。よろしいですか？
+        send: 公開中です
+        recognize: 承認依頼中です
+        draft: 下書き保存中です
+        comment: コメント登録中です
+      message:
+        delete_description: 件の公開期限切れ記事があります
+        body_limit: 添付ファイルを除く記事本文総容量です
+        postperiod_word: ヶ月間
+        comment: コメントを入力してください。
+        regist_comment: コメントを登録しました。
+        edit_comment: コメントを更新しました。
+        validate_num: は数値で1以上を入力してください。
+        invalid_user: "の%{error_user}は無効になっています。削除するか、または有効なユーザーを選択してください。"
+        invalid_body_limit: "記事本文の容量制限を%{body_size}バイト超過しました。　不要な記事を削除するか、管理者に連絡してください。"
+        validate_title: タイトルを入力してください。
+        validate_title_space: スペースのみのタイトルは登録できません。
+        validate_title_limit: タイトルは140文字以内で記入してください。
+        validate_category1_id: を設定してください。
+        validate_section_code: を選択してください。
+        validate_expiry_date: を確認してください。（期限日が公開日より前になっています。）
+        lose_display: 保存していない場合、編集中の内容は失われます
+        able_date: 公開開始日時を入力してください。
+        incorrect_able_date: 公開開始日時を正しく入力してください。
+        not_exist_able_date: 公開開始日時に存在しない日時が設定されています。
+        expiry_date: 公開終了日時を正しく入力してください。
+        not_exist_expiry_date: 公開終了日時に存在しない日時が設定されています。
+        startdate: 公開日（期間開始）を正しく入力してください。
+        enddate: 公開日（期間終了）を正しく入力してください。
+        not_exist_startdate: 公開日（期間開始）に存在しない日付が設定されています。
+        not_exist_enddate: 公開日（期間終了）に存在しない日付が設定されています。
+        not_title: タイトルが登録されていません
+        bbs_fail: タイトルが指定されていないか、公開されている情報ではありません。
+        use_body_size: 記事本文使用量は
+        use_body_capacity : 記事本文利用率は
+        byte: バイト
+        tail_message: です。
+        use_body_limit_near: 制限値に近付いています。
+        use_body_limit_over: 制限値を超過しました。
+      select_item:
+        public: 公開中
+        private: 非公開
+        view_show: する
+        view_hide: しない
+        category_name: 分類
+        status:
+          importance: 重要必読
+          normal: 普通
+        oneline_comment:
+          use: 使用する
+          unused: 使用しない
+        display_user:
+          user_name: ユーザー名のみ
+          section_code: 所属名のみ
+          both: ユーザー名と所属名
+        limit_line:
+          none: しない
+          day_1: 1日
+          month_1: 1ヵ月
+          month_3: 3ヵ月
+          month_6: 6ヵ月
+          month_9: 9ヵ月
+          month_12: 12ヵ月
+          month_15: 15ヵ月
+          month_18: 18ヵ月
+          month_24: 24ヵ月
+        recognize_on: 承認あり
+        recognize_off: 承認なし
+      download:
+        tmpfile: 掲示板添付ファイル
+      forward:
+        title: 転送（掲示板から）
+        circular: 転送（回覧板）
+        mail: 転送（メール）
+        entry_header: 転送先掲示板選択
+    gwcircular:
+      link:
+        seen: 回覧内容について、確認しました
+      th:
+        title: タイトル
+        body: 回覧記事
+        circular_limit: 回覧期限日時
+        importance: ステータス
+        creator: 回覧作成：
+        expiry_date: 閲覧期限：
+        spec_config: 受信者側表示設定
+        state: 状態
+        target_user: 受信者名
+        comment: コメント
+        tmpfile: 添付
+        opendocdate: 確認日時
+        createdate: 作成日時
+        editdate: 最終更新日時
+        charcode: 文字コード
+        createor_user: 作成者
+        circular_status: 回覧状況
+        csv: CSVファイル
+        attachment: 添付ファイル
+        output: 出力
+      attach_list:
+        list: 添付ファイル一覧
+        title: タイトル
+        name: 添付ファイル名
+        memo: 備考
+      csv_export:
+        export: CSV出力
+        description1: 文字コードを選択して実行してください。
+        description2: 出力対象を、指定の文字コードで出力します。
+      file_export:
+        export: 添付ファイル出力
+        description1: 文字コードを選択して実行してください。
+        description2: すべての添付ファイルをひとつにまとめてZip形式で出力します。Zipファイル中に含まれる各ファイル名を、指定の文字コードで出力します。
+      search_start: から
+      search_end: まで
+      submit:
+        public_confirm: 配信します。よろしいですか？
+        public_update_confirm: 受信者の状態が全て未読に戻ります。（コメントは残ります）\n編集された内容で再配信してよろしいですか？
+        draft_confirm: 下書き保存します。よろしいですか？
+        send: 配信中です
+        draft: 下書き保存中です
+        comment: コメント登録中です
+      custom_group:
+        message:
+          blank: カスタムグループを事前に登録してください
+          validate_readers: 配信先を設定してください。
+        states:
+          enabled: 有効
+          disabled: 無効
+        custom_select: 宛先リストを事前に登録してください
+      message:
+        attached_file_not_found: 添付ファイルが見つかりませんでした。
+        file_name_too_long: フォルダ名、またはファイル名が長すぎるため、zipファイルが作成できませんでした。
+        cannot_create_zip_file: zipファイルが作成できませんでした。
+        comment: コメントを入力してください。
+        already_update_error: サーバが混み合っています。しばらく待ってから再度操作を行ってください。
+        no_export_file: 出力対象の添付ファイルがありません。
+        validate_num: は数値で1以上を入力してください。
+        validate_title: を入力してください。
+        validate_title_space: スペースのみのタイトルは登録できません。
+        validate_title_limit: は140文字以内で記入してください。
+        validate_body_limit: 返信内容は140文字以内で記入してください。
+        validate_expiry_date: を確認してください。（期限日が作成日より前になっています。）
+        validate_commission_limit: "配信先に%{cnt}人設定されていますが、回覧人数の制限値を越えています。最大%{commission_limit}人まで登録可能です。"
+        circular_limit: 回覧期限日時を入力してください。
+        correct_circular_limit: 回覧期限日時を正しく入力してください。
+        no_presence_circular_limit: 回覧期限日時に存在しない日時が設定されています。
+        no_select_destination: 配信先が選択されていません。
+        limit_st_date: 期限日（期間開始）を正しく入力してください。
+        limit_ed_date: 期限日（期間終了）を正しく入力してください。
+        create_st_date: 作成日（期間開始）を正しく入力してください。
+        create_ed_date: 作成日（期間終了）を正しく入力してください。
+        no_presence_limit_st_date: 期限日（期間開始）に存在しない日付が設定されています。
+        no_presence_limit_ed_date: 期限日（期間終了）に存在しない日付が設定されています。
+        no_presence_create_st_date: 作成日（期間開始）に存在しない日付が設定されています。
+        no_presence_create_ed_date: 作成日（期間終了）に存在しない日付が設定されています。
+      download:
+        tmpfile: 回覧板添付ファイル
+      setting:
+        title: 回覧板 機能設定
+      select_item:
+        default_limit:
+          line_10: 10行
+          line_20: 20行
+          line_30: 30行
+          line_50: 50行
+          line_100: 100行
+          line_150: 150行
+          line_200: 200行
+          line_250: 250行
+        delete_date_setting:
+          none: しない
+          use: する
+        delivery_status:
+          undelivered: 未配信
+          public: 配信済み
+          draft: 下書き
+          public_end: 期限終了
+          preparation: 非通知
+          still: 配信予定
+          unread: 未読
+          already: 既読
+          public_limit: 期限切れ
+        status:
+          importance: 重要必読
+          normal: 普通
+        limit_line:
+          none: しない
+          day_1: 1日
+          month_1: 1ヵ月
+          month_3: 3ヵ月
+          month_6: 6ヵ月
+          month_9: 9ヵ月
+          month_12: 12ヵ月
+          month_15: 15ヵ月
+          month_18: 18ヵ月
+          month_24: 24ヵ月
+      commission:
+        custom_group: 配信先設定（宛先リスト）
+        pre_registration: 事前に登録しているカスタムグループから選択します。
+        destination: 配信先設定
+        select_user: 指定された個人に回覧板が配信されます。
+      comment:
+        create: コメント作成
+      doc:
+        attachment_name: 添付ファイル名
+      script:
+        start: 回覧板id, DB名, 回覧板タイトル,削除件数, (処理開始)
+        end: 回覧板期限切れ記事削除処理終了
+        item_no_set: 管理情報登録ない　終了.
+        span_no_set: 期間の設定がない　終了.
+        cols_valid: cols が異常です
+      side:
+        menu:
+          unread: 未読の回覧
+          already: 既読の回覧
+          owner: 作成した回覧
+          admin: 管理者
+        search:
+          message: 選択されている区分（未読・既読等）の回覧を検索します。
+          kwd: キーワード
+          grp: 所属
+          creator: 作成者
+          expirydate: 期限
+          start: から
+          end: まで
+          createdate: 作成日
+    attachment:
+      message:
+        name_too_long: ファイル名が長すぎるため保存できませんでした。
+        exceed_max_size: "ファイルサイズが制限を超えています。【最大%{max_size}MBの設定です。】【%{file_size}MBのファイルを登録しようとしています。】"
+        fail_exceed_max_size: "ファイルサイズが制限を超えているため、ファイルが添付できませんでした。【最大%{max_size}MBの設定です。】【%{file_size}MBのファイルを登録しようとしています。】"
+        exceed_capacity: ファイルの利用可能容量を超過しています。
+        file_memo: 備考を更新しました。
+        no_file: ファイルが指定されていません。
+      label:
+        file_name: ファイル名
+        file_size: サイズ（幅x高さ）
+        insert_link: リンク貼付
+        insert_image: 画像貼付
+        notes: 備考
+        delete: 削除
+    freezescreen:
+      default: 処理中です
+    forward:
+      to_gwcircular: 転送（回覧板から）
+    account:
+      not_sso: SSOの設定がありません。
+      group_error_head: 所属設定が異常です。
+      group_error_tail: 管理者に連絡してください。
+    memo:
+      same_send: 同時受信者
+      get_at: 連絡メモが届きました。
+      reception: 受信
+      transmission: 送信
+      th:
+        title: 伝言
+        group: 所属/担当/社名
+        user: 担当者
+        ed_at: 時刻
+        creator: 送信者
+    session:
+      auto_delete_start: セッション情報自動削除開始
+      auto_elete_end: セッション情報自動削除終了
+    sys:
+      message:
+        not_auth: 権限がありません。
+    mail:
+      name: :rumi.reminder.feature.mail.name
+      admin: 管理画面
+      error_message_head: ログインに失敗しました。
+      error_message_tail: 時間をおいてお試しください。
+      late_error: メールサーバが混雑等の原因により遅延しているようです。しばらく時間をおいてからアクセスしてください。
+      imap_connect_fail: IMAP： 接続に失敗
+    smart:
+      login:
+        name: ログイン
+      logout:
+        name: ログアウト
+      portal:
+        name: トップページ
+      schedule:
+        name: スケジュール
+        move_core:
+          last_year: 前年
+          last_month: 前月
+          last_week: 前週
+          yesterday: 前日
+          today: 今日
+          this_month: 今月
+          tomorrow: 翌日
+          following_week: 翌週
+          following_month: 翌月
+          following_year: 翌年
+      schedule_prop:
+        name: 施設予約
+      pc:
+        name: PC版表示
+    error:
+      input: を入力してください。
+      select: を選択してください。
+      date: は正しい日付を入力してください。
+      number: は整数で入力してください。
+      number9: は9桁以内の整数で登録してください。
+      number0_of_6: は 0～6 の整数で登録してください。
+      not_zero: は０以外の数値を入力してください。
+      registration: を登録してください。
+      registered: はすでに登録されています。
+      abnormality: が異常です。
+      not_email: は正しいEメールアドレスではありません。
+      undefined_type: 不明な型です。
+      schedule:
+        context: と終了日時の前後関係が不正です。
+        unimplemented: update/create 以外は未実装です
+        automatic_correction: という日時は、データが異常、もしくは日付が存在しません。日時の入力内容は、直近の正常な日時に自動修正されます。ご注意ください。
+        authority_user_select: はスケジュール登録に権限が必要なユーザーを含んでいます。ユーザーを再指定してください。
+        user_blank: は空欄となっています。ユーザーを指定してください。
+        view_only_auth_head: この施設
+        view_only_auth: は照会のみ可能で予約は行えません。予約する場合は、施設の管理所属にお問い合わせください。
+        of: の
+        after_st_date: は、開始日より後の日付を入力してください。
+        after_st_at: は、開始日時以降の日時を入力してください。
+        span_hour_head: から終了日時までの間隔は、
+        span_hour_tail: 時間まで許可されています。
+        span_hour_check: 開始日時、終了日時の見直しを行ってください。
+        repeat_head: 、終了日の間の期間、条件に当てはまる日は
+        repeat_body: 日となります。繰り返し回数は
+        repeat_tail: 回まで許されます。開始日、終了日、規則などを見直し、再度登録してください。
+        competition_prop: 重複した施設
+        reservation_prop: の範囲外の施設は予約できません。（該当する施設
+        unavailable_prop: より先の予約を行うことはできません。（該当する施設
+      prop_other:
+        d_load_st: は予約可能終了日より前の日を入力してください。
+        with_no_limit_group: には「制限なし」と他の所属の同時登録はできません。
+      group:
+        parent_disable: は、上位所属が「無効」のため、「有効」にできません。
+        enable_end_at_blank: は、状態が「有効」の場合、空欄としてください。
+        after_start_at: には、適用開始日より後の日付を入力してください。
+        before_today: には、本日以前の日付を入力してください。
+      users_group:
+        enable_end_at_blank: は、ユーザーの状態が「有効」の場合、空欄としてください。
+        after_start_at: には、配属開始日より後の日付を入力してください。
+        before_today: には、本日以前の日付を入力してください。
+      role_name_priv:
+        registered: と対象権限が登録済みのものと重複しています。

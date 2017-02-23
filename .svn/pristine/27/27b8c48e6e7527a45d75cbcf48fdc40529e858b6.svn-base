@@ -1,0 +1,21 @@
+<% states = Gw::AdminMessage.state_select %>
+
+<%= p_required_head %>
+
+<table class="defaultTable">
+  <tr>
+    <th><%= t("rumi.config_settings.admin_message.th.view") %><%= required('※') %></th>
+    <td><%= radio f, :state, states, :class => 'state' %></td>
+  </tr>
+  <tr>
+    <th><%= t("rumi.config_settings.admin_message.th.sort_no") %><%= required('※') %></th>
+    <td>
+      <%= f.text_field :sort_no, :size => 5, :class => 'IMEoff' %>
+      <%= t("rumi.config_settings.admin_message.sort_no.explain") %>
+    </td>
+  </tr>
+  <tr>
+    <th><%= t("rumi.config_settings.admin_message.th.message") %><%= required('※') %></th>
+    <td><%= f.text_area :body, :cols => 60, :rows => 5 %></td>
+  </tr>
+</table>

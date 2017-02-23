@@ -1,0 +1,44 @@
+<%= render partial: 'header' %>
+
+<!-- コンテンツここから -->
+<div class="main">
+  <%= div_notice %>
+  <%= render partial: 'menu' %>
+
+  <div style="margin-bottom: 20px;">
+    <% @groups.each do |d| %>
+      <% next unless d.synchro_target? %>
+      <div class="ldap_dep">
+        <%= d.code %>,
+        <%= d.name %>
+      </div>
+      <div class="ldap_secs">
+        <% d.children.each do |s| %>
+          <div class="ldap_sec">
+            <%= s.code %>,
+            <%= s.name %>,
+            <%= s.name_en %>,
+            <%= s.email %>
+          </div>
+          <div class="ldap_users">
+            <% s.users.each do |u| %>
+              <% next unless u.synchro_target? %>
+              <span class="ldap_user">
+                <%= u.name %>/
+              </span>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="backlink paginationSingle">
+    <ul>
+      <li>
+        <%= link_to t("rumi.back_link.return"), system_ldap_temporaries_path %>
+      </li>
+    </ul>
+  </div>
+</div>
+<!-- コンテンツここまで -->

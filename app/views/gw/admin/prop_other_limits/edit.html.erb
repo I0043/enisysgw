@@ -1,0 +1,10 @@
+<%= render partial: 'piece_header' %>
+
+<!-- コンテンツここから -->
+<div class="main">
+  <%= form_for :item, url: gw_prop_other_limit_path, html: {method: :put} do |f| %>
+    <%= render partial: 'form', locals: {f: f} %>
+      <%= raw(submit_for_update(f)) %>
+  <% end %>
+</div>
+<!-- コンテンツここまで -->

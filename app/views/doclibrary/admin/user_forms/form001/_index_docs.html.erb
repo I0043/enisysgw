@@ -1,0 +1,124 @@
+<%= javascript_tag do %>
+  listForm_obj = new rumi.listForm();
+<% end %>
+
+<div class="docfileTitle"><%= t('rumi.doclibrary.docFileTitle') %></div>
+<%= form_tag '/doclibrary/docs', :method => :get, :id => 'file_form' do |f| %>
+  <%= hidden_field_tag(:title_id, params[:title_id]) unless params[:title_id].blank? %>
+  <%= hidden_field_tag(:cat, params[:cat]) unless params[:cat].blank? %>
+  <%= hidden_field_tag(:state, params[:state]) unless params[:state].blank? %>
+  <%= hidden_field_tag(:kwd, params[:kwd]) unless params[:kwd].blank? %>
+  <%= hidden_field_tag(:creator, params[:creator]) unless params[:creator].blank? %>
+  <%#= hidden_field_tag(:term_start, params[:term_start]) unless params[:term_start].blank? %>
+  <%#= hidden_field_tag(:term_finish, params[:term_finish]) unless params[:term_finish].blank? %>
+  <table class="docformDownloader">
+    <tr>
+      <td>
+          <%= submit_tag(t('rumi.doclibrary.th.download'),
+              {:name => 'download', :class=> 'download'}) %>
+      </td>
+    </tr>
+    <% if flash.now[:error].present? %>
+      <tr>
+        <td>
+          <div class="notice">
+            <%= flash.now[:error] %>
+          </div>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+  <table class="defaultTable listTable docformTitle" style="margin-bottom:5px;">
+    <tr>
+      <% if @is_category_index_form && @parent.admin_user? %>
+        <th style="width:5px;"></th>
+      <% end %>
+      <th class="checker">
+        <input type="checkbox" id="check_all" onclick="listForm_obj.checkAll('file_form', 'file_check', 'check_all'); return false;">
+      </th>
+      <% if @is_doc_searching || (params[:state] != 'CATEGORY') %>
+        <th>
+          <%= t('activerecord.attributes.doclibrary/doc.title') %>
+        </th>
+        <th>
+          <%= t('activerecord.attributes.doclibrary/doc.category1') %>
+        </th>
+      <% else %>
+        <th>
+          <%= t('activerecord.attributes.doclibrary/doc.foldertitle') %>
+        </th>
+      <% end %>
+      <th style="width:20%;">
+        <%= t('activerecord.attributes.doclibrary/doc.section') %>
+      </th>
+      <th class="update"><%= t('rumi.doclibrary.th.update_at') %></th>
+    </tr>
+    <% if (params[:state] == 'CATEGORY' || (params[:state] == 'DRAFT' && @doclibrary_admin)) && @folders.present? && @is_doc_searching == false %>
+      <% for folder in @folders %>
+        <tr>
+          <%
+          case params[:state]
+          when 'DRAFT'
+            folder_path = "/doclibrary/docs?title_id=#{@title.id}&state=CATEGORY&cat=#{folder.id}"
+          else
+            folder_path = folder_doclib_category_qstring(folder)
+          end
+          %>
+          <% if @is_category_index_form && @parent.admin_user? %>
+            <td></td>
+          <% end %>
+          <td></td>
+          <% if @is_doc_searching || (params[:state] != 'CATEGORY') %>
+            <td></td>
+            <td class="title">
+              <div class="someFolder">&nbsp;</div>
+              <%= link_to folder.name, folder_path %>
+            </td>
+          <% else %>
+            <td class="title">
+              <div class="someFolder">&nbsp;</div>
+              <%= link_to folder.name, folder_path %>
+            </td>
+          <% end %>
+          <td></td>
+          <td><%= I18n.l (folder.docs_last_updated_at || folder.updated_at) %></td>
+        </tr>
+      <% end %>
+    <% end %>
+
+    <% for item in @items %>
+      <tr>
+        <% if @is_category_index_form && @parent.admin_user? %>
+          <td class="icondrag draggable ui-draggable" id="dragfile_<%= item.id%>"></td>
+        <% end %>
+        <td class="checker" style="text-align:center;">
+          <% checked = (params[:file_check])? params[:file_check].include?(item.id.to_s) : false %>
+          <%= check_box_tag 'file_check[]', item.id, checked %>
+        </td>
+        <% if @is_doc_searching || (params[:state] != 'CATEGORY') %>
+          <td class="title">
+            <div class="someFile">&nbsp;</div>
+            <%= link_to item.title, "#{doclibrary_show_uri(item,params)}#{doclib_params_set_index}" %>
+          </td>
+          <td>
+            <% unless item.parent.blank? %>
+              <%= link_to get_doc_folder(item.parent),
+                  item.parent.link_list_path,
+                  {:title => "#{create_doc_folder_tooltip(item.parent)}"} %>
+            <% end %>
+          </td>
+        <% else %>
+          <td class="title">
+            <div class="someFile">&nbsp;</div>
+            <%= link_to item.title, "#{doclibrary_show_uri(item,params)}#{doclib_params_set_index}" %>
+          </td>
+        <% end %>
+        <td><%= item.section_name %></td>
+        <td>
+          <%= I18n.l item.updated_at if item.updated_at.present? %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+<% end %>
+<%= paginate @items %>

@@ -1,0 +1,89 @@
+<%
+  edit = t("rumi.button.edit")
+  delete = t("rumi.button.delete")
+  destroy_confirm_s = t("rumi.message.confirm.delete")
+%>
+<%= render partial: 'piece_header', locals: {piece_head_title: @piece_head_title} %>
+<!-- コンテンツここから -->
+<div class="main">
+  <!-- フォーム切替ボタン等 -->
+  <div class="area_contentsNav">
+    <div class="navBlock">
+      <div class="contentsNav">
+        <ul>
+          <li class="btEdit">
+            <%= link_to image_tag("/images/icon/pen.png", alt: edit) + edit, edit_doclibrary_cabinet_path(@item) %>
+           </li>
+          <li class="btDestroy">
+            <%= link_to image_tag("/images/icon/dele.png", alt: delete) + delete, doclibrary_cabinet_path(@item), data: {confirm: destroy_confirm_s}, :method => 'delete' %>
+          </li>
+        </ul>
+      </div>
+      <!-- // .contentsNav -->
+    </div>
+    <!-- // .navBlock -->
+    <span class="docLinkRight">
+      <%=link_to(t("rumi.gwboard.list.public_display"), @item.docs_path) %>
+    </span>
+  </div>
+  <!-- // .area_contentsNav -->
+  <div class="notice"><%= flash.now[:notice] %></div>
+
+  <table class="defaultTable inputTable">
+    <tr>
+    <th class="blueIndex"><%= t("rumi.gwboard.th.status") %></th>
+    <td><%=@item.states[@item.state]%></td>
+    </tr>
+  </table>
+  <table class="defaultTable inputTable">
+    <tr>
+    <th class="blueIndex">
+      <%= t('activerecord.attributes.doclibrary/control.title') %>
+    </th>
+    <td><%= @item.title%></td>
+    </tr>
+  <tr>
+    <th class="blueIndex"><%= t("rumi.gwboard.th.listlines") %></th>
+    <td><%=@item.default_limit%></td>
+    </tr>
+  </table>
+  <table class="defaultTable inputTable">
+    <tr>
+      <th><%= t("rumi.gwboard.th.admin_group") %></th>
+      <td>
+      <% for admingrp in @admingrps %>
+      <%=%Q[#{admingrp[2]}]%><br />
+      <%end if @admingrps%>
+      </td>
+    </tr>
+    <tr>
+      <th><%= t("rumi.gwboard.th.admin") %></th>
+      <td>
+      <% for adm in @adms %>
+      <%=%Q[#{adm[2]}]%><br />
+      <%end if @adms%>
+      </td>
+    </tr>
+    <tr>
+      <th><%= t("rumi.gwboard.th.reader_group") %></th>
+      <td>
+      <% for reader in @readers %>
+      <%=%Q[#{reader[2]}]%><br />
+      <%end if @readers%>
+      </td>
+    </tr>
+    <tr>
+      <th><%= t("rumi.gwboard.th.reader") %></th>
+      <td>
+      <% for sureader in @sureaders %>
+      <%=%Q[#{sureader[2]}]%><br />
+      <%end if @sureaders%>
+      </td>
+    </tr>
+  </table>
+  <div class="backlink paginationSingle">
+    <ul>
+      <li><%=link_to(t('rumi.back_link.gwboard_admin'), doclibrary_cabinets_path) %></li>
+    </ul>
+  </div>
+</div>

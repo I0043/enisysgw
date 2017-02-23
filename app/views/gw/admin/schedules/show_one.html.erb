@@ -1,0 +1,137 @@
+<%
+  link_date = Gw.datetime_to_date(@item.st_at)
+  mode = 'form'
+
+  message = get_maeesages
+
+  # 開始日時、終了日時の文字列
+  time_show = @item.time_show
+  st_at_s = "#{I18n.l @item.st_at.to_date, format: :date5} #{time_show[:st_at_show]}"
+  ed_at_s = "#{I18n.l @item.ed_at.to_date, format: :date5} #{time_show[:ed_at_show]}"
+  
+  title_category = Gw.yaml_to_array_for_select('gw_schedules_title_categories', :include_blank=>1).to_a.rassoc(@item.title_category_id.to_i) # 件名カテゴリ
+  if @item.delete_state == 1
+    delete_flg = true
+  else
+    delete_flg = false
+  end
+%>
+<%= render partial: '/gw/admin/schedules/piece_header', locals: {piece_head_title: @piece_head_title, new: true} %>
+
+<!-- コンテンツここから -->
+<div class="main">
+  <!-- フォーム切替ボタン等 -->
+  <% if params[:action] == 'show_one' || params[:action] == 'delete_schedule'  || params[:action] == 'delete_schedule_repeat' %>
+    <%= render partial: '/gw/admin/schedules/schedule_bt_box', locals: {d: link_date, mode: mode} %>
+  <% end %>
+  <!-- フォーム切替ボタン等ここまで -->
+  <% if params[:action] == 'show_one' && delete_flg %>
+    <div class="deleteSchedule" id="deleteSchedule">
+      <%=  t("rumi.schedule.message.deleted_schedule") -%>
+    </div>
+  <% end %>
+  <%= raw(div_notice) %>
+
+  <%= p_required(message) %>
+  <% if @item.repeated? %>
+    <table class="defaultTable">
+      <tr>
+        <td colspan="2">
+          <%= t("rumi.schedule.repeat.head") %>
+          <%= I18n.l @item.repeat.st_date_at.to_date, format: :date1 %>
+          <%= t("rumi.schedule.repeat.body") %>
+          <%= I18n.l @item.repeat.ed_date_at.to_date, format: :date1 %>
+          <%= t("rumi.schedule.repeat.tail") %>
+        </td>
+      </tr>
+    </table>
+  <% end %>
+
+  <table class="defaultTable rentDetails">
+    <tr>
+      <th><%= t("rumi.schedule.th.st_at") %></th>
+      <td><%= st_at_s %></td>
+    </tr>
+    <tr>
+      <th><%= t("rumi.schedule.th.ed_at") %></th>
+      <td><%= ed_at_s %></td>
+    </tr>
+    <tr>
+      <th><%= t("rumi.schedule.th.title") %></th>
+      <td><%= "【#{title_category[0]}】　" unless title_category.blank? %><%= @item.title %></td>
+    </tr>
+    <tr>
+      <th><%= t("rumi.schedule.th.place") %></th>
+      <td><%= @item.place %></td>
+    </tr>
+    <tr>
+      <th><%= t("rumi.schedule.th.memo") %></th>
+      <td><%= simple_format(h(@item.memo)) %></td>
+    </tr>
+    <tr>
+      <th><%= t("rumi.schedule.th.creator") %></th>
+      <td><%= @item.creator_gname %>　<%= @item.creator_uname %></td>
+    </tr>
+    <tr>
+      <th><%= t("rumi.schedule.th.created_at") %></th>
+      <td><%= I18n.l @item.created_at %></td>
+    </tr>
+    <tr>
+      <th><%= t("rumi.schedule.th.updater") %></th>
+      <td><%= @item.updater_gname %>　<%= @item.updater_uname %></td>
+    </tr>
+    <tr>
+      <th><%= t("rumi.schedule.th.updated_at") %></th>
+      <td><%= I18n.l @item.updated_at if @item.updated_at.present? %></td>
+    </tr>
+    <% if @use_prop %>
+      <tr>
+        <th><%= t("rumi.schedule.th.inquire_to") %></th>
+        <td><%= @item.inquire_to %></td>
+      </tr>
+    <% end %>
+    <tr>
+      <th><%= t("rumi.schedule.th.public") %></th>
+      <td><%= @public_show %></td>
+    </tr>
+    <% if @item.is_public == 2 %>
+      <tr>
+        <th><%= t("rumi.schedule.th.public_group") %></th>
+        <td><%= raw(Gw.join([@item.public_groups_display], '<br />')) %></td>
+      </tr>
+    <% end %>
+  </table>
+
+  <%= raw(Gw::ScheduleUser.users_state_view(@item, caption: t("rumi.schedule.th.users"))) %>
+
+  <% if @item.schedule_props.length > 0 %>
+    <table class="defaultTable">
+      <tr>
+        <th colspan="4"><%= t("rumi.schedule_prop.name") %></th>
+      </tr>
+      <% @item.schedule_props.each do |schedule_prop| %>
+        <% prop = schedule_prop.prop %> 
+        <% if prop.present? %>
+          <%
+            type = prop.prop_type
+            type_name = type.present? ? type.name : ""
+          %>
+          <tr>
+            <th style="width: 135px;"><%= t("rumi.schedule_prop.th.name") %> <%= "（#{type_name}）" %></th>
+            <td><%= schedule_prop.prop.name %></td>
+            <th style="width: 135px;"><%= t("rumi.schedule_prop.th.admin_group") %></th>
+            <td><%= schedule_prop.owner_s %></td>
+          </tr>
+        <% end %>
+      <% end %>
+    </table>
+  <% end %>
+  
+  <!-- ページネーション -->
+  <div class="backlink paginationSingle">
+    <ul>
+      <li><%= link_to t("rumi.back_link.return"), @request_from.present? ? @request_from : :back %></li>
+    </ul>
+  </div>
+</div>
+<!-- コンテンツここまで -->

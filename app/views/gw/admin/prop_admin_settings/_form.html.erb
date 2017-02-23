@@ -1,0 +1,106 @@
+<%
+  parent_group_id = Core.user_group.parent_id
+  group_child_groups = System::Group.child_groups_to_select_option(parent_group_id)
+  admin_values = params[:item] && params[:item][:admin_json] ? params[:item][:admin_json] : nz(@admin_json)
+%>
+
+<%= raw(Gw.required_head) %>
+
+<table class="defaultTable rentDetails inputTable">
+  <tr>
+    <th><%= t("rumi.prop_admin_setting.th.name") %><%= required %></th>
+    <td><%= f.text_field :name, size: 30 %></td>
+  </tr>
+  <tr>
+    <th><%= t("rumi.prop_admin_setting.th.type") %><%= required %></th>
+    <td><%= f.select(:type_id, options_from_collection_for_select(@type, :id, :name, @item.type_id)) %></td>
+  </tr>
+  <tr>
+    <th><%= t("rumi.prop_admin_setting.th.span_limit") %><%= required %></th>
+    <td>
+      <%= f.text_field :span, size: 30 %>
+      <%= t("rumi.prop_admin_setting.th.day") %>　<%= t("rumi.prop_admin_setting.th.limitless") %>：
+      <%= raw f.check_box("span_limit", {onClick: 'span_check(this)'}, "1", "0") %>
+      &nbsp;
+      <%= raw(t("rumi.prop_admin_setting.message.span_limit"))%>
+    </td>
+  </tr>
+  <tr>
+    <th><%= t("rumi.prop_admin_setting.th.span_hour") %><%= required %></th>
+    <td>
+      <%= f.text_field :span_hour, size: 30 %>
+      <%= t("rumi.prop_admin_setting.th.hour") %>　<%= t("rumi.prop_admin_setting.th.limitless") %>：
+      <%= raw f.check_box("time_limit", {:onClick => 'time_check(this)'}, "1", "0") %>
+      &nbsp;
+      <%= raw(t("rumi.prop_admin_setting.message.span_hour"))%>
+    </td>
+  </tr>
+  <tr>
+    <th><%= t("rumi.prop_admin_setting.th.group") %><%= required %></th>
+    <td>
+      <%= render partial: "shared/select_group", locals: {
+        parent_group_selected: parent_group_id, child_groups: build_select_parent_groups(group_child_groups),
+        hidden_item_name: "item[admin_json]", values: admin_values,
+        ui_mode: ui_mode_groups_default
+      } %>
+    </td>
+  </tr>
+</table>
+
+<script language = "JavaScript" type="text/javascript">
+  <!--
+  var my_submit = function() {
+    // prop
+    var fr = $('item_admin_json');
+    // valueが無い、もしくはJSONが空の場合はalertを出す
+    if (!fr.value || JSON.parse(fr.value).length == 0) {
+      alert("<%= t("rumi.message.confirm.group_no_select") %>");
+      return false;
+    }
+
+    $('itemForm').submit(); // 送信
+  }
+
+  var span_check = function(obj) {
+    if (obj.checked) { // チェックボックスはチェックされています
+      $('item_span').value="";
+      $('item_span').disabled = true;
+    } else { // チェックボックスはチェックされていません
+      $('item_span').value="";
+      $('item_span').disabled = false;
+    }
+  }
+  var time_check = function(obj) {
+    if (obj.checked) { // チェックボックスはチェックされています
+      $('item_span_hour').value="";
+      $('item_span_hour').disabled = true;
+    } else { // チェックボックスはチェックされていません
+      $('item_span_hour').value="";
+      $('item_span_hour').disabled = false;
+    }
+  }
+
+  var span_check_s = function(obj) {
+    if (obj.checked) { // チェックボックスはチェックされています
+      $('item_span').value="";
+      $('item_span').disabled = true;
+    } else { // チェックボックスはチェックされていません
+      $('item_span').disabled = false;
+    }
+  }
+  var time_check_s = function(obj) {
+    if (obj.checked) { // チェックボックスはチェックされています
+      $('item_span_hour').value="";
+      $('item_span_hour').disabled = true;
+    } else { // チェックボックスはチェックされていません
+      $('item_span_hour').disabled = false;
+    }
+  }
+
+  var my_load = function() {
+    span_check_s($('item_span_limit'));
+    time_check_s($('item_time_limit'));
+  }
+  window.onload = my_load;
+  -->
+</script>

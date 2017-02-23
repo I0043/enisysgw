@@ -1,0 +1,10 @@
+<%= render partial: '/gwcircular/admin/menus/piece_header', locals: {piece_head_title: @piece_head_title} %>
+<!-- コンテンツここから -->
+<div class="main">
+  <div class="entry_subHeader">
+    <h3><%= @item.title %></h3>
+  </div>
+
+  <%= render :partial => 'form' %>
+
+</div>

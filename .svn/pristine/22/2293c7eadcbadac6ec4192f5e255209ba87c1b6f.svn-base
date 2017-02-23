@@ -1,0 +1,50 @@
+<%= render partial: 'piece_header' %>
+
+<!-- コンテンツここから -->
+<div class="main">
+  <%= div_notice %>
+  <div class="area_contentsNav">
+    <div class="navBlock">
+      <div class="contentsNav">
+        <ul>
+          <li><%= link_to(t("rumi.prop_other_limit.synchro"), action: :synchro) %></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  
+  <% if @items.blank? %>
+    <%= t("rumi.message.empty.list") %>
+  <% else %>
+    <table class="defaultTable">
+      <tr>
+        <th></th>
+        <th><%= t("rumi.prop_other_limit.th.group") %></th>
+        <th><%= t("rumi.prop_other_limit.th.limit") %></th>
+        <th><%= t("rumi.prop_other_limit.th.sum") %></th>
+        <% @prop_types.each do |type| %>
+          <th><%= type.name %></th>
+        <% end %>
+      </tr>
+      <% @items.each do |item| %>
+        <% count = current_count_group_props_each(item.gid, @prop_types) %>
+        <tr class="<%= cycle '' , 'cycle' %>">
+          <td><%= link_to_show item.id %></td>
+          <td><%= raw(item.group.name) %></td>
+          <td><%= item.limit %></td>
+          <td><%= count[@prop_types.size] %></td>
+          <% @prop_types.each_with_index do |type, i| %>
+          <td class="item"><%= count[i] %></td>
+          <% end %>
+        </tr>
+      <% end %>
+    </table>
+  <% end %>
+
+  <div class="backlink paginationSingle">
+    <ul>
+      <li><%= link_to t("rumi.back_link.admin"), gw_config_settings_path %></li>
+    </ul>
+  </div>
+</div>
+<!-- コンテンツここまで -->

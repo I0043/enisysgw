@@ -1,0 +1,84 @@
+<% _path = '/_attachs/gwcircular/'%>
+<%
+  if @item.blank?
+    mce_base_url = ''
+  else
+    mce_base_url = _path + sprintf("%06d", @item.title_id) + '/' + @item.name + "/" unless @item.name.blank?
+  end
+%>
+<%= tool_tiny_mce(mce_base_url, {:leftbar_mode=>true}) %>
+<%= raw(gw_js_include_full) %>
+<%= raw(%Q(<div class="notice">#{required(flash.now[:notice])}</div>)) unless flash.now[:notice].blank? %>
+<%= required_head %>
+<table class="show bbsText defaultTable">
+  <tr>
+    <th>
+      <%= t('rumi.gwcircular.th.title') %><%= raw(required('※')) %> ( <%= t('rumi.gwcircular.th.title') + t('rumi.gwboard.message.title_limit') %> )
+    </th>
+  </tr>
+  <tr>
+    <td><%= f.text_field :title, size: 140, maxlength: 140, style: "width:100%;" %></td>
+  </tr>
+  <tr>
+    <th><%= t('rumi.gwcircular.th.body') %></th>
+  </tr>
+  <tr>
+    <td class="mceEditor">
+      <%= f.text_area :body, class: 'mceEditor', rows: "20", style: "width:100%;height:300px;" %>
+    </td>
+  </tr>
+</table>
+
+<%= gwcircular_attachments_form(f, @item)%>
+
+<%= hidden_field_tag("item[state]", @item.state, :id=>"item_state") %>
+<%= hidden_field_tag("item[confirmation]", 1, :id=>"item_confirmation") %>
+
+<table class="show defaultTable bbs_attachlistTable">
+  <tr>
+    <th><%= Gwcircular::Doc.human_attribute_name(:spec_config) %></th>
+    <td><%= f.select :spec_config, @item.spec_config_name%></td>
+  </tr>
+  <tr>
+    <th><%= t('rumi.gwcircular.th.circular_limit') %><%= raw(required('※')) %></th>
+    <td>
+      <%= f.text_field :expiry_date, :value => (I18n.l @item.expiry_date), time: true, onclick: "new CalendarDateSelect( $(this), {time:true, year_range:10} );", style: "ime-mode: disabled", onkeydown: "return rumi.BlockEnterKeyCode(event);", onpaste: "return false", oncontextmenu: "return false" %><img src="/images/icon/calendar_bla.png" alt="Calendar" class="calendar_date_select_popup_icon" onclick="new CalendarDateSelect( $(this).previous(), {time:true, year_range:10} );" style="cursor:pointer;">
+    </td>
+  </tr>
+  <tr>
+    <th><%= t('rumi.gwcircular.th.importance') %></th>
+    <td><%= f.radio_buttons :importance, @item.importance_states_select, :class => 'state'  %></td>
+  </tr>
+</table>
+
+<%= render(:partial => '/gwcircular/admin/commissions/form')%>
+<%= raw(render(:partial => 'form_script')) %>
+
+<%= hidden_field_tag(:cond, params[:cond]) unless params[:cond].blank? %>
+
+<script type="text/javascript">
+//<![CDATA[
+  function chageDisp(obj,changeObjId) {
+    var display = document.getElementById(changeObjId).style.display;
+    if (display == '') {
+      obj.innerHTML = '<%= I18n.t('rumi.gwboard.attach_list.open') %>';
+    } else if (display == 'none') {
+      obj.innerHTML = '<%= I18n.t('rumi.gwboard.attach_list.close') %>';
+    }
+    Element.toggle($(changeObjId));
+  }
+//]]>
+</script>
+<script type="text/javascript">
+//<![CDATA[
+  var supressBeforeUnload = false;
+
+  window.onbeforeunload = function( event ) {
+    if (!supressBeforeUnload) {
+      event = event || window.event;
+      event.returnValue = '<%= t("rumi.message.confirm.board_page_move") %>';
+      return '<%= t("rumi.message.confirm.board_page_move") %>';
+    }
+  }
+//]]>
+</script>

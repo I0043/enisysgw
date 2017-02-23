@@ -1,0 +1,42 @@
+<%
+  top = t("rumi.smart.portal.name")
+  schedule = t("rumi.smart.schedule.name")
+  schedule_prop = t("rumi.smart.schedule_prop.name")
+  pc = t("rumi.smart.pc.name")
+  logout = t("rumi.smart.logout.name")
+%>
+<header id="header" role="banner">
+  <!-- ログインユーザー名 -->
+  <p>
+    <span class="name"><%= link_to_show_profile(Core.user.name, Core.user.code) %></span>
+  </p>
+  <!-- ここからグローバルナビ -->
+  <nav id="navigation" role="navigation">
+    <div class="tab">
+      <ul class="login">
+        <li id="toggle"><a id="open" class="open" href="#"><img src="/images/gnavBtn.png"/></a><a id="close" style="display: none;" class="close" href="#"><img src="/images/gnavBtn.png"/></a></li>
+      </ul>
+    </div>
+    <div id="panel">
+      <ul id="gnav">
+        <li>
+          <%= link_to image_tag("/images/Gnav/home.png", {border: "0", alt: top}) + " " + top, gw_smart_portal_index_path %>
+        </li>
+        <li>
+          <%= link_to image_tag("/images/Gnav/schedule.png", {border: "0", alt: schedule}) + " " + schedule, gw_smart_schedules_path %>
+          <%= @header_count %>
+        </li>
+        <li>
+          <%= link_to image_tag("/images/Gnav/reserve.png", {border: "0", alt: schedule_prop}) + " " + schedule_prop, gw_smart_schedule_props_path %>
+        </li>
+        <li>
+          <%= link_to image_tag("/images/Gnav/home.png", {border: "0", alt: pc}) + " " + pc, root_path %>
+        </li>
+        <li>
+          <%= link_to image_tag("/images/Gnav/logout.png", {border: "0", alt: " " + logout}) + " " + logout, _admin_smart_logout_path %>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <!-- // ここまでグローバルナビ -->
+</header>

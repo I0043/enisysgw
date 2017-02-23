@@ -1,0 +1,151 @@
+<%
+  param_str  = "?rid=#{@item.id}"
+%>
+<%= render partial: 'gwcircular/admin/menus/piece_header', locals: {piece_head_title: @piece_head_title} %>
+<div class="main">
+  <%= render :partial => 'header' %>
+
+  <div class="contentHeader circular_infoHeader gwcircularHeader">
+    <p>
+      <span><%= t('rumi.gwcircular.th.creator') %></span>
+      <span>
+        <%= @parent.createrdivision %>
+        <td class="space"></td>
+        <%= @parent.creater %>
+      </span>
+      <span><%= I18n.l @parent.created_at %></span>
+    </p>
+    <p>
+      <span><%= t('rumi.gwcircular.th.expiry_date') %></span>
+      <span><%= I18n.l @parent.expiry_date unless @parent.expiry_date.blank? %></span>
+    </p>
+  </div>
+  <!-- // .contentHeader -->
+
+  <div class="docsInnerBox">
+    <div class="bssTitle"><%= raw(hbr(@parent.title)) %></div>
+    <div class="bssEntry"><%= raw(@parent.body) %></div>
+    <%= render :partial => '/gwboard/admin/docs/library_index' %>
+  </div>
+  <!-- // .docsInnerBox -->
+
+  <table class="defaultTable bbs_attachlistTable">
+    <tbody>
+      <tr>
+        <th><%= t('rumi.gwcircular.th.spec_config') %></th>
+        <td><%= @item.spec_config_name_status %></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <% if @item.parent_doc.unseen?(Core.user.id) || @item.state == 'unread' %>
+    <div class="buttonlink">
+      <ul>
+        <li><%= link_to t("rumi.gwcircular.link.seen"), @item.doc_state_already_update %></li>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= render :partial => 'form_comment' %>
+
+  <table class="defaultTable listTable">
+    <tr>
+      <th><%= t('rumi.gwcircular.th.state') %></th>
+      <th><%= t('rumi.gwcircular.th.target_user') %></th>
+      <th><%= t('rumi.gwcircular.th.comment') %></th>
+      <th class="icon"<%= t('rumi.gwcircular.th.tmpfile') %></th>
+      <th class="update"><%= t('rumi.gwcircular.th.opendocdate') %></th>
+      <th class="update"><%= t('rumi.gwcircular.th.editdate') %></th>
+    </tr>
+    <tr>
+      <td><%= raw(status_name(@item)) %></td>
+      <% if @item.spec_config == 5 %>
+        <td><%= link_to "#{@item.target_user_name}", "#{doc_edit_show_path(@item)}#{param_str}#{cond_param(params[:cond],2)}" %></td>
+      <% else %>
+        <td><%= "#{@item.target_user_name}" %></td>
+      <% end %>
+      <td><%= @item.body %></td>
+      <td class="attach">
+        <% unless @item.str_attache_span.blank? %>
+          <img src="/images/icon/marker_link.png" alt=<%= t('rumi.gwcircular.th.tmpfile') %>><%= raw(@item.str_attache_span) %>
+        <% end %>
+      </td>
+      <td><%= @item.display_opendocdate %></td>
+      <td><%= @item.display_editdate %></td>
+    </tr>
+    <% if @item.spec_config != 0 %>
+      <% for item in @commissions %>
+        <tr>
+          <td><span><%= raw(status_name(item)) %></span></td>
+          <% if item.spec_config == 5 %>
+            <td><%= link_to "#{item.target_user_name}", "#{doc_edit_show_path(item)}#{param_str}#{cond_param(params[:cond],2)}" %></td>
+            <td><%= item.already_body %></td>
+            <td class="attach">
+              <% unless item.str_attache_span.blank? %>
+                <img src="/images/icon/marker_link.png" alt=<%= t('rumi.gwcircular.th.tmpfile') %>><%= raw(item.str_attache_span) %>
+              <% end %>
+            </td>
+            <td><%= item.display_opendocdate %></td>
+            <td><%= item.display_editdate  %></td>
+          <% else %>
+            <td><%= "#{item.target_user_name}" %></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          <% end %>
+        </tr>
+      <% end %>
+    <% end %>
+  </table>
+
+  <!-- ページネーション -->
+  <div class="backlink paginationSingle">
+    <ul>
+      <li><%= link_to t("rumi.back_link.return"), "#{@title.menus_path}#{cond_param(params[:cond])}" %></li>
+    </ul>
+  </div>
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+function mailforwardView(uri) {
+  openMailForm(uri, '<%=raw mail_form_style %>');
+  return false;
+}
+function gwbbsforwardView(uri) {
+  openGwbbsForm(uri, '<%=raw gwbbs_form_style %>');
+  return false;
+}
+function openMailForm(uri){
+  var opt = null;
+  var name = 'mail_form';
+  if (arguments.length > 1) {
+    opt = arguments[1];
+  }
+
+  try {
+    var win = window.open(uri, name, opt);
+    win.focus();
+    return win;
+  } catch(e) {
+    return;
+  }
+}
+function openGwbbsForm(uri){
+  var opt = null;
+  var name = "gwbbs_form_select";
+  if (arguments.length > 1) {
+    opt = arguments[1];
+  }
+
+  try {
+    var win = window.open(uri, name, opt);
+    win.focus();
+    return win;
+  } catch(e) {
+    return;
+  }
+}
+//]]>
+</script>

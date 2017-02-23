@@ -1,0 +1,31 @@
+<%= render partial: 'piece_header' %>
+
+<!-- コンテンツここから -->
+<div class="main">
+  <%= div_notice %>
+  <% if @items.blank? %>
+    <%= Gw.div_notice(t("rumi.message.empty.list")) %>
+  <% else %>
+    <table class="defaultTable">
+      <tr>
+        <th></th>
+        <th><%= t("rumi.prop_group_setting.th.name") %></th>
+        <th><%= t("rumi.prop_group_setting.th.related_facility") %></th>
+      </tr>
+      <% @items.each do |item| %>
+        <tr class="<%= cycle '', 'cycle' %>">
+          <td><%= link_to t("rumi.link.edit"), edit_gw_prop_group_setting_path(item.id) %></td>
+          <td><%= item.name %></td>
+          <td><%= raw(Gw.join [item.setsubi], '<br />') %></td>
+        </tr>
+      <% end %>
+    </table>
+  <% end %>
+
+  <div class="backlink paginationSingle">
+    <ul>
+      <li><%= link_to t("rumi.back_link.admin"), gw_config_settings_path %></li>
+    </ul>
+  </div>
+</div>
+<!-- コンテンツここまで -->

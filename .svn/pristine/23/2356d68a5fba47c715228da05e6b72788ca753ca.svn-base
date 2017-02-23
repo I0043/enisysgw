@@ -1,0 +1,34 @@
+ja:
+  date:
+    formats:
+      default: "%Y-%m-%d"
+      date1: "%Y年%m月%d日"
+      date2: "%Y年%m月%d日(%a)"
+      date3: "%Y年%m月"
+      date4: "%m-%d"
+      date5: "%Y年%m月%d日 (%a)"
+    day_names: [日曜日, 月曜日, 火曜日, 水曜日, 木曜日, 金曜日, 土曜日]
+    abbr_day_names: [日, 月, 火, 水, 木, 金, 土]
+    # Don't forget the nil at the beginning; there's no such thing as a 0th month
+    month_names: [~, 1月, 2月, 3月, 4月, 5月, 6月, 7月, 8月, 9月, 10月, 11月, 12月]
+    abbr_month_names: [~, 1月, 2月, 3月, 4月, 5月, 6月, 7月, 8月, 9月, 10月, 11月, 12月]
+    # Used in date_select and datime_select.
+    order:
+      - :year
+      - :month
+      - :day
+  time:
+    formats:
+      default: "%Y-%m-%d %H:%M"
+      time1: "%Y年%m月%d日%H時%M分"
+      time2: "%Y-%m-%-d %-H:%-M"
+      time3: "%Y-%m-%d %H:%M:%S"
+      time4: "%m/%d %H:%M"
+    am: "午前"
+    pm: "午後"
+
+# Used in array.to_sentence.
+  support:
+    array:
+      sentence_connector: "and"
+      skip_last_comma: false

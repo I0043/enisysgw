@@ -1,0 +1,20 @@
+<table class="defaultTable listTable configTable">
+  <tr>
+    <th style="width: 60px;"></th>
+    <th style="width: 60px;"></th>
+    <th style="text-align: center;"><%= t("rumi.ldap_temporary.th.version") %></th>
+    <th style="text-align: center;"><%= t("rumi.ldap_temporary.th.created_at") %></th>
+  </tr>
+  <% @items.each do |item| %>
+  <tr class="<%= cycle '', 'cycle' %>">
+    <td style="text-align: center;"><%= link_to t("rumi.link.show"), url_for(:action => :show, :id => item.version) %></td>
+    <td style="text-align: center;">
+      <%= link_to t("rumi.link.delete"), system_ldap_temporary_path(item.version), data: {confirm: t("rumi.message.confirm.delete"), method: :delete} %>
+    </td>
+    <td style="text-align: center;"><%= item.version %></td>
+    <td style="text-align: center;"><%= I18n.l item.created_at, format: :time3 %></td>
+  </tr>
+  <% end %>
+</table>
+
+<%= paginate @items %>

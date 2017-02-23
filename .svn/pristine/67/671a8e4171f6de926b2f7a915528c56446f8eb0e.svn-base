@@ -1,0 +1,51 @@
+<%
+  user_id = Core.user.id
+  group_id = Core.user_group.id
+  if @item.class_id.to_i == 1
+    unless @item.uid.blank?
+      user_id = @item.uid
+      if @item.group_id.blank?
+        user_group = System::UsersGroup.find_by_user_id(@item.uid)
+        group_id = user_group.group_id
+      else
+        group_id = @item.group_id
+      end
+    end
+  elsif @item.class_id.to_i == 2
+    unless @item.uid.blank?
+      user_id = nil
+      group_id = @item.uid
+    end
+  end
+  selected_group_id = @item.group_id || group_id
+  selected_user_id = @item.uid || user_id
+  users = System::UsersGroup.affiliated_users_to_select_option(
+     selected_group_id, System::UsersGroup::TO_SELECT_OPTION_SETTINGS[:system_role])
+%>
+
+<%= required_head %>
+
+<%= f.hidden_field(:role_name_id) %>
+<%= f.hidden_field(:priv_user_id) %>
+<%= f.hidden_field(:table_name) %>
+<%= f.hidden_field(:priv_name) %>
+<%= f.hidden_field(:class_id) %>
+<%= f.hidden_field(:idx) %>
+<%= f.hidden_field(:priv) %>
+
+<table class="defaultTable rentDetails">
+  <tr>
+    <th><%= t("rumi.role.th.group") %><%= required %></th>
+    <td>
+      <%= select_tag("item[gid_raw]", 
+        options_for_select(build_select_parent_groups(@groups), selected_group_id),
+        onchange: "rumi.ui.singleSelectGroupOnChange(this.value, 'item_uid_raw', true);", class: "single-selector") %>
+    </td>
+  </tr>
+  <tr>
+    <th><%= t("rumi.role.th.user") %><%= required %></th>
+    <td>
+      <%= select_tag("item[uid_raw]", options_for_select(build_select_users(users), selected_user_id), class: "single-selector") %>
+    </td>
+  </tr>
+</table>

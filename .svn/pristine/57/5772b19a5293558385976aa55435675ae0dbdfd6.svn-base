@@ -1,0 +1,16 @@
+<% mode = 'day' %>
+<%= render partial: '/gw/admin/schedules/piece_header', locals: {piece_head_title: @piece_head_title, new: true} %>
+
+<!-- コンテンツここから -->
+<div class="main">
+  <!-- フォーム切替ボタン等 -->
+  <%= render partial: '/gw/admin/schedules/schedule_bt_box', locals: {d: @st_date, mode: 'day'} %>
+  <!-- フォーム切替ボタン等ここまで -->
+
+  <%= render partial: '/gw/admin/schedules/schedule_line_box', locals: {d: @st_date, mode: mode, move_mode: :header} %>
+
+  <!-- スケジュール詳細 -->
+  <%= render partial: '/gw/admin/schedules/show_day_one' %>
+  <!-- スケジュール詳細ここまで -->
+</div>
+<!-- コンテンツここまで -->

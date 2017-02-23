@@ -1,0 +1,76 @@
+<%= render partial: 'header', locals: {new: false} %>
+
+<!-- コンテンツここから -->
+<div class="main">
+  <%= div_notice %>
+  <%= form_for :profile_item, url: update_profile_system_users_path, html: {method: :put, multipart: true} do |f| %>
+    <%= f.error_messages %>
+    <%= f.hidden_field :user_id %>
+    <%= f.hidden_field :user_code %>
+    <table class="defaultTable rentDetails">
+      <% if @model.column_used?('name') %>
+        <tr>
+          <th><%= t("rumi.user.th.name") %></th>
+          <td><%= @item.name %></td>
+        </tr>
+      <% end %>
+      <% if @model.column_used?('name_en') %>
+        <tr>
+          <th><%= t("rumi.user.th.name_en") %></th>
+          <td><%= @item.name_en %></td>
+        </tr>
+      <% end %>
+      <% if @model.column_used?('email') %>
+        <tr>
+          <th><%= t("rumi.user.th.email") %></th>
+          <td><%= @item.email %></td>
+        </tr>
+      <% end %>
+      <% if @model.column_used?('official_position') %>
+        <tr>
+          <th><%= t("rumi.user.th.official_position") %></th>
+          <td><%= @item.official_position %></td>
+        </tr>
+      <% end %>
+      <% if @model.column_used?('assigned_job') %>
+        <tr>
+          <th><%= t("rumi.user.th.assigned_job") %></th>
+          <td><%= @item.assigned_job %></td>
+        </tr>
+      <% end %>
+      <% if @model.column_used?('add_column1') && @model.get_column_name('add_column1').present? %>
+        <tr>
+          <th><%= @model.get_column_name('add_column1') %></th>
+          <td><%= f.text_field :add_column1, size: 50, onkeydown: "return BlockEnter(event);" %></td>
+        </tr>
+      <% end %>
+      <% if @model.column_used?('add_column2') && @model.get_column_name('add_column2').present? %>
+        <tr>
+          <th><%= @model.get_column_name('add_column2') %></th>
+          <td><%= f.text_field :add_column2, size: 50, onkeydown: "return BlockEnter(event);" %></td>
+        </tr>
+      <% end %>
+      <% if @model.column_used?('add_column3') && @model.get_column_name('add_column3').present? %>
+        <tr>
+          <th><%= @model.get_column_name('add_column3') %></th>
+          <td><%= f.text_field :add_column3, size: 50, onkeydown: "return BlockEnter(event);" %></td>
+        </tr>
+      <% end %>
+      <% if @model.column_used?('add_column4') && @model.get_column_name('add_column4').present? %>
+        <tr>
+          <th><%= @model.get_column_name('add_column4') %></th>
+          <td><%= f.text_field :add_column4, size: 50, onkeydown: "return BlockEnter(event);" %></td>
+        </tr>
+      <% end %>
+      <% if @model.column_used?('add_column5') && @model.get_column_name('add_column5').present? %>
+        <tr>
+          <th><%= @model.get_column_name('add_column5') %></th>
+          <td><%= f.text_field :add_column5, size: 50, onkeydown: "return BlockEnter(event);" %></td>
+        </tr>
+      <% end %>
+    </table>
+    <%= raw render partial: 'form_script' %>
+    <%= submit_for(f, {caption: t("rumi.submit.update")}) %>
+  <% end %>
+</div>
+<!-- コンテンツここまで -->

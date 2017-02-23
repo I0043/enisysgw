@@ -1,0 +1,32 @@
+<%= render partial: 'header', locals: {new: true} %>
+
+<!-- コンテンツここから -->
+<div class="main">
+  <!-- フォーム切替ボタン等 -->
+  <%= render partial: 'bt_box' %>
+  <!-- フォーム切替ボタン等ここまで -->
+
+  <table class="defaultTable">
+    <tr>
+      <th style="width:12em;"><%= t("rumi.config_settings.schedule_role.th.user") %></th>
+      <td><%= @items.target %></td>
+    </tr>
+    <tr>
+      <th><%= t("rumi.config_settings.schedule_role.th.auth_group") %></th>
+      <td><%= raw(Gw.join [@items.groups], '<br />') %></td>
+    </tr>
+    <tr>
+      <th><%= t("rumi.config_settings.schedule_role.th.auth_user") %></th>
+      <td><%= raw(Gw.join [@items.users], '<br />') %></td>
+    </tr>
+  </table>
+
+  <div class="backlink paginationSingle">
+    <ul>
+      <li>
+        <%=link_to t("rumi.back_link.return"),  "/system/schedule_roles" %>
+      </li>
+    </ul>
+  </div>
+</div>
+<!-- コンテンツここまで -->

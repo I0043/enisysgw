@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title><%= Core.title %> - 縁sys</title>
+    <link rel="stylesheet" href="/_common/themes/gw/css/login.css" />
+    <link rel="apple-touch-icon" href="icon.png" />
+    <link rel="shortcut icon" href="/images/favicon.ico" />
+  </head>
+  <body id="page-login"  onLoad="document.forms[0].account.focus()">
+    <article role="main">
+      <section>
+        <!-- ここからコンテンツ -->
+        <div id="content">
+          <%= form_tag do %>
+            <%= hidden_field_tag :uri, @uri %>
+            <p class="version"><%= $ENISYS_VERSION %></p>
+            <h1><img src="../images/enisys_login.png" width="212" height="164" alt="Gw"/></h1>
+            <div class="notice"><%= flash.now[:notice] %></div>
+            <div class="fields">
+              <div><span class="head">ユーザーID</span><%= text_field_tag 'account', '', {:accesskey => 'u'} %></div>
+              <div><span class="head">パスワード</span><%= password_field_tag 'password', '', {:accesskey => 'p'} %></div>
+            </div>
+            <div class="submitters">
+              <input class="login" type="submit" alt="ログイン" value="ログイン" accesskey="e" name="commit"  />
+            </div>
+          <% end %>
+        </div>
+        <!-- // ここまでコンテンツ -->
+      </section>
+    </article>
+  </body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="robots" content="noindex,nofollow" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <link rel="stylesheet" href="/_common/themes/gw/css/login.css" />
+    <link rel="apple-touch-icon" href="icon.png" />
+    <link rel="shortcut icon" href="/images/favicon.ico" />
+    <title><%= t("rumi.login.title") %></title>
+  </head>
+  <body id="page-login"  onLoad="document.forms[0].account.focus()">
+    <div id="wrapper">
+      <div class="formContainer">
+        <%= form_tag do %>
+          <%= hidden_field_tag :uri, @uri %>
+          <div class="notice"><%= flash.now[:notice] %></div>
+          <div class="fields">
+            <div><span class="head"><%= t("rumi.login.th.user_id") %></span><%= text_field_tag 'account', '', {accesskey: 'u', style: "ime-mode: disabled"} %></div>
+            <div><span class="head"><%= t("rumi.login.th.password") %></span><%= password_field_tag 'password', '', {accesskey: 'p'} %></div>
+          </div>
+          <%
+            footer = Enisys.config.application['sys.login_footer']
+            submitter_style = "margin-top:14px" if footer == ""
+          %>
+          <div class="submit">
+            <input class="login" type="submit" alt="<%= t("rumi.login.name") %>" value="<%= t("rumi.login.name") %>" accesskey="e" name="commit" style="<%= submitter_style %>" />
+            <%= raw footer %>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="logoContainer">
+      </div>
+
+      <div class="logoContainer">
+        <img src="/images/enisys_login.png" width="212" height="164" alt="MATSUE Ruby GW ENISYS"/>
+      </div>
+    </div>
+  </body>
+</html>

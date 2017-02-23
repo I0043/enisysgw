@@ -1,0 +1,21 @@
+<nav id="navigation" role="navigation">
+  <ul>
+    <%
+    @items.each_with_index do |items, idx|
+      items.opened_children.each_with_index do |item, idx3|
+        if item.has_display_auth?
+          opt = item.link_options
+          mail_class = idx3 == 1 ? 'MailLink disabledLink' : ''
+          concat raw %Q(<li>)
+          concat raw link_to(image_tag(link_options_url(opt[:icon_path]), :alt => item.name, :title => item.name, :border => 0) + item.name,
+                       link_options_url(opt[:url]), :class => "#{opt[:css_class]} #{opt[:icon_class]} #{opt[:disabled]} #{mail_class}", :target => opt[:target], :title => item.name)
+
+          concat raw span_notification_count(opt, params[:account], params[:password])
+          concat raw %Q(</li>)
+          concat raw "\n"
+        end
+      end
+    end
+    %>
+  </ul>
+</nav>

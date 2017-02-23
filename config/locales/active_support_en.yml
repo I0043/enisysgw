@@ -1,0 +1,35 @@
+en:
+  date:
+    formats:
+      default: "%d %b %Y"
+      date1: "%d %B %Y"
+      date2: "%A, %d %B %Y"
+      date3: "%B %Y"
+      date4: "%d %b"
+      date5: "(%a) %d %b %Y"
+    day_names: [Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday]
+    abbr_day_names: [Sun, Mon, Tue, Wed, Thu, Fri, Sat]
+    # Don't forget the nil at the beginning; there's no such thing as a 0th month
+    month_names: [~, January, February, March, April, May, June, July, August, September, October, November, December]
+    abbr_month_names: [~, Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec]
+    # Used in date_select and datime_select.
+    order:
+      - :day
+      - :month
+      - :year
+      
+  time:
+    formats:
+      default: "%d %b %Y %H:%M"
+      time1: "%d %b %Y %H:%M"
+      time2: "%d %b %Y %-H:%-M"
+      time3: "%d %b %Y %H:%M:%S"
+      time4: "%d/%b %H:%M"
+    am: "am"
+    pm: "pm"   
+
+# Used in array.to_sentence.
+  support:
+    array:
+      sentence_connector: "and"
+      skip_last_comma: false

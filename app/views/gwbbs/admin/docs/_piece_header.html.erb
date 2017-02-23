@@ -1,0 +1,14 @@
+<header class="entryHeader">
+  <h2><%= piece_head_title %></h2>
+  <span class="navBlock">
+    <% unless @forward  %>
+      <% if @is_writable %>
+        <div class="newEdit">
+          <a href="<%= "#{new_gwbbs_doc_path({title_id: params[:title_id], limit: params[:limit]})}" %>">
+            <img src="/images/icon/add.png" alt=<%= t('rumi.button.new') %>><%= t('rumi.button.new') %>
+          </a>
+        </div>
+      <% end %>
+    <% end %>
+  </span>
+</header>

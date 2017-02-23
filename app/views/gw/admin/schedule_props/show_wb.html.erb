@@ -1,0 +1,173 @@
+<%
+
+################
+##### 表示する予定表の「最初の時刻」と「最後の時刻」の範囲を決定
+prop_schedules = Hash::new
+schedules_wblist = Array.new #ホワイトボード表示用に追加
+@props.each do |prop|
+  key = "prop_#{prop.id}"
+  prop_schedules[key] = Hash::new
+  prop_schedules[key][:schedules] = Array.new
+  prop_schedules[key][:allday_flg] = false
+  prop_schedules[key][:allday_cnt] = 0
+
+  @schedules.each do |schedule|
+    participant = false
+    schedule.schedule_props.each do |schedule_prop|
+      break if participant
+      participant = schedule_prop.prop_id == prop.id
+    end
+    if participant
+      prop_schedules[key][:schedules] << schedule
+      schedules_wblist << "#{schedule.show_time(@st_date)} #{schedule.title} /#{prop.name[0..1]}" #ホワイトボード表示用に追加
+      if schedule.allday == 1 || schedule.allday == 2
+        prop_schedules[key][:allday_flg] = true
+        prop_schedules[key][:allday_cnt] += 1
+      end
+    end
+  end
+
+  prop_schedules[key][:schedule_len] = prop_schedules[key][:schedules].length
+
+  if prop_schedules[key][:schedule_len] == 0
+    prop_schedules[key][:trc] = "scheduleTableBody"
+    prop_schedules[key][:row] = 1
+  else
+    if prop_schedules[key][:allday_flg] == true
+      prop_schedules[key][:trc] = "alldayLine"
+      prop_schedules[key][:row] = (prop_schedules[key][:schedule_len] * 2) - ((prop_schedules[key][:allday_cnt] * 2) - 1)
+    else
+      prop_schedules[key][:trc] = "scheduleTableBody categoryBorder"
+      prop_schedules[key][:row] = prop_schedules[key][:schedule_len] * 2
+    end
+  end
+end
+show_day_header = render(:partial => '/gw/admin/schedules/show_day_header')
+%>
+
+<div class="piece schedulePiece prop dayview">
+  <div class="pieceHeader">
+    <%= link_to "トップページ", root_path %>
+  </div>
+  <div class="pieceBody">
+    <div class="pieceBodyBody">
+      <table summary="スケジュール詳細" class="scheduleTable">
+        <tbody>
+          <% if @show_flg %>
+<%
+=begin
+%>
+            <% @props.each_with_index do |prop, p_id| %>
+              <%
+              key = "prop_#{prop.id}"
+              schedule_data = prop_schedules[key]
+              genre_class_s = " #{prop.get_type_class}"
+
+              parent_groups = Gw::PropOther.get_parent_groups
+              admin_first_id = prop.get_admin_first_id(parent_groups)
+              group  = System::GroupHistory.find_by_id(admin_first_id)
+              caption_main_s = "#{prop.name}"
+              d_load_st = prop.d_load_st if prop.d_load_st
+              d_load_ed = prop.d_load_ed if prop.d_load_ed
+              d_load = true
+              d_load = false if (d_load_st.present? && d_load_st > @st_date) || (d_load_ed.present? && d_load_ed < @st_date)
+              groups = Site.user.groups
+              gids = Array.new
+              groups.each do |sg|
+                gids << sg.id
+                gids << sg.parent_id
+              end
+              gids << 0
+              gids.uniq!
+              search_gids = Gw.join([gids], ',')
+              _this_prop_admin = Gw::PropOtherRole.select("id, prop_id")
+                                                  .where("prop_id in (#{prop.id})")
+                                                  .where("gid in (#{search_gids})")
+                                                  .where("auth='admin'")
+              _this_prop_editor = Gw::PropOtherRole.select("id, prop_id")
+                                                   .where("prop_id in (#{prop.id})")
+                                                   .where("gid in (#{search_gids})")
+                                                   .where("auth='edit'")
+              this_prop_admin = _this_prop_admin.map{|x| x.prop_id}
+              this_prop_editor = _this_prop_editor.map{|x| x.prop_id}
+              if @is_gw_admin || @schedule_prop_admin ||
+                 (this_prop_admin.present? && this_prop_editor.present?) ||
+                 (@prop_edit_ids.index(prop.id) && prop.reserved_state == 1 &&
+                  prop.delete_state == 0 && d_load &&
+                  prop.available?(@st_date)) # 権限があるかどうか確認
+                is_prop_edit = true
+              else
+                is_prop_edit = false
+              end
+              #if prop.reserved_state == 0 || prop.delete_state == 1
+              #  is_prop_edit = false
+              #end
+              %>
+              <% if @header_each == 0 && p_id == 0 || @header_each != 0 && p_id % @header_each == 0 %>
+                <%#= show_day_header -%>
+              <% end %><%# header End %>
+            <tr class="<%= schedule_data[:trc] -%>">
+
+              <th rowspan="<%= schedule_data[:row] -%>" class="scheduleUser">
+                <% cnt = 0 %>
+		  <span>
+                    <a href="/gw/prop_others/<%= prop.id -%>" style = "font-size: 600%;"><%= caption_main_s[0..1] -%></a>
+                    <% if is_prop_edit %>
+                    <%= show_schedule_edit_icon(@calendar_first_day, :prop_id=>prop.id, :s_genre => "other") -%>
+                    <% end %>
+                  </span>
+                  <br>
+                </div>
+              </th>
+
+              <% if schedule_data[:schedule_len] == 0 %>
+                <% (@calendar_end_time - @calendar_first_time + 1).times do %>
+                  <td colspan="2" class="scheduleData">
+                    <!-- 予定無し -->
+                  </td>
+                <% end %>
+              <% else %>
+
+                <% participant_schedule_cnt = 0 %>
+                <% schedule_data[:schedules].each do |schedule| %>
+                  <%
+                    schedule_id = "sche#{schedule.id}_#{prop.id}"
+                    participant = false
+                    schedule.schedule_props.each do |schedule_prop|
+                      break if participant
+                      participant = schedule_prop.prop_id == prop.id
+                    end
+                   public =  schedule.is_public_auth?(@is_gw_admin)
+                  %>
+                  <%= render(:partial => '/gw/admin/schedules/show_day_one_wb',
+                    :locals=>{:schedule => schedule, :schedule_data => schedule_data,
+                      :participant_schedule_cnt => participant_schedule_cnt, :public => public, :schedule_id => schedule_id, :user_id => nil}) -%>
+
+
+                  <% participant_schedule_cnt += 1 %>
+                <% end %><%# if @schedules.each_with_index end =>schedule_data[:shedules].each end の間違いでは？%>
+              <% end %><%# if user_schedule[:schedule_len] == 0 end%>
+
+            <% end %><%# @prop.each end =>@props.each_with_inde の間違いでは？%>
+<%
+=end
+%>
+             <% schedules_wblist.sort! %>
+             <% schedules_wblist.each do |schedule| %>
+               <tr style="background-color:<%= cycle("#fff", "#ccf") -%>;">
+                 <td style = "font-size: 96px;">
+                 <%= schedule -%>
+                 </td>
+               </tr>
+             <% end %><%# schedules_wblist.each end%>
+
+            <%#= show_day_header -%>
+          <% else %><%# if @show_flg %>
+            <%= Gw.div_notice('表示する項目はありません。') -%>
+          <% end %><%# if @show_flg %>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,64 @@
+<%
+  group_id, parent_group_id, group_child_groups, group_values = get_group(params)
+  user_id, users, user_values = get_user(group_id, params)
+  affiliated_group_id, user_child_group = get_affiliated
+%>
+
+<%= required_head %>
+
+<table class="defaultTable rentDetails inputTable">
+  <tr>
+    <th><%= t("rumi.config_settings.schedule_role.th.user_group") %><%= required('※') %></th>
+    <td>
+      <%= select_tag("item[gid_raw]",
+        options_for_select(build_select_parent_groups(), group_id),
+        onchange: "rumi.ui.singleSelectGroupOnChange(this.value, 'item_uid_raw', true);", class: "single-selector") %>
+    </td>
+  </tr>
+  <tr>
+    <th><%= t("rumi.config_settings.schedule_role.th.user") %><%= required('※') %></th>
+    <td><%= select_tag("item[uid_raw]", options_for_select(build_select_users(users), user_id), class: "single-selector") %></td>
+  </tr>
+  <tr>
+    <th class="blueIndex">
+      <%= t("rumi.config_settings.schedule_role.th.auth_group") %>
+      <%= p_required(t("rumi.config_settings.schedule_role.message.auth_group")) %>
+    </th>
+    <td>
+      <%= render partial: "shared/select_group", locals: {
+        parent_group_selected: parent_group_id, child_groups: group_child_groups,
+        hidden_item_name: "item[group_json]", values: group_values,
+        ui_mode: ui_mode_groups_default
+      } %>
+    </td>
+  </tr>
+  <tr>
+    <th class="blueIndex">
+      <%= t("rumi.config_settings.schedule_role.th.auth_user") %>
+      <%= p_required(t("rumi.config_settings.schedule_role.message.auth_user")) %>
+    </th>
+    <td>
+      <%= render partial: "shared/select_group", locals: {
+        parent_group_selected: affiliated_group_id, child_groups: user_child_group,
+        hidden_item_name: "item[user_json]", values: user_values,
+        ui_mode: ui_mode_users_default
+      } %>
+    </td>
+  </tr>
+</table>
+<script type="text/javascript">
+  //<![CDATA[
+  var my_submit = function() {
+
+    var fg = $('item_group_json');
+    var fu = $('item_user_json');
+    // valueが無い、もしくはJSONが空の場合はalertを出す
+      if ((!fg.value || JSON.parse(fg.value).length == 0) && (!fu.value || JSON.parse(fu.value).length == 0)) {
+      alert('<%= t("rumi.config_settings.schedule_role.message.no_select") %>');
+      return false;
+    }
+
+    $('itemForm').submit(); // 送信
+  }
+  //]]>
+</script>

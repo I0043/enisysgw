@@ -1,0 +1,16 @@
+<% if @gw_admin && params[:c1].present? && params[:c1] == "1" %>
+  <% url =  system_custom_group_path(@item.id, c1: 1) %>
+<% else %>
+  <% url =  system_custom_group_path(@item.id) %>
+<% end %>
+<%= render partial: 'piece_header', locals: {new: false} %>
+
+<!-- コンテンツここから -->
+<div class="main">
+  <%= form_for :item, url: url, html: {method: :put, id: 'itemForm'} do |f| %>
+    <%= f.error_messages %>
+    <%= render partial: 'form', locals: {f: f} %>
+    <%= raw(submit_for_update f, js_submitter: "return my_submit()", caption: t("rumi.submit.update"))  %>
+  <% end %>
+</div>
+<!-- コンテンツここまで -->

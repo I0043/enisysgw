@@ -1,0 +1,13 @@
+<header class="entryHeader">
+  <h2><%= @piece_head_title %></h2>
+</header>
+
+<!-- コンテンツここから -->
+<div class="main">
+  <%= form_for :item, url: gwcircular_itemdelete_path, html: {method: :put , multipart: true, id: 'itemForm'} do |f| %>
+    <%= f.error_messages %>
+    <%= render partial: 'form', locals: {f: f} %>
+    <%= submit_for_update f %>
+  <% end %>
+</div>
+<!-- コンテンツここまで -->

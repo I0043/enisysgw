@@ -1,0 +1,99 @@
+<%
+  prop_schedules = get_prop_schedules
+  width = (75.0 / @calendar_space_time.size.to_f / 2.0).to_f.to_s
+%>
+<table class="defaultTable scheduleTable scheduleDaily">
+  <% @props.each_with_index do |prop, p_id| %>
+    <%
+      key = "prop_#{prop.id}"
+      schedule_data = prop_schedules[key]
+      is_prop_edit = get_schedule_prop_edit(prop)
+      view_size = schedule_data[:schedules].size.to_i * 2 + 1 >= 3 ? schedule_data[:schedules].size.to_i * 2 + 1 : 3 rescue 3
+    %>
+    <% if @header_each == 0 && p_id == 0 || @header_each != 0 && p_id % @header_each == 0 %>
+      <%= render partial: '/gw/admin/schedules/show_day_header' %>
+    <% end %>
+    <tbody>
+      <tr class="categoryBorder schedule-body">
+        <th rowspan="<%= view_size %>">
+          <p>
+            <%= link_to prop.name,  "/gw/prop_others/#{prop.id}" %>
+            <% if is_prop_edit %>
+              <%= show_schedule_edit_icon(@calendar_first_day, :prop_id=>prop.id, :s_genre => "other") -%>
+            <% end %>
+          </p>
+          <% cnt = 0 %>
+          <% @images.each do |img| %>
+            <% if prop.id == img.parent_id && cnt==0 %>
+              <% cnt = 1 %>
+              <div class="username image"><%= image_tag(img.path, size: "100%xauto") %></div>
+            <% end %>
+          <% end %>
+          <% if cnt == 0 %>
+             <div class="username other" style="background-size: 100% auto;"></div>
+          <% end %>
+          <p>
+            <%= link_to t("rumi.schedule.link.week"), show_week_gw_schedule_props_path(s_genre: "other", s_date: @calendar_first_day.strftime("%Y%m%d"), prop_id: prop.id) %>
+            <%= link_to t("rumi.schedule.link.month"), show_month_gw_schedule_props_path(s_genre: "other", s_date: @calendar_first_day.strftime("%Y%m%d"), prop_id: prop.id, cls: "other") %>
+          </p>
+        </th>
+        <td colspan="<%= @col %>" class="scheduleData" style="display: none;"></td>
+      </tr>
+      <% if schedule_data[:schedule_len] == 0 %>
+        <tr class="scheduleTableBody explanation end">
+          <td colspan="<%= @col %>"></td>
+        </tr>
+      <% else %>
+        <% participant_schedule_cnt = 0 %>
+        <% schedule_data[:schedules].each do |schedule| %>
+          <%
+            schedule_id = "sche#{schedule.id}_#{prop.id}"
+            user_id = nil
+            st_at, ed_at = schedule.show_day_date_range(@st_date)
+            len = ed_at - st_at + 0.5
+            if len == 0 && schedule.ed_at ==  schedule.st_at
+              len = 0.5
+              ed_at += 0.5
+            end
+            floor = (st_at - (@calendar_space_time.first)).floor * 2
+          %>
+          <tr class="scheduleTableBody categoryBorder">
+            <% if floor > 0 %>
+              <td colspan="<%= floor %>" class="scheduleData" style="width: <%= (width.to_f * floor).to_s + "% !important" %>;"></td>
+            <% end %>
+            <% if st_at != st_at.floor %>
+              <td colspan="1" style="width: <%= width + "% !important" %>;"></td>
+            <% end %>
+            <td colspan="<%= (len * 2).to_i %>">
+              <div title="<%= create_schedule_tooltip(schedule, @ie) -%>" class="ind" id="<%= schedule_id -%>">
+                <%= link_to show_one_title(schedule, schedule_id, user_id), show_one_gw_schedule_path(schedule.id), {class: schedule.get_category_class} %>
+              </div>
+            </td>
+            <% if ed_at == ed_at.ceil %>
+              <td colspan="1" style="width: <%= width + "% !important" %>;"></td>
+            <% end %>
+            <% (((@calendar_space_time.last) - ed_at).ceil).times do %>
+              <td colspan="2" style="width: <%= (width.to_f * 2.0).to_s + "% !important" %>;"></td>
+            <% end %>
+          </tr>
+          <tr class="scheduleTableBody explanation<%= " end" if schedule_data[:schedule_len] == participant_schedule_cnt + 1 %>">
+            <% if floor > 0 %>
+              <td colspan="<%= floor %>" class="scheduleData" style="height: 25px; width: <%= (width.to_f * floor).to_s + "% !important" %>;"></td>
+            <% end %>
+            <% if st_at != st_at.floor %>
+              <td colspan="1" style="height: 25px; width: <%= width + "% !important" %>;"></td>
+            <% end %>
+
+            <td colspan="<%= ((@calendar_space_time.last - st_at) * 2).to_i + 2 %>" style="height: 25px; width: <%= (width.to_f * ((@calendar_space_time.last - st_at) * 2).to_i + 2).to_s + "% !important" %>;">
+              <%= link_to show_one_title(schedule, schedule_id, user_id), show_one_gw_schedule_path(schedule.id) %>
+              <% if @schedule_settings[:view_place_display] == '1' && schedule.place.present? %>
+              （<%= schedule.place %>）
+              <% end %>
+            </td>
+          </tr>
+          <% participant_schedule_cnt += 1 %>
+        <% end %>
+      <% end %>
+    </tbody>
+  <% end %>
+</table>

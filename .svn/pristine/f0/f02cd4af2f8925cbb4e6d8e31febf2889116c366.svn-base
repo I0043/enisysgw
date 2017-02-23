@@ -1,0 +1,11 @@
+<% if @gw_admin == true && params[:c1].present? && params[:c1] == "1" %>
+  <%= form_tag url_for(:action => :index), :method => :get, :class => 'search' do %>
+    <%= hidden_field_tag :c1, "1" if params[:c1].present? && params[:c1] == "1" %>
+    <div class="indication">
+      <%= t("rumi.system.custom_group.search") %>
+      <%= text_field_tag :keyword, @keyword, :class => 'name', :size => 20, :maxlength => 20 %>
+      <%= submit_tag t("rumi.system.custom_group.search"),     :name => :search %>
+      <%= submit_tag t("rumi.system.custom_group.reset"), :name => :reset %>
+    </div>
+  <% end %>
+<% end %>

@@ -1,0 +1,30 @@
+<script type="text/javascript">
+  function FreezeScreen_on(msg) {
+    scroll(0,0);
+    var outerPane = document.getElementById('FreezePane');
+    var innerPane = document.getElementById('InnerFreezePane');
+    if (outerPane) {
+      outerPane.className = 'FreezePaneOn';
+      var h = Math.max.apply( null, [document.body.clientHeight ,
+                                     document.body.scrollHeight,
+                                     document.documentElement.scrollHeight,
+                                     document.documentElement.clientHeight,
+                                     2100] )  + 'px';
+      outerPane.style.height = h;
+    }
+    if (innerPane) innerPane.innerHTML = msg;
+  }
+  FreezeScreen_on("読込中");
+</script>
+<div class="formTitle markEditing">編集</div>
+<span class="required">※は必須項目です。</span>
+
+<%= form_for :item, :url => "/gw/smart_schedules/#{@item.id}#{"?ref=sh" if !params[:ref].blank?}&o=#{params[:o]}",
+  :html => {:method => :put, :id => 'itemForm'} do |f| %>
+
+<%= f.error_messages %>
+<%= render(:partial => 'form', :locals => {:f => f}) %>
+<div class="submitters">
+  <input class="mockblock" id="item_submit" name="commit" onclick="my_submit('schedule_edit');" type="button" value="確定する" />
+</div>
+<% end %>

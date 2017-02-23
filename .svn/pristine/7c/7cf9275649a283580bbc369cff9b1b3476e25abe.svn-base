@@ -1,0 +1,78 @@
+<%
+  box_width = 'width:300px;'  #承認者設定枠の幅
+  concat raw hidden_field_tag('init[admins_json]', @item.admins_json)
+  concat raw hidden_field_tag('init[readers_json]', @item.readers_json)
+  user_groups = Gwboard::Group.level
+  groups = Gwboard::Group.level2_only
+
+  adminGroupInfo = '<br />' + t('rumi.doclibrary.message.admin_group')
+  adminUserInfo = '<br />' + t('rumi.doclibrary.message.admin_users')
+  readGroupInfo = '<br />' + t('rumi.doclibrary.message.read_group1') + '<br /><br />' + t('rumi.doclibrary.message.read_group2')
+  readUserInfo = '<br />' + t('rumi.doclibrary.message.read_user1') + '<br /><br />' + t('rumi.doclibrary.message.read_group2')
+
+%>
+<% no_limit_group_child_groups = build_select_parent_groups(
+     System::Group.child_groups_to_select_option(System::Group.no_limit_group_id)) %>
+
+<% parent_group_id = Core.user_group.parent_id %>
+<% group_child_groups = build_select_parent_groups(System::Group.child_groups_to_select_option(parent_group_id)) %>
+
+<% affiliated_group_id = Core.user_group.id %>
+<% user_child_group = build_select_users(System::UsersGroup.affiliated_users_to_select_option(affiliated_group_id)) %>
+
+<table class="defaultTable inputTable">
+  <tr>
+    <th class="titleTop"><%= t('rumi.doclibrary.th.adminGroup') %><%= detail(adminGroupInfo) %></th>
+    <td class="userChange">
+      <%= render partial: "shared/select_group", locals: {
+        parent_group_selected: parent_group_id, child_groups: group_child_groups,
+        hidden_item_name: "item[admin_groups_json]", values: @item.admin_groups_json,
+        ui_mode: ui_mode_groups_default
+      } %>
+    </td>
+  </tr>
+</table>
+<table class="defaultTable inputTable">
+  <tr>
+    <th class="titleTop"><%= t('rumi.doclibrary.th.adminUser') %><%= detail(adminUserInfo) %></th>
+    <td class="userChange">
+      <%= render partial: "shared/select_group", locals: {
+        parent_group_selected: affiliated_group_id, child_groups: user_child_group,
+        hidden_item_name: "item[admins_json]", values: @item.admins_json,
+        ui_mode: ui_mode_users_default
+      } %>
+    </td>
+  </tr>
+</table>
+<table class="defaultTable inputTable">
+  <tr>
+    <th class="titleTop"><%= t('rumi.doclibrary.th.readGroup') %><%= detail(readGroupInfo) %></th>
+    <td class="userChange">
+      <%= render partial: "shared/select_group", locals: {
+        parent_group_selected: System::Group.no_limit_group_id, child_groups: no_limit_group_child_groups,
+        hidden_item_name: "item[reader_groups_json]", values: @item.reader_groups_json,
+        ui_mode: ui_mode_groups_include_no_limit
+      } %>
+    </td>
+  </tr>
+</table>
+<table class="defaultTable inputTable">
+  <tr>
+    <th class="titleTop"><%= t('rumi.doclibrary.th.readUser') %><%= detail(readUserInfo) %></th>
+    <td class="userChange">
+      <%= render partial: "shared/select_group", locals: {
+        parent_group_selected: affiliated_group_id, child_groups: user_child_group,
+        hidden_item_name: "item[readers_json]", values: @item.readers_json,
+        ui_mode: ui_mode_users_default
+      } %>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+//<![CDATA[
+  var my_submit = function() {
+    $('itemForm').submit();
+  }
+//]]>
+</script>

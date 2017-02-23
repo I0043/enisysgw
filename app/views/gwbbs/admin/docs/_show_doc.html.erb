@@ -1,0 +1,122 @@
+<%= render partial: 'header' %>
+
+<div class="contentHeader bbs_infoHeader bssHeader">
+  <p>
+    <span><%= t('rumi.gwbbs.show.section_code') %></span>
+    <span><%= @item.section_name %></span>
+  </p>
+  <p>
+    <span><%= t('rumi.gwbbs.show.detail_creator') %></span>
+    <span>
+      <% unless @item.name_type == 0 %>
+        <%= @item.name_creater_section %>
+      <% end %>
+      <% unless @item.name_type == 1 %>
+        <%= @item.creater %>
+      <% end %>
+      <td class="space"></td>
+      <%= I18n.l @item.createdate.to_time unless @item.createdate.blank? %>
+    </span>
+  </p>
+  <p>
+    <span><%= t('rumi.gwbbs.show.status') %></span>
+    <span>
+      <% if @title.importance == 1 %>
+        <%= @item.importance_name %>
+      <% end %>
+    </span>
+  </p>
+  <p>
+    <span><%= t('rumi.gwbbs.show.detail_editor') %></span>
+    <span>
+      <% unless @item.name_type == 0 || @item.editor.blank? %>
+        <%= @item.name_editor_section %>
+      <% end %>
+      <% unless @item.name_type == 1 %>
+        <%= @item.editor %>
+      <% end %>
+      <td class="space"></td>
+      <%= I18n.l @item.editdate.to_time unless @item.editdate.blank? %>
+    </span>
+  </p>
+  <p>
+    <span><%= t('rumi.gwbbs.show.expiry_date') %></span>
+    <span><%= I18n.l @item.expiry_date unless @item.expiry_date.blank? %></span>
+  </p>
+</div>
+<!-- // .contentHeader -->
+
+<div class="docsInnerBox">
+  <div class="bssTitle"><%=raw(hbr(@item.title))%></div>
+  <div class="bssEntry"><%=raw(@item.body)%></div>
+  <%= render :partial => '/gwboard/admin/docs/library_index' %>
+</div>
+<!-- // .docsInnerBox -->
+
+<%= render :partial => 'form_comment' if @item.one_line_note == 1 %>
+
+<%= render :partial => 'comment_index' if @item.one_line_note == 1 %>
+
+<!-- ページネーション -->
+<% if !@previous.blank? || !@next.blank? %>
+  <div class="backlink">
+    <% unless @title.use_other_system %>
+      <ul>
+        <% unless @previous.blank? %>
+          <li><a href=<%= "#{@previous.show_path}&pp=#{@prev_page}#{gwbbs_params_set}" %>><img src="/images/icon/arrow_l.png" width="15" height="30" alt=""/></a></li>
+        <% else %>
+          <li class="disable_first"><img src="/images/icon/arrow_l.png" width="15" height="30" alt=""/></li>
+        <% end %>
+        <li><%= link_to t('rumi.gwbbs.show.move_show'), "#{@title.docs_path}#{gwbbs_params_set}" %></li>
+        <% unless @next.blank? %>
+          <li><a href=<%= "#{@next.show_path}&pp=#{@next_page}#{gwbbs_params_set}" %>><img src="/images/icon/arrow_r.png" width="15" height="30" alt=""/></a></li>
+        <% else %>
+          <li class="disable_last"><img src="/images/icon/arrow_r.png" width="15" height="30" alt=""/></li>
+        <% end %>
+      </ul>
+    <% end %>
+  </div>
+<% end %>
+
+<script type="text/javascript">
+//<![CDATA[
+function mailforwardView(uri) {
+  openMailForm(uri, '<%=raw mail_form_style %>');
+  return false;
+}
+function gwcircularforwardView(uri) {
+  openGwcircularForm(uri, '<%=raw gwcircular_form_style %>');
+  return false;
+}
+function openMailForm(uri){
+  var opt = null;
+  var name = 'mail_form';
+  if (arguments.length > 1) {
+    opt = arguments[1];
+  }
+
+  try {
+    var win = window.open(uri, name, opt);
+    win.focus();
+    return win;
+  } catch(e) {
+    return;
+  }
+}
+function openGwcircularForm(uri){
+  var opt = null;
+  var name = "gwcircular_form";
+  if (arguments.length > 1) {
+    opt = arguments[1];
+  }
+
+  try {
+    var win = window.open(uri, name, opt);
+    win.focus();
+    return win;
+  } catch(e) {
+    return;
+  }
+}
+//]]>
+</script>

@@ -1,0 +1,126 @@
+<% schedule_init(f, params) %>
+<%
+  case params[:action]
+  when 'new','create'
+%>
+  <div class="headBtn">
+    <ul class="headBtn-2 noArrow">
+
+      <li><a onclick="switchRepeat(1);">通常</a></li>
+      <li><a onclick="switchRepeat(2);">繰り返しあり</a></li>
+    </ul>
+  </div>
+<% end %>
+<%= raw(hidden_field_tag('init[repeat_mode]', "#{@repeat_mode}")) %>
+<table class="show" id="inputDatetimeNormal">
+  <tr>
+    <th>開始日時<%= raw(required) %></th>
+  </tr>
+  <tr>
+    <td class="day">
+      <%= raw(date_picker_prop_switch f, 'st_at', :errors=>@item.errors, :mode=>:datetime, :value=>@d_load_st, :minute_interval=>'5', :m_type => "smart") %>
+    </td>
+  </tr>
+  <tr>
+    <th>終了日時 <%= raw(required) %></th>
+  </tr>
+  <tr>
+    <td class="day">
+      <div class="timeSet">
+        <%= raw(date_picker_prop_switch f, 'ed_at', :errors=>@item.errors, :mode=>:datetime, :value=>@d_load_ed, :minute_interval=>'5', :m_type => "smart") %>
+        <%= raw(required '保存前に、終了時刻を確認してください') %>
+        <%= hidden_field_tag('item[creator_uid]', "#{@creator_uid}") %>
+        <%= hidden_field_tag('item[creator_uname]', "#{@creator_uname}") %>
+        <%= hidden_field_tag('item[creator_ucode]', "#{@creator_ucode}") %>
+        <%= hidden_field_tag('item[creator_gid]', "#{@creator_gid}") %>
+        <%= hidden_field_tag('item[created_at]', "#{@created_at}") %>
+      </div>
+      <div class="otherSelect" id="otherSelect">
+        <%= raw(f.check_box('allday_radio_id', {:multiple => true, :checked => @allday_radio_id == 1 , :onclick=>'allday_radio_click(this)'}, "1", nil)) %><%= t("rumi.schedule.th.undecided") %>
+        <%= raw(f.check_box('allday_radio_id', {:multiple => true, :checked => @allday_radio_id == 2 , :onclick=>'allday_radio_click(this)'}, "2", nil)) %><%= t("rumi.schedule.th.allday") %>
+      </div>
+    </td>
+  </tr>
+</table>
+
+<table class="show" id="inputDatetimeRepeat" style="display: none;">
+  <tr>
+    <th>繰り返し期間<%= raw(required) %></th>
+  </tr>
+  <tr>
+    <td><%= raw(date_picker_prop_switch f, 'repeat_st_date_at', :errors=>@item.errors, :mode=>:date, :value=>@d_load_st, :m_type => "smart") %>
+      ～<%= raw(date_picker_prop_switch f, 'repeat_ed_date_at', :errors=>@item.errors, :mode=>:date, :value=>@d_load_ed, :m_type => "smart") %>
+    </td>
+  </tr>
+  <%= raw(smart_repeat_radio_s(f, @repeat_class_id, params)) %>
+  <tr>
+    <th>時間<%= raw(required) %></th>
+  </tr>
+  <tr>
+    <td><%= raw(date_picker_prop_switch f, 'repeat_st_time_at', :errors=>@item.errors, :mode=>:time, :value=>@d_load_st, :minute_interval=>'5', :m_type => "smart") %>
+      ～<%= raw(date_picker_prop_switch f, 'repeat_ed_time_at', :errors=>@item.errors, :mode=>:time, :value=>@d_load_ed, :minute_interval=>'5', :m_type => "smart") %>
+      <%= raw(f.check_box('repeat_allday_radio_id', {:multiple => true, :checked => @repeat_allday_radio_id == 1 , :onclick=>'repeat_allday_radio_click(this)'}, "1", "")) %><%= t("rumi.schedule.th.undecided") %>
+      <%= raw(f.check_box('repeat_allday_radio_id', {:multiple => true, :checked => @repeat_allday_radio_id == 2 , :onclick=>'repeat_allday_radio_click(this)'}, "2", "")) %><%= t("rumi.schedule.th.allday") %>
+      </span>
+      <br /><%= raw(required '保存前に、終了時刻を確認してください') %>
+    </td>
+  </tr>
+</table>
+
+<table class="show">
+  <tr>
+      <th>スケジュール種別</th>
+  </tr>
+  <tr>
+    <td>
+      <%= @form_kind_radio_str.html_safe %>
+    </td>
+  </tr>
+</table>
+
+<table class="show">
+  <tr>
+    <th>件名（用務名等）</th>
+  </tr>
+  <tr>
+    <td>
+      <%= f.select(:title_category_id, Gw.yaml_to_array_for_select('gw_schedules_title_categories', :include_blank=>1),
+        {:selected=>@item.title_category_id}, {:onchange=>'title_category_id_selected();'}) %><br />
+      <%= f.text_field :title, :class => "w100" %><%= raw(required) %>
+    </td>
+  </tr>
+  <tr>
+    <th>場所</th>
+  </tr>
+  <tr>
+    <td><%= f.text_field :place, :class => "multiple-selector" %></td>
+  </tr>
+  <tr>
+    <th>メモ</th>
+  </tr>
+  <tr>
+    <td><%= f.text_area :memo, :class => "area100", :cols => nil %>
+    </td>
+  </tr>
+  <%= hidden_field_tag(:title_category_text, "") %>
+</table>
+
+<%= render :partial => '/gw/admin/smart_schedules/form_participant', :locals => {:f => f} %>
+<%= render :partial => '/gw/admin/smart_schedules/form_prop', :locals => {:f => f} %>
+
+<table class="show">
+  <tr>
+    <th>公開<%= raw(required) %></th>
+  </tr>
+  <tr>
+    <td><%= raw(radio f, 'is_public', Gw::Schedule.is_public_select, :onclick=>'is_public_click();', :br =>'<br />') %></td>
+  </tr>
+</table>
+
+<%= raw(render :partial => 'form_public', :locals => {:f => f}) %>
+
+<div id="pp"></div>
+<%= raw(gw_js_include_full) %>
+
+<%= raw(render(:partial => 'form_at_script')) %>
+<%= raw(render(:partial => 'form_script')) %>

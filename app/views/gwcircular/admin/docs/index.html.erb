@@ -1,0 +1,19 @@
+<%= render :partial => 'header' %>
+
+<table class="index">
+<tr class="headIndex">
+<th class="state"><%= t("rumi.gwcircular.th.state") %></th>
+<th class="docTitle"><%= t("rumi.gwcircular.th.title") %></th>
+<th style="width:120px;"><%= t("rumi.gwcircular.th.circular_limit") %></th>
+<th class="update"><%= t("rumi.gwcircular.th.editdate") %></th>
+</tr>
+<% for item in @items %>
+  <tr class="<%= cycle 'article', 'article cycle' %>">
+  <td class="state"></td>
+  <td class="docTitle"><%= link_to item.title, show_path(item) %></td>
+  <td class="update"><%= I18n.l item.expiry_date if item.expiry_date.present? %></td>
+  <td class="update"><%= I18n.l item.latest_updated_at.to_date if item.latest_updated_at.present? %></td>
+  </tr>
+<% end %>
+</table>
+<%= paginate @items %>

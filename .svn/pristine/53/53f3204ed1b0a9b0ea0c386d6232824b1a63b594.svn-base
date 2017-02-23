@@ -1,0 +1,67 @@
+<%= javascript_tag do %>
+  listForm_obj = new rumi.listForm();
+<% end %>
+  
+<table class="defaultTable listTable">
+  <tr>
+    <% if is_read_check? %>
+      <th style="width: 1em;">
+        <input type="checkbox" id="check_all" onclick="listForm_obj.checkAll('listForm', 'ids', 'check_all'); return false;">
+      </th>
+    <% end %>
+    <th class="icon"><img src="/images/icon/marker_important.png" alt=""/></th>
+    <th class="icon"><img src="/images/icon/marker_link.png" alt=<%= t('rumi.gwcircular.th.tmpfile') %>></th>
+    <th class="icon"><img src="/images/icon/marker_comment.png" alt=<%= t('rumi.gwcircular.th.comment') %>/></th>
+    <th class="docTitle"><%= t('rumi.gwbbs.th.doctitle') %></th>
+    <th class="docmanager"><%= t('rumi.gwbbs.th.docmanager') %></th>
+    <th style="width: 10em;"><%= t('rumi.gwbbs.th.createor_user') %></th>
+    <th class="update"><%= t('rumi.gwbbs.th.docreleasedate') %></th>
+    <th class="update"><%= t('rumi.gwbbs.th.docupdate') %></th>
+  </tr>
+
+  <!-- ループ -->
+  <% for item in @items %>
+    <tr>
+      <% if is_read_check? %>
+        <td class="checker">
+          <% checked =
+          (params[:ids])? params[:ids].include?(item.id.to_s) : false %>
+          <%= check_box_tag 'ids[]', item.id, checked %>
+        </td>
+      <% end %>
+      <td class="icon">
+        <% if item.importance.present? && item.importance == 0 %>
+          <img src="/images/icon/marker_important.png" alt=""/>
+        <% end %>
+      </td>
+      <td class="attach">
+        <% if item.attachmentfile.present? && item.attachmentfile.to_s != '0' %>
+          <img src="/images/icon/marker_link.png" alt=<%= t('rumi.gwcircular.th.tmpfile') %>><%= raw(item.attachmentfile.to_s) %>
+        <% end %>
+      </td>
+      <td class="attach docTitle">
+        <% if item.one_line_note.to_i == 1 %>
+          <% if item.comment.present? && item.comment.count.to_s != '0' %>
+            <% if !["DRAFT", "NEVER", "VOID"].include?(params[:state]) && item.comment_unseen?(Core.user.id) %>
+              <span class="new">new</span>
+            <% end %>
+            <img src="/images/icon/marker_comment.png" alt=<%= t('rumi.gwcircular.th.comment') %>><%= raw(item.comment.count.to_s) %>
+          <% else %>
+            <img src="/images/icon/marker_comment.png" alt=<%= t('rumi.gwcircular.th.comment') %>>
+          <% end %>
+        <% end %>
+      </td>
+      <td class="docTitle">
+        <% if !["DRAFT", "NEVER", "VOID"].include?(params[:state]) && item.unseen?(Core.user.id) %>
+          <span class="new">new</span>
+        <% end %>
+        <%= link_to(hbr(item.title), item.show_path  + gwbbs_params_set) %>
+      </td>
+      <td><%= item.section_name.to_s %></td>
+      <td><%= "#{item.creater}" %></td>
+      <td><%= I18n.l item.able_date if item.able_date.present? %></td>
+      <td><%= I18n.l item.latest_updated_at if item.latest_updated_at.present? %></td>
+    </tr>
+  <% end %>
+  <!-- // ループ -->
+</table>

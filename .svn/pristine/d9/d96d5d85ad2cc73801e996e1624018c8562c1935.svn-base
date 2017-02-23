@@ -1,0 +1,11 @@
+<% scat04 = [[t("rumi.gwbbs.select_item.recognize_off"),"0"],[t("rumi.gwbbs.select_item.recognize_on"),"1"]] %>
+<table class="defaultTable inputTable">
+  <tr>
+    <th><%= t("rumi.gwbbs.th.recognize") %></th>
+    <td><%= f.radio_buttons :category4_id, scat04, :class => 'state'  ,:onclick => 'sel_class1()' %></td>
+  </tr>
+</table>
+
+<div id="item_recog_select1" style="display:none;" >
+  <%= render partial: "gwboard/admin/recognizers/select_group", locals: { f: f } %>
+</div>

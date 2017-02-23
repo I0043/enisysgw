@@ -1,0 +1,12 @@
+<%= render partial: 'header', locals: {new: false} %>
+
+<!-- コンテンツここから -->
+<div class="main">
+  <%= div_notice %>
+  <%= form_for :item, url: system_groups_path do |f| %>
+    <%= f.error_messages %>
+    <%= render partial: 'form', locals: {f: f} %>
+    <%= submit_for_create f %>
+  <% end %>
+</div>
+<!-- コンテンツここまで -->

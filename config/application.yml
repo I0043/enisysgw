@@ -1,0 +1,35 @@
+:version:
+  :major: 2
+  :minor: 0
+  :patch_revel: 0
+gw:
+  # 新着情報表示件数
+  reminder_view_size: 20
+  #大文字・小文字アルファベット、数字のみ可
+  is_attach: 
+  #アクセスログ削除設定経過月(default:3ヶ月)
+  access_log_delete_month: 3
+schedule:
+  #公開範囲の初期値　1:公開 2:所属内 3:非公開
+  is_public: 1
+doclibrary:
+  #フォルダ階層上限値
+  level_no: 10
+sys:
+  # ログイン画面フッター文字
+  login_footer: ''
+  # 携帯向けフッター文字
+  mobile_footer: ''
+  # セッション保持期限（H）
+  session_expiration: 24
+  # 携帯向けセッション保持期限（H）
+  session_expiration_for_mobile: 1
+  # PCサイト/携帯サイト強制表示
+  force_site: ''
+  # ファイル名最大長
+  max_file_name_length: 200
+system:
+  # 1ユーザーあたりのカスタムグループ作成上限
+  custom_group: 20
+webmail:
+  # root_url: http://enisysmail.co.jp

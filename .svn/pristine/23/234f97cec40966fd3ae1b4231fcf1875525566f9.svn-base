@@ -1,0 +1,38 @@
+<div class="explanation">
+  <% if @show_flg %>
+    <% @users.each_with_index do |user, u_id| %>
+      <%
+        key = "user_#{user.id}"
+        schedule_data = @user_schedules[key]
+      %>
+      <% if schedule_data[:schedule_len] == 0 %>
+        <% (@calendar_end_time - @calendar_first_time + 1).times do %>
+        <div class="" id="">
+          <!-- 予定無し -->
+        </div>
+        <% end %>
+        <% else %>
+        <% participant_schedule_cnt = 0 %>
+        <% schedule_data[:schedules].each do |schedule| %>
+        <%
+          schedule_id = "sche#{schedule.id}_#{user.id}"
+          participant = false
+          schedule.schedule_users.each do |schedule_user|
+            break if participant
+            participant = schedule_user.uid == user.id
+          end
+
+          public =  schedule.is_public_auth?(@gw_admin)
+        %>
+
+        <% user_id = user.id ? user.id : nil %>
+        <%= smart_show_day_one(schedule, schedule_data, participant_schedule_cnt, public, schedule_id, user_id) %>
+
+        <% participant_schedule_cnt += 1 %>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% else %>
+    <%= Gw.div_notice('表示する項目はありません。') -%>
+  <% end %>
+</div>

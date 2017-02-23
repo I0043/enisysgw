@@ -1,0 +1,16 @@
+<% if @admin_message_items.length > 0 %>
+<div id="message" style="text-align: center;">
+  <% if  @admin_message_items.length == 1 %>
+    <header class="entryHeader">
+      <div><h2><%=raw @admin_message_items[0].body %></h2></div>
+    </header>
+  <% else %>
+    <header class="entryHeader">
+      <div><h2><%=raw @admin_message_items[0].body %></h2></div>
+    </header>
+    <header class="entryHeader">
+      <div><h2><%=raw @admin_message_items[1].body %></h2></div>
+    </header>
+  <% end %>
+</div>
+<% end %>

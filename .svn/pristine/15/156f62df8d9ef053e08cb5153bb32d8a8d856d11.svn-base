@@ -1,0 +1,17 @@
+<%= render partial: '/gw/admin/prop_others/piece_header', locals: {new: false} %>
+
+<!-- コンテンツここから -->
+<div class="main">
+  <%= div_notice %>
+  <p><%= t("rumi.prop_other.import.message") %></p>
+  <%= form_tag import_file_gw_prop_others_path , {method: :post , multipart: true} do %>
+    <table class="defaultTable rentDetails">
+      <tr>
+        <th><%= t("rumi.prop_other.import.file_select") %></th>
+        <td><%= file_field_tag 'item[file]' , size: 20 , accept: 'text/csv,text/plain' %></td>
+      </tr>
+    </table>
+    <div class="submitters"><%= submit_tag t("rumi.button.import") %></div>
+  <% end %>
+</div>
+<!-- コンテンツここまで -->

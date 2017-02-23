@@ -1,0 +1,73 @@
+<% delete_confirm = t("rumi.message.confirm.delete") %>
+<%= render partial: 'piece_header', locals: {new: true} %>
+
+<!-- コンテンツここから -->
+<div class="main">
+  <%= render partial: 'search' %>
+  <%= form_for :item, :url => "/system/custom_groups/sort_update", :html => {:method => :put} do |f| %>
+    <%= f.error_messages %>
+    <%= hidden_field_tag :c1, "1" if params[:c1].present? && params[:c1] == "1" %>
+    <%= div_notice %>
+    <table class="defaultTable">
+      <tr>
+        <th><%= t("rumi.system.custom_group.sort_no") %><input id="item_submit" name="commit" type="submit" value="<%= t("rumi.button.update") %>" /></th>
+        <th><%= t("rumi.system.custom_group.name") %></th>
+        <th><%= t("rumi.system.custom_group.owner_user") %></th>
+        <th><%= t("rumi.system.custom_group.updater") %></th>
+        <th><%= t("rumi.system.custom_group.updated_at") %></th>
+        <th><%= t("rumi.system.custom_group.state") %></th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+      <% for item in @items %>
+        <tr>
+          <% if @gw_admin == true %>
+            <td><%= f.text_field "sort_no_#{item.id}", :value => item.sort_no, :class => 'string sort_no', :style => 'width: 40px;', :size=>5 , :maxlength=>4 %></td>
+            <td><%= item.name %></td>
+            <td><%= item.owner_user.display_name_only if !item.owner_user.blank? %></td>
+            <td><%= item.updater.display_name_only if !item.updater.blank? %></td>
+            <td><%= I18n.l item.updated_at if !item.updated_at.blank? %></td>
+            <td><%= item.state == 'enabled' ? t("rumi.rumi_helper.state.enabled") : t("rumi.rumi_helper.state.disabled") %></td>
+            <%
+              edit_url = params[:c1].present? && params[:c1] == "1" ? edit_system_custom_group_path(item.id, c1: 1) : edit_system_custom_group_path(item.id)
+              delete_url = params[:c1].present? && params[:c1] == "1" ? system_custom_group_path(item.id, c1: 1) : system_custom_group_path(item.id)
+            %>
+            <td><%= link_to t("rumi.link.edit"), edit_url %></td>
+            <td><%= link_to t("rumi.link.delete"), delete_url, data: {confirm: delete_confirm, method: :delete} %></td>
+            <td><%= link_to t("rumi.rumi_helper.preview"), "/gw/schedules?cgid=#{item.id}" %></td>
+          <% else %>
+            <td>
+              <% if item.owner_uid == Core.user.id %>
+                <%= f.text_field "sort_no_#{item.id}", :value => item.sort_no, :class => 'string sort_no', :style => 'width: 40px;', :size=>5 , :maxlength=>4 %>
+              <% else %>
+                <%= item.sort_no %>
+                <%= f.hidden_field "sort_no_#{item.id}", :value => item.sort_no %>
+              <% end %>
+            </td>
+            <td><%= item.name %></td>
+            <td><%= item.owner_user.display_name_only if !item.owner_user.blank? %></td>
+            <td><%= item.updater.display_name_only if !item.updater.blank? %></td>
+            <td><%= I18n.l item.updated_at if !item.updated_at.blank? %></td>
+            <td><%= item.state == 'enabled' ? t("rumi.rumi_helper.state.enabled") : t("rumi.rumi_helper.state.disabled") %></td>
+            <td><%= link_to t("rumi.link.edit"), edit_system_custom_group_path(item.id) %></td>
+            <td>
+              <% if item.owner_uid == Core.user.id %>
+                <%= link_to t("rumi.link.delete"), system_custom_group_path(item.id), data: {confirm: delete_confirm, method: :delete} %>
+              <% end %>
+            </td>
+            <td><%= link_to t("rumi.rumi_helper.preview"), "/gw/schedules?cgid=#{item.id}" %></td>
+          <% end %>
+        </tr>
+      <% end %>
+    </table>
+  <% end %>
+
+  <div class="backlink paginationSingle">
+    <ul>
+      <% value = @gw_admin ? t("rumi.back_link.admin") : t("rumi.back_link.config") %>
+      <li><%= link_to value, gw_config_settings_path %></li>
+    </ul>
+  </div>
+</div>
+<!-- コンテンツここまで -->

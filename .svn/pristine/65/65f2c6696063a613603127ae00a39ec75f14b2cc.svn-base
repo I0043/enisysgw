@@ -1,0 +1,19 @@
+<%
+  files_uri = gwboard_attaches_path(item.id) + "?system=#{item.system_name}&title_id=#{item.title_id}&partial_use_form=#{partial_use_form}"
+%>
+<table class="bbs_attachlistTable">
+  <tr>
+    <th><%= t("rumi.gwbbs.th.tmpfile") %></th>
+    <td>
+      <a href="#" onclick="chageDisp(this,'attach_form');return false;"><%= t("rumi.gwboard.attach_list.open") %></a>
+    </td>
+  </tr>
+</table>
+
+<table id="attach_form" border="0" class="show" style="display: none;">
+  <tr>
+    <td style="padding: 0px 0px;">
+      <iframe src="<%= files_uri %>" style="width: 100%; height: 500px;" frameborder="0"></iframe>
+    </td>
+  </tr>
+</table>

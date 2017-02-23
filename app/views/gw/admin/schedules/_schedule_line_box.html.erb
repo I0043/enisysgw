@@ -1,0 +1,38 @@
+<%
+  case mode
+  when 'day', 'week', '2week'
+    date_format_name = 'week'
+    if @schedule_move_url_directive.blank?
+      @schedule_move_url_directive = %Q(#{request.path_translated}#{mode == 'day' ? '%d?%q' :
+        @sp_mode == :schedule ? '?s_date=%d&%q' :
+        @sp_mode == :event ? 'event_week?s_date=%d' : mode == '2week' ? 'show_2week?s_date=%d&%q' : 'show_week?s_date=%d&%q'})
+    end
+    get_schedule_move_ab(d)
+  when 'month'
+    date_format_name = 'month'
+    get_schedule_move_ab_m(d)
+    @schedule_move_url_directive = %Q(#{request.path_info}?s_date=%d&%q) if @sp_mode == :prop
+  end
+  if @sp_mode == :prop
+    prop_id_str = "&prop_id=#{params[:prop_id]}" if !params[:prop_id].blank?
+    type_id_str = "&type_id=#{params[:type_id]}" if !params[:type_id].blank?
+    other_admin_gid_str = "&s_other_admin_gid=#{params[:s_other_admin_gid]}" if !params[:s_other_admin_gid].blank?
+    @schedule_move_url_directive.concat "#{prop_id_str}#{type_id_str}#{other_admin_gid_str}"
+  end
+%>
+<div class="contentHeader">
+  <div class="contentDate">
+    <p>
+      <%= I18n.l d, format: date_format_name == 'week' ? :date2 : :date3 %>
+      <% if @sp_mode == :prop %>
+        － <%= @title_view_name %>
+      <% end %>
+    </p>
+  </div>
+  <div class="tabMenu">
+    <ul>
+      <%= raw Gw::Model::Schedule.show_schedule_move_core(@schedule_move_ab, @schedule_move_url_directive, @schedule_move_qs) %>
+    </ul>
+  </div>
+</div>
+

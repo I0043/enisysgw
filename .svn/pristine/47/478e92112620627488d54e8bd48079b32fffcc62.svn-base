@@ -1,0 +1,14 @@
+<%= form_tag '', :method => :get, :class => 'changelimit' do %>
+<%= hidden_field_tag(:title_id, params[:title_id]) unless params[:title_id].blank? %>
+<%= hidden_field_tag(:state, params[:state]) unless params[:state].blank? %>
+<%= hidden_field_tag(:cat, params[:cat]) unless params[:cat].blank? %>
+<%= hidden_field_tag(:gcd, params[:gcd]) unless params[:gcd].blank? %>
+<%= hidden_field_tag(:grp, params[:grp]) unless params[:grp].blank? %>
+<%= hidden_field_tag(:p_id, params[:p_id]) unless params[:p_id].blank? %>
+<%= hidden_field_tag(:yyyy, params[:yyyy]) unless params[:yyyy].blank? %>
+<%= hidden_field_tag(:mm, params[:mm]) unless params[:mm].blank? %>
+<%= hidden_field_tag(:page, params[:page]) unless params[:page].blank? %>
+<span><%= t('rumi.doclibrary.th.line_limit') %></span>
+<%=select_tag('limit', options_from_collection_for_select([[10,t('rumi.gwcircular.select_item.line_10')],[20,t('rumi.gwcircular.select_item.line_20')],[30,t('rumi.gwcircular.select_item.line_30')],[50,t('rumi.gwcircular.select_item.line_50')],[100,t('rumi.gwcircular.select_item.line_100')]],:first,:last, params['limit'].to_i), :onchange => 'submit();')%>
+<!-- end .search -->
+<% end %>

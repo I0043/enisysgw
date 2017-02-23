@@ -1,0 +1,13 @@
+<%= render partial: 'piece_header', locals: {piece_head_title: @piece_head_title} %>
+<!-- コンテンツここから -->
+<div class="main">
+    <%= render partial: 'header' %>
+    <%= render partial: 'index_unread' if params[:cond] == 'unread' %>
+    <%= render partial: 'index_already' if params[:cond] == 'already' %>
+    <%= render partial: 'index_owner' if params[:cond] == 'owner' %>
+    <% if @gw_admin %>
+        <%= render partial: 'index_admin' if params[:cond] == 'admin' %>
+    <% end %>
+    <%= paginate @items %>
+    <%=render partial: 'index_attach_list' %>
+</div>

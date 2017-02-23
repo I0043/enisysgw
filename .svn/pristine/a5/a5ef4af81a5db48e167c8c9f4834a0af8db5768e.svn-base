@@ -1,0 +1,35 @@
+<%= render partial: 'header_str', locals: {piece_head_title: @piece_head_title, new: false} %>
+
+<!-- コンテンツここから -->
+<div class="main">
+  <%= raw(div_notice) %>
+  <!-- フォーム切替ボタン等 -->
+  <%= render :partial => 'header' %>
+  <!-- フォーム切替ボタン等ここまで -->
+
+  <table class="defaultTable">
+    <tr>
+      <th><%= t("rumi.config_settings.admin_message.th.view") %></th>
+      <td><%= t("rumi.config_settings.admin_message.view#{@item.state.to_s}") %></td>
+    </tr>
+    <tr>
+      <th><%= t("rumi.config_settings.admin_message.th.sort_no") %></th>
+      <td><%= @item.sort_no %></td>
+    </tr>
+    <tr>
+      <th><%= t("rumi.config_settings.admin_message.th.message") %></th>
+      <td><%= @item.body %></td>
+    </tr>
+    <tr>
+      <th><%= t("rumi.config_settings.admin_message.th.updated_at") %></th>
+      <td><%= I18n.l @item.updated_at if @item.updated_at.present? %></td>
+    </tr>
+  </table>
+
+  <div class="backlink paginationSingle">
+    <ul>
+      <li><%=link_to t("rumi.back_link.return"), "/gw/admin_messages?#{@qs}" %></li>
+    </ul>
+  </div>
+</div>
+<!-- コンテンツここまで -->

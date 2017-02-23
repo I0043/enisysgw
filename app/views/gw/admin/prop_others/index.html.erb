@@ -1,0 +1,52 @@
+<% reserved_state = Gw.yaml_to_array_for_select("t1f0_kyoka_fuka") %>
+<%= render partial: '/gw/admin/prop_others/piece_header', locals: {new: true} %>
+
+<!-- コンテンツここから -->
+<div class="main">
+  <%= render partial: 'search' %>
+  <%= div_notice %>
+
+  <% if @items.blank? %>
+    <%= Gw.div_notice(t("rumi.message.empty.list")) %>
+  <% else %>
+    <table class="defaultTable">
+      <tr>
+        <th></th>
+        <th><%= t("rumi.prop_other.th.state") %></th>
+        <th><%= t("rumi.prop_other.th.type") %></th>
+        <th><%= t("rumi.prop_other.th.name") %></th>
+        <th><%= t("rumi.prop_other.th.admin") %></th>
+        <th><%= t("rumi.prop_other.th.editor") %></th>
+        <th><%= t("rumi.prop_other.th.reader") %></th>
+      </tr>
+      <% @items.each do |item| %>
+        <tr class="<%= cycle '', 'cycle' %>">
+          <td><%= link_to(t("rumi.link.show"), "/gw/prop_#{@genre}s/#{item.id}?cls=#{@cls}") -%></td>
+          <td><%= reserved_state[item.reserved_state][0] %></td>
+          <td><%= safe{item.prop_type.name} %></td>
+          <td><%= item.name %></td>
+          <td><%= truncate_group_names(item.admin(:show)) %></td>
+          <td><%= truncate_group_names(item.editor(:show))%></td>
+          <td><%= truncate_group_names(item.reader(:show)) %></td>
+        </tr>
+      <% end %>
+    </table>
+  <% end %>
+
+  <div class="backlink paginationSingle">
+    <ul>
+      <li><%= link_to t("rumi.back_link.admin"), gw_config_settings_path %></li>
+    </ul>
+  </div>
+  <script language = "JavaScript" type="text/javascript">
+    //<![CDATA[
+    var search_submit = function () {
+      var type_id = $('s_type_id').value;
+      if (type_id != "-"){
+        document.forms['search'].submit();
+      }
+    }
+    //]]>
+  </script>
+</div>
+<!-- コンテンツここまで -->

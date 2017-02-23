@@ -1,0 +1,6 @@
+<header class="entry_header bg-green">
+  <h2><%= Page.title %></h2>
+  <%= link_to new_gw_smart_schedule_path do %>
+    <p class='add-new'>新規作成</p>
+  <% end %>
+</header>

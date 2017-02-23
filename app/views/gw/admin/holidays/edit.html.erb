@@ -1,0 +1,12 @@
+<%= render partial: 'header', locals: {new: false} %>
+
+<!-- コンテンツここから -->
+<div class="main">
+  <%= div_notice %>
+  <%= form_for :item, url: "/gw/holidays/#{@item.id}", html: {method: :put, multipart: true, id: 'itemForm'} do |f| %>
+    <%= f.error_messages %>
+    <%= render partial: '/gw/admin/holidays/form', locals: {f: f} %>
+    <%= raw(submit_for(f, {caption: t("rumi.submit.update")})) %>
+  <% end %>
+</div>
+<!-- コンテンツここまで -->

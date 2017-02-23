@@ -1,0 +1,160 @@
+<%
+  @format ||= "%_d"
+  mode = 'month'
+  week_first_day = @calendar_first_day
+  week_cnt = 0
+  p = place rescue ""
+%>
+<% unless p == "print" %>
+  <%= render partial: '/gw/admin/schedules/piece_header', locals: {piece_head_title: @piece_head_title, new: true} %>
+
+  <!-- コンテンツここから -->
+  <div class="main">
+    <!-- フォーム切替ボタン等 -->
+    <% if @sp_mode == :prop %>
+      <%= render partial: '/gw/admin/schedule_props/bt_box', locals: {d: @st_date, mode: mode} %>
+    <% else %>
+      <%= render partial: '/gw/admin/schedules/schedule_bt_box', locals: {d: @st_date, mode: mode} %>
+    <% end %>
+    <!-- フォーム切替ボタン等ここまで -->
+
+    <%= render partial: '/gw/admin/schedules/schedule_line_box', locals: {d: @st_date, mode: mode, move_mode: :header} %>
+    <!-- スケジュール詳細 -->
+    <table class="defaultTable scheduleTable scheduleMonthly">
+      <thead>
+        <tr>
+          <% 7.times do |i| %>
+            <%
+              week_add_day = week_first_day + i
+              wday = (week_add_day).wday
+              class_str = %Q(scheduleData #{Gw.weekday(wday, 'eh')})
+            %>
+            <th class="<%= class_str %>">
+              <span class="day"><%= Gw.weekday(wday) %></span>
+            </th>
+          <% end %>
+        </tr>
+      </thead>
+      <tbody>
+        <% while week_first_day <= @calendar_end_day do %>
+          <% week_cnt += 1 %>
+          <tr class="schedule-body">
+            <% 7.times do |i| %>
+              <%
+                week_add_day = week_first_day + i
+                class_str = create_month_class_noweek(week_add_day, @st_date, @holidays, params)
+              %>
+              <td class="<%= class_str %>">
+                <span class="date">
+                  <%= link_to(date_format(@format, week_add_day), day_link(week_add_day, mode)) %>
+                </span>
+                <% @holidays.each do |holiday| %>
+                  <%
+                    next if holiday.ed_at.nil?
+                    if holiday.ed_at.to_date == week_add_day
+                  %>
+                    <div title="<%= holiday.title %>" class="holidays" id="holiday<%= holiday.id %>">
+                      <span class="holiday_title"><%= holiday.title %></span>
+                    </div>
+                  <% end %>
+                <% end %>
+                <span class="add">
+                  <% if @sp_mode == :schedule && schedule_edit_auth(week_add_day) %>
+                    <%= show_schedule_edit_icon(week_add_day, uid: @uid) %>
+                  <% end %>
+                  <% if @sp_mode == :prop && schedule_edit_auth(week_add_day) %>
+                    <%= show_schedule_edit_icon(week_add_day, prop_id: params[:prop_id], s_genre: params[:s_genre]) -%>
+                  <% end %>
+                </span>
+                <% @schedules.each_with_index do |schedule, j| %>
+                  <%
+                    schedule_id = "sche#{schedule.id}_#{i}_#{j}_#{week_cnt}"
+                    prop = @prop.present? ? @prop : nil
+                    user_id = params[:uid]? params[:uid].to_i : prop ? nil : Core.user.id
+                  %>
+                  <%= show_week_one(schedule, week_add_day, schedule_id, user_id, prop) %>
+                <% end %>
+              </td>
+            <% end %>
+          </tr>
+          <% week_first_day = week_first_day + 7 %>
+        <% end %>
+      </tbody>
+    </table>
+    <!-- スケジュール詳細ここまで -->
+  </div>
+  <!-- コンテンツここまで -->
+<% else %>
+  <link rel="stylesheet" href="/_common/themes/gw/css/base.css" />
+  <!-- コンテンツここから -->
+  <div class="main">
+    <div style="float:right; margin-top: 5px; margin-bottom: 5px;">
+      <%= button_tag t("rumi.button.print"), type: "button", onclick: "window.print();", style: "margin-right:10px;padding:3px;" %>
+      <%= button_tag t("rumi.button.close"), type: "button", onclick: "window.close();", style: "margin-right:10px;padding:3px;" %>
+    </div>
+    <!-- スケジュール詳細 -->
+    <table summary="<%= t("rumi.schedule.summary") %>" class="defaultTable scheduleTable scheduleMonthly">
+      <thead>
+        <tr>
+          <% 7.times do |i| %>
+            <%
+              week_add_day = week_first_day + i
+              wday = (week_add_day).wday
+              class_str = %Q(scheduleData #{Gw.weekday(wday, 'eh')})
+            %>
+            <th class="<%= class_str %>">
+              <span class="day"><%= Gw.weekday(wday) %></span>
+            </th>
+          <% end %>
+        </tr>
+      </thead>
+      <tbody>
+        <% while week_first_day <= @calendar_end_day do %>
+          <% week_cnt += 1 %>
+          <tr class="schedule-body">
+            <% 7.times do |i| %>
+              <%
+                week_add_day = week_first_day + i
+                class_str = create_month_class_noweek(week_add_day, @st_date, @holidays, params)
+              %>
+              <td class="<%= class_str %>">
+                <span class="date">
+                  <%= link_to(date_format(@format, week_add_day), day_link(week_add_day, mode)) %>
+                </span>
+                <span class="add">
+                  <% if @sp_mode == :schedule && schedule_edit_auth(week_add_day) %>
+                    <%= show_schedule_edit_icon(week_add_day, uid: @uid) %>
+                  <% end %>
+                  <% if @sp_mode == :prop && schedule_edit_auth(week_add_day) %>
+                    <%= show_schedule_edit_icon(week_add_day, prop_id: params[:prop_id], s_genre: params[:s_genre]) %>
+                  <% end %>
+                </span>
+                <% @schedules.each_with_index do |schedule, j| %>
+                  <%
+                    schedule_id = "sche#{schedule.id}_#{i}_#{j}_#{week_cnt}"
+                    prop = @prop.present? ? @prop : nil
+                    user_id = params[:uid]? params[:uid].to_i : prop ? nil : Core.user.id
+                  %>
+                  <%= show_week_one(schedule, week_add_day, schedule_id, user_id, prop) %>
+                <% end %>
+                <% @holidays.each do |holiday| %>
+                  <%
+                    next if holiday.ed_at.nil?
+                    if holiday.ed_at.to_date == week_add_day
+                  %>
+                    <div title="<%= holiday.title %>" class="ind" id="holiday<%= holiday.id %>">
+                      <span class="title"><%= holiday.title %></span>
+                    </div>
+                  <% end %>
+                <% end %>
+              </td>
+            <% end %>
+          </tr>
+          <% week_first_day = week_first_day + 7 %>
+        <% end %>
+      </tbody>
+    </table>
+    <!-- スケジュール詳細ここまで -->
+  </div>
+  <!-- コンテンツここまで -->
+<% end %>

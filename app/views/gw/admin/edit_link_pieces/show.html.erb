@@ -1,0 +1,36 @@
+<%= render :partial => 'header_str', locals: {piece_head_title: @piece_head_title} %>
+
+<!-- コンテンツここから -->
+<div class="main">
+  <%= div_notice %>
+
+  <%= render partial: 'header_navi' %>
+  
+  <table class="defaultTable listTable configTable">
+    <tr>
+      <th><%= t("rumi.config_settings.edit_link_piece.th.published") %></th>
+      <td><%= Gw::EditLinkPiece.published_show(@item.published) %></td>
+    </tr>
+    <tr>
+      <th><%= t("rumi.config_settings.edit_link_piece.th.state") %></th>
+      <td><%= Gw::EditLinkPiece.state_show(@item.state) %></td>
+    </tr>
+    <tr>
+      <th><%= t("rumi.config_settings.edit_link_piece.th.name") %></th>
+      <td><%=raw @item.name %></td>
+    </tr>
+    <tr>
+      <th><%= t("rumi.config_settings.edit_link_piece.th.sort") %></th>
+      <td><%= @item.sort_no %></td>
+    </tr>
+    <tr>
+      <th><%= t("rumi.config_settings.edit_link_piece.th.link_url") %></th>
+      <td><%= @item.link_url %></td>
+    </tr>
+    <tr>
+      <th><%= t("rumi.config_settings.edit_link_piece.th.class_external") %></th>
+      <td><%= Gw::EditLinkPiece.external_show(@item.class_external) %></td>
+    </tr>
+  </table>
+</div>
+<!-- コンテンツここまで -->

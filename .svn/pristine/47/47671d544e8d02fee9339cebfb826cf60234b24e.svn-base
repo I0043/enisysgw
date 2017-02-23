@@ -1,0 +1,41 @@
+<tbody>
+  <tr class="schedule-body">
+    <th>
+      <%
+        date = @calendar_first_day
+        s_date = date.strftime("%Y%m%d")
+      %>
+      <p><%= user.official_position %></p>
+      <p><%= link_to_show_profile(user.display_name_only, user.code) %></p>
+      <p class="linkBox">
+        <%= link_to t("rumi.schedule.link.day"), gw_schedule_path(s_date, uid: user.id) %>
+      </p>
+      <p class="linkBox">
+        <%= link_to t("rumi.schedule.link.week"), gw_schedules_path(s_date: s_date, uid: user.id) %>
+      </p>
+      <p class="linkBox">
+        <%= link_to t("rumi.schedule.link.month"), show_month_gw_schedules_path(s_date: s_date, uid: user.id) %>
+      </p>
+      <p class="linkBox">
+        <%= link_to t("rumi.schedule.link.list"), gw_schedule_lists_path(uid: user.id, s_year: date.year, s_month: date.month) %>
+      </p>
+    </th>
+    <% 7.times do |i| %>
+      <%
+        week_add_day = week_first_day + i
+        class_str = create_month_class(week_add_day, @st_date, @holidays, params)
+      %>
+      <td class="<%= class_str -%>">
+        <% if @edit && user.schedule_auth? -%>
+          <span class="add">
+            <%= raw link_to image_tag("/images/icon/add4.png", alt: "edit"), schedule_new_link(week_add_day, uid: user.id) %>
+          </span>
+        <% end %>
+        <% @schedules.each_with_index do |schedule, j| %>
+          <% schedule_id = "sche#{schedule.id}_#{i}_#{j}_#{user_cnt}" %>
+          <%= raw show_week_one(schedule, week_add_day, schedule_id, user.id, nil) %>
+        <% end %>
+      </td>
+    <% end %>
+  </tr>
+</tbody>

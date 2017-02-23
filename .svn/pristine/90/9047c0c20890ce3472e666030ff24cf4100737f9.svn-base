@@ -1,0 +1,13 @@
+<%= render partial: 'piece_header', locals: {new: false} %>
+
+<!-- コンテンツここから -->
+<div class="main">
+  <%= form_for :item, url: gw_prop_types_path, html: {id: 'itemForm'} do |f| %>
+    <%= f.error_messages %>
+    <%= render partial: 'form', locals: {f: f} %>
+    <div class="submitters">
+      <%= f.submit t("rumi.submit.create") %>
+    </div>
+  <% end %>
+</div>
+<!-- コンテンツここまで -->

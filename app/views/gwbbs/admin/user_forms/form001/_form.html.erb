@@ -1,0 +1,17 @@
+<table class="defaultTable inputTable">
+  <tr>
+    <th><%= t('rumi.gwbbs.th.doctitle') %><span class="required"><%= required('※') %></span> ( <%= t('rumi.gwbbs.th.doctitle') + t('rumi.gwboard.message.title_limit') %> )</th>
+  </tr>
+  <tr>
+    <td><%= f.text_field :title, size: 140, maxlength: 140, style: "width:100%;" %></td>
+  </tr>
+  <tr>
+    <th><%= t('rumi.gwbbs.th.body') %></th>
+  </tr>
+  <tr>
+    <td class="mceEditor"><%= f.text_area :body, :class => 'mceEditor', :style => 'width:100%;height:300px;' %></td>
+  </tr>
+</table>
+
+<%=gwboard_attachments_form(f, @item)%>
+

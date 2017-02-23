@@ -1,0 +1,20 @@
+<%= render partial: 'header' %>
+
+<!-- コンテンツここから -->
+<div class="main">
+  <%= div_notice %>
+  <div class="imgBox" style="float: none;">
+    <%= raw(%Q(<img src="/images/bg_login.jpg" />)) %>
+  </div>
+
+  <%= form_for :login_image, url: image_upload_system_login_images_path, html: {multipart: true, id: 'itemForm'} do |f| %>
+    <p>
+      <label for="item_upload"><%= t("rumi.user.profile.upload_item") %></label>
+      <%= f.file_field :upload %>
+    </p>
+    <p>
+      <%= submit_tag t("rumi.button.upload") %>
+    </p>
+  <% end %>
+</div>
+<!-- コンテンツここまで -->

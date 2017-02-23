@@ -1,0 +1,2432 @@
+  [1m[36m (6.5ms)[0m  [1mCREATE TABLE `schema_migrations` (`version` varchar(255) NOT NULL) ENGINE=InnoDB[0m
+  [1m[35m (7.4ms)[0m  CREATE UNIQUE INDEX `unique_schema_migrations`  ON `schema_migrations` (`version`) 
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT `schema_migrations`.* FROM `schema_migrations`[0m
+Migrating to LoadInitalSchema (20131025015415)
+  [1m[35m (1.9ms)[0m  CREATE TABLE `doclibrary_adms` (`id` int(11) auto_increment PRIMARY KEY, `unid` int(11), `content_id` int(11), `created_at` datetime, `title_id` int(11), `user_id` int(11), `user_code` varchar(255), `user_name` text, `group_id` int(11), `group_code` varchar(255), `group_name` text) ENGINE=InnoDB
+  [1m[36m (2.3ms)[0m  [1mCREATE TABLE `doclibrary_controls` (`id` int(11) auto_increment PRIMARY KEY, `unid` int(11), `content_id` int(11), `state` text, `created_at` datetime, `updated_at` datetime, `recognized_at` datetime, `published_at` datetime, `default_published` int(11), `upload_graphic_file_size_capacity` int(11), `upload_graphic_file_size_capacity_unit` varchar(255), `upload_document_file_size_capacity` int(11), `upload_document_file_size_capacity_unit` varchar(255), `upload_graphic_file_size_max` int(11), `upload_document_file_size_max` int(11), `upload_graphic_file_size_currently` decimal(17,0), `upload_document_file_size_currently` decimal(17,0), `create_section` varchar(255), `addnew_forbidden` int(11), `draft_forbidden` int(11), `delete_forbidden` int(11), `importance` int(11), `form_name` varchar(255), `banner` text, `banner_position` varchar(255), `left_banner` text, `left_menu` text, `left_index_use` varchar(1), `left_index_bg_color` varchar(255), `default_folder` varchar(255), `other_system_link` text, `wallpaper` text, `css` text, `sort_no` int(11), `caption` text, `view_hide` tinyint(1), `categoey_view` tinyint(1), `categoey_view_line` int(11), `monthly_view` tinyint(1), `monthly_view_line` int(11), `notification` int(11), `upload_system` int(11), `limit_date` varchar(255), `name` varchar(255), `title` varchar(255), `category` int(11), `category1_name` varchar(255), `category2_name` varchar(255), `category3_name` varchar(255), `recognize` int(11), `createdate` text, `createrdivision_id` varchar(20), `createrdivision` text, `creater_id` varchar(20), `creater` text, `editdate` text, `editordivision_id` varchar(20), `editordivision` text, `editor_id` varchar(20), `editor` text, `default_limit` int(11), `dbname` varchar(255), `admingrps` text, `admingrps_json` text, `adms` text, `adms_json` text, `dsp_admin_name` text, `editors` text, `editors_json` text, `readers` text, `readers_json` text, `sueditors` text, `sueditors_json` text, `sureaders` text, `sureaders_json` text, `help_display` text, `help_url` text, `help_admin_url` text, `special_link` text, `docslast_updated_at` datetime) ENGINE=InnoDB[0m
+  [1m[35m (1.8ms)[0m  CREATE TABLE `doclibrary_roles` (`id` int(11) auto_increment PRIMARY KEY, `unid` int(11), `content_id` int(11), `created_at` datetime, `title_id` int(11), `role_code` varchar(255), `user_id` int(11), `user_code` varchar(255), `user_name` text, `group_id` int(11), `group_code` varchar(255), `group_name` text) ENGINE=InnoDB
+  [1m[36m (2.9ms)[0m  [1mCREATE TABLE `gw_admin_messages` (`id` int(11) auto_increment PRIMARY KEY, `created_at` datetime, `updated_at` datetime, `body` text, `sort_no` int(11), `state` int(11)) ENGINE=InnoDB[0m
+  [1m[35m (1.7ms)[0m  CREATE TABLE `gw_circulars` (`id` int(11) auto_increment PRIMARY KEY, `state` int(11), `uid` int(11), `u_code` varchar(255), `gid` int(11), `g_code` varchar(255), `class_id` int(11), `title` text, `st_at` datetime, `ed_at` datetime, `is_finished` int(11), `is_system` int(11), `options` text, `body` text, `deleted_at` datetime, `updated_at` datetime, `created_at` datetime) ENGINE=InnoDB
+  [1m[36m (4.8ms)[0m  [1mCREATE  INDEX `ed_at`  ON `gw_circulars` (`ed_at`) [0m
+  [1m[35m (3.7ms)[0m  CREATE  INDEX `state`  ON `gw_circulars` (`state`) 
+  [1m[36m (3.8ms)[0m  [1mCREATE  INDEX `uid`  ON `gw_circulars` (`uid`) [0m
+  [1m[35m (1.5ms)[0m  CREATE TABLE `gw_edit_link_piece_csses` (`id` int(11) auto_increment PRIMARY KEY, `state` varchar(255), `css_name` varchar(255), `css_sort_no` int(11) DEFAULT 0, `css_class` varchar(255), `css_type` int(11) DEFAULT 1, `deleted_at` datetime, `deleted_user` varchar(255), `deleted_group` varchar(255), `updated_at` datetime, `updated_user` varchar(255), `updated_group` varchar(255), `created_at` datetime, `created_user` varchar(255), `created_group` varchar(255)) ENGINE=InnoDB
+  [1m[36m (1.7ms)[0m  [1mCREATE TABLE `gw_edit_link_pieces` (`id` int(11) auto_increment PRIMARY KEY, `uid` int(11), `class_created` int(11) DEFAULT 0, `published` varchar(255), `state` varchar(255), `level_no` int(11) DEFAULT 0, `parent_id` int(11) DEFAULT 0, `name` varchar(255), `sort_no` int(11) DEFAULT 0, `tab_keys` int(11) DEFAULT 0, `display_auth_priv` int(11), `role_name_id` int(11), `display_auth` text, `block_icon_id` int(11), `block_css_id` int(11), `link_url` text, `remark` text, `icon_path` text, `link_div_class` varchar(255), `class_external` int(11) DEFAULT 0, `ssoid` int(11), `class_sso` int(11) DEFAULT 0, `field_account` varchar(255), `field_pass` varchar(255), `css_id` int(11) DEFAULT 0, `deleted_at` datetime, `deleted_user` varchar(255), `deleted_group` varchar(255), `updated_at` datetime, `updated_user` varchar(255), `updated_group` varchar(255), `created_at` datetime, `created_user` varchar(255), `created_group` varchar(255)) ENGINE=InnoDB[0m
+  [1m[35m (1.5ms)[0m  CREATE TABLE `gw_holidays` (`id` int(11) auto_increment PRIMARY KEY, `creator_uid` int(11), `creator_ucode` varchar(255), `creator_uname` text, `creator_gid` int(11), `creator_gcode` varchar(255), `creator_gname` text, `title_category_id` int(11), `title` varchar(255), `is_public` int(11), `memo` text, `schedule_repeat_id` int(11), `dirty_repeat_id` int(11), `no_time_id` int(11), `st_at` datetime, `ed_at` datetime, `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB
+  [1m[36m (3.4ms)[0m  [1mCREATE  INDEX `st_at`  ON `gw_holidays` (`st_at`, `ed_at`) [0m
+  [1m[35m (1.4ms)[0m  CREATE TABLE `gw_memo_users` (`id` int(11) auto_increment PRIMARY KEY, `schedule_id` int(11), `class_id` int(11), `uid` int(11), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB
+  [1m[36m (1.5ms)[0m  [1mCREATE TABLE `gw_memos` (`id` int(11) auto_increment PRIMARY KEY, `class_id` int(11), `uid` int(11), `title` varchar(255), `st_at` datetime, `ed_at` datetime, `is_finished` int(11), `is_system` int(11), `fr_group` varchar(255), `fr_user` varchar(255), `memo_category_id` int(11), `memo_category_text` varchar(255), `body` text, `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [1m[35m (1.7ms)[0m  CREATE TABLE `gw_prop_other_images` (`id` int(11) auto_increment PRIMARY KEY, `parent_id` int(11), `idx` int(11), `note` varchar(255), `path` varchar(255), `orig_filename` varchar(255), `content_type` varchar(255), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB
+  [1m[36m (1.1ms)[0m  [1mCREATE TABLE `gw_prop_other_limits` (`id` int(11) auto_increment PRIMARY KEY, `sort_no` int(11), `state` varchar(255), `gid` int(11), `limit` int(11), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [1m[35m (1.4ms)[0m  CREATE TABLE `gw_prop_other_roles` (`id` int(11) auto_increment PRIMARY KEY, `prop_id` int(11), `gid` int(11), `auth` varchar(255), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB
+  [1m[36m (3.8ms)[0m  [1mCREATE  INDEX `prop_id`  ON `gw_prop_other_roles` (`prop_id`) [0m
+  [1m[35m (1.5ms)[0m  CREATE TABLE `gw_prop_others` (`id` int(11) auto_increment PRIMARY KEY, `sort_no` varchar(255), `name` varchar(255), `type_id` int(11), `state` text, `edit_state` int(11), `delete_state` int(11) DEFAULT 0, `reserved_state` int(11) DEFAULT 1, `comment` text, `created_at` datetime, `updated_at` datetime, `extra_flag` varchar(255), `extra_data` text, `gid` int(11), `gname` varchar(255), `creator_uid` int(11), `updater_uid` int(11)) ENGINE=InnoDB
+  [1m[36m (1.5ms)[0m  [1mCREATE TABLE `gw_prop_types` (`id` int(11) auto_increment PRIMARY KEY, `state` varchar(255), `name` varchar(255), `sort_no` int(11), `created_at` datetime, `updated_at` datetime, `deleted_at` datetime) ENGINE=InnoDB[0m
+  [1m[35m (1.5ms)[0m  CREATE TABLE `gw_schedule_props` (`id` int(11) auto_increment PRIMARY KEY, `schedule_id` int(11), `prop_type` varchar(255), `prop_id` int(11), `created_at` datetime, `updated_at` datetime, `extra_data` text, `confirmed_uid` int(11), `confirmed_gid` int(11), `confirmed_at` datetime, `rented_uid` int(11), `rented_gid` int(11), `rented_at` datetime, `returned_uid` int(11), `returned_gid` int(11), `returned_at` datetime, `cancelled_uid` int(11), `cancelled_gid` int(11), `cancelled_at` datetime, `st_at` datetime, `ed_at` datetime) ENGINE=InnoDB
+  [1m[36m (3.4ms)[0m  [1mCREATE  INDEX `prop_id`  ON `gw_schedule_props` (`prop_id`) [0m
+  [1m[35m (3.5ms)[0m  CREATE  INDEX `schedule_id`  ON `gw_schedule_props` (`schedule_id`, `prop_type`, `prop_id`) 
+  [1m[36m (1.5ms)[0m  [1mCREATE TABLE `gw_schedule_public_roles` (`id` int(11) auto_increment PRIMARY KEY, `schedule_id` int(11), `class_id` int(11), `uid` int(11), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [1m[35m (1.4ms)[0m  CREATE TABLE `gw_schedule_repeats` (`id` int(11) auto_increment PRIMARY KEY, `created_at` datetime, `updated_at` datetime, `st_date_at` datetime, `ed_date_at` datetime, `st_time_at` datetime, `ed_time_at` datetime, `class_id` int(11), `weekday_ids` varchar(255)) ENGINE=InnoDB
+  [1m[36m (1.2ms)[0m  [1mCREATE TABLE `gw_schedule_users` (`id` int(11) auto_increment PRIMARY KEY, `schedule_id` int(11), `class_id` int(11), `uid` int(11), `created_at` datetime, `updated_at` datetime, `st_at` datetime, `ed_at` datetime) ENGINE=InnoDB[0m
+  [1m[35m (6.8ms)[0m  CREATE  INDEX `schedule_id`  ON `gw_schedule_users` (`schedule_id`, `class_id`, `uid`) 
+  [1m[36m (5.7ms)[0m  [1mCREATE  INDEX `schedule_id2`  ON `gw_schedule_users` (`schedule_id`) [0m
+  [1m[35m (4.9ms)[0m  CREATE  INDEX `uid`  ON `gw_schedule_users` (`uid`) 
+  [1m[36m (2.1ms)[0m  [1mCREATE TABLE `gw_schedules` (`id` int(11) auto_increment PRIMARY KEY, `creator_uid` int(11), `creator_ucode` varchar(255), `creator_uname` text, `creator_gid` int(11), `creator_gcode` varchar(255), `creator_gname` text, `updater_uid` int(11), `updater_ucode` varchar(255), `updater_uname` text, `updater_gid` int(11), `updater_gcode` varchar(255), `updater_gname` text, `owner_uid` int(11), `owner_ucode` varchar(255), `owner_uname` text, `owner_gid` int(11), `owner_gcode` varchar(255), `owner_gname` text, `title_category_id` int(11), `title` varchar(255), `place_category_id` int(11), `place` varchar(255), `to_go` int(11), `is_public` int(11), `is_pr` int(11), `memo` text, `admin_memo` text, `repeat_id` int(11), `schedule_repeat_id` int(11), `dirty_repeat_id` int(11), `no_time_id` int(11), `schedule_parent_id` int(11), `participant_nums_inner` int(11), `participant_nums_outer` int(11), `check_30_over` int(11), `inquire_to` text, `st_at` datetime, `ed_at` datetime, `created_at` datetime, `updated_at` datetime, `todo` int(11), `allday` int(11), `guide_state` int(11), `guide_place_id` int(11), `guide_place` text, `guide_ed_at` int(11), `event_week` int(11), `event_month` int(11)) ENGINE=InnoDB[0m
+  [1m[35m (4.7ms)[0m  CREATE  INDEX `ed_at`  ON `gw_schedules` (`ed_at`) 
+  [1m[36m (4.1ms)[0m  [1mCREATE  INDEX `schedule_repeat_id`  ON `gw_schedules` (`schedule_repeat_id`) [0m
+  [1m[35m (3.4ms)[0m  CREATE  INDEX `st_at`  ON `gw_schedules` (`st_at`, `ed_at`) 
+  [1m[36m (1.5ms)[0m  [1mCREATE TABLE `gw_user_properties` (`id` int(11) auto_increment PRIMARY KEY, `class_id` int(11), `uid` varchar(255), `name` varchar(255), `type_name` varchar(255), `options` text, `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [1m[35m (1.4ms)[0m  CREATE TABLE `gw_year_fiscal_jps` (`id` int(11) auto_increment PRIMARY KEY, `start_at` datetime, `end_at` datetime, `fyear` text, `fyear_f` text, `markjp` text, `markjp_f` text, `namejp` text, `namejp_f` text, `updated_at` datetime, `updated_user` text, `updated_group` text, `created_at` datetime, `created_user` text, `created_group` text) ENGINE=InnoDB
+  [1m[36m (1.4ms)[0m  [1mCREATE TABLE `gw_year_mark_jps` (`id` int(11) auto_increment PRIMARY KEY, `name` text, `mark` text, `start_at` datetime, `updated_at` datetime, `updated_user` text, `updated_group` text, `created_at` datetime, `created_user` text, `created_group` text) ENGINE=InnoDB[0m
+  [1m[35m (1.3ms)[0m  CREATE TABLE `gwbbs_adms` (`id` int(11) auto_increment PRIMARY KEY, `unid` int(11), `content_id` int(11), `created_at` datetime, `title_id` int(11), `user_id` int(11), `user_code` varchar(255), `user_name` text, `group_id` int(11), `group_code` varchar(255), `group_name` text) ENGINE=InnoDB
+  [1m[36m (2.9ms)[0m  [1mCREATE TABLE `gwbbs_controls` (`id` int(11) auto_increment PRIMARY KEY, `unid` int(11), `content_id` int(11), `state` text, `created_at` datetime, `updated_at` datetime, `recognized_at` datetime, `published_at` datetime, `default_published` int(11), `doc_body_size_capacity` int(11), `doc_body_size_currently` int(11), `upload_graphic_file_size_capacity` int(11), `upload_graphic_file_size_capacity_unit` varchar(255), `upload_document_file_size_capacity` int(11), `upload_document_file_size_capacity_unit` varchar(255), `upload_graphic_file_size_max` int(11), `upload_document_file_size_max` int(11), `upload_graphic_file_size_currently` decimal(17,0), `upload_document_file_size_currently` decimal(17,0), `create_section` varchar(255), `create_section_flag` varchar(255), `addnew_forbidden` tinyint(1), `edit_forbidden` tinyint(1), `draft_forbidden` tinyint(1), `delete_forbidden` tinyint(1), `attachfile_index_use` tinyint(1), `importance` int(11), `form_name` varchar(255), `banner` text, `banner_position` varchar(255), `left_banner` text, `left_menu` text, `left_index_use` varchar(1), `left_index_pattern` int(11), `left_index_bg_color` varchar(255), `default_mode` varchar(255), `other_system_link` text, `preview_mode` tinyint(1), `wallpaper_id` int(11), `wallpaper` text, `css` text, `font_color` text, `icon_id` int(11), `icon` text, `sort_no` int(11), `caption` text, `view_hide` tinyint(1), `categoey_view` tinyint(1), `categoey_view_line` int(11), `monthly_view` tinyint(1), `monthly_view_line` int(11), `group_view` tinyint(1), `one_line_use` int(11), `notification` int(11), `restrict_access` tinyint(1), `upload_system` int(11), `limit_date` varchar(255), `name` varchar(255), `title` varchar(255), `category` int(11), `category1_name` varchar(255), `category2_name` varchar(255), `category3_name` varchar(255), `recognize` int(11), `createdate` text, `createrdivision_id` varchar(20), `createrdivision` text, `creater_id` varchar(20), `creater` text, `editdate` text, `editordivision_id` varchar(20), `editordivision` text, `editor_id` varchar(20), `editor` text, `default_limit` int(11), `dbname` varchar(255), `admingrps` text, `admingrps_json` text, `adms` text, `adms_json` text, `dsp_admin_name` text, `editors` text, `editors_json` text, `readers` text, `readers_json` text, `sueditors` text, `sueditors_json` text, `sureaders` text, `sureaders_json` text, `help_display` text, `help_url` text, `help_admin_url` text, `notes_field01` text, `notes_field02` text, `notes_field03` text, `notes_field04` text, `notes_field05` text, `notes_field06` text, `notes_field07` text, `notes_field08` text, `notes_field09` text, `notes_field10` text, `docslast_updated_at` datetime) ENGINE=InnoDB[0m
+  [1m[35m (1.4ms)[0m  CREATE TABLE `gwbbs_itemdeletes` (`id` int(11) auto_increment PRIMARY KEY, `unid` int(11), `content_id` int(11), `created_at` datetime, `updated_at` datetime, `admin_code` varchar(255), `title_id` int(11), `board_title` text, `board_state` varchar(255), `board_view_hide` varchar(255), `board_sort_no` int(11), `public_doc_count` int(11), `void_doc_count` int(11), `dbname` varchar(255), `limit_date` varchar(255), `board_limit_date` varchar(255)) ENGINE=InnoDB
+  [1m[36m (1.2ms)[0m  [1mCREATE TABLE `gwbbs_roles` (`id` int(11) auto_increment PRIMARY KEY, `unid` int(11), `content_id` int(11), `created_at` datetime, `title_id` int(11), `role_code` varchar(255), `user_id` int(11), `user_code` varchar(255), `user_name` text, `group_id` int(11), `group_code` varchar(255), `group_name` text) ENGINE=InnoDB[0m
+  [1m[35m (1.4ms)[0m  CREATE TABLE `gwcircular_adms` (`id` int(11) auto_increment PRIMARY KEY, `unid` int(11), `content_id` int(11), `created_at` datetime, `title_id` int(11), `user_id` int(11), `user_code` varchar(255), `user_name` text, `group_id` int(11), `group_code` varchar(255), `group_name` text) ENGINE=InnoDB
+  [1m[36m (2.5ms)[0m  [1mCREATE TABLE `gwcircular_controls` (`id` int(11) auto_increment PRIMARY KEY, `unid` int(11), `content_id` int(11), `state` text, `created_at` datetime, `updated_at` datetime, `recognized_at` datetime, `published_at` datetime, `default_published` int(11), `doc_body_size_capacity` int(11), `doc_body_size_currently` int(11), `upload_graphic_file_size_capacity` int(11), `upload_graphic_file_size_capacity_unit` varchar(255), `upload_document_file_size_capacity` int(11), `upload_document_file_size_capacity_unit` varchar(255), `upload_graphic_file_size_max` int(11), `upload_document_file_size_max` int(11), `upload_graphic_file_size_currently` decimal(17,0), `upload_document_file_size_currently` decimal(17,0), `commission_limit` int(11), `create_section` varchar(255), `create_section_flag` varchar(255), `addnew_forbidden` tinyint(1), `edit_forbidden` tinyint(1), `draft_forbidden` tinyint(1), `delete_forbidden` tinyint(1), `attachfile_index_use` tinyint(1), `importance` int(11), `form_name` varchar(255), `banner` text, `banner_position` varchar(255), `left_banner` text, `left_menu` text, `left_index_use` varchar(1), `left_index_pattern` int(11), `left_index_bg_color` varchar(255), `default_mode` varchar(255), `other_system_link` text, `preview_mode` tinyint(1), `wallpaper_id` int(11), `wallpaper` text, `css` text, `font_color` text, `icon_id` int(11), `icon` text, `sort_no` int(11), `caption` text, `view_hide` tinyint(1), `categoey_view` tinyint(1), `categoey_view_line` int(11), `monthly_view` tinyint(1), `monthly_view_line` int(11), `group_view` tinyint(1), `one_line_use` int(11), `notification` int(11), `restrict_access` tinyint(1), `upload_system` int(11), `limit_date` varchar(255), `name` varchar(255), `title` varchar(255), `category` int(11), `category1_name` varchar(255), `category2_name` varchar(255), `category3_name` varchar(255), `recognize` int(11), `createdate` text, `createrdivision_id` varchar(20), `createrdivision` text, `creater_id` varchar(20), `creater` text, `editdate` text, `editordivision_id` varchar(20), `editordivision` text, `editor_id` varchar(20), `editor` text, `default_limit` int(11), `dbname` varchar(255), `admingrps` text, `admingrps_json` text, `adms` text, `adms_json` text, `dsp_admin_name` text, `editors` text, `editors_json` text, `readers` text, `readers_json` text, `sueditors` text, `sueditors_json` text, `sureaders` text, `sureaders_json` text, `help_display` text, `help_url` text, `help_admin_url` text, `notes_field01` text, `notes_field02` text, `notes_field03` text, `notes_field04` text, `notes_field05` text, `notes_field06` text, `notes_field07` text, `notes_field08` text, `notes_field09` text, `notes_field10` text, `docslast_updated_at` datetime) ENGINE=InnoDB[0m
+  [1m[35m (1.3ms)[0m  CREATE TABLE `gwcircular_custom_groups` (`id` int(11) auto_increment PRIMARY KEY, `parent_id` int(11), `class_id` int(11), `owner_uid` int(11), `owner_gid` int(11), `updater_uid` int(11), `updater_gid` int(11), `state` text, `created_at` datetime, `updated_at` datetime, `level_no` int(11), `name` text, `name_en` text, `sort_no` int(11), `sort_prefix` text, `is_default` int(11), `reader_groups_json` mediumtext, `reader_groups` mediumtext, `readers_json` mediumtext, `readers` mediumtext) ENGINE=InnoDB
+  [1m[36m (1.7ms)[0m  [1mCREATE TABLE `gwcircular_docs` (`id` int(11) auto_increment PRIMARY KEY, `unid` int(11), `content_id` int(11), `state` text, `created_at` datetime, `updated_at` datetime, `recognized_at` datetime, `published_at` datetime, `latest_updated_at` datetime, `doc_type` int(11), `parent_id` int(11), `target_user_id` int(11), `target_user_code` varchar(20), `target_user_name` text, `confirmation` int(11), `section_code` varchar(255), `section_name` text, `importance` int(11), `title_id` int(11), `name` text, `title` text, `head` mediumtext, `body` mediumtext, `note` mediumtext, `category_use` int(11), `category1_id` int(11), `category2_id` int(11), `category3_id` int(11), `category4_id` int(11), `keywords` text, `commission_count` int(11), `unread_count` int(11), `already_count` int(11), `draft_count` int(11), `createdate` text, `creater_admin` tinyint(1), `createrdivision_id` varchar(20), `createrdivision` text, `creater_id` varchar(20), `creater` text, `editdate` text, `editor_admin` tinyint(1), `editordivision_id` varchar(20), `editordivision` text, `editor_id` varchar(20), `editor` text, `able_date` datetime, `expiry_date` datetime, `attachmentfile` int(11), `reader_groups_json` mediumtext, `reader_groups` mediumtext, `readers_json` mediumtext, `readers` mediumtext) ENGINE=InnoDB[0m
+  [1m[35m (4.7ms)[0m  CREATE  INDEX `parent_id`  ON `gwcircular_docs` (`parent_id`) 
+  [1m[36m (1.2ms)[0m  [1mCREATE TABLE `gwcircular_files` (`id` int(11) auto_increment PRIMARY KEY, `unid` int(11), `content_id` int(11), `state` text, `created_at` datetime, `updated_at` datetime, `recognized_at` datetime, `published_at` datetime, `latest_updated_at` datetime, `parent_id` int(11), `title_id` int(11), `content_type` varchar(255), `filename` text, `memo` text, `size` int(11), `width` int(11), `height` int(11), `db_file_id` int(11)) ENGINE=InnoDB[0m
+  [1m[35m (1.2ms)[0m  CREATE TABLE `gwcircular_itemdeletes` (`id` int(11) auto_increment PRIMARY KEY, `unid` int(11), `content_id` int(11), `created_at` datetime, `updated_at` datetime, `admin_code` varchar(255), `title_id` int(11), `board_title` text, `board_state` varchar(255), `board_view_hide` varchar(255), `board_sort_no` int(11), `public_doc_count` int(11), `void_doc_count` int(11), `dbname` varchar(255), `limit_date` varchar(255), `board_limit_date` varchar(255)) ENGINE=InnoDB
+  [1m[36m (1.2ms)[0m  [1mCREATE TABLE `gwcircular_roles` (`id` int(11) auto_increment PRIMARY KEY, `unid` int(11), `content_id` int(11), `created_at` datetime, `title_id` int(11), `role_code` varchar(255), `user_id` int(11), `user_code` varchar(255), `user_name` text, `group_id` int(11), `group_code` varchar(255), `group_name` text) ENGINE=InnoDB[0m
+  [1m[35m (1.2ms)[0m  CREATE TABLE `sessions` (`id` int(11) auto_increment PRIMARY KEY, `session_id` varchar(255) NOT NULL, `data` text, `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB
+  [1m[36m (5.0ms)[0m  [1mCREATE  INDEX `index_sessions_on_session_id`  ON `sessions` (`session_id`) [0m
+  [1m[35m (3.8ms)[0m  CREATE  INDEX `index_sessions_on_updated_at`  ON `sessions` (`updated_at`) 
+  [1m[36m (1.3ms)[0m  [1mCREATE TABLE `system_admin_logs` (`id` int(11) auto_increment PRIMARY KEY, `created_at` datetime, `user_id` int(11), `item_unid` int(11), `controller` text, `action` text) ENGINE=InnoDB[0m
+  [1m[35m (1.3ms)[0m  CREATE TABLE `system_custom_group_roles` (`rid` int(11) auto_increment PRIMARY KEY, `created_at` datetime, `updated_at` datetime, `group_id` int(11), `custom_group_id` int(11), `priv_name` text, `user_id` int(11), `class_id` int(11)) ENGINE=InnoDB
+  [1m[36m (4.3ms)[0m  [1mCREATE  INDEX `custom_group_id`  ON `system_custom_group_roles` (`custom_group_id`) [0m
+  [1m[35m (3.5ms)[0m  CREATE  INDEX `group_id`  ON `system_custom_group_roles` (`group_id`) 
+  [1m[36m (3.6ms)[0m  [1mCREATE  INDEX `user_id`  ON `system_custom_group_roles` (`user_id`) [0m
+  [1m[35m (1.4ms)[0m  CREATE TABLE `system_custom_groups` (`id` int(11) auto_increment PRIMARY KEY, `parent_id` int(11), `class_id` int(11), `owner_uid` int(11), `owner_gid` int(11), `updater_uid` int(11) NOT NULL, `updater_gid` int(11) NOT NULL, `state` text, `created_at` datetime, `updated_at` datetime, `level_no` int(11), `name` text, `name_en` text, `sort_no` int(11), `sort_prefix` text, `is_default` int(11)) ENGINE=InnoDB
+  [1m[36m (2.7ms)[0m  [1mCREATE TABLE `system_group_histories` (`id` int(11) auto_increment PRIMARY KEY, `parent_id` int(11), `state` text, `created_at` datetime, `updated_at` datetime, `level_no` int(11), `version_id` int(11), `code` varchar(255), `name` text, `name_en` text, `email` text, `start_at` datetime, `end_at` datetime, `sort_no` int(11), `ldap_version` varchar(255), `ldap` int(11)) ENGINE=InnoDB[0m
+  [1m[35m (1.4ms)[0m  CREATE TABLE `system_groups` (`id` int(11) auto_increment PRIMARY KEY, `parent_id` int(11), `state` text, `created_at` datetime, `updated_at` datetime, `level_no` int(11), `version_id` int(11), `code` varchar(255), `name` text, `name_en` text, `email` text, `start_at` datetime, `end_at` datetime, `sort_no` int(11), `ldap_version` varchar(255), `ldap` int(11)) ENGINE=InnoDB
+  [1m[36m (1.4ms)[0m  [1mCREATE TABLE `system_ldap_temporaries` (`id` int(11) auto_increment PRIMARY KEY, `parent_id` int(11), `created_at` datetime, `updated_at` datetime, `version` varchar(255), `data_type` varchar(255), `code` varchar(255), `sort_no` varchar(255), `name` text, `name_en` text, `kana` text, `email` text, `match` text, `official_position` varchar(255), `assigned_job` varchar(255)) ENGINE=InnoDB[0m
+  [1m[35m (4.5ms)[0m  CREATE  INDEX `version`  ON `system_ldap_temporaries` (`version`(20), `parent_id`, `data_type`(20), `sort_no`) 
+  [1m[36m (1.2ms)[0m  [1mCREATE TABLE `system_login_logs` (`id` int(11) auto_increment PRIMARY KEY, `user_id` int(11), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [1m[35m (3.8ms)[0m  CREATE  INDEX `user_id`  ON `system_login_logs` (`user_id`) 
+  [1m[36m (1.3ms)[0m  [1mCREATE TABLE `system_priv_names` (`id` int(11) auto_increment PRIMARY KEY, `unid` int(11), `state` text, `content_id` int(11), `created_at` datetime, `updated_at` datetime, `display_name` text, `priv_name` text, `sort_no` int(11)) ENGINE=InnoDB[0m
+  [1m[35m (1.2ms)[0m  CREATE TABLE `system_public_logs` (`id` int(11) auto_increment PRIMARY KEY, `created_at` datetime, `user_id` int(11), `item_unid` int(11), `controller` text, `action` text) ENGINE=InnoDB
+  [1m[36m (1.1ms)[0m  [1mCREATE TABLE `system_role_name_privs` (`id` int(11) auto_increment PRIMARY KEY, `role_id` int(11), `priv_id` int(11), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [1m[35m (1.3ms)[0m  CREATE TABLE `system_role_names` (`id` int(11) auto_increment PRIMARY KEY, `unid` int(11), `state` text, `content_id` int(11), `created_at` datetime, `updated_at` datetime, `display_name` text, `table_name` text, `sort_no` int(11)) ENGINE=InnoDB
+  [1m[36m (1.4ms)[0m  [1mCREATE TABLE `system_roles` (`id` int(11) auto_increment PRIMARY KEY, `table_name` varchar(255), `priv_name` varchar(255), `idx` int(11), `class_id` int(11), `uid` varchar(255), `priv` int(11), `created_at` datetime, `updated_at` datetime, `role_name_id` int(11), `priv_user_id` int(11), `group_id` int(11)) ENGINE=InnoDB[0m
+  [1m[35m (1.6ms)[0m  CREATE TABLE `system_users` (`id` int(11) auto_increment PRIMARY KEY, `air_login_id` varchar(255), `state` text, `created_at` datetime, `updated_at` datetime, `code` varchar(255) NOT NULL, `ldap` int(11) NOT NULL, `ldap_version` int(11), `auth_no` text, `sort_no` varchar(255), `name` text, `name_en` text, `kana` text, `password` text, `mobile_access` int(11), `mobile_password` varchar(255), `email` text, `official_position` varchar(255), `assigned_job` varchar(255), `remember_token` text, `remember_token_expires_at` datetime, `air_token` text) ENGINE=InnoDB
+  [1m[36m (5.0ms)[0m  [1mCREATE UNIQUE INDEX `unique_user_code`  ON `system_users` (`code`) [0m
+  [1m[35m (1.2ms)[0m  CREATE TABLE `system_users_custom_groups` (`rid` int(11) auto_increment PRIMARY KEY, `created_at` datetime, `updated_at` datetime, `custom_group_id` int(11), `user_id` int(11), `title` text, `title_en` text, `sort_no` int(11), `icon` text) ENGINE=InnoDB
+  [1m[36m (3.5ms)[0m  [1mCREATE  INDEX `custom_group_id`  ON `system_users_custom_groups` (`custom_group_id`) [0m
+  [1m[35m (1.4ms)[0m  CREATE TABLE `system_users_group_histories` (`rid` int(11) auto_increment PRIMARY KEY, `created_at` datetime, `updated_at` datetime, `user_id` int(11), `group_id` int(11), `job_order` int(11), `start_at` datetime, `end_at` datetime, `user_code` varchar(255), `group_code` varchar(255)) ENGINE=InnoDB
+  [1m[36m (1.4ms)[0m  [1mCREATE TABLE `system_users_groups` (`rid` int(11) auto_increment PRIMARY KEY, `created_at` datetime, `updated_at` datetime, `user_id` int(11), `group_id` int(11), `job_order` int(11), `start_at` datetime, `end_at` datetime, `user_code` varchar(255), `group_code` varchar(255)) ENGINE=InnoDB[0m
+  [1m[35m (1.3ms)[0m  CREATE TABLE `system_users_groups_csvdata` (`id` int(11) auto_increment PRIMARY KEY, `state` varchar(255) NOT NULL, `data_type` varchar(255) NOT NULL, `level_no` int(11), `parent_id` int(11) NOT NULL, `parent_code` varchar(255) NOT NULL, `code` varchar(255) NOT NULL, `sort_no` int(11), `ldap` int(11) NOT NULL, `job_order` int(11), `name` text NOT NULL, `name_en` text, `kana` text, `password` varchar(255), `mobile_access` int(11), `mobile_password` varchar(255), `email` varchar(255), `official_position` varchar(255), `assigned_job` varchar(255), `start_at` datetime NOT NULL, `end_at` datetime, `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB
+  [1m[36m (1.6ms)[0m  [1mCREATE TABLE `gwbbs_comments` (`id` int(11) auto_increment PRIMARY KEY, `unid` int(11), `content_id` int(11), `state` text, `created_at` datetime, `updated_at` datetime, `recognized_at` datetime, `published_at` datetime, `latest_updated_at` datetime, `doc_type` int(11), `parent_id` int(11), `content_state` text, `title_id` int(11), `name` text, `pname` text, `title` text, `head` mediumtext, `body` mediumtext, `note` mediumtext, `category1_id` int(11), `category2_id` int(11), `category3_id` int(11), `category4_id` int(11), `keyword1` text, `keyword2` text, `keyword3` text, `keywords` text, `createdate` text, `createrdivision_id` varchar(20), `createrdivision` text, `creater_id` varchar(20), `creater` text, `editdate` text, `editordivision_id` varchar(20), `editordivision` text, `editor_id` varchar(20), `editor` text, `expiry_date` datetime, `inpfld_001` text, `inpfld_002` text) ENGINE=InnoDB[0m
+  [1m[35m (2.0ms)[0m  CREATE TABLE `gwbbs_docs` (`id` int(11) auto_increment PRIMARY KEY, `unid` int(11), `content_id` int(11), `state` text, `created_at` datetime, `updated_at` datetime, `recognized_at` datetime, `published_at` datetime, `latest_updated_at` datetime, `doc_type` int(11), `parent_id` int(11), `content_state` text, `section_code` varchar(255), `section_name` text, `importance` int(11), `one_line_note` int(11), `title_id` int(11), `name` text, `pname` text, `title` text, `head` mediumtext, `body` mediumtext, `note` mediumtext, `category_use` int(11), `category1_id` int(11), `category2_id` int(11), `category3_id` int(11), `category4_id` int(11), `keywords` text, `createdate` text, `creater_admin` tinyint(1), `createrdivision_id` varchar(20), `createrdivision` text, `creater_id` varchar(20), `creater` text, `editdate` text, `editor_admin` tinyint(1), `editordivision_id` varchar(20), `editordivision` text, `editor_id` varchar(20), `editor` text, `able_date` datetime, `expiry_date` datetime, `attachmentfile` int(11), `form_name` varchar(255), `inpfld_001` text, `inpfld_002` text, `inpfld_003` text, `inpfld_004` text, `inpfld_005` text, `inpfld_006` text, `inpfld_006w` varchar(255), `inpfld_006d` datetime, `inpfld_007` text, `inpfld_008` text, `inpfld_009` text, `inpfld_010` text, `inpfld_011` text, `inpfld_012` text, `inpfld_013` text, `inpfld_014` text, `inpfld_015` text, `inpfld_016` text, `inpfld_017` text, `inpfld_018` text, `inpfld_019` text, `inpfld_020` text, `inpfld_021` text, `inpfld_022` text, `inpfld_023` text, `inpfld_024` text, `inpfld_025` text) ENGINE=InnoDB
+  [1m[36m (1.5ms)[0m  [1mCREATE TABLE `gwbbs_files` (`id` int(11) auto_increment PRIMARY KEY, `unid` int(11), `content_id` int(11), `state` text, `created_at` datetime, `updated_at` datetime, `recognized_at` datetime, `published_at` datetime, `latest_updated_at` datetime, `parent_id` int(11), `title_id` int(11), `content_type` varchar(255), `filename` text, `memo` text, `size` int(11), `width` int(11), `height` int(11), `db_file_id` int(11)) ENGINE=InnoDB[0m
+  [1m[35m (1.8ms)[0m  CREATE TABLE `doclibrary_docs` (`id` int(11) auto_increment PRIMARY KEY, `unid` int(11), `content_id` int(11), `state` text, `created_at` datetime, `updated_at` datetime, `recognized_at` datetime, `published_at` datetime, `latest_updated_at` datetime, `doc_type` int(11), `parent_id` int(11), `content_state` text, `section_code` varchar(255), `section_name` text, `importance` int(11), `one_line_note` int(11), `title_id` int(11), `name` text, `pname` text, `title` text, `head` mediumtext, `body` mediumtext, `note` mediumtext, `category_use` int(11), `category1_id` int(11), `category2_id` int(11), `category3_id` int(11), `category4_id` int(11), `keywords` text, `createdate` text, `creater_admin` tinyint(1), `createrdivision_id` varchar(20), `createrdivision` text, `creater_id` varchar(20), `creater` text, `editdate` text, `editor_admin` tinyint(1), `editordivision_id` varchar(20), `editordivision` text, `editor_id` varchar(20), `editor` text, `expiry_date` datetime, `attachmentfile` int(11), `form_name` varchar(255), `inpfld_001` text, `inpfld_002` int(11), `inpfld_003` int(11), `inpfld_004` int(11), `inpfld_005` int(11), `inpfld_006` int(11), `inpfld_007` text, `inpfld_008` text, `inpfld_009` text, `inpfld_010` text, `inpfld_011` text, `inpfld_012` text, `notes_001` text, `notes_002` text, `notes_003` text) ENGINE=InnoDB
+  [1m[36m (4.2ms)[0m  [1mCREATE  INDEX `category1_id`  ON `doclibrary_docs` (`category1_id`) [0m
+  [1m[35m (3.6ms)[0m  CREATE  INDEX `title_id`  ON `doclibrary_docs` (`state`(50), `title_id`, `category1_id`) 
+  [1m[36m (3.6ms)[0m  [1mCREATE  INDEX `title_id2`  ON `doclibrary_docs` (`title_id`) [0m
+  [1m[35m (1.5ms)[0m  CREATE TABLE `doclibrary_files` (`id` int(11) auto_increment PRIMARY KEY, `unid` int(11), `content_id` int(11), `state` text, `created_at` datetime, `updated_at` datetime, `recognized_at` datetime, `published_at` datetime, `latest_updated_at` datetime, `parent_id` int(11), `title_id` int(11), `content_type` varchar(255), `filename` text, `memo` text, `size` int(11), `width` int(11), `height` int(11), `db_file_id` int(11)) ENGINE=InnoDB
+  [1m[36m (1.3ms)[0m  [1mCREATE TABLE `doclibrary_folder_acls` (`id` int(11) auto_increment PRIMARY KEY, `unid` int(11), `content_id` int(11), `created_at` datetime, `updated_at` datetime, `folder_id` int(11), `title_id` int(11), `acl_flag` int(11), `acl_section_id` int(11), `acl_section_code` varchar(255), `acl_section_name` text, `acl_user_id` int(11), `acl_user_code` varchar(255), `acl_user_name` text) ENGINE=InnoDB[0m
+  [1m[35m (4.7ms)[0m  CREATE  INDEX `acl_section_code`  ON `doclibrary_folder_acls` (`acl_section_code`) 
+  [1m[36m (4.2ms)[0m  [1mCREATE  INDEX `acl_user_code`  ON `doclibrary_folder_acls` (`acl_user_code`) [0m
+  [1m[35m (3.5ms)[0m  CREATE  INDEX `folder_id`  ON `doclibrary_folder_acls` (`folder_id`) 
+  [1m[36m (3.7ms)[0m  [1mCREATE  INDEX `title_id`  ON `doclibrary_folder_acls` (`title_id`) [0m
+  [1m[35m (1.5ms)[0m  CREATE TABLE `doclibrary_folders` (`id` int(11) auto_increment PRIMARY KEY, `unid` int(11), `parent_id` int(11), `state` text, `created_at` datetime, `updated_at` datetime, `title_id` int(11), `sort_no` int(11), `level_no` int(11), `children_size` int(11), `total_children_size` int(11), `name` text, `memo` text, `readers` text, `readers_json` text, `reader_groups` text, `reader_groups_json` text, `docs_last_updated_at` datetime) ENGINE=InnoDB
+  [1m[36m (5.7ms)[0m  [1mCREATE  INDEX `parent_id`  ON `doclibrary_folders` (`parent_id`) [0m
+  [1m[35m (3.3ms)[0m  CREATE  INDEX `sort_no`  ON `doclibrary_folders` (`sort_no`) 
+  [1m[36m (3.4ms)[0m  [1mCREATE  INDEX `title_id`  ON `doclibrary_folders` (`title_id`) [0m
+  [1m[35m (1.4ms)[0m  CREATE TABLE `doclibrary_group_folders` (`id` int(11) auto_increment PRIMARY KEY, `unid` int(11), `parent_id` int(11), `state` text, `use_state` text, `created_at` datetime, `updated_at` datetime, `title_id` int(11), `sort_no` int(11), `level_no` int(11), `children_size` int(11), `total_children_size` int(11), `code` varchar(255), `name` text, `sysgroup_id` int(11), `sysparent_id` int(11), `readers` text, `readers_json` text, `reader_groups` text, `reader_groups_json` text, `docs_last_updated_at` datetime) ENGINE=InnoDB
+  [1m[36m (4.0ms)[0m  [1mCREATE  INDEX `code`  ON `doclibrary_group_folders` (`code`) [0m
+  [1m[35m (1.1ms)[0m  CREATE TABLE `doclibrary_recognizers` (`id` int(11) auto_increment PRIMARY KEY, `unid` int(11), `updated_at` datetime, `created_at` datetime, `title_id` int(11), `parent_id` int(11), `user_id` int(11), `code` varchar(255), `name` text, `recognized_at` datetime) ENGINE=InnoDB
+  [1m[36m (0.2ms)[0m  [1mSELECT version FROM `schema_migrations`[0m
+  [1m[35m (0.6ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('0')
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20131025015415')
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+Migrating to AddDetailsToGwScheduleUsers (20131209093001)
+  [1m[35m (3.3ms)[0m  ALTER TABLE `gw_schedule_users` ADD `already_at` datetime
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20131209093001')
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+Migrating to AddDeleteStateToGwSchedules (20131209093102)
+  [1m[35m (3.8ms)[0m  ALTER TABLE `gw_schedules` ADD `delete_state` int(11) DEFAULT 0
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20131209093102')
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+Migrating to CreateGwPropGroupSettings (20131211101400)
+  [1m[35m (1.2ms)[0m  CREATE TABLE `gw_prop_group_settings` (`id` int(11) auto_increment PRIMARY KEY, `prop_group_id` int(11), `prop_other_id` int(11), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20131211101400')
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+Migrating to CreateGwPropGroups (20131211101401)
+  [1m[35m (1.3ms)[0m  CREATE TABLE `gw_prop_groups` (`id` int(11) auto_increment PRIMARY KEY, `state` text, `name` varchar(255), `sort_no` int(11), `parent_id` int(11), `created_at` datetime, `updated_at` datetime, `deleted_at` datetime) ENGINE=InnoDB
+  [1m[36m (0.5ms)[0m  [1minsert into gw_prop_groups values(1,'public','(root)',0,1,now(),now(),null)[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20131211101401')[0m
+  [1m[35m (0.3ms)[0m  COMMIT
+Migrating to CreateGwPropAdminSettings (20131211101402)
+  [1m[36m (1.2ms)[0m  [1mCREATE TABLE `gw_prop_admin_settings` (`id` int(11) auto_increment PRIMARY KEY, `name` varchar(255), `type_id` int(11), `span` int(11), `span_limit` int(11), `span_hour` int(11), `span_min` int(11), `time_limit` int(11), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20131211101402')[0m
+  [1m[35m (0.3ms)[0m  COMMIT
+Migrating to CreateGwPropAdminSettingRoles (20131211101403)
+  [1m[36m (1.3ms)[0m  [1mCREATE TABLE `gw_prop_admin_setting_roles` (`id` int(11) auto_increment PRIMARY KEY, `prop_setting_id` int(11), `gid` int(11), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20131211101403')[0m
+  [1m[35m (0.3ms)[0m  COMMIT
+Migrating to RemoveAlreadyAtFromGwScheduleUsers (20131217092420)
+  [1m[36m (3.2ms)[0m  [1mALTER TABLE `gw_schedule_users` DROP `already_at`[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20131217092420')[0m
+  [1m[35m (0.3ms)[0m  COMMIT
+Migrating to CreateGwReminders (20131217094447)
+DEPRECATION WARNING: `#timestamps` was called without specifying an option for `null`. In Rails 5, this behavior will change to `null: false`. You should manually specify `null: true` to prevent the behavior of your existing migrations from changing. (called from block in change at /var/share/enisysgw/db/migrate/20131217094447_create_gw_reminders.rb:15)
+  [1m[36m (1.3ms)[0m  [1mCREATE TABLE `gw_reminders` (`id` int(11) auto_increment PRIMARY KEY, `user_id` int(11), `category` varchar(255), `sub_category` varchar(255), `title_id` int(11), `item_id` int(11), `title` varchar(255), `datetime` datetime, `url` varchar(255), `action` varchar(255), `seen_at` datetime, `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20131217094447')[0m
+  [1m[35m (0.4ms)[0m  COMMIT
+Migrating to AddEditableGroupsJsonToSystemRoles (20131225023035)
+  [1m[36m (3.3ms)[0m  [1mALTER TABLE `system_roles` ADD `editable_groups_json` text[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20131225023035')[0m
+  [1m[35m (0.3ms)[0m  COMMIT
+Migrating to CreateSystemRoleGroups (20131225042502)
+DEPRECATION WARNING: `#timestamps` was called without specifying an option for `null`. In Rails 5, this behavior will change to `null: false`. You should manually specify `null: true` to prevent the behavior of your existing migrations from changing. (called from block in change at /var/share/enisysgw/db/migrate/20131225042502_create_system_role_groups.rb:10)
+  [1m[36m (1.4ms)[0m  [1mCREATE TABLE `system_role_groups` (`id` int(11) auto_increment PRIMARY KEY, `system_role_id` int(11), `role_code` varchar(255), `group_code` varchar(255), `group_id` int(11), `group_name` text, `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [1m[35m (4.8ms)[0m  CREATE  INDEX `index_system_role_groups_on_system_role_id`  ON `system_role_groups` (`system_role_id`) 
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20131225042502')
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+Migrating to AddDetailsToGwbbsDocs (20131226093001)
+  [1m[35m (4.2ms)[0m  ALTER TABLE `gwbbs_docs` ADD `name_type` int(11)
+  [1m[36m (4.0ms)[0m  [1mALTER TABLE `gwbbs_docs` ADD `name_creater_section_id` varchar(20)[0m
+  [1m[35m (3.9ms)[0m  ALTER TABLE `gwbbs_docs` ADD `name_creater_section` text
+  [1m[36m (3.7ms)[0m  [1mALTER TABLE `gwbbs_docs` ADD `name_editor_section_id` varchar(20)[0m
+  [1m[35m (3.8ms)[0m  ALTER TABLE `gwbbs_docs` ADD `name_editor_section` text
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20131226093001')
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+Migrating to AddCategoryToSystemGroups (20131227115623)
+  [1m[35m (5.6ms)[0m  ALTER TABLE `system_groups` ADD `category` int(11)
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20131227115623')
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+Migrating to CreateSystemUsersProfiles (20140106102610)
+DEPRECATION WARNING: `#timestamps` was called without specifying an option for `null`. In Rails 5, this behavior will change to `null: false`. You should manually specify `null: true` to prevent the behavior of your existing migrations from changing. (called from block in change at /var/share/enisysgw/db/migrate/20140106102610_create_system_users_profiles.rb:12)
+  [1m[35m (1.3ms)[0m  CREATE TABLE `system_users_profiles` (`id` int(11) auto_increment PRIMARY KEY, `user_id` int(11), `user_code` varchar(255), `add_column1` text, `add_column2` text, `add_column3` text, `add_column4` text, `add_column5` text, `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20140106102610')
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+Migrating to CreateSystemUsersProfileSettings (20140106102613)
+DEPRECATION WARNING: `#timestamps` was called without specifying an option for `null`. In Rails 5, this behavior will change to `null: false`. You should manually specify `null: true` to prevent the behavior of your existing migrations from changing. (called from block in change at /var/share/enisysgw/db/migrate/20140106102613_create_system_users_profile_settings.rb:9)
+  [1m[35m (1.3ms)[0m  CREATE TABLE `system_users_profile_settings` (`id` int(11) auto_increment PRIMARY KEY, `key_name` varchar(255), `name` varchar(255), `used` int(11), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB
+  [1m[36m (0.6ms)[0m  [1minsert into system_users_profile_settings values
+      (1,'name','名前',1,now(),now()),
+      (2,'name_en','名前（英）',0,now(),now()),
+      (3,'email','メールアドレス',1,now(),now()),
+      (4,'official_position','役職',1,now(),now()),
+      (5,'assigned_job','担当',0,now(),now()),
+      (6,'add_column1','',1,now(),now()),
+      (7,'add_column2','',1,now(),now()),
+      (8,'add_column3','',1,now(),now()),
+      (9,'add_column4','',1,now(),now()),
+      (10,'add_column5','',1,now(),now())[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20140106102613')[0m
+  [1m[35m (0.5ms)[0m  COMMIT
+Migrating to CreateView (20140108042815)
+  [1m[36m (1.1ms)[0m  [1m    CREATE OR REPLACE VIEW doclibrary_view_acl_docs AS
+      SELECT
+        doclibrary_docs.id AS id,
+        doclibrary_folders.sort_no AS sort_no,
+        doclibrary_folder_acls.acl_flag AS acl_flag,
+        doclibrary_folder_acls.acl_section_id AS acl_section_id,
+        doclibrary_folder_acls.acl_section_code AS acl_section_code,
+        doclibrary_folder_acls.acl_section_name AS acl_section_name,
+        doclibrary_folder_acls.acl_user_id AS acl_user_id,
+        doclibrary_folder_acls.acl_user_code AS acl_user_code,
+        doclibrary_folder_acls.acl_user_name AS acl_user_name,
+        doclibrary_folders.name AS folder_name
+      FROM ((doclibrary_docs JOIN doclibrary_folder_acls ON ((
+        (doclibrary_docs.title_id = doclibrary_folder_acls.title_id) AND
+        (doclibrary_docs.category1_id = doclibrary_folder_acls.folder_id))
+        )) JOIN doclibrary_folders ON ((doclibrary_docs.category1_id = doclibrary_folders.id)
+      ));
+[0m
+  [1m[35m (1.3ms)[0m      CREATE OR REPLACE VIEW doclibrary_view_acl_files AS
+      SELECT
+        doclibrary_docs.state AS docs_state,
+        doclibrary_files.id AS id,
+        doclibrary_files.unid AS unid,
+        doclibrary_files.content_id AS content_id,
+        doclibrary_files.state AS state,
+        doclibrary_files.created_at AS created_at,
+        doclibrary_files.updated_at AS updated_at,
+        doclibrary_files.recognized_at AS recognized_at,
+        doclibrary_files.published_at AS published_at,
+        doclibrary_files.latest_updated_at AS latest_updated_at,
+        doclibrary_files.parent_id AS parent_id,
+        doclibrary_files.title_id AS title_id,
+        doclibrary_files.content_type AS content_type,
+        doclibrary_files.filename AS filename,
+        doclibrary_files.memo AS memo,
+        doclibrary_files.size AS size,
+        doclibrary_files.width AS width,
+        doclibrary_files.height AS height,
+        doclibrary_files.db_file_id AS db_file_id,
+        doclibrary_docs.category1_id AS category1_id,
+        doclibrary_docs.section_code AS section_code,
+        doclibrary_folder_acls.acl_flag AS acl_flag,
+        doclibrary_folder_acls.acl_section_id AS acl_section_id,
+        doclibrary_folder_acls.acl_section_code AS acl_section_code,
+        doclibrary_folder_acls.acl_section_name AS acl_section_name,
+        doclibrary_folder_acls.acl_user_id AS acl_user_id,
+        doclibrary_folder_acls.acl_user_code AS acl_user_code,
+        doclibrary_folder_acls.acl_user_name AS acl_user_name
+      FROM ((doclibrary_files JOIN doclibrary_docs ON ((
+          (doclibrary_files.parent_id = doclibrary_docs.id) AND
+          (doclibrary_files.title_id = doclibrary_docs.title_id)
+        ))) JOIN doclibrary_folder_acls ON ((
+          (doclibrary_docs.category1_id = doclibrary_folder_acls.folder_id) AND
+          (doclibrary_docs.title_id = doclibrary_folder_acls.title_id)
+      )));
+
+  [1m[36m (1.1ms)[0m  [1m    CREATE OR REPLACE VIEW doclibrary_view_acl_folders AS
+      SELECT 
+        doclibrary_folders.id AS id,
+        doclibrary_folders.unid AS unid,
+        doclibrary_folders.parent_id AS parent_id,
+        doclibrary_folders.state AS state,
+        doclibrary_folders.created_at AS created_at,
+        doclibrary_folders.updated_at AS updated_at,
+        doclibrary_folders.title_id AS title_id,
+        doclibrary_folders.sort_no AS sort_no,
+        doclibrary_folders.level_no AS level_no,
+        doclibrary_folders.children_size AS children_size,
+        doclibrary_folders.total_children_size AS total_children_size,
+        doclibrary_folders.name AS name,
+        doclibrary_folders.memo AS memo,
+        doclibrary_folders.readers AS readers,
+        doclibrary_folders.readers_json AS readers_json,
+        doclibrary_folders.reader_groups AS reader_groups,
+        doclibrary_folders.reader_groups_json AS reader_groups_json,
+        doclibrary_folders.docs_last_updated_at AS docs_last_updated_at,
+        doclibrary_folder_acls.acl_flag AS acl_flag,
+        doclibrary_folder_acls.acl_section_id AS acl_section_id,
+        doclibrary_folder_acls.acl_section_code AS acl_section_code,
+        doclibrary_folder_acls.acl_section_name AS acl_section_name,
+        doclibrary_folder_acls.acl_user_id AS acl_user_id,
+        doclibrary_folder_acls.acl_user_code AS acl_user_code,
+        doclibrary_folder_acls.acl_user_name AS acl_user_name
+      FROM (doclibrary_folder_acls JOIN doclibrary_folders ON ((
+        (doclibrary_folder_acls.folder_id = doclibrary_folders.id) AND
+        (doclibrary_folder_acls.title_id = doclibrary_folders.title_id)
+      )));
+[0m
+  [1m[35m (1.5ms)[0m      CREATE OR REPLACE VIEW doclibrary_view_acl_doc_counts AS
+      SELECT
+        doclibrary_docs.state AS state,
+        doclibrary_docs.title_id AS title_id,
+        doclibrary_folder_acls.acl_flag AS acl_flag,
+        doclibrary_folder_acls.acl_section_code AS acl_section_code,
+        doclibrary_folder_acls.acl_user_code AS acl_user_code,
+        doclibrary_docs.section_code AS section_code,
+        COUNT(doclibrary_docs.id) AS cnt
+      FROM (doclibrary_docs JOIN doclibrary_folder_acls ON ((
+        (doclibrary_docs.category1_id = doclibrary_folder_acls.folder_id) AND
+        (doclibrary_docs.title_id = doclibrary_folder_acls.title_id)
+      )))
+      GROUP BY
+        doclibrary_docs.state,
+        doclibrary_docs.title_id,
+        doclibrary_folder_acls.acl_flag,
+        doclibrary_folder_acls.acl_section_code,
+        doclibrary_folder_acls.acl_user_code,
+        doclibrary_docs.section_code;
+
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20140108042815')
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+Migrating to RemoveSortNoFromSystemUsers (20140116021719)
+  [1m[35m (3.2ms)[0m  ALTER TABLE `system_users` DROP `sort_no`
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20140116021719')
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+Migrating to AddSortNoToSystemUsers (20140116021737)
+  [1m[35m (3.1ms)[0m  ALTER TABLE `system_users` ADD `sort_no` int(11)
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20140116021737')
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+Migrating to CreateAccessLogs (20140116131600)
+  [1m[35m (1.3ms)[0m  CREATE TABLE `access_logs` (`user_id` int(11), `user_code` varchar(255), `user_name` varchar(255), `controller_name` varchar(255), `action_name` varchar(255), `parameters` text, `feature_id` varchar(255), `feature_name` varchar(255), `ipaddress` varchar(255), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20140116131600')
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+Migrating to AddExpirationDateToGwReminders (20140120104444)
+  [1m[35m (2.8ms)[0m  ALTER TABLE `gw_reminders` ADD `expiration_datetime` datetime
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20140120104444')
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+Migrating to AddLocationToGwEditLinkPieces (20140122025705)
+  [1m[35m (3.2ms)[0m  ALTER TABLE `gw_edit_link_pieces` ADD `location` int(11)
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20140122025705')
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+Migrating to CreateSystemUsersGroupsCsvdataProfiles (20140207130709)
+DEPRECATION WARNING: `#timestamps` was called without specifying an option for `null`. In Rails 5, this behavior will change to `null: false`. You should manually specify `null: true` to prevent the behavior of your existing migrations from changing. (called from block in change at /var/share/enisysgw/db/migrate/20140207130709_create_system_users_groups_csvdata_profiles.rb:12)
+  [1m[35m (1.3ms)[0m  CREATE TABLE `system_users_groups_csvdata_profiles` (`id` int(11) auto_increment PRIMARY KEY, `user_id` int(11), `user_code` varchar(255), `add_column1` text, `add_column2` text, `add_column3` text, `add_column4` text, `add_column5` text, `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20140207130709')
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+Migrating to AddCategoryToSystemUsersGroupsCsvdata (20140207130731)
+  [1m[35m (3.0ms)[0m  ALTER TABLE `system_users_groups_csvdata` ADD `category` int(11)
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20140207130731')
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+Migrating to CreateSystemScheduleRoles (20140213171100)
+  [1m[35m (1.3ms)[0m  CREATE TABLE `system_schedule_roles` (`id` int(11) auto_increment PRIMARY KEY, `target_uid` int(11) NOT NULL, `user_id` int(11), `group_id` int(11), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20140213171100')
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+Migrating to AddSpecConfigToGwCircularDocs (20140218145312)
+  [1m[35m (4.4ms)[0m  ALTER TABLE `gwcircular_docs` ADD `spec_config` int(11)
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20140218145312')
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+Migrating to AddAdminRolesToDoclibraryFolders (20140219045939)
+  [1m[35m (3.5ms)[0m  ALTER TABLE `doclibrary_folders` ADD `admins` text
+  [1m[36m (3.5ms)[0m  [1mALTER TABLE `doclibrary_folders` ADD `admins_json` text[0m
+  [1m[35m (3.2ms)[0m  ALTER TABLE `doclibrary_folders` ADD `admin_groups` text
+  [1m[36m (3.9ms)[0m  [1mALTER TABLE `doclibrary_folders` ADD `admin_groups_json` text[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20140219045939')[0m
+  [1m[35m (0.4ms)[0m  COMMIT
+Migrating to ReplaceViewDoclibraryViewAclFolders (20140305083507)
+  [1m[36m (1.7ms)[0m  [1m    CREATE OR REPLACE VIEW doclibrary_view_acl_folders AS
+      SELECT 
+        doclibrary_folders.id AS id,
+        doclibrary_folders.unid AS unid,
+        doclibrary_folders.parent_id AS parent_id,
+        doclibrary_folders.state AS state,
+        doclibrary_folders.created_at AS created_at,
+        doclibrary_folders.updated_at AS updated_at,
+        doclibrary_folders.title_id AS title_id,
+        doclibrary_folders.sort_no AS sort_no,
+        doclibrary_folders.level_no AS level_no,
+        doclibrary_folders.children_size AS children_size,
+        doclibrary_folders.total_children_size AS total_children_size,
+        doclibrary_folders.name AS name,
+        doclibrary_folders.memo AS memo,
+        doclibrary_folders.admins AS admins,
+        doclibrary_folders.admins_json AS admins_json,
+        doclibrary_folders.admin_groups AS admin_groups,
+        doclibrary_folders.admin_groups_json AS admin_groups_json,
+        doclibrary_folders.readers AS readers,
+        doclibrary_folders.readers_json AS readers_json,
+        doclibrary_folders.reader_groups AS reader_groups,
+        doclibrary_folders.reader_groups_json AS reader_groups_json,
+        doclibrary_folders.docs_last_updated_at AS docs_last_updated_at,
+        doclibrary_folder_acls.acl_flag AS acl_flag,
+        doclibrary_folder_acls.acl_section_id AS acl_section_id,
+        doclibrary_folder_acls.acl_section_code AS acl_section_code,
+        doclibrary_folder_acls.acl_section_name AS acl_section_name,
+        doclibrary_folder_acls.acl_user_id AS acl_user_id,
+        doclibrary_folder_acls.acl_user_code AS acl_user_code,
+        doclibrary_folder_acls.acl_user_name AS acl_user_name
+      FROM (doclibrary_folder_acls JOIN doclibrary_folders ON ((
+        (doclibrary_folder_acls.folder_id = doclibrary_folders.id) AND
+        (doclibrary_folder_acls.title_id = doclibrary_folders.title_id)
+      )));
+[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20140305083507')[0m
+  [1m[35m (0.3ms)[0m  COMMIT
+Migrating to CreateSystemUsersProfileImages (20140310145503)
+DEPRECATION WARNING: `#timestamps` was called without specifying an option for `null`. In Rails 5, this behavior will change to `null: false`. You should manually specify `null: true` to prevent the behavior of your existing migrations from changing. (called from block in change at /var/share/enisysgw/db/migrate/20140310145503_create_system_users_profile_images.rb:11)
+  [1m[36m (1.2ms)[0m  [1mCREATE TABLE `system_users_profile_images` (`id` int(11) auto_increment PRIMARY KEY, `user_id` int(11), `user_code` varchar(255), `note` varchar(255), `path` varchar(255), `orig_filename` varchar(255), `content_type` varchar(255), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20140310145503')[0m
+  [1m[35m (0.4ms)[0m  COMMIT
+Migrating to AddColumnImapPasswordToSystemUsers (20140313114000)
+  [1m[36m (3.1ms)[0m  [1mALTER TABLE `system_users` ADD `imap_password` varchar(255)[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20140313114000')[0m
+  [1m[35m (0.3ms)[0m  COMMIT
+Migrating to AddIndexesToGwReminders (20140616141500)
+  [1m[36m (4.8ms)[0m  [1mCREATE  INDEX `index_gw_reminders_on_user_id`  ON `gw_reminders` (`user_id`) [0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20140616141500')[0m
+  [1m[35m (0.3ms)[0m  COMMIT
+Migrating to AddIndexesToAccessLogs (20140710041158)
+  [1m[36m (3.5ms)[0m  [1mCREATE  INDEX `index_access_logs_on_created_at`  ON `access_logs` (`created_at`) [0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20140710041158')[0m
+  [1m[35m (0.3ms)[0m  COMMIT
+Migrating to AddIndexesToGwcircularDocs (20140718085409)
+  [1m[36m (3.6ms)[0m  [1mCREATE INDEX `index_for_monthly_search` ON `gwcircular_docs` (`title_id`, `doc_type`, `target_user_code`, `state`(20), `created_at`, `able_date`)[0m
+  [1m[35m (3.4ms)[0m  CREATE INDEX `index_for_createrdivision_search` ON `gwcircular_docs` (`title_id`, `doc_type`, `target_user_code`, `state`(20), `able_date`, `createrdivision_id`)
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20140718085409')
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+Migrating to AddColumnToGwPropOthers (20141015150700)
+  [1m[35m (3.1ms)[0m  ALTER TABLE `gw_prop_others` ADD `d_load_st` datetime
+  [1m[36m (3.1ms)[0m  [1mALTER TABLE `gw_prop_others` ADD `d_load_ed` datetime[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20141015150700')[0m
+  [1m[35m (1.5ms)[0m  COMMIT
+Migrating to AddLimitMonthToGwPropOthers (20141128150000)
+  [1m[36m (3.1ms)[0m  [1mALTER TABLE `gw_prop_others` ADD `limit_month` int(11)[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20141128150000')[0m
+  [1m[35m (0.3ms)[0m  COMMIT
+Migrating to ChangeColumnToGwPropOthers (20150713130200)
+  [1m[36m (2.7ms)[0m  [1mALTER TABLE `gw_prop_others` CHANGE `sort_no` `sort_no` int(11) DEFAULT NULL[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20150713130200')[0m
+  [1m[35m (0.3ms)[0m  COMMIT
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT `schema_migrations`.* FROM `schema_migrations`[0m
+  [1m[35m (0.4ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'access_logs'
+
+  [1m[36m (0.2ms)[0m  [1mSHOW CREATE TABLE `access_logs`[0m
+  [1m[35m (0.3ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'doclibrary_adms'
+
+  [1m[36m (0.1ms)[0m  [1mSHOW CREATE TABLE `doclibrary_adms`[0m
+  [1m[35m (0.2ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'doclibrary_controls'
+
+  [1m[36m (0.2ms)[0m  [1mSHOW CREATE TABLE `doclibrary_controls`[0m
+  [1m[35m (0.2ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'doclibrary_docs'
+
+  [1m[36m (0.2ms)[0m  [1mSHOW CREATE TABLE `doclibrary_docs`[0m
+  [1m[35m (0.2ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'doclibrary_files'
+
+  [1m[36m (0.1ms)[0m  [1mSHOW CREATE TABLE `doclibrary_files`[0m
+  [1m[35m (0.2ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'doclibrary_folder_acls'
+
+  [1m[36m (0.1ms)[0m  [1mSHOW CREATE TABLE `doclibrary_folder_acls`[0m
+  [1m[35m (0.2ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'doclibrary_folders'
+
+  [1m[36m (0.1ms)[0m  [1mSHOW CREATE TABLE `doclibrary_folders`[0m
+  [1m[35m (0.2ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'doclibrary_group_folders'
+
+  [1m[36m (0.1ms)[0m  [1mSHOW CREATE TABLE `doclibrary_group_folders`[0m
+  [1m[35m (0.2ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'doclibrary_recognizers'
+
+  [1m[36m (0.1ms)[0m  [1mSHOW CREATE TABLE `doclibrary_recognizers`[0m
+  [1m[35m (0.2ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'doclibrary_roles'
+
+  [1m[36m (0.1ms)[0m  [1mSHOW CREATE TABLE `doclibrary_roles`[0m
+  [1m[35m (0.3ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'doclibrary_view_acl_doc_counts'
+
+  [1m[36m (0.4ms)[0m  [1mSHOW CREATE TABLE `doclibrary_view_acl_doc_counts`[0m
+  [1m[35m (0.2ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'doclibrary_view_acl_docs'
+
+  [1m[36m (0.3ms)[0m  [1mSHOW CREATE TABLE `doclibrary_view_acl_docs`[0m
+  [1m[35m (0.3ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'doclibrary_view_acl_files'
+
+  [1m[36m (0.4ms)[0m  [1mSHOW CREATE TABLE `doclibrary_view_acl_files`[0m
+  [1m[35m (0.2ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'doclibrary_view_acl_folders'
+
+  [1m[36m (0.3ms)[0m  [1mSHOW CREATE TABLE `doclibrary_view_acl_folders`[0m
+  [1m[35m (0.2ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'gw_admin_messages'
+
+  [1m[36m (0.1ms)[0m  [1mSHOW CREATE TABLE `gw_admin_messages`[0m
+  [1m[35m (0.2ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'gw_circulars'
+
+  [1m[36m (0.1ms)[0m  [1mSHOW CREATE TABLE `gw_circulars`[0m
+  [1m[35m (0.2ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'gw_edit_link_piece_csses'
+
+  [1m[36m (0.1ms)[0m  [1mSHOW CREATE TABLE `gw_edit_link_piece_csses`[0m
+  [1m[35m (0.2ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'gw_edit_link_pieces'
+
+  [1m[36m (0.1ms)[0m  [1mSHOW CREATE TABLE `gw_edit_link_pieces`[0m
+  [1m[35m (0.2ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'gw_holidays'
+
+  [1m[36m (0.1ms)[0m  [1mSHOW CREATE TABLE `gw_holidays`[0m
+  [1m[35m (0.3ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'gw_memo_users'
+
+  [1m[36m (0.1ms)[0m  [1mSHOW CREATE TABLE `gw_memo_users`[0m
+  [1m[35m (0.2ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'gw_memos'
+
+  [1m[36m (0.1ms)[0m  [1mSHOW CREATE TABLE `gw_memos`[0m
+  [1m[35m (0.2ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'gw_prop_admin_setting_roles'
+
+  [1m[36m (0.1ms)[0m  [1mSHOW CREATE TABLE `gw_prop_admin_setting_roles`[0m
+  [1m[35m (0.2ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'gw_prop_admin_settings'
+
+  [1m[36m (0.1ms)[0m  [1mSHOW CREATE TABLE `gw_prop_admin_settings`[0m
+  [1m[35m (0.2ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'gw_prop_group_settings'
+
+  [1m[36m (0.1ms)[0m  [1mSHOW CREATE TABLE `gw_prop_group_settings`[0m
+  [1m[35m (0.2ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'gw_prop_groups'
+
+  [1m[36m (0.1ms)[0m  [1mSHOW CREATE TABLE `gw_prop_groups`[0m
+  [1m[35m (0.2ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'gw_prop_other_images'
+
+  [1m[36m (0.1ms)[0m  [1mSHOW CREATE TABLE `gw_prop_other_images`[0m
+  [1m[35m (0.3ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'gw_prop_other_limits'
+
+  [1m[36m (0.1ms)[0m  [1mSHOW CREATE TABLE `gw_prop_other_limits`[0m
+  [1m[35m (0.3ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'gw_prop_other_roles'
+
+  [1m[36m (0.2ms)[0m  [1mSHOW CREATE TABLE `gw_prop_other_roles`[0m
+  [1m[35m (0.3ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'gw_prop_others'
+
+  [1m[36m (0.1ms)[0m  [1mSHOW CREATE TABLE `gw_prop_others`[0m
+  [1m[35m (0.3ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'gw_prop_types'
+
+  [1m[36m (0.1ms)[0m  [1mSHOW CREATE TABLE `gw_prop_types`[0m
+  [1m[35m (0.3ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'gw_reminders'
+
+  [1m[36m (0.2ms)[0m  [1mSHOW CREATE TABLE `gw_reminders`[0m
+  [1m[35m (0.3ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'gw_schedule_props'
+
+  [1m[36m (0.2ms)[0m  [1mSHOW CREATE TABLE `gw_schedule_props`[0m
+  [1m[35m (0.3ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'gw_schedule_public_roles'
+
+  [1m[36m (0.1ms)[0m  [1mSHOW CREATE TABLE `gw_schedule_public_roles`[0m
+  [1m[35m (0.3ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'gw_schedule_repeats'
+
+  [1m[36m (0.2ms)[0m  [1mSHOW CREATE TABLE `gw_schedule_repeats`[0m
+  [1m[35m (0.3ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'gw_schedule_users'
+
+  [1m[36m (0.2ms)[0m  [1mSHOW CREATE TABLE `gw_schedule_users`[0m
+  [1m[35m (0.3ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'gw_schedules'
+
+  [1m[36m (0.2ms)[0m  [1mSHOW CREATE TABLE `gw_schedules`[0m
+  [1m[35m (0.3ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'gw_user_properties'
+
+  [1m[36m (0.1ms)[0m  [1mSHOW CREATE TABLE `gw_user_properties`[0m
+  [1m[35m (0.2ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'gw_year_fiscal_jps'
+
+  [1m[36m (0.1ms)[0m  [1mSHOW CREATE TABLE `gw_year_fiscal_jps`[0m
+  [1m[35m (0.2ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'gw_year_mark_jps'
+
+  [1m[36m (0.1ms)[0m  [1mSHOW CREATE TABLE `gw_year_mark_jps`[0m
+  [1m[35m (0.3ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'gwbbs_adms'
+
+  [1m[36m (0.1ms)[0m  [1mSHOW CREATE TABLE `gwbbs_adms`[0m
+  [1m[35m (0.2ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'gwbbs_comments'
+
+  [1m[36m (0.1ms)[0m  [1mSHOW CREATE TABLE `gwbbs_comments`[0m
+  [1m[35m (0.2ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'gwbbs_controls'
+
+  [1m[36m (0.3ms)[0m  [1mSHOW CREATE TABLE `gwbbs_controls`[0m
+  [1m[35m (0.2ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'gwbbs_docs'
+
+  [1m[36m (0.2ms)[0m  [1mSHOW CREATE TABLE `gwbbs_docs`[0m
+  [1m[35m (0.2ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'gwbbs_files'
+
+  [1m[36m (0.2ms)[0m  [1mSHOW CREATE TABLE `gwbbs_files`[0m
+  [1m[35m (0.2ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'gwbbs_itemdeletes'
+
+  [1m[36m (0.1ms)[0m  [1mSHOW CREATE TABLE `gwbbs_itemdeletes`[0m
+  [1m[35m (0.2ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'gwbbs_roles'
+
+  [1m[36m (0.2ms)[0m  [1mSHOW CREATE TABLE `gwbbs_roles`[0m
+  [1m[35m (0.2ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'gwcircular_adms'
+
+  [1m[36m (0.2ms)[0m  [1mSHOW CREATE TABLE `gwcircular_adms`[0m
+  [1m[35m (0.2ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'gwcircular_controls'
+
+  [1m[36m (0.2ms)[0m  [1mSHOW CREATE TABLE `gwcircular_controls`[0m
+  [1m[35m (0.3ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'gwcircular_custom_groups'
+
+  [1m[36m (0.2ms)[0m  [1mSHOW CREATE TABLE `gwcircular_custom_groups`[0m
+  [1m[35m (0.2ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'gwcircular_docs'
+
+  [1m[36m (0.2ms)[0m  [1mSHOW CREATE TABLE `gwcircular_docs`[0m
+  [1m[35m (0.2ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'gwcircular_files'
+
+  [1m[36m (0.1ms)[0m  [1mSHOW CREATE TABLE `gwcircular_files`[0m
+  [1m[35m (0.2ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'gwcircular_itemdeletes'
+
+  [1m[36m (0.1ms)[0m  [1mSHOW CREATE TABLE `gwcircular_itemdeletes`[0m
+  [1m[35m (0.2ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'gwcircular_roles'
+
+  [1m[36m (0.1ms)[0m  [1mSHOW CREATE TABLE `gwcircular_roles`[0m
+  [1m[35m (0.2ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'sessions'
+
+  [1m[36m (0.2ms)[0m  [1mSHOW CREATE TABLE `sessions`[0m
+  [1m[35m (0.2ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'system_admin_logs'
+
+  [1m[36m (0.1ms)[0m  [1mSHOW CREATE TABLE `system_admin_logs`[0m
+  [1m[35m (0.3ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'system_custom_group_roles'
+
+  [1m[36m (0.1ms)[0m  [1mSHOW CREATE TABLE `system_custom_group_roles`[0m
+  [1m[35m (0.2ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'system_custom_groups'
+
+  [1m[36m (0.1ms)[0m  [1mSHOW CREATE TABLE `system_custom_groups`[0m
+  [1m[35m (0.2ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'system_group_histories'
+
+  [1m[36m (0.1ms)[0m  [1mSHOW CREATE TABLE `system_group_histories`[0m
+  [1m[35m (0.2ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'system_groups'
+
+  [1m[36m (0.1ms)[0m  [1mSHOW CREATE TABLE `system_groups`[0m
+  [1m[35m (0.2ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'system_ldap_temporaries'
+
+  [1m[36m (0.1ms)[0m  [1mSHOW CREATE TABLE `system_ldap_temporaries`[0m
+  [1m[35m (0.2ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'system_login_logs'
+
+  [1m[36m (0.1ms)[0m  [1mSHOW CREATE TABLE `system_login_logs`[0m
+  [1m[35m (0.2ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'system_priv_names'
+
+  [1m[36m (0.1ms)[0m  [1mSHOW CREATE TABLE `system_priv_names`[0m
+  [1m[35m (0.2ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'system_public_logs'
+
+  [1m[36m (0.1ms)[0m  [1mSHOW CREATE TABLE `system_public_logs`[0m
+  [1m[35m (0.2ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'system_role_groups'
+
+  [1m[36m (0.2ms)[0m  [1mSHOW CREATE TABLE `system_role_groups`[0m
+  [1m[35m (0.2ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'system_role_name_privs'
+
+  [1m[36m (0.1ms)[0m  [1mSHOW CREATE TABLE `system_role_name_privs`[0m
+  [1m[35m (0.2ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'system_role_names'
+
+  [1m[36m (0.1ms)[0m  [1mSHOW CREATE TABLE `system_role_names`[0m
+  [1m[35m (0.2ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'system_roles'
+
+  [1m[36m (0.1ms)[0m  [1mSHOW CREATE TABLE `system_roles`[0m
+  [1m[35m (0.2ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'system_schedule_roles'
+
+  [1m[36m (0.1ms)[0m  [1mSHOW CREATE TABLE `system_schedule_roles`[0m
+  [1m[35m (0.2ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'system_users'
+
+  [1m[36m (0.1ms)[0m  [1mSHOW CREATE TABLE `system_users`[0m
+  [1m[35m (0.2ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'system_users_custom_groups'
+
+  [1m[36m (0.1ms)[0m  [1mSHOW CREATE TABLE `system_users_custom_groups`[0m
+  [1m[35m (0.2ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'system_users_group_histories'
+
+  [1m[36m (0.1ms)[0m  [1mSHOW CREATE TABLE `system_users_group_histories`[0m
+  [1m[35m (0.2ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'system_users_groups'
+
+  [1m[36m (0.1ms)[0m  [1mSHOW CREATE TABLE `system_users_groups`[0m
+  [1m[35m (0.2ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'system_users_groups_csvdata'
+
+  [1m[36m (0.1ms)[0m  [1mSHOW CREATE TABLE `system_users_groups_csvdata`[0m
+  [1m[35m (0.2ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'system_users_groups_csvdata_profiles'
+
+  [1m[36m (0.1ms)[0m  [1mSHOW CREATE TABLE `system_users_groups_csvdata_profiles`[0m
+  [1m[35m (0.2ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'system_users_profile_images'
+
+  [1m[36m (0.1ms)[0m  [1mSHOW CREATE TABLE `system_users_profile_images`[0m
+  [1m[35m (0.2ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'system_users_profile_settings'
+
+  [1m[36m (0.1ms)[0m  [1mSHOW CREATE TABLE `system_users_profile_settings`[0m
+  [1m[35m (0.2ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'system_users_profiles'
+
+  [1m[36m (0.1ms)[0m  [1mSHOW CREATE TABLE `system_users_profiles`[0m
+  [1m[36m (5.3ms)[0m  [1mCREATE TABLE `schema_migrations` (`version` varchar(255) NOT NULL) ENGINE=InnoDB[0m
+  [1m[35m (10.8ms)[0m  CREATE UNIQUE INDEX `unique_schema_migrations`  ON `schema_migrations` (`version`) 
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1mSELECT `schema_migrations`.* FROM `schema_migrations`[0m
+Migrating to LoadInitalSchema (20131025015415)
+  [1m[35m (2.2ms)[0m  CREATE TABLE `doclibrary_adms` (`id` int(11) auto_increment PRIMARY KEY, `unid` int(11), `content_id` int(11), `created_at` datetime, `title_id` int(11), `user_id` int(11), `user_code` varchar(255), `user_name` text, `group_id` int(11), `group_code` varchar(255), `group_name` text) ENGINE=InnoDB
+  [1m[36m (4.4ms)[0m  [1mCREATE TABLE `doclibrary_controls` (`id` int(11) auto_increment PRIMARY KEY, `unid` int(11), `content_id` int(11), `state` text, `created_at` datetime, `updated_at` datetime, `recognized_at` datetime, `published_at` datetime, `default_published` int(11), `upload_graphic_file_size_capacity` int(11), `upload_graphic_file_size_capacity_unit` varchar(255), `upload_document_file_size_capacity` int(11), `upload_document_file_size_capacity_unit` varchar(255), `upload_graphic_file_size_max` int(11), `upload_document_file_size_max` int(11), `upload_graphic_file_size_currently` decimal(17,0), `upload_document_file_size_currently` decimal(17,0), `create_section` varchar(255), `addnew_forbidden` int(11), `draft_forbidden` int(11), `delete_forbidden` int(11), `importance` int(11), `form_name` varchar(255), `banner` text, `banner_position` varchar(255), `left_banner` text, `left_menu` text, `left_index_use` varchar(1), `left_index_bg_color` varchar(255), `default_folder` varchar(255), `other_system_link` text, `wallpaper` text, `css` text, `sort_no` int(11), `caption` text, `view_hide` tinyint(1), `categoey_view` tinyint(1), `categoey_view_line` int(11), `monthly_view` tinyint(1), `monthly_view_line` int(11), `notification` int(11), `upload_system` int(11), `limit_date` varchar(255), `name` varchar(255), `title` varchar(255), `category` int(11), `category1_name` varchar(255), `category2_name` varchar(255), `category3_name` varchar(255), `recognize` int(11), `createdate` text, `createrdivision_id` varchar(20), `createrdivision` text, `creater_id` varchar(20), `creater` text, `editdate` text, `editordivision_id` varchar(20), `editordivision` text, `editor_id` varchar(20), `editor` text, `default_limit` int(11), `dbname` varchar(255), `admingrps` text, `admingrps_json` text, `adms` text, `adms_json` text, `dsp_admin_name` text, `editors` text, `editors_json` text, `readers` text, `readers_json` text, `sueditors` text, `sueditors_json` text, `sureaders` text, `sureaders_json` text, `help_display` text, `help_url` text, `help_admin_url` text, `special_link` text, `docslast_updated_at` datetime) ENGINE=InnoDB[0m
+  [1m[35m (2.0ms)[0m  CREATE TABLE `doclibrary_roles` (`id` int(11) auto_increment PRIMARY KEY, `unid` int(11), `content_id` int(11), `created_at` datetime, `title_id` int(11), `role_code` varchar(255), `user_id` int(11), `user_code` varchar(255), `user_name` text, `group_id` int(11), `group_code` varchar(255), `group_name` text) ENGINE=InnoDB
+  [1m[36m (2.1ms)[0m  [1mCREATE TABLE `gw_admin_messages` (`id` int(11) auto_increment PRIMARY KEY, `created_at` datetime, `updated_at` datetime, `body` text, `sort_no` int(11), `state` int(11)) ENGINE=InnoDB[0m
+  [1m[35m (2.1ms)[0m  CREATE TABLE `gw_circulars` (`id` int(11) auto_increment PRIMARY KEY, `state` int(11), `uid` int(11), `u_code` varchar(255), `gid` int(11), `g_code` varchar(255), `class_id` int(11), `title` text, `st_at` datetime, `ed_at` datetime, `is_finished` int(11), `is_system` int(11), `options` text, `body` text, `deleted_at` datetime, `updated_at` datetime, `created_at` datetime) ENGINE=InnoDB
+  [1m[36m (8.8ms)[0m  [1mCREATE  INDEX `ed_at`  ON `gw_circulars` (`ed_at`) [0m
+  [1m[35m (5.9ms)[0m  CREATE  INDEX `state`  ON `gw_circulars` (`state`) 
+  [1m[36m (13.2ms)[0m  [1mCREATE  INDEX `uid`  ON `gw_circulars` (`uid`) [0m
+  [1m[35m (1.9ms)[0m  CREATE TABLE `gw_edit_link_piece_csses` (`id` int(11) auto_increment PRIMARY KEY, `state` varchar(255), `css_name` varchar(255), `css_sort_no` int(11) DEFAULT 0, `css_class` varchar(255), `css_type` int(11) DEFAULT 1, `deleted_at` datetime, `deleted_user` varchar(255), `deleted_group` varchar(255), `updated_at` datetime, `updated_user` varchar(255), `updated_group` varchar(255), `created_at` datetime, `created_user` varchar(255), `created_group` varchar(255)) ENGINE=InnoDB
+  [1m[36m (1.9ms)[0m  [1mCREATE TABLE `gw_edit_link_pieces` (`id` int(11) auto_increment PRIMARY KEY, `uid` int(11), `class_created` int(11) DEFAULT 0, `published` varchar(255), `state` varchar(255), `level_no` int(11) DEFAULT 0, `parent_id` int(11) DEFAULT 0, `name` varchar(255), `sort_no` int(11) DEFAULT 0, `tab_keys` int(11) DEFAULT 0, `display_auth_priv` int(11), `role_name_id` int(11), `display_auth` text, `block_icon_id` int(11), `block_css_id` int(11), `link_url` text, `remark` text, `icon_path` text, `link_div_class` varchar(255), `class_external` int(11) DEFAULT 0, `ssoid` int(11), `class_sso` int(11) DEFAULT 0, `field_account` varchar(255), `field_pass` varchar(255), `css_id` int(11) DEFAULT 0, `deleted_at` datetime, `deleted_user` varchar(255), `deleted_group` varchar(255), `updated_at` datetime, `updated_user` varchar(255), `updated_group` varchar(255), `created_at` datetime, `created_user` varchar(255), `created_group` varchar(255)) ENGINE=InnoDB[0m
+  [1m[35m (1.7ms)[0m  CREATE TABLE `gw_holidays` (`id` int(11) auto_increment PRIMARY KEY, `creator_uid` int(11), `creator_ucode` varchar(255), `creator_uname` text, `creator_gid` int(11), `creator_gcode` varchar(255), `creator_gname` text, `title_category_id` int(11), `title` varchar(255), `is_public` int(11), `memo` text, `schedule_repeat_id` int(11), `dirty_repeat_id` int(11), `no_time_id` int(11), `st_at` datetime, `ed_at` datetime, `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB
+  [1m[36m (5.9ms)[0m  [1mCREATE  INDEX `st_at`  ON `gw_holidays` (`st_at`, `ed_at`) [0m
+  [1m[35m (1.9ms)[0m  CREATE TABLE `gw_memo_users` (`id` int(11) auto_increment PRIMARY KEY, `schedule_id` int(11), `class_id` int(11), `uid` int(11), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB
+  [1m[36m (1.7ms)[0m  [1mCREATE TABLE `gw_memos` (`id` int(11) auto_increment PRIMARY KEY, `class_id` int(11), `uid` int(11), `title` varchar(255), `st_at` datetime, `ed_at` datetime, `is_finished` int(11), `is_system` int(11), `fr_group` varchar(255), `fr_user` varchar(255), `memo_category_id` int(11), `memo_category_text` varchar(255), `body` text, `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [1m[35m (2.0ms)[0m  CREATE TABLE `gw_prop_other_images` (`id` int(11) auto_increment PRIMARY KEY, `parent_id` int(11), `idx` int(11), `note` varchar(255), `path` varchar(255), `orig_filename` varchar(255), `content_type` varchar(255), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB
+  [1m[36m (1.5ms)[0m  [1mCREATE TABLE `gw_prop_other_limits` (`id` int(11) auto_increment PRIMARY KEY, `sort_no` int(11), `state` varchar(255), `gid` int(11), `limit` int(11), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [1m[35m (1.5ms)[0m  CREATE TABLE `gw_prop_other_roles` (`id` int(11) auto_increment PRIMARY KEY, `prop_id` int(11), `gid` int(11), `auth` varchar(255), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB
+  [1m[36m (5.8ms)[0m  [1mCREATE  INDEX `prop_id`  ON `gw_prop_other_roles` (`prop_id`) [0m
+  [1m[35m (1.8ms)[0m  CREATE TABLE `gw_prop_others` (`id` int(11) auto_increment PRIMARY KEY, `sort_no` varchar(255), `name` varchar(255), `type_id` int(11), `state` text, `edit_state` int(11), `delete_state` int(11) DEFAULT 0, `reserved_state` int(11) DEFAULT 1, `comment` text, `created_at` datetime, `updated_at` datetime, `extra_flag` varchar(255), `extra_data` text, `gid` int(11), `gname` varchar(255), `creator_uid` int(11), `updater_uid` int(11)) ENGINE=InnoDB
+  [1m[36m (1.6ms)[0m  [1mCREATE TABLE `gw_prop_types` (`id` int(11) auto_increment PRIMARY KEY, `state` varchar(255), `name` varchar(255), `sort_no` int(11), `created_at` datetime, `updated_at` datetime, `deleted_at` datetime) ENGINE=InnoDB[0m
+  [1m[35m (1.7ms)[0m  CREATE TABLE `gw_schedule_props` (`id` int(11) auto_increment PRIMARY KEY, `schedule_id` int(11), `prop_type` varchar(255), `prop_id` int(11), `created_at` datetime, `updated_at` datetime, `extra_data` text, `confirmed_uid` int(11), `confirmed_gid` int(11), `confirmed_at` datetime, `rented_uid` int(11), `rented_gid` int(11), `rented_at` datetime, `returned_uid` int(11), `returned_gid` int(11), `returned_at` datetime, `cancelled_uid` int(11), `cancelled_gid` int(11), `cancelled_at` datetime, `st_at` datetime, `ed_at` datetime) ENGINE=InnoDB
+  [1m[36m (5.1ms)[0m  [1mCREATE  INDEX `prop_id`  ON `gw_schedule_props` (`prop_id`) [0m
+  [1m[35m (4.4ms)[0m  CREATE  INDEX `schedule_id`  ON `gw_schedule_props` (`schedule_id`, `prop_type`, `prop_id`) 
+  [1m[36m (1.6ms)[0m  [1mCREATE TABLE `gw_schedule_public_roles` (`id` int(11) auto_increment PRIMARY KEY, `schedule_id` int(11), `class_id` int(11), `uid` int(11), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [1m[35m (1.8ms)[0m  CREATE TABLE `gw_schedule_repeats` (`id` int(11) auto_increment PRIMARY KEY, `created_at` datetime, `updated_at` datetime, `st_date_at` datetime, `ed_date_at` datetime, `st_time_at` datetime, `ed_time_at` datetime, `class_id` int(11), `weekday_ids` varchar(255)) ENGINE=InnoDB
+  [1m[36m (1.5ms)[0m  [1mCREATE TABLE `gw_schedule_users` (`id` int(11) auto_increment PRIMARY KEY, `schedule_id` int(11), `class_id` int(11), `uid` int(11), `created_at` datetime, `updated_at` datetime, `st_at` datetime, `ed_at` datetime) ENGINE=InnoDB[0m
+  [1m[35m (6.7ms)[0m  CREATE  INDEX `schedule_id`  ON `gw_schedule_users` (`schedule_id`, `class_id`, `uid`) 
+  [1m[36m (4.4ms)[0m  [1mCREATE  INDEX `schedule_id2`  ON `gw_schedule_users` (`schedule_id`) [0m
+  [1m[35m (4.9ms)[0m  CREATE  INDEX `uid`  ON `gw_schedule_users` (`uid`) 
+  [1m[36m (2.3ms)[0m  [1mCREATE TABLE `gw_schedules` (`id` int(11) auto_increment PRIMARY KEY, `creator_uid` int(11), `creator_ucode` varchar(255), `creator_uname` text, `creator_gid` int(11), `creator_gcode` varchar(255), `creator_gname` text, `updater_uid` int(11), `updater_ucode` varchar(255), `updater_uname` text, `updater_gid` int(11), `updater_gcode` varchar(255), `updater_gname` text, `owner_uid` int(11), `owner_ucode` varchar(255), `owner_uname` text, `owner_gid` int(11), `owner_gcode` varchar(255), `owner_gname` text, `title_category_id` int(11), `title` varchar(255), `place_category_id` int(11), `place` varchar(255), `to_go` int(11), `is_public` int(11), `is_pr` int(11), `memo` text, `admin_memo` text, `repeat_id` int(11), `schedule_repeat_id` int(11), `dirty_repeat_id` int(11), `no_time_id` int(11), `schedule_parent_id` int(11), `participant_nums_inner` int(11), `participant_nums_outer` int(11), `check_30_over` int(11), `inquire_to` text, `st_at` datetime, `ed_at` datetime, `created_at` datetime, `updated_at` datetime, `todo` int(11), `allday` int(11), `guide_state` int(11), `guide_place_id` int(11), `guide_place` text, `guide_ed_at` int(11), `event_week` int(11), `event_month` int(11)) ENGINE=InnoDB[0m
+  [1m[35m (5.8ms)[0m  CREATE  INDEX `ed_at`  ON `gw_schedules` (`ed_at`) 
+  [1m[36m (5.6ms)[0m  [1mCREATE  INDEX `schedule_repeat_id`  ON `gw_schedules` (`schedule_repeat_id`) [0m
+  [1m[35m (5.7ms)[0m  CREATE  INDEX `st_at`  ON `gw_schedules` (`st_at`, `ed_at`) 
+  [1m[36m (1.7ms)[0m  [1mCREATE TABLE `gw_user_properties` (`id` int(11) auto_increment PRIMARY KEY, `class_id` int(11), `uid` varchar(255), `name` varchar(255), `type_name` varchar(255), `options` text, `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [1m[35m (1.9ms)[0m  CREATE TABLE `gw_year_fiscal_jps` (`id` int(11) auto_increment PRIMARY KEY, `start_at` datetime, `end_at` datetime, `fyear` text, `fyear_f` text, `markjp` text, `markjp_f` text, `namejp` text, `namejp_f` text, `updated_at` datetime, `updated_user` text, `updated_group` text, `created_at` datetime, `created_user` text, `created_group` text) ENGINE=InnoDB
+  [1m[36m (1.5ms)[0m  [1mCREATE TABLE `gw_year_mark_jps` (`id` int(11) auto_increment PRIMARY KEY, `name` text, `mark` text, `start_at` datetime, `updated_at` datetime, `updated_user` text, `updated_group` text, `created_at` datetime, `created_user` text, `created_group` text) ENGINE=InnoDB[0m
+  [1m[35m (1.6ms)[0m  CREATE TABLE `gwbbs_adms` (`id` int(11) auto_increment PRIMARY KEY, `unid` int(11), `content_id` int(11), `created_at` datetime, `title_id` int(11), `user_id` int(11), `user_code` varchar(255), `user_name` text, `group_id` int(11), `group_code` varchar(255), `group_name` text) ENGINE=InnoDB
+  [1m[36m (3.2ms)[0m  [1mCREATE TABLE `gwbbs_controls` (`id` int(11) auto_increment PRIMARY KEY, `unid` int(11), `content_id` int(11), `state` text, `created_at` datetime, `updated_at` datetime, `recognized_at` datetime, `published_at` datetime, `default_published` int(11), `doc_body_size_capacity` int(11), `doc_body_size_currently` int(11), `upload_graphic_file_size_capacity` int(11), `upload_graphic_file_size_capacity_unit` varchar(255), `upload_document_file_size_capacity` int(11), `upload_document_file_size_capacity_unit` varchar(255), `upload_graphic_file_size_max` int(11), `upload_document_file_size_max` int(11), `upload_graphic_file_size_currently` decimal(17,0), `upload_document_file_size_currently` decimal(17,0), `create_section` varchar(255), `create_section_flag` varchar(255), `addnew_forbidden` tinyint(1), `edit_forbidden` tinyint(1), `draft_forbidden` tinyint(1), `delete_forbidden` tinyint(1), `attachfile_index_use` tinyint(1), `importance` int(11), `form_name` varchar(255), `banner` text, `banner_position` varchar(255), `left_banner` text, `left_menu` text, `left_index_use` varchar(1), `left_index_pattern` int(11), `left_index_bg_color` varchar(255), `default_mode` varchar(255), `other_system_link` text, `preview_mode` tinyint(1), `wallpaper_id` int(11), `wallpaper` text, `css` text, `font_color` text, `icon_id` int(11), `icon` text, `sort_no` int(11), `caption` text, `view_hide` tinyint(1), `categoey_view` tinyint(1), `categoey_view_line` int(11), `monthly_view` tinyint(1), `monthly_view_line` int(11), `group_view` tinyint(1), `one_line_use` int(11), `notification` int(11), `restrict_access` tinyint(1), `upload_system` int(11), `limit_date` varchar(255), `name` varchar(255), `title` varchar(255), `category` int(11), `category1_name` varchar(255), `category2_name` varchar(255), `category3_name` varchar(255), `recognize` int(11), `createdate` text, `createrdivision_id` varchar(20), `createrdivision` text, `creater_id` varchar(20), `creater` text, `editdate` text, `editordivision_id` varchar(20), `editordivision` text, `editor_id` varchar(20), `editor` text, `default_limit` int(11), `dbname` varchar(255), `admingrps` text, `admingrps_json` text, `adms` text, `adms_json` text, `dsp_admin_name` text, `editors` text, `editors_json` text, `readers` text, `readers_json` text, `sueditors` text, `sueditors_json` text, `sureaders` text, `sureaders_json` text, `help_display` text, `help_url` text, `help_admin_url` text, `notes_field01` text, `notes_field02` text, `notes_field03` text, `notes_field04` text, `notes_field05` text, `notes_field06` text, `notes_field07` text, `notes_field08` text, `notes_field09` text, `notes_field10` text, `docslast_updated_at` datetime) ENGINE=InnoDB[0m
+  [1m[35m (1.9ms)[0m  CREATE TABLE `gwbbs_itemdeletes` (`id` int(11) auto_increment PRIMARY KEY, `unid` int(11), `content_id` int(11), `created_at` datetime, `updated_at` datetime, `admin_code` varchar(255), `title_id` int(11), `board_title` text, `board_state` varchar(255), `board_view_hide` varchar(255), `board_sort_no` int(11), `public_doc_count` int(11), `void_doc_count` int(11), `dbname` varchar(255), `limit_date` varchar(255), `board_limit_date` varchar(255)) ENGINE=InnoDB
+  [1m[36m (1.8ms)[0m  [1mCREATE TABLE `gwbbs_roles` (`id` int(11) auto_increment PRIMARY KEY, `unid` int(11), `content_id` int(11), `created_at` datetime, `title_id` int(11), `role_code` varchar(255), `user_id` int(11), `user_code` varchar(255), `user_name` text, `group_id` int(11), `group_code` varchar(255), `group_name` text) ENGINE=InnoDB[0m
+  [1m[35m (2.0ms)[0m  CREATE TABLE `gwcircular_adms` (`id` int(11) auto_increment PRIMARY KEY, `unid` int(11), `content_id` int(11), `created_at` datetime, `title_id` int(11), `user_id` int(11), `user_code` varchar(255), `user_name` text, `group_id` int(11), `group_code` varchar(255), `group_name` text) ENGINE=InnoDB
+  [1m[36m (2.9ms)[0m  [1mCREATE TABLE `gwcircular_controls` (`id` int(11) auto_increment PRIMARY KEY, `unid` int(11), `content_id` int(11), `state` text, `created_at` datetime, `updated_at` datetime, `recognized_at` datetime, `published_at` datetime, `default_published` int(11), `doc_body_size_capacity` int(11), `doc_body_size_currently` int(11), `upload_graphic_file_size_capacity` int(11), `upload_graphic_file_size_capacity_unit` varchar(255), `upload_document_file_size_capacity` int(11), `upload_document_file_size_capacity_unit` varchar(255), `upload_graphic_file_size_max` int(11), `upload_document_file_size_max` int(11), `upload_graphic_file_size_currently` decimal(17,0), `upload_document_file_size_currently` decimal(17,0), `commission_limit` int(11), `create_section` varchar(255), `create_section_flag` varchar(255), `addnew_forbidden` tinyint(1), `edit_forbidden` tinyint(1), `draft_forbidden` tinyint(1), `delete_forbidden` tinyint(1), `attachfile_index_use` tinyint(1), `importance` int(11), `form_name` varchar(255), `banner` text, `banner_position` varchar(255), `left_banner` text, `left_menu` text, `left_index_use` varchar(1), `left_index_pattern` int(11), `left_index_bg_color` varchar(255), `default_mode` varchar(255), `other_system_link` text, `preview_mode` tinyint(1), `wallpaper_id` int(11), `wallpaper` text, `css` text, `font_color` text, `icon_id` int(11), `icon` text, `sort_no` int(11), `caption` text, `view_hide` tinyint(1), `categoey_view` tinyint(1), `categoey_view_line` int(11), `monthly_view` tinyint(1), `monthly_view_line` int(11), `group_view` tinyint(1), `one_line_use` int(11), `notification` int(11), `restrict_access` tinyint(1), `upload_system` int(11), `limit_date` varchar(255), `name` varchar(255), `title` varchar(255), `category` int(11), `category1_name` varchar(255), `category2_name` varchar(255), `category3_name` varchar(255), `recognize` int(11), `createdate` text, `createrdivision_id` varchar(20), `createrdivision` text, `creater_id` varchar(20), `creater` text, `editdate` text, `editordivision_id` varchar(20), `editordivision` text, `editor_id` varchar(20), `editor` text, `default_limit` int(11), `dbname` varchar(255), `admingrps` text, `admingrps_json` text, `adms` text, `adms_json` text, `dsp_admin_name` text, `editors` text, `editors_json` text, `readers` text, `readers_json` text, `sueditors` text, `sueditors_json` text, `sureaders` text, `sureaders_json` text, `help_display` text, `help_url` text, `help_admin_url` text, `notes_field01` text, `notes_field02` text, `notes_field03` text, `notes_field04` text, `notes_field05` text, `notes_field06` text, `notes_field07` text, `notes_field08` text, `notes_field09` text, `notes_field10` text, `docslast_updated_at` datetime) ENGINE=InnoDB[0m
+  [1m[35m (1.6ms)[0m  CREATE TABLE `gwcircular_custom_groups` (`id` int(11) auto_increment PRIMARY KEY, `parent_id` int(11), `class_id` int(11), `owner_uid` int(11), `owner_gid` int(11), `updater_uid` int(11), `updater_gid` int(11), `state` text, `created_at` datetime, `updated_at` datetime, `level_no` int(11), `name` text, `name_en` text, `sort_no` int(11), `sort_prefix` text, `is_default` int(11), `reader_groups_json` mediumtext, `reader_groups` mediumtext, `readers_json` mediumtext, `readers` mediumtext) ENGINE=InnoDB
+  [1m[36m (2.2ms)[0m  [1mCREATE TABLE `gwcircular_docs` (`id` int(11) auto_increment PRIMARY KEY, `unid` int(11), `content_id` int(11), `state` text, `created_at` datetime, `updated_at` datetime, `recognized_at` datetime, `published_at` datetime, `latest_updated_at` datetime, `doc_type` int(11), `parent_id` int(11), `target_user_id` int(11), `target_user_code` varchar(20), `target_user_name` text, `confirmation` int(11), `section_code` varchar(255), `section_name` text, `importance` int(11), `title_id` int(11), `name` text, `title` text, `head` mediumtext, `body` mediumtext, `note` mediumtext, `category_use` int(11), `category1_id` int(11), `category2_id` int(11), `category3_id` int(11), `category4_id` int(11), `keywords` text, `commission_count` int(11), `unread_count` int(11), `already_count` int(11), `draft_count` int(11), `createdate` text, `creater_admin` tinyint(1), `createrdivision_id` varchar(20), `createrdivision` text, `creater_id` varchar(20), `creater` text, `editdate` text, `editor_admin` tinyint(1), `editordivision_id` varchar(20), `editordivision` text, `editor_id` varchar(20), `editor` text, `able_date` datetime, `expiry_date` datetime, `attachmentfile` int(11), `reader_groups_json` mediumtext, `reader_groups` mediumtext, `readers_json` mediumtext, `readers` mediumtext) ENGINE=InnoDB[0m
+  [1m[35m (6.6ms)[0m  CREATE  INDEX `parent_id`  ON `gwcircular_docs` (`parent_id`) 
+  [1m[36m (1.9ms)[0m  [1mCREATE TABLE `gwcircular_files` (`id` int(11) auto_increment PRIMARY KEY, `unid` int(11), `content_id` int(11), `state` text, `created_at` datetime, `updated_at` datetime, `recognized_at` datetime, `published_at` datetime, `latest_updated_at` datetime, `parent_id` int(11), `title_id` int(11), `content_type` varchar(255), `filename` text, `memo` text, `size` int(11), `width` int(11), `height` int(11), `db_file_id` int(11)) ENGINE=InnoDB[0m
+  [1m[35m (1.7ms)[0m  CREATE TABLE `gwcircular_itemdeletes` (`id` int(11) auto_increment PRIMARY KEY, `unid` int(11), `content_id` int(11), `created_at` datetime, `updated_at` datetime, `admin_code` varchar(255), `title_id` int(11), `board_title` text, `board_state` varchar(255), `board_view_hide` varchar(255), `board_sort_no` int(11), `public_doc_count` int(11), `void_doc_count` int(11), `dbname` varchar(255), `limit_date` varchar(255), `board_limit_date` varchar(255)) ENGINE=InnoDB
+  [1m[36m (1.6ms)[0m  [1mCREATE TABLE `gwcircular_roles` (`id` int(11) auto_increment PRIMARY KEY, `unid` int(11), `content_id` int(11), `created_at` datetime, `title_id` int(11), `role_code` varchar(255), `user_id` int(11), `user_code` varchar(255), `user_name` text, `group_id` int(11), `group_code` varchar(255), `group_name` text) ENGINE=InnoDB[0m
+  [1m[35m (1.5ms)[0m  CREATE TABLE `sessions` (`id` int(11) auto_increment PRIMARY KEY, `session_id` varchar(255) NOT NULL, `data` text, `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB
+  [1m[36m (6.9ms)[0m  [1mCREATE  INDEX `index_sessions_on_session_id`  ON `sessions` (`session_id`) [0m
+  [1m[35m (5.0ms)[0m  CREATE  INDEX `index_sessions_on_updated_at`  ON `sessions` (`updated_at`) 
+  [1m[36m (1.7ms)[0m  [1mCREATE TABLE `system_admin_logs` (`id` int(11) auto_increment PRIMARY KEY, `created_at` datetime, `user_id` int(11), `item_unid` int(11), `controller` text, `action` text) ENGINE=InnoDB[0m
+  [1m[35m (1.9ms)[0m  CREATE TABLE `system_custom_group_roles` (`rid` int(11) auto_increment PRIMARY KEY, `created_at` datetime, `updated_at` datetime, `group_id` int(11), `custom_group_id` int(11), `priv_name` text, `user_id` int(11), `class_id` int(11)) ENGINE=InnoDB
+  [1m[36m (5.4ms)[0m  [1mCREATE  INDEX `custom_group_id`  ON `system_custom_group_roles` (`custom_group_id`) [0m
+  [1m[35m (4.8ms)[0m  CREATE  INDEX `group_id`  ON `system_custom_group_roles` (`group_id`) 
+  [1m[36m (5.6ms)[0m  [1mCREATE  INDEX `user_id`  ON `system_custom_group_roles` (`user_id`) [0m
+  [1m[35m (1.9ms)[0m  CREATE TABLE `system_custom_groups` (`id` int(11) auto_increment PRIMARY KEY, `parent_id` int(11), `class_id` int(11), `owner_uid` int(11), `owner_gid` int(11), `updater_uid` int(11) NOT NULL, `updater_gid` int(11) NOT NULL, `state` text, `created_at` datetime, `updated_at` datetime, `level_no` int(11), `name` text, `name_en` text, `sort_no` int(11), `sort_prefix` text, `is_default` int(11)) ENGINE=InnoDB
+  [1m[36m (1.6ms)[0m  [1mCREATE TABLE `system_group_histories` (`id` int(11) auto_increment PRIMARY KEY, `parent_id` int(11), `state` text, `created_at` datetime, `updated_at` datetime, `level_no` int(11), `version_id` int(11), `code` varchar(255), `name` text, `name_en` text, `email` text, `start_at` datetime, `end_at` datetime, `sort_no` int(11), `ldap_version` varchar(255), `ldap` int(11)) ENGINE=InnoDB[0m
+  [1m[35m (2.0ms)[0m  CREATE TABLE `system_groups` (`id` int(11) auto_increment PRIMARY KEY, `parent_id` int(11), `state` text, `created_at` datetime, `updated_at` datetime, `level_no` int(11), `version_id` int(11), `code` varchar(255), `name` text, `name_en` text, `email` text, `start_at` datetime, `end_at` datetime, `sort_no` int(11), `ldap_version` varchar(255), `ldap` int(11)) ENGINE=InnoDB
+  [1m[36m (1.8ms)[0m  [1mCREATE TABLE `system_ldap_temporaries` (`id` int(11) auto_increment PRIMARY KEY, `parent_id` int(11), `created_at` datetime, `updated_at` datetime, `version` varchar(255), `data_type` varchar(255), `code` varchar(255), `sort_no` varchar(255), `name` text, `name_en` text, `kana` text, `email` text, `match` text, `official_position` varchar(255), `assigned_job` varchar(255)) ENGINE=InnoDB[0m
+  [1m[35m (5.4ms)[0m  CREATE  INDEX `version`  ON `system_ldap_temporaries` (`version`(20), `parent_id`, `data_type`(20), `sort_no`) 
+  [1m[36m (1.5ms)[0m  [1mCREATE TABLE `system_login_logs` (`id` int(11) auto_increment PRIMARY KEY, `user_id` int(11), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [1m[35m (5.4ms)[0m  CREATE  INDEX `user_id`  ON `system_login_logs` (`user_id`) 
+  [1m[36m (1.7ms)[0m  [1mCREATE TABLE `system_priv_names` (`id` int(11) auto_increment PRIMARY KEY, `unid` int(11), `state` text, `content_id` int(11), `created_at` datetime, `updated_at` datetime, `display_name` text, `priv_name` text, `sort_no` int(11)) ENGINE=InnoDB[0m
+  [1m[35m (1.4ms)[0m  CREATE TABLE `system_public_logs` (`id` int(11) auto_increment PRIMARY KEY, `created_at` datetime, `user_id` int(11), `item_unid` int(11), `controller` text, `action` text) ENGINE=InnoDB
+  [1m[36m (1.4ms)[0m  [1mCREATE TABLE `system_role_name_privs` (`id` int(11) auto_increment PRIMARY KEY, `role_id` int(11), `priv_id` int(11), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [1m[35m (1.4ms)[0m  CREATE TABLE `system_role_names` (`id` int(11) auto_increment PRIMARY KEY, `unid` int(11), `state` text, `content_id` int(11), `created_at` datetime, `updated_at` datetime, `display_name` text, `table_name` text, `sort_no` int(11)) ENGINE=InnoDB
+  [1m[36m (1.8ms)[0m  [1mCREATE TABLE `system_roles` (`id` int(11) auto_increment PRIMARY KEY, `table_name` varchar(255), `priv_name` varchar(255), `idx` int(11), `class_id` int(11), `uid` varchar(255), `priv` int(11), `created_at` datetime, `updated_at` datetime, `role_name_id` int(11), `priv_user_id` int(11), `group_id` int(11)) ENGINE=InnoDB[0m
+  [1m[35m (2.0ms)[0m  CREATE TABLE `system_users` (`id` int(11) auto_increment PRIMARY KEY, `air_login_id` varchar(255), `state` text, `created_at` datetime, `updated_at` datetime, `code` varchar(255) NOT NULL, `ldap` int(11) NOT NULL, `ldap_version` int(11), `auth_no` text, `sort_no` varchar(255), `name` text, `name_en` text, `kana` text, `password` text, `mobile_access` int(11), `mobile_password` varchar(255), `email` text, `official_position` varchar(255), `assigned_job` varchar(255), `remember_token` text, `remember_token_expires_at` datetime, `air_token` text) ENGINE=InnoDB
+  [1m[36m (7.5ms)[0m  [1mCREATE UNIQUE INDEX `unique_user_code`  ON `system_users` (`code`) [0m
+  [1m[35m (2.4ms)[0m  CREATE TABLE `system_users_custom_groups` (`rid` int(11) auto_increment PRIMARY KEY, `created_at` datetime, `updated_at` datetime, `custom_group_id` int(11), `user_id` int(11), `title` text, `title_en` text, `sort_no` int(11), `icon` text) ENGINE=InnoDB
+  [1m[36m (6.3ms)[0m  [1mCREATE  INDEX `custom_group_id`  ON `system_users_custom_groups` (`custom_group_id`) [0m
+  [1m[35m (1.7ms)[0m  CREATE TABLE `system_users_group_histories` (`rid` int(11) auto_increment PRIMARY KEY, `created_at` datetime, `updated_at` datetime, `user_id` int(11), `group_id` int(11), `job_order` int(11), `start_at` datetime, `end_at` datetime, `user_code` varchar(255), `group_code` varchar(255)) ENGINE=InnoDB
+  [1m[36m (1.6ms)[0m  [1mCREATE TABLE `system_users_groups` (`rid` int(11) auto_increment PRIMARY KEY, `created_at` datetime, `updated_at` datetime, `user_id` int(11), `group_id` int(11), `job_order` int(11), `start_at` datetime, `end_at` datetime, `user_code` varchar(255), `group_code` varchar(255)) ENGINE=InnoDB[0m
+  [1m[35m (1.8ms)[0m  CREATE TABLE `system_users_groups_csvdata` (`id` int(11) auto_increment PRIMARY KEY, `state` varchar(255) NOT NULL, `data_type` varchar(255) NOT NULL, `level_no` int(11), `parent_id` int(11) NOT NULL, `parent_code` varchar(255) NOT NULL, `code` varchar(255) NOT NULL, `sort_no` int(11), `ldap` int(11) NOT NULL, `job_order` int(11), `name` text NOT NULL, `name_en` text, `kana` text, `password` varchar(255), `mobile_access` int(11), `mobile_password` varchar(255), `email` varchar(255), `official_position` varchar(255), `assigned_job` varchar(255), `start_at` datetime NOT NULL, `end_at` datetime, `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB
+  [1m[36m (2.2ms)[0m  [1mCREATE TABLE `gwbbs_comments` (`id` int(11) auto_increment PRIMARY KEY, `unid` int(11), `content_id` int(11), `state` text, `created_at` datetime, `updated_at` datetime, `recognized_at` datetime, `published_at` datetime, `latest_updated_at` datetime, `doc_type` int(11), `parent_id` int(11), `content_state` text, `title_id` int(11), `name` text, `pname` text, `title` text, `head` mediumtext, `body` mediumtext, `note` mediumtext, `category1_id` int(11), `category2_id` int(11), `category3_id` int(11), `category4_id` int(11), `keyword1` text, `keyword2` text, `keyword3` text, `keywords` text, `createdate` text, `createrdivision_id` varchar(20), `createrdivision` text, `creater_id` varchar(20), `creater` text, `editdate` text, `editordivision_id` varchar(20), `editordivision` text, `editor_id` varchar(20), `editor` text, `expiry_date` datetime, `inpfld_001` text, `inpfld_002` text) ENGINE=InnoDB[0m
+  [1m[35m (2.6ms)[0m  CREATE TABLE `gwbbs_docs` (`id` int(11) auto_increment PRIMARY KEY, `unid` int(11), `content_id` int(11), `state` text, `created_at` datetime, `updated_at` datetime, `recognized_at` datetime, `published_at` datetime, `latest_updated_at` datetime, `doc_type` int(11), `parent_id` int(11), `content_state` text, `section_code` varchar(255), `section_name` text, `importance` int(11), `one_line_note` int(11), `title_id` int(11), `name` text, `pname` text, `title` text, `head` mediumtext, `body` mediumtext, `note` mediumtext, `category_use` int(11), `category1_id` int(11), `category2_id` int(11), `category3_id` int(11), `category4_id` int(11), `keywords` text, `createdate` text, `creater_admin` tinyint(1), `createrdivision_id` varchar(20), `createrdivision` text, `creater_id` varchar(20), `creater` text, `editdate` text, `editor_admin` tinyint(1), `editordivision_id` varchar(20), `editordivision` text, `editor_id` varchar(20), `editor` text, `able_date` datetime, `expiry_date` datetime, `attachmentfile` int(11), `form_name` varchar(255), `inpfld_001` text, `inpfld_002` text, `inpfld_003` text, `inpfld_004` text, `inpfld_005` text, `inpfld_006` text, `inpfld_006w` varchar(255), `inpfld_006d` datetime, `inpfld_007` text, `inpfld_008` text, `inpfld_009` text, `inpfld_010` text, `inpfld_011` text, `inpfld_012` text, `inpfld_013` text, `inpfld_014` text, `inpfld_015` text, `inpfld_016` text, `inpfld_017` text, `inpfld_018` text, `inpfld_019` text, `inpfld_020` text, `inpfld_021` text, `inpfld_022` text, `inpfld_023` text, `inpfld_024` text, `inpfld_025` text) ENGINE=InnoDB
+  [1m[36m (1.9ms)[0m  [1mCREATE TABLE `gwbbs_files` (`id` int(11) auto_increment PRIMARY KEY, `unid` int(11), `content_id` int(11), `state` text, `created_at` datetime, `updated_at` datetime, `recognized_at` datetime, `published_at` datetime, `latest_updated_at` datetime, `parent_id` int(11), `title_id` int(11), `content_type` varchar(255), `filename` text, `memo` text, `size` int(11), `width` int(11), `height` int(11), `db_file_id` int(11)) ENGINE=InnoDB[0m
+  [1m[35m (2.0ms)[0m  CREATE TABLE `doclibrary_docs` (`id` int(11) auto_increment PRIMARY KEY, `unid` int(11), `content_id` int(11), `state` text, `created_at` datetime, `updated_at` datetime, `recognized_at` datetime, `published_at` datetime, `latest_updated_at` datetime, `doc_type` int(11), `parent_id` int(11), `content_state` text, `section_code` varchar(255), `section_name` text, `importance` int(11), `one_line_note` int(11), `title_id` int(11), `name` text, `pname` text, `title` text, `head` mediumtext, `body` mediumtext, `note` mediumtext, `category_use` int(11), `category1_id` int(11), `category2_id` int(11), `category3_id` int(11), `category4_id` int(11), `keywords` text, `createdate` text, `creater_admin` tinyint(1), `createrdivision_id` varchar(20), `createrdivision` text, `creater_id` varchar(20), `creater` text, `editdate` text, `editor_admin` tinyint(1), `editordivision_id` varchar(20), `editordivision` text, `editor_id` varchar(20), `editor` text, `expiry_date` datetime, `attachmentfile` int(11), `form_name` varchar(255), `inpfld_001` text, `inpfld_002` int(11), `inpfld_003` int(11), `inpfld_004` int(11), `inpfld_005` int(11), `inpfld_006` int(11), `inpfld_007` text, `inpfld_008` text, `inpfld_009` text, `inpfld_010` text, `inpfld_011` text, `inpfld_012` text, `notes_001` text, `notes_002` text, `notes_003` text) ENGINE=InnoDB
+  [1m[36m (6.2ms)[0m  [1mCREATE  INDEX `category1_id`  ON `doclibrary_docs` (`category1_id`) [0m
+  [1m[35m (4.8ms)[0m  CREATE  INDEX `title_id`  ON `doclibrary_docs` (`state`(50), `title_id`, `category1_id`) 
+  [1m[36m (4.4ms)[0m  [1mCREATE  INDEX `title_id2`  ON `doclibrary_docs` (`title_id`) [0m
+  [1m[35m (1.7ms)[0m  CREATE TABLE `doclibrary_files` (`id` int(11) auto_increment PRIMARY KEY, `unid` int(11), `content_id` int(11), `state` text, `created_at` datetime, `updated_at` datetime, `recognized_at` datetime, `published_at` datetime, `latest_updated_at` datetime, `parent_id` int(11), `title_id` int(11), `content_type` varchar(255), `filename` text, `memo` text, `size` int(11), `width` int(11), `height` int(11), `db_file_id` int(11)) ENGINE=InnoDB
+  [1m[36m (1.6ms)[0m  [1mCREATE TABLE `doclibrary_folder_acls` (`id` int(11) auto_increment PRIMARY KEY, `unid` int(11), `content_id` int(11), `created_at` datetime, `updated_at` datetime, `folder_id` int(11), `title_id` int(11), `acl_flag` int(11), `acl_section_id` int(11), `acl_section_code` varchar(255), `acl_section_name` text, `acl_user_id` int(11), `acl_user_code` varchar(255), `acl_user_name` text) ENGINE=InnoDB[0m
+  [1m[35m (6.2ms)[0m  CREATE  INDEX `acl_section_code`  ON `doclibrary_folder_acls` (`acl_section_code`) 
+  [1m[36m (4.6ms)[0m  [1mCREATE  INDEX `acl_user_code`  ON `doclibrary_folder_acls` (`acl_user_code`) [0m
+  [1m[35m (4.9ms)[0m  CREATE  INDEX `folder_id`  ON `doclibrary_folder_acls` (`folder_id`) 
+  [1m[36m (4.7ms)[0m  [1mCREATE  INDEX `title_id`  ON `doclibrary_folder_acls` (`title_id`) [0m
+  [1m[35m (1.8ms)[0m  CREATE TABLE `doclibrary_folders` (`id` int(11) auto_increment PRIMARY KEY, `unid` int(11), `parent_id` int(11), `state` text, `created_at` datetime, `updated_at` datetime, `title_id` int(11), `sort_no` int(11), `level_no` int(11), `children_size` int(11), `total_children_size` int(11), `name` text, `memo` text, `readers` text, `readers_json` text, `reader_groups` text, `reader_groups_json` text, `docs_last_updated_at` datetime) ENGINE=InnoDB
+  [1m[36m (5.0ms)[0m  [1mCREATE  INDEX `parent_id`  ON `doclibrary_folders` (`parent_id`) [0m
+  [1m[35m (4.7ms)[0m  CREATE  INDEX `sort_no`  ON `doclibrary_folders` (`sort_no`) 
+  [1m[36m (5.7ms)[0m  [1mCREATE  INDEX `title_id`  ON `doclibrary_folders` (`title_id`) [0m
+  [1m[35m (2.0ms)[0m  CREATE TABLE `doclibrary_group_folders` (`id` int(11) auto_increment PRIMARY KEY, `unid` int(11), `parent_id` int(11), `state` text, `use_state` text, `created_at` datetime, `updated_at` datetime, `title_id` int(11), `sort_no` int(11), `level_no` int(11), `children_size` int(11), `total_children_size` int(11), `code` varchar(255), `name` text, `sysgroup_id` int(11), `sysparent_id` int(11), `readers` text, `readers_json` text, `reader_groups` text, `reader_groups_json` text, `docs_last_updated_at` datetime) ENGINE=InnoDB
+  [1m[36m (5.7ms)[0m  [1mCREATE  INDEX `code`  ON `doclibrary_group_folders` (`code`) [0m
+  [1m[35m (1.7ms)[0m  CREATE TABLE `doclibrary_recognizers` (`id` int(11) auto_increment PRIMARY KEY, `unid` int(11), `updated_at` datetime, `created_at` datetime, `title_id` int(11), `parent_id` int(11), `user_id` int(11), `code` varchar(255), `name` text, `recognized_at` datetime) ENGINE=InnoDB
+  [1m[36m (0.2ms)[0m  [1mSELECT version FROM `schema_migrations`[0m
+  [1m[35m (0.6ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('0')
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20131025015415')
+  [1m[36m (0.5ms)[0m  [1mCOMMIT[0m
+Migrating to AddDetailsToGwScheduleUsers (20131209093001)
+  [1m[35m (4.7ms)[0m  ALTER TABLE `gw_schedule_users` ADD `already_at` datetime
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20131209093001')
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+Migrating to AddDeleteStateToGwSchedules (20131209093102)
+  [1m[35m (5.2ms)[0m  ALTER TABLE `gw_schedules` ADD `delete_state` int(11) DEFAULT 0
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20131209093102')
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+Migrating to CreateGwPropGroupSettings (20131211101400)
+  [1m[35m (1.9ms)[0m  CREATE TABLE `gw_prop_group_settings` (`id` int(11) auto_increment PRIMARY KEY, `prop_group_id` int(11), `prop_other_id` int(11), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20131211101400')
+  [1m[36m (0.5ms)[0m  [1mCOMMIT[0m
+Migrating to CreateGwPropGroups (20131211101401)
+  [1m[35m (1.8ms)[0m  CREATE TABLE `gw_prop_groups` (`id` int(11) auto_increment PRIMARY KEY, `state` text, `name` varchar(255), `sort_no` int(11), `parent_id` int(11), `created_at` datetime, `updated_at` datetime, `deleted_at` datetime) ENGINE=InnoDB
+  [1m[36m (0.9ms)[0m  [1minsert into gw_prop_groups values(1,'public','(root)',0,1,now(),now(),null)[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20131211101401')[0m
+  [1m[35m (0.4ms)[0m  COMMIT
+Migrating to CreateGwPropAdminSettings (20131211101402)
+  [1m[36m (1.9ms)[0m  [1mCREATE TABLE `gw_prop_admin_settings` (`id` int(11) auto_increment PRIMARY KEY, `name` varchar(255), `type_id` int(11), `span` int(11), `span_limit` int(11), `span_hour` int(11), `span_min` int(11), `time_limit` int(11), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20131211101402')[0m
+  [1m[35m (0.5ms)[0m  COMMIT
+Migrating to CreateGwPropAdminSettingRoles (20131211101403)
+  [1m[36m (1.8ms)[0m  [1mCREATE TABLE `gw_prop_admin_setting_roles` (`id` int(11) auto_increment PRIMARY KEY, `prop_setting_id` int(11), `gid` int(11), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20131211101403')[0m
+  [1m[35m (0.5ms)[0m  COMMIT
+Migrating to RemoveAlreadyAtFromGwScheduleUsers (20131217092420)
+  [1m[36m (5.0ms)[0m  [1mALTER TABLE `gw_schedule_users` DROP `already_at`[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20131217092420')[0m
+  [1m[35m (0.4ms)[0m  COMMIT
+Migrating to CreateGwReminders (20131217094447)
+DEPRECATION WARNING: `#timestamps` was called without specifying an option for `null`. In Rails 5, this behavior will change to `null: false`. You should manually specify `null: true` to prevent the behavior of your existing migrations from changing. (called from block in change at /var/share/enisysgw/db/migrate/20131217094447_create_gw_reminders.rb:15)
+  [1m[36m (2.2ms)[0m  [1mCREATE TABLE `gw_reminders` (`id` int(11) auto_increment PRIMARY KEY, `user_id` int(11), `category` varchar(255), `sub_category` varchar(255), `title_id` int(11), `item_id` int(11), `title` varchar(255), `datetime` datetime, `url` varchar(255), `action` varchar(255), `seen_at` datetime, `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20131217094447')[0m
+  [1m[35m (0.5ms)[0m  COMMIT
+Migrating to AddEditableGroupsJsonToSystemRoles (20131225023035)
+  [1m[36m (5.0ms)[0m  [1mALTER TABLE `system_roles` ADD `editable_groups_json` text[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20131225023035')[0m
+  [1m[35m (0.5ms)[0m  COMMIT
+Migrating to CreateSystemRoleGroups (20131225042502)
+DEPRECATION WARNING: `#timestamps` was called without specifying an option for `null`. In Rails 5, this behavior will change to `null: false`. You should manually specify `null: true` to prevent the behavior of your existing migrations from changing. (called from block in change at /var/share/enisysgw/db/migrate/20131225042502_create_system_role_groups.rb:10)
+  [1m[36m (1.5ms)[0m  [1mCREATE TABLE `system_role_groups` (`id` int(11) auto_increment PRIMARY KEY, `system_role_id` int(11), `role_code` varchar(255), `group_code` varchar(255), `group_id` int(11), `group_name` text, `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [1m[35m (6.5ms)[0m  CREATE  INDEX `index_system_role_groups_on_system_role_id`  ON `system_role_groups` (`system_role_id`) 
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20131225042502')
+  [1m[36m (0.5ms)[0m  [1mCOMMIT[0m
+Migrating to AddDetailsToGwbbsDocs (20131226093001)
+  [1m[35m (6.1ms)[0m  ALTER TABLE `gwbbs_docs` ADD `name_type` int(11)
+  [1m[36m (6.1ms)[0m  [1mALTER TABLE `gwbbs_docs` ADD `name_creater_section_id` varchar(20)[0m
+  [1m[35m (5.6ms)[0m  ALTER TABLE `gwbbs_docs` ADD `name_creater_section` text
+  [1m[36m (5.6ms)[0m  [1mALTER TABLE `gwbbs_docs` ADD `name_editor_section_id` varchar(20)[0m
+  [1m[35m (5.8ms)[0m  ALTER TABLE `gwbbs_docs` ADD `name_editor_section` text
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20131226093001')
+  [1m[36m (0.5ms)[0m  [1mCOMMIT[0m
+Migrating to AddCategoryToSystemGroups (20131227115623)
+  [1m[35m (16.2ms)[0m  ALTER TABLE `system_groups` ADD `category` int(11)
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20131227115623')
+  [1m[36m (0.8ms)[0m  [1mCOMMIT[0m
+Migrating to CreateSystemUsersProfiles (20140106102610)
+DEPRECATION WARNING: `#timestamps` was called without specifying an option for `null`. In Rails 5, this behavior will change to `null: false`. You should manually specify `null: true` to prevent the behavior of your existing migrations from changing. (called from block in change at /var/share/enisysgw/db/migrate/20140106102610_create_system_users_profiles.rb:12)
+  [1m[35m (2.0ms)[0m  CREATE TABLE `system_users_profiles` (`id` int(11) auto_increment PRIMARY KEY, `user_id` int(11), `user_code` varchar(255), `add_column1` text, `add_column2` text, `add_column3` text, `add_column4` text, `add_column5` text, `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20140106102610')
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+Migrating to CreateSystemUsersProfileSettings (20140106102613)
+DEPRECATION WARNING: `#timestamps` was called without specifying an option for `null`. In Rails 5, this behavior will change to `null: false`. You should manually specify `null: true` to prevent the behavior of your existing migrations from changing. (called from block in change at /var/share/enisysgw/db/migrate/20140106102613_create_system_users_profile_settings.rb:9)
+  [1m[35m (2.1ms)[0m  CREATE TABLE `system_users_profile_settings` (`id` int(11) auto_increment PRIMARY KEY, `key_name` varchar(255), `name` varchar(255), `used` int(11), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB
+  [1m[36m (0.8ms)[0m  [1minsert into system_users_profile_settings values
+      (1,'name','名前',1,now(),now()),
+      (2,'name_en','名前（英）',0,now(),now()),
+      (3,'email','メールアドレス',1,now(),now()),
+      (4,'official_position','役職',1,now(),now()),
+      (5,'assigned_job','担当',0,now(),now()),
+      (6,'add_column1','',1,now(),now()),
+      (7,'add_column2','',1,now(),now()),
+      (8,'add_column3','',1,now(),now()),
+      (9,'add_column4','',1,now(),now()),
+      (10,'add_column5','',1,now(),now())[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20140106102613')[0m
+  [1m[35m (0.5ms)[0m  COMMIT
+Migrating to CreateView (20140108042815)
+  [1m[36m (1.5ms)[0m  [1m    CREATE OR REPLACE VIEW doclibrary_view_acl_docs AS
+      SELECT
+        doclibrary_docs.id AS id,
+        doclibrary_folders.sort_no AS sort_no,
+        doclibrary_folder_acls.acl_flag AS acl_flag,
+        doclibrary_folder_acls.acl_section_id AS acl_section_id,
+        doclibrary_folder_acls.acl_section_code AS acl_section_code,
+        doclibrary_folder_acls.acl_section_name AS acl_section_name,
+        doclibrary_folder_acls.acl_user_id AS acl_user_id,
+        doclibrary_folder_acls.acl_user_code AS acl_user_code,
+        doclibrary_folder_acls.acl_user_name AS acl_user_name,
+        doclibrary_folders.name AS folder_name
+      FROM ((doclibrary_docs JOIN doclibrary_folder_acls ON ((
+        (doclibrary_docs.title_id = doclibrary_folder_acls.title_id) AND
+        (doclibrary_docs.category1_id = doclibrary_folder_acls.folder_id))
+        )) JOIN doclibrary_folders ON ((doclibrary_docs.category1_id = doclibrary_folders.id)
+      ));
+[0m
+  [1m[35m (1.7ms)[0m      CREATE OR REPLACE VIEW doclibrary_view_acl_files AS
+      SELECT
+        doclibrary_docs.state AS docs_state,
+        doclibrary_files.id AS id,
+        doclibrary_files.unid AS unid,
+        doclibrary_files.content_id AS content_id,
+        doclibrary_files.state AS state,
+        doclibrary_files.created_at AS created_at,
+        doclibrary_files.updated_at AS updated_at,
+        doclibrary_files.recognized_at AS recognized_at,
+        doclibrary_files.published_at AS published_at,
+        doclibrary_files.latest_updated_at AS latest_updated_at,
+        doclibrary_files.parent_id AS parent_id,
+        doclibrary_files.title_id AS title_id,
+        doclibrary_files.content_type AS content_type,
+        doclibrary_files.filename AS filename,
+        doclibrary_files.memo AS memo,
+        doclibrary_files.size AS size,
+        doclibrary_files.width AS width,
+        doclibrary_files.height AS height,
+        doclibrary_files.db_file_id AS db_file_id,
+        doclibrary_docs.category1_id AS category1_id,
+        doclibrary_docs.section_code AS section_code,
+        doclibrary_folder_acls.acl_flag AS acl_flag,
+        doclibrary_folder_acls.acl_section_id AS acl_section_id,
+        doclibrary_folder_acls.acl_section_code AS acl_section_code,
+        doclibrary_folder_acls.acl_section_name AS acl_section_name,
+        doclibrary_folder_acls.acl_user_id AS acl_user_id,
+        doclibrary_folder_acls.acl_user_code AS acl_user_code,
+        doclibrary_folder_acls.acl_user_name AS acl_user_name
+      FROM ((doclibrary_files JOIN doclibrary_docs ON ((
+          (doclibrary_files.parent_id = doclibrary_docs.id) AND
+          (doclibrary_files.title_id = doclibrary_docs.title_id)
+        ))) JOIN doclibrary_folder_acls ON ((
+          (doclibrary_docs.category1_id = doclibrary_folder_acls.folder_id) AND
+          (doclibrary_docs.title_id = doclibrary_folder_acls.title_id)
+      )));
+
+  [1m[36m (1.5ms)[0m  [1m    CREATE OR REPLACE VIEW doclibrary_view_acl_folders AS
+      SELECT 
+        doclibrary_folders.id AS id,
+        doclibrary_folders.unid AS unid,
+        doclibrary_folders.parent_id AS parent_id,
+        doclibrary_folders.state AS state,
+        doclibrary_folders.created_at AS created_at,
+        doclibrary_folders.updated_at AS updated_at,
+        doclibrary_folders.title_id AS title_id,
+        doclibrary_folders.sort_no AS sort_no,
+        doclibrary_folders.level_no AS level_no,
+        doclibrary_folders.children_size AS children_size,
+        doclibrary_folders.total_children_size AS total_children_size,
+        doclibrary_folders.name AS name,
+        doclibrary_folders.memo AS memo,
+        doclibrary_folders.readers AS readers,
+        doclibrary_folders.readers_json AS readers_json,
+        doclibrary_folders.reader_groups AS reader_groups,
+        doclibrary_folders.reader_groups_json AS reader_groups_json,
+        doclibrary_folders.docs_last_updated_at AS docs_last_updated_at,
+        doclibrary_folder_acls.acl_flag AS acl_flag,
+        doclibrary_folder_acls.acl_section_id AS acl_section_id,
+        doclibrary_folder_acls.acl_section_code AS acl_section_code,
+        doclibrary_folder_acls.acl_section_name AS acl_section_name,
+        doclibrary_folder_acls.acl_user_id AS acl_user_id,
+        doclibrary_folder_acls.acl_user_code AS acl_user_code,
+        doclibrary_folder_acls.acl_user_name AS acl_user_name
+      FROM (doclibrary_folder_acls JOIN doclibrary_folders ON ((
+        (doclibrary_folder_acls.folder_id = doclibrary_folders.id) AND
+        (doclibrary_folder_acls.title_id = doclibrary_folders.title_id)
+      )));
+[0m
+  [1m[35m (1.6ms)[0m      CREATE OR REPLACE VIEW doclibrary_view_acl_doc_counts AS
+      SELECT
+        doclibrary_docs.state AS state,
+        doclibrary_docs.title_id AS title_id,
+        doclibrary_folder_acls.acl_flag AS acl_flag,
+        doclibrary_folder_acls.acl_section_code AS acl_section_code,
+        doclibrary_folder_acls.acl_user_code AS acl_user_code,
+        doclibrary_docs.section_code AS section_code,
+        COUNT(doclibrary_docs.id) AS cnt
+      FROM (doclibrary_docs JOIN doclibrary_folder_acls ON ((
+        (doclibrary_docs.category1_id = doclibrary_folder_acls.folder_id) AND
+        (doclibrary_docs.title_id = doclibrary_folder_acls.title_id)
+      )))
+      GROUP BY
+        doclibrary_docs.state,
+        doclibrary_docs.title_id,
+        doclibrary_folder_acls.acl_flag,
+        doclibrary_folder_acls.acl_section_code,
+        doclibrary_folder_acls.acl_user_code,
+        doclibrary_docs.section_code;
+
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20140108042815')
+  [1m[36m (0.5ms)[0m  [1mCOMMIT[0m
+Migrating to RemoveSortNoFromSystemUsers (20140116021719)
+  [1m[35m (4.2ms)[0m  ALTER TABLE `system_users` DROP `sort_no`
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20140116021719')
+  [1m[36m (0.8ms)[0m  [1mCOMMIT[0m
+Migrating to AddSortNoToSystemUsers (20140116021737)
+  [1m[35m (5.4ms)[0m  ALTER TABLE `system_users` ADD `sort_no` int(11)
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20140116021737')
+  [1m[36m (0.7ms)[0m  [1mCOMMIT[0m
+Migrating to CreateAccessLogs (20140116131600)
+  [1m[35m (2.5ms)[0m  CREATE TABLE `access_logs` (`user_id` int(11), `user_code` varchar(255), `user_name` varchar(255), `controller_name` varchar(255), `action_name` varchar(255), `parameters` text, `feature_id` varchar(255), `feature_name` varchar(255), `ipaddress` varchar(255), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20140116131600')
+  [1m[36m (0.6ms)[0m  [1mCOMMIT[0m
+Migrating to AddExpirationDateToGwReminders (20140120104444)
+  [1m[35m (6.0ms)[0m  ALTER TABLE `gw_reminders` ADD `expiration_datetime` datetime
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20140120104444')
+  [1m[36m (0.5ms)[0m  [1mCOMMIT[0m
+Migrating to AddLocationToGwEditLinkPieces (20140122025705)
+  [1m[35m (6.1ms)[0m  ALTER TABLE `gw_edit_link_pieces` ADD `location` int(11)
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20140122025705')
+  [1m[36m (0.5ms)[0m  [1mCOMMIT[0m
+Migrating to CreateSystemUsersGroupsCsvdataProfiles (20140207130709)
+DEPRECATION WARNING: `#timestamps` was called without specifying an option for `null`. In Rails 5, this behavior will change to `null: false`. You should manually specify `null: true` to prevent the behavior of your existing migrations from changing. (called from block in change at /var/share/enisysgw/db/migrate/20140207130709_create_system_users_groups_csvdata_profiles.rb:12)
+  [1m[35m (2.2ms)[0m  CREATE TABLE `system_users_groups_csvdata_profiles` (`id` int(11) auto_increment PRIMARY KEY, `user_id` int(11), `user_code` varchar(255), `add_column1` text, `add_column2` text, `add_column3` text, `add_column4` text, `add_column5` text, `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20140207130709')
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+Migrating to AddCategoryToSystemUsersGroupsCsvdata (20140207130731)
+  [1m[35m (4.6ms)[0m  ALTER TABLE `system_users_groups_csvdata` ADD `category` int(11)
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20140207130731')
+  [1m[36m (0.5ms)[0m  [1mCOMMIT[0m
+Migrating to CreateSystemScheduleRoles (20140213171100)
+  [1m[35m (1.9ms)[0m  CREATE TABLE `system_schedule_roles` (`id` int(11) auto_increment PRIMARY KEY, `target_uid` int(11) NOT NULL, `user_id` int(11), `group_id` int(11), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20140213171100')
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+Migrating to AddSpecConfigToGwCircularDocs (20140218145312)
+  [1m[35m (5.6ms)[0m  ALTER TABLE `gwcircular_docs` ADD `spec_config` int(11)
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20140218145312')
+  [1m[36m (0.5ms)[0m  [1mCOMMIT[0m
+Migrating to AddAdminRolesToDoclibraryFolders (20140219045939)
+  [1m[35m (4.0ms)[0m  ALTER TABLE `doclibrary_folders` ADD `admins` text
+  [1m[36m (8.1ms)[0m  [1mALTER TABLE `doclibrary_folders` ADD `admins_json` text[0m
+  [1m[35m (5.3ms)[0m  ALTER TABLE `doclibrary_folders` ADD `admin_groups` text
+  [1m[36m (4.9ms)[0m  [1mALTER TABLE `doclibrary_folders` ADD `admin_groups_json` text[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20140219045939')[0m
+  [1m[35m (0.5ms)[0m  COMMIT
+Migrating to ReplaceViewDoclibraryViewAclFolders (20140305083507)
+  [1m[36m (2.4ms)[0m  [1m    CREATE OR REPLACE VIEW doclibrary_view_acl_folders AS
+      SELECT 
+        doclibrary_folders.id AS id,
+        doclibrary_folders.unid AS unid,
+        doclibrary_folders.parent_id AS parent_id,
+        doclibrary_folders.state AS state,
+        doclibrary_folders.created_at AS created_at,
+        doclibrary_folders.updated_at AS updated_at,
+        doclibrary_folders.title_id AS title_id,
+        doclibrary_folders.sort_no AS sort_no,
+        doclibrary_folders.level_no AS level_no,
+        doclibrary_folders.children_size AS children_size,
+        doclibrary_folders.total_children_size AS total_children_size,
+        doclibrary_folders.name AS name,
+        doclibrary_folders.memo AS memo,
+        doclibrary_folders.admins AS admins,
+        doclibrary_folders.admins_json AS admins_json,
+        doclibrary_folders.admin_groups AS admin_groups,
+        doclibrary_folders.admin_groups_json AS admin_groups_json,
+        doclibrary_folders.readers AS readers,
+        doclibrary_folders.readers_json AS readers_json,
+        doclibrary_folders.reader_groups AS reader_groups,
+        doclibrary_folders.reader_groups_json AS reader_groups_json,
+        doclibrary_folders.docs_last_updated_at AS docs_last_updated_at,
+        doclibrary_folder_acls.acl_flag AS acl_flag,
+        doclibrary_folder_acls.acl_section_id AS acl_section_id,
+        doclibrary_folder_acls.acl_section_code AS acl_section_code,
+        doclibrary_folder_acls.acl_section_name AS acl_section_name,
+        doclibrary_folder_acls.acl_user_id AS acl_user_id,
+        doclibrary_folder_acls.acl_user_code AS acl_user_code,
+        doclibrary_folder_acls.acl_user_name AS acl_user_name
+      FROM (doclibrary_folder_acls JOIN doclibrary_folders ON ((
+        (doclibrary_folder_acls.folder_id = doclibrary_folders.id) AND
+        (doclibrary_folder_acls.title_id = doclibrary_folders.title_id)
+      )));
+[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20140305083507')[0m
+  [1m[35m (0.6ms)[0m  COMMIT
+Migrating to CreateSystemUsersProfileImages (20140310145503)
+DEPRECATION WARNING: `#timestamps` was called without specifying an option for `null`. In Rails 5, this behavior will change to `null: false`. You should manually specify `null: true` to prevent the behavior of your existing migrations from changing. (called from block in change at /var/share/enisysgw/db/migrate/20140310145503_create_system_users_profile_images.rb:11)
+  [1m[36m (1.8ms)[0m  [1mCREATE TABLE `system_users_profile_images` (`id` int(11) auto_increment PRIMARY KEY, `user_id` int(11), `user_code` varchar(255), `note` varchar(255), `path` varchar(255), `orig_filename` varchar(255), `content_type` varchar(255), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20140310145503')[0m
+  [1m[35m (0.5ms)[0m  COMMIT
+Migrating to AddColumnImapPasswordToSystemUsers (20140313114000)
+  [1m[36m (4.8ms)[0m  [1mALTER TABLE `system_users` ADD `imap_password` varchar(255)[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20140313114000')[0m
+  [1m[35m (0.4ms)[0m  COMMIT
+Migrating to AddIndexesToGwReminders (20140616141500)
+  [1m[36m (8.9ms)[0m  [1mCREATE  INDEX `index_gw_reminders_on_user_id`  ON `gw_reminders` (`user_id`) [0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20140616141500')[0m
+  [1m[35m (0.6ms)[0m  COMMIT
+Migrating to AddIndexesToAccessLogs (20140710041158)
+  [1m[36m (11.2ms)[0m  [1mCREATE  INDEX `index_access_logs_on_created_at`  ON `access_logs` (`created_at`) [0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20140710041158')[0m
+  [1m[35m (0.6ms)[0m  COMMIT
+Migrating to AddIndexesToGwcircularDocs (20140718085409)
+  [1m[36m (6.4ms)[0m  [1mCREATE INDEX `index_for_monthly_search` ON `gwcircular_docs` (`title_id`, `doc_type`, `target_user_code`, `state`(20), `created_at`, `able_date`)[0m
+  [1m[35m (4.8ms)[0m  CREATE INDEX `index_for_createrdivision_search` ON `gwcircular_docs` (`title_id`, `doc_type`, `target_user_code`, `state`(20), `able_date`, `createrdivision_id`)
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20140718085409')
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+Migrating to AddColumnToGwPropOthers (20141015150700)
+  [1m[35m (3.5ms)[0m  ALTER TABLE `gw_prop_others` ADD `d_load_st` datetime
+  [1m[36m (3.9ms)[0m  [1mALTER TABLE `gw_prop_others` ADD `d_load_ed` datetime[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20141015150700')[0m
+  [1m[35m (0.5ms)[0m  COMMIT
+Migrating to AddLimitMonthToGwPropOthers (20141128150000)
+  [1m[36m (4.9ms)[0m  [1mALTER TABLE `gw_prop_others` ADD `limit_month` int(11)[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20141128150000')[0m
+  [1m[35m (0.4ms)[0m  COMMIT
+Migrating to ChangeColumnToGwPropOthers (20150713130200)
+  [1m[36m (4.1ms)[0m  [1mALTER TABLE `gw_prop_others` CHANGE `sort_no` `sort_no` int(11) DEFAULT NULL[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (`version`) VALUES ('20150713130200')[0m
+  [1m[35m (0.4ms)[0m  COMMIT
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1mSELECT `schema_migrations`.* FROM `schema_migrations`[0m
+  [1m[35m (0.6ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'access_logs'
+
+  [1m[36m (0.2ms)[0m  [1mSHOW CREATE TABLE `access_logs`[0m
+  [1m[35m (0.4ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'doclibrary_adms'
+
+  [1m[36m (0.4ms)[0m  [1mSHOW CREATE TABLE `doclibrary_adms`[0m
+  [1m[35m (0.4ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'doclibrary_controls'
+
+  [1m[36m (0.4ms)[0m  [1mSHOW CREATE TABLE `doclibrary_controls`[0m
+  [1m[35m (0.4ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'doclibrary_docs'
+
+  [1m[36m (0.3ms)[0m  [1mSHOW CREATE TABLE `doclibrary_docs`[0m
+  [1m[35m (0.4ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'doclibrary_files'
+
+  [1m[36m (0.2ms)[0m  [1mSHOW CREATE TABLE `doclibrary_files`[0m
+  [1m[35m (0.4ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'doclibrary_folder_acls'
+
+  [1m[36m (0.2ms)[0m  [1mSHOW CREATE TABLE `doclibrary_folder_acls`[0m
+  [1m[35m (0.4ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'doclibrary_folders'
+
+  [1m[36m (0.3ms)[0m  [1mSHOW CREATE TABLE `doclibrary_folders`[0m
+  [1m[35m (0.4ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'doclibrary_group_folders'
+
+  [1m[36m (0.2ms)[0m  [1mSHOW CREATE TABLE `doclibrary_group_folders`[0m
+  [1m[35m (0.4ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'doclibrary_recognizers'
+
+  [1m[36m (0.2ms)[0m  [1mSHOW CREATE TABLE `doclibrary_recognizers`[0m
+  [1m[35m (0.4ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'doclibrary_roles'
+
+  [1m[36m (0.2ms)[0m  [1mSHOW CREATE TABLE `doclibrary_roles`[0m
+  [1m[35m (0.4ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'doclibrary_view_acl_doc_counts'
+
+  [1m[36m (0.6ms)[0m  [1mSHOW CREATE TABLE `doclibrary_view_acl_doc_counts`[0m
+  [1m[35m (0.3ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'doclibrary_view_acl_docs'
+
+  [1m[36m (0.5ms)[0m  [1mSHOW CREATE TABLE `doclibrary_view_acl_docs`[0m
+  [1m[35m (0.3ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'doclibrary_view_acl_files'
+
+  [1m[36m (0.6ms)[0m  [1mSHOW CREATE TABLE `doclibrary_view_acl_files`[0m
+  [1m[35m (0.4ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'doclibrary_view_acl_folders'
+
+  [1m[36m (0.6ms)[0m  [1mSHOW CREATE TABLE `doclibrary_view_acl_folders`[0m
+  [1m[35m (0.4ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'gw_admin_messages'
+
+  [1m[36m (0.2ms)[0m  [1mSHOW CREATE TABLE `gw_admin_messages`[0m
+  [1m[35m (0.4ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'gw_circulars'
+
+  [1m[36m (0.3ms)[0m  [1mSHOW CREATE TABLE `gw_circulars`[0m
+  [1m[35m (0.4ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'gw_edit_link_piece_csses'
+
+  [1m[36m (0.3ms)[0m  [1mSHOW CREATE TABLE `gw_edit_link_piece_csses`[0m
+  [1m[35m (0.4ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'gw_edit_link_pieces'
+
+  [1m[36m (0.3ms)[0m  [1mSHOW CREATE TABLE `gw_edit_link_pieces`[0m
+  [1m[35m (0.4ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'gw_holidays'
+
+  [1m[36m (0.3ms)[0m  [1mSHOW CREATE TABLE `gw_holidays`[0m
+  [1m[35m (0.3ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'gw_memo_users'
+
+  [1m[36m (0.2ms)[0m  [1mSHOW CREATE TABLE `gw_memo_users`[0m
+  [1m[35m (0.4ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'gw_memos'
+
+  [1m[36m (0.2ms)[0m  [1mSHOW CREATE TABLE `gw_memos`[0m
+  [1m[35m (0.6ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'gw_prop_admin_setting_roles'
+
+  [1m[36m (0.2ms)[0m  [1mSHOW CREATE TABLE `gw_prop_admin_setting_roles`[0m
+  [1m[35m (0.4ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'gw_prop_admin_settings'
+
+  [1m[36m (0.2ms)[0m  [1mSHOW CREATE TABLE `gw_prop_admin_settings`[0m
+  [1m[35m (0.4ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'gw_prop_group_settings'
+
+  [1m[36m (0.2ms)[0m  [1mSHOW CREATE TABLE `gw_prop_group_settings`[0m
+  [1m[35m (0.4ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'gw_prop_groups'
+
+  [1m[36m (0.2ms)[0m  [1mSHOW CREATE TABLE `gw_prop_groups`[0m
+  [1m[35m (0.4ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'gw_prop_other_images'
+
+  [1m[36m (0.2ms)[0m  [1mSHOW CREATE TABLE `gw_prop_other_images`[0m
+  [1m[35m (0.3ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'gw_prop_other_limits'
+
+  [1m[36m (0.3ms)[0m  [1mSHOW CREATE TABLE `gw_prop_other_limits`[0m
+  [1m[35m (0.4ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'gw_prop_other_roles'
+
+  [1m[36m (0.2ms)[0m  [1mSHOW CREATE TABLE `gw_prop_other_roles`[0m
+  [1m[35m (0.4ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'gw_prop_others'
+
+  [1m[36m (0.2ms)[0m  [1mSHOW CREATE TABLE `gw_prop_others`[0m
+  [1m[35m (0.4ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'gw_prop_types'
+
+  [1m[36m (0.4ms)[0m  [1mSHOW CREATE TABLE `gw_prop_types`[0m
+  [1m[35m (0.4ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'gw_reminders'
+
+  [1m[36m (0.3ms)[0m  [1mSHOW CREATE TABLE `gw_reminders`[0m
+  [1m[35m (0.4ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'gw_schedule_props'
+
+  [1m[36m (0.3ms)[0m  [1mSHOW CREATE TABLE `gw_schedule_props`[0m
+  [1m[35m (0.4ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'gw_schedule_public_roles'
+
+  [1m[36m (0.2ms)[0m  [1mSHOW CREATE TABLE `gw_schedule_public_roles`[0m
+  [1m[35m (0.4ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'gw_schedule_repeats'
+
+  [1m[36m (0.2ms)[0m  [1mSHOW CREATE TABLE `gw_schedule_repeats`[0m
+  [1m[35m (0.4ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'gw_schedule_users'
+
+  [1m[36m (0.2ms)[0m  [1mSHOW CREATE TABLE `gw_schedule_users`[0m
+  [1m[35m (0.4ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'gw_schedules'
+
+  [1m[36m (0.3ms)[0m  [1mSHOW CREATE TABLE `gw_schedules`[0m
+  [1m[35m (0.4ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'gw_user_properties'
+
+  [1m[36m (0.2ms)[0m  [1mSHOW CREATE TABLE `gw_user_properties`[0m
+  [1m[35m (0.4ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'gw_year_fiscal_jps'
+
+  [1m[36m (0.2ms)[0m  [1mSHOW CREATE TABLE `gw_year_fiscal_jps`[0m
+  [1m[35m (0.4ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'gw_year_mark_jps'
+
+  [1m[36m (0.2ms)[0m  [1mSHOW CREATE TABLE `gw_year_mark_jps`[0m
+  [1m[35m (0.4ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'gwbbs_adms'
+
+  [1m[36m (0.2ms)[0m  [1mSHOW CREATE TABLE `gwbbs_adms`[0m
+  [1m[35m (0.3ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'gwbbs_comments'
+
+  [1m[36m (0.3ms)[0m  [1mSHOW CREATE TABLE `gwbbs_comments`[0m
+  [1m[35m (0.4ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'gwbbs_controls'
+
+  [1m[36m (0.4ms)[0m  [1mSHOW CREATE TABLE `gwbbs_controls`[0m
+  [1m[35m (0.4ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'gwbbs_docs'
+
+  [1m[36m (0.4ms)[0m  [1mSHOW CREATE TABLE `gwbbs_docs`[0m
+  [1m[35m (0.4ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'gwbbs_files'
+
+  [1m[36m (0.3ms)[0m  [1mSHOW CREATE TABLE `gwbbs_files`[0m
+  [1m[35m (0.4ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'gwbbs_itemdeletes'
+
+  [1m[36m (0.2ms)[0m  [1mSHOW CREATE TABLE `gwbbs_itemdeletes`[0m
+  [1m[35m (0.4ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'gwbbs_roles'
+
+  [1m[36m (0.2ms)[0m  [1mSHOW CREATE TABLE `gwbbs_roles`[0m
+  [1m[35m (0.3ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'gwcircular_adms'
+
+  [1m[36m (0.2ms)[0m  [1mSHOW CREATE TABLE `gwcircular_adms`[0m
+  [1m[35m (0.4ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'gwcircular_controls'
+
+  [1m[36m (0.4ms)[0m  [1mSHOW CREATE TABLE `gwcircular_controls`[0m
+  [1m[35m (0.4ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'gwcircular_custom_groups'
+
+  [1m[36m (0.2ms)[0m  [1mSHOW CREATE TABLE `gwcircular_custom_groups`[0m
+  [1m[35m (0.4ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'gwcircular_docs'
+
+  [1m[36m (0.3ms)[0m  [1mSHOW CREATE TABLE `gwcircular_docs`[0m
+  [1m[35m (0.4ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'gwcircular_files'
+
+  [1m[36m (0.2ms)[0m  [1mSHOW CREATE TABLE `gwcircular_files`[0m
+  [1m[35m (0.4ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'gwcircular_itemdeletes'
+
+  [1m[36m (0.3ms)[0m  [1mSHOW CREATE TABLE `gwcircular_itemdeletes`[0m
+  [1m[35m (0.4ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'gwcircular_roles'
+
+  [1m[36m (0.2ms)[0m  [1mSHOW CREATE TABLE `gwcircular_roles`[0m
+  [1m[35m (0.4ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'sessions'
+
+  [1m[36m (0.2ms)[0m  [1mSHOW CREATE TABLE `sessions`[0m
+  [1m[35m (0.4ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'system_admin_logs'
+
+  [1m[36m (0.2ms)[0m  [1mSHOW CREATE TABLE `system_admin_logs`[0m
+  [1m[35m (0.4ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'system_custom_group_roles'
+
+  [1m[36m (0.3ms)[0m  [1mSHOW CREATE TABLE `system_custom_group_roles`[0m
+  [1m[35m (0.3ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'system_custom_groups'
+
+  [1m[36m (0.3ms)[0m  [1mSHOW CREATE TABLE `system_custom_groups`[0m
+  [1m[35m (0.4ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'system_group_histories'
+
+  [1m[36m (0.2ms)[0m  [1mSHOW CREATE TABLE `system_group_histories`[0m
+  [1m[35m (0.6ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'system_groups'
+
+  [1m[36m (0.2ms)[0m  [1mSHOW CREATE TABLE `system_groups`[0m
+  [1m[35m (0.4ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'system_ldap_temporaries'
+
+  [1m[36m (0.3ms)[0m  [1mSHOW CREATE TABLE `system_ldap_temporaries`[0m
+  [1m[35m (0.4ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'system_login_logs'
+
+  [1m[36m (0.2ms)[0m  [1mSHOW CREATE TABLE `system_login_logs`[0m
+  [1m[35m (0.4ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'system_priv_names'
+
+  [1m[36m (0.2ms)[0m  [1mSHOW CREATE TABLE `system_priv_names`[0m
+  [1m[35m (0.4ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'system_public_logs'
+
+  [1m[36m (0.2ms)[0m  [1mSHOW CREATE TABLE `system_public_logs`[0m
+  [1m[35m (0.4ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'system_role_groups'
+
+  [1m[36m (0.3ms)[0m  [1mSHOW CREATE TABLE `system_role_groups`[0m
+  [1m[35m (0.4ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'system_role_name_privs'
+
+  [1m[36m (0.2ms)[0m  [1mSHOW CREATE TABLE `system_role_name_privs`[0m
+  [1m[35m (0.4ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'system_role_names'
+
+  [1m[36m (0.2ms)[0m  [1mSHOW CREATE TABLE `system_role_names`[0m
+  [1m[35m (0.4ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'system_roles'
+
+  [1m[36m (0.4ms)[0m  [1mSHOW CREATE TABLE `system_roles`[0m
+  [1m[35m (0.3ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'system_schedule_roles'
+
+  [1m[36m (0.2ms)[0m  [1mSHOW CREATE TABLE `system_schedule_roles`[0m
+  [1m[35m (0.4ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'system_users'
+
+  [1m[36m (0.3ms)[0m  [1mSHOW CREATE TABLE `system_users`[0m
+  [1m[35m (0.4ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'system_users_custom_groups'
+
+  [1m[36m (0.2ms)[0m  [1mSHOW CREATE TABLE `system_users_custom_groups`[0m
+  [1m[35m (0.4ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'system_users_group_histories'
+
+  [1m[36m (0.4ms)[0m  [1mSHOW CREATE TABLE `system_users_group_histories`[0m
+  [1m[35m (0.3ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'system_users_groups'
+
+  [1m[36m (0.2ms)[0m  [1mSHOW CREATE TABLE `system_users_groups`[0m
+  [1m[35m (0.4ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'system_users_groups_csvdata'
+
+  [1m[36m (0.3ms)[0m  [1mSHOW CREATE TABLE `system_users_groups_csvdata`[0m
+  [1m[35m (0.4ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'system_users_groups_csvdata_profiles'
+
+  [1m[36m (0.2ms)[0m  [1mSHOW CREATE TABLE `system_users_groups_csvdata_profiles`[0m
+  [1m[35m (0.4ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'system_users_profile_images'
+
+  [1m[36m (0.2ms)[0m  [1mSHOW CREATE TABLE `system_users_profile_images`[0m
+  [1m[35m (0.4ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'system_users_profile_settings'
+
+  [1m[36m (0.3ms)[0m  [1mSHOW CREATE TABLE `system_users_profile_settings`[0m
+  [1m[35m (0.3ms)[0m  SELECT fk.referenced_table_name as 'to_table'
+      ,fk.referenced_column_name as 'primary_key'
+      ,fk.column_name as 'column'
+      ,fk.constraint_name as 'name'
+FROM information_schema.key_column_usage fk
+WHERE fk.referenced_column_name is not null
+  AND fk.table_schema = 'development_enisysgw'
+  AND fk.table_name = 'system_users_profiles'
+
+  [1m[36m (0.3ms)[0m  [1mSHOW CREATE TABLE `system_users_profiles`[0m

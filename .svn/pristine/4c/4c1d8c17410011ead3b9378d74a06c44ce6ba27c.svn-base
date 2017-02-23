@@ -1,0 +1,12 @@
+<%= render partial: '/gw/admin/prop_others/piece_header', locals: {new: false} %>
+
+<!-- コンテンツここから -->
+<div class="main">
+  <%= div_notice %>
+  <%= form_for :item, url: gw_prop_others_path(@item.id, cls: @cls), html: {multipart: true, id: 'itemForm'} do |f| %>
+    <%= f.error_messages %>
+    <%= render partial: '/gw/admin/prop_others/form', locals: {f: f} %>
+    <%= raw(submit_for_create f, js_submitter: "return my_submit()") %>
+  <% end %>
+</div>
+<!-- コンテンツここまで -->

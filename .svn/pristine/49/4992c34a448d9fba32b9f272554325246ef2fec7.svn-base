@@ -1,0 +1,202 @@
+<div class="entry_subHeader">
+  <h3><%= t("rumi.config_settings.base.setting.name") %></h3>
+</div>
+<table class="settingTable">
+  <tr>
+    <th><%= link_to t("rumi.user.name"), system_users_path %></th>
+    <td><%= t("rumi.user.message.message") %></td>
+  </tr>
+  <tr>
+    <th><%= link_to t("rumi.group.name"), system_groups_path %></th>
+    <td><%= t("rumi.group.message.message") %></td>
+  </tr>
+  <tr>
+    <th><%= link_to t("rumi.csv.name"), csvget_system_users_path %></th>
+    <td><%= t("rumi.csv.message.message") %></td>
+  </tr>
+  <tr>
+    <th><%= link_to t("rumi.user_profile.name"), profile_settings_system_users_path %></th>
+    <td><%= t("rumi.user_profile.message.message") %></td>
+  </tr>
+  <tr>
+    <th><%= link_to t("rumi.ldap.name"), system_ldap_groups_path(0) %></th>
+    <td><%= t("rumi.ldap.message.message") %></td>
+  </tr>
+  <tr>
+    <th><%= link_to t("rumi.ldap_temporary.name"), system_ldap_temporaries_path %></th>
+    <td><%= t("rumi.ldap_temporary.message.message") %></td>
+  </tr>
+  <tr>
+    <th><%= link_to t("rumi.config_settings.role.setting.name"), system_roles_path %></th>
+    <td><%= t("rumi.config_settings.role.setting.message") %></td>
+  </tr>
+  <tr>
+    <th><%= link_to t("rumi.custom_group.name_admin"), system_custom_groups_path(c1: 1) %></th>
+    <td><%= t("rumi.config_settings.scheduler.custom_group.admin_message") %></td>
+  </tr>
+  <tr>
+    <th><%= link_to t("rumi.login_image.name"), system_login_images_path %></th>
+    <td><%= t("rumi.login_image.message") %></td>
+  </tr>
+</table>
+
+<hr>
+
+<div class="entry_subHeader">
+  <h3><%= t("rumi.config_settings.top_page.name") %></h3>
+</div>
+<table class="settingTable">
+  <tr>
+    <th><%= link_to t("rumi.config_settings.top_page.message.name"), gw_admin_messages_path %></th>
+    <td><%= t("rumi.config_settings.top_page.message.message") %></td>
+  </tr>
+  <tr>
+    <th><%= link_to t("rumi.config_settings.top_page.link_piece.name"), gw_edit_link_pieces_path %></th>
+    <td><%= t("rumi.config_settings.top_page.link_piece.message") %></td>
+  </tr>
+</table>
+
+<hr>
+
+<div class="entry_subHeader">
+  <h3><%= t("rumi.config_settings.gwcircular.setting.name") %></h3>
+</div>
+<table class="settingTable">
+  <tr>
+    <th><%= link_to t("rumi.config_settings.gwcircular.setting.name"), gwcircular_basic_path(1) %></th>
+    <td><%= t("rumi.config_settings.gwcircular.setting.message") %></td>
+  </tr>
+  <tr>
+    <th><%= link_to t("rumi.config_settings.auto_delete.gwcircular.name"), edit_gwcircular_itemdelete_path(0) %></th>
+    <td><%= t("rumi.config_settings.auto_delete.gwcircular.message") %></td>
+  </tr>
+</table>
+
+<hr>
+
+<div class="entry_subHeader">
+  <h3><%= t("rumi.config_settings.gwbbs.setting.name") %></h3>
+</div>
+<table class="settingTable">
+  <tr>
+    <th><%= link_to t("rumi.config_settings.gwbbs.setting.name") , gwbbs_makers_path %></th>
+    <td><%= t("rumi.config_settings.gwbbs.setting.message") %></td>
+  </tr>
+  <tr>
+    <th><%= link_to t("rumi.config_settings.auto_delete.gwbbs.name"), gwbbs_itemdeletes_path %></th>
+    <td><%= t("rumi.config_settings.auto_delete.gwbbs.message") %></td>
+  </tr>
+</table>
+
+<hr>
+
+<div class="entry_subHeader">
+  <h3><%= t("rumi.config_settings.scheduler.scheduler.name") %></h3>
+</div>
+<table class="settingTable">
+  <tr>
+    <th><%= link_to t("rumi.config_settings.scheduler.holiday.name"), gw_holidays_path(category: 1) %></th>
+    <td><%= t("rumi.config_settings.scheduler.holiday.message") %></td>
+  </tr>
+  <tr>
+    <th><%= link_to t("rumi.config_settings.scheduler.schedule_role.name"), system_schedule_roles_path %></th>
+    <td><%= t("rumi.config_settings.scheduler.schedule_role.message") %></td>
+  </tr>
+  <tr>
+    <th><%= link_to t("rumi.config_settings.auto_delete.schedule.name"), admin_deletes_gw_schedule_settings_path %></th>
+    <td><%= t("rumi.config_settings.auto_delete.schedule.message") %></td>
+  </tr>
+</table>
+
+<hr>
+
+<div class="entry_subHeader">
+  <h3><%= t("rumi.config_settings.prop.title") %></h3>
+</div>
+<table class="settingTable">
+  <tr>
+    <th><%= link_to t("rumi.config_settings.prop.prop_other.name"), gw_prop_others_path %></th>
+    <td><%= t("rumi.config_settings.prop.prop_other.message") %></td>
+  </tr>
+  <tr>
+    <th><%= link_to t("rumi.config_settings.prop.prop_other_limit.name"), gw_prop_other_limits_path %></th>
+    <td><%= t("rumi.config_settings.prop.prop_other_limit.message") %></td>
+  </tr>
+  <tr>
+    <th><%= link_to t("rumi.config_settings.prop.prop_type.name"), gw_prop_types_path %></th>
+    <td><%= t("rumi.config_settings.prop.prop_type.message") %></td>
+  </tr>
+  <tr>
+    <th><%= link_to t("rumi.config_settings.prop.prop_admin_setting.name"), gw_prop_admin_settings_path %></th>
+    <td><%= t("rumi.config_settings.prop.prop_admin_setting.message") %></td>
+  </tr>
+  <tr>
+    <th><%= link_to t("rumi.config_settings.prop.import.name"), import_gw_prop_others_path %></th>
+    <td><%= t("rumi.config_settings.prop.import.message") %></td>
+  </tr>
+  <tr>
+    <th><%= link_to t("rumi.config_settings.prop.export.name"), export_gw_prop_others_path %></th>
+    <td><%= t("rumi.config_settings.prop.export.message") %></td>
+  </tr>
+  <tr>
+    <th><%= link_to t("rumi.config_settings.prop.prop_group_setting.name"), gw_prop_group_settings_path %></th>
+    <td><%= t("rumi.config_settings.prop.prop_group_setting.message") %></td>
+  </tr>
+  <tr>
+    <th><%= link_to t("rumi.config_settings.prop.prop_group.name"), gw_prop_groups_path %></th>
+    <td><%= t("rumi.config_settings.prop.prop_group.message") %></td>
+  </tr>
+</table>
+
+<hr>
+
+<div class="entry_subHeader">
+  <h3><%= t("rumi.config_settings.doclibrary.setting.name") %></h3>
+</div>
+<table class="settingTable">
+  <% if @doclibrary_admin %>
+    <tr>
+      <th><%= link_to t("rumi.config_settings.doclibrary.setting.name"), doclibrary_cabinets_path %></th>
+      <td><%= t("rumi.config_settings.doclibrary.setting.message") %></td>
+    </tr>
+  <% end %>
+</table>
+
+<hr>
+
+<div class="entry_subHeader">
+  <h3><%= t("rumi.config_settings.access_log.setting.name") %></h3>
+</div>
+<table class="settingTable">
+  <tr>
+    <th><%= link_to t("rumi.config_settings.access_log.setting.name"), gw_access_logs_path %></th>
+    <td><%= t("rumi.config_settings.access_log.setting.message") %></td>
+  </tr>
+</table>
+
+<% mail_url = Enisys::Config.application["webmail.root_url"] %>
+<% if mail_url.present? %>
+<hr>
+<div class="entry_subHeader">
+  <h3><%= t("rumi.config_settings.mail.header") %></h3>
+</div>
+
+<table class="settingTable">
+  <tr>
+    <th><%= link_to t("rumi.config_settings.mail.setting.admin.addresses"), mail_url + '/_admin/sys/addresses' %></th>
+    <td><%= t("rumi.config_settings.mail.explain.admin.addresses") %></td>
+  </tr>
+  <tr>
+    <th><%= link_to t("rumi.config_settings.mail.setting.admin.address_control"), mail_url + '/_admin/sys/public_address_book_roles' %></th>
+    <td><%= t("rumi.config_settings.mail.explain.admin.address_control") %></td>
+  </tr>
+  <tr>
+    <th><%= link_to t("rumi.config_settings.mail.setting.admin.attack_mail"), mail_url + '/_admin/sys/attack_mail_domains' %></th>
+    <td><%= t("rumi.config_settings.mail.explain.admin.attack_mail") %></td>
+  </tr>
+  <tr>
+    <th><%= link_to t("rumi.config_settings.mail.setting.admin.all_webmail_setting"), mail_url + '/_admin/sys/all_webmail_settings' %></th>
+    <td><%= t("rumi.config_settings.mail.explain.admin.all_webmail_setting") %></td>
+  </tr>
+</table>
+<% end %>

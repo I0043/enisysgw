@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <%= render :partial => 'layouts/admin/gw/header_tag' %>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="robots" content="noindex,nofollow" />
+    <link rel="stylesheet" href="/_common/themes/gw/css/base.css" />
+    <link rel="stylesheet" href="/_common/themes/gw/css/color-default.css" />
+    <link rel="apple-touch-icon" href="icon.png" />
+    <link rel="shortcut icon" href="/images/favicon.ico" />
+    <script type="text/jscript" src="/js/prototype.js"></script>
+    <% if @side != "doclibrary" %>
+      <script type="text/jscript" src="/js/jquery-1.11.1.min.js"></script>
+      <script type="text/jscript" src="/js/common.js"></script>
+    <% end %>
+    <script type="text/javascript">
+    //<![CDATA[
+    jQuery.noConflict();
+    //]]>
+    </script>
+  </head>
+  <body <%= Page.body_id %>>
+    <!-- ここからヘッダー -->
+    <%= render :partial => 'gw/admin/piece/header_menus/index' %>
+    <!-- // ここまでヘッダー -->
+    <div id="content">
+      <article role="main">
+        <section>
+          <div class="mainContent">
+            <div id="FreezePane" class="FreezePaneOff">
+              <div id="InnerFreezePane" class="InnerFreezePane"></div>
+            </div>
+            <!-- コンテンツここから -->
+            <%= yield %>
+            <!-- コンテンツここまで -->
+          </div>
+        </section>
+      </article>
+    </div>
+    <!-- ここからサイドバー -->
+    <%= render :partial => "layouts/admin/side/#{@side}" rescue render :partial => "layouts/admin/side/portal" %>
+    <!-- サイドバーここまで -->
+
+    <br class="clear" />
+    <%= render :partial => 'layouts/admin/gw/footer' %>
+    <div id="pagetop">
+      <%= image_tag("/images/btn_p_top.png", alt: "Page top") %>
+    </div>
+  </body>
+  <%
+    if Core.user.email.present?
+      query = Rumi::AbstractApi.new.create_query(account:  Core.user.code)
+      uri = Enisys::Config.application["webmail.root_url"]
+      url = %Q{#{uri}/_api/gw/webmail/remind?#{query}}
+    else
+      url = ''
+    end
+  %>
+
+  <% if @side == "portal" %>
+    <%
+      remind_url = ""
+      if Core.present? && Core.user.present?
+        remind_url = url_for(controller: 'gw/admin/piece/reminder',
+                                 action:     :index,
+                                 sort_key:   params[:sort_key],
+                                 order:      params[:order],
+                                 user_id:    Core.user.id,
+                                 code:       Core.user.code,
+                                 name:       Core.user.name,
+                                 group_code: Core.user_group.code,
+                                 group_name: Core.user_group.name)
+      end
+    %>
+    <%= javascript_tag "rumi.unread.reminderRequest('#{remind_url}');" %>
+  <% end %>
+  <%= javascript_tag "rumi.mailStateDefault();" %>
+  <%= javascript_tag "rumi.unread.mailCountRequest('#{url}');" %>
+
+<%= javascript_tag do %>
+  <% if @side == "doclibrary" && @is_category_index_form && @has_some_folder_admin %>
+    // == 索引ツリーフォルダーのドラッグ＆ドロップ、ファイルのドラッグ＆ドロップ ==
+    // 初期化時の処理
+    jQuery(document).ready(function () {
+      new rumi.dragdrop('<%=raw escape_javascript('/doclibrary/docs/files_drag') %>',
+                        '<%=raw escape_javascript('/doclibrary/docs/folder_drag') %>');
+    });
+
+    // 索引ツリー更新時の処理
+    jQuery(document).ajaxComplete(function () {
+      new rumi.dragdrop('<%=raw escape_javascript('/doclibrary/docs/files_drag') %>',
+                        '<%=raw escape_javascript('/doclibrary/docs/folder_drag') %>');
+    });
+  <% end %>
+<% end %>
+<% if @side == "doclibrary" %>
+  <%= javascript_include_tag '/js/common' %>
+<% end %>
+</html>

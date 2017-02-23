@@ -1,0 +1,44 @@
+<div id="sidebar">
+  <p class="sideDate">Today <%= @today %></p>
+  <div class="subMenu">
+    <% @edit_link_piece_items.each_with_index do |items, idx| %>
+      <% items.opened_children.each_with_index do |item, idx3| %>
+        <ul>
+          <% item.opened_children.each_with_index do |l4_item, idx4| %>
+            <% l4_options = l4_item.link_options %>
+            <li>
+              <%= link_to l4_item.name.to_s.html_safe, l4_options[:url], :target => l4_options[:target] %>
+            </li>
+          <% end %>
+        </ul>
+      <% end %>
+    <% end %>
+  </div>
+  <div class="accordionContainer">
+    <% @edit_link_piece_items.each_with_index do |items, idx| %>
+      <% items.opened_children.each_with_index do |item, idx3| %>
+        <p class="trigger"><%= item.name.to_s.html_safe %></p>
+        <ul>
+          <% item.opened_children.each_with_index do |l4_item, idx4| %>
+            <% l4_options = l4_item.link_options %>
+            <li>
+              <%= link_to l4_item.name.to_s.html_safe, l4_options[:url], :target => l4_options[:target] %>
+            </li>
+          <% end %>
+        </ul>
+      <% end %>
+    <% end %>
+  </div>
+
+  <div class="sideContainer">
+    <p class="sideTitle"><%= t("rumi.portal.link") %></p>
+    <ul>
+      <% @edit_link_piece_items.each do |item| %>
+        <% options = item.link_options %>
+        <li>
+          <%= link_to item.name.to_s.html_safe, options[:url], :target => options[:target] %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</div>

@@ -1,0 +1,27 @@
+<%
+  header_each = nz(@header_each, 5).to_i
+  week_first_day = @calendar_first_day
+  mode = 'week'
+%>
+<%= render partial: '/gw/admin/schedules/piece_header', locals: {piece_head_title: @piece_head_title, new: true} %>
+
+<!-- コンテンツここから -->
+<div class="main">
+  <!-- フォーム切替ボタン等 -->
+  <%= render partial: '/gw/admin/schedule_props/bt_box', locals: {d: @st_date, mode: mode} %>
+  <!-- フォーム切替ボタン等ここまで -->
+
+  <%= render partial: '/gw/admin/schedules/schedule_line_box', locals: {d: @st_date, mode: mode, move_mode: :header} %>
+
+  <!-- スケジュール詳細 -->
+  <table class="defaultTable scheduleTable scheduleWeekly">
+    <% @props.each_with_index do |prop, prop_cnt| %>
+      <% if header_each == 0 && prop_cnt == 0 || header_each != 0 && prop_cnt % header_each == 0 %>
+        <%= render partial: '/gw/admin/schedules/show_week_header', locals: {mode: mode} %>
+      <% end %>
+      <%= render partial: '/gw/admin/schedule_props/show_week_one', locals: {prop: prop, week_first_day: week_first_day, prop_cnt: prop_cnt, mode: mode} %>
+    <% end %>
+  </table>
+  <!-- スケジュール詳細ここまで -->
+</div>
+<!-- コンテンツここまで -->

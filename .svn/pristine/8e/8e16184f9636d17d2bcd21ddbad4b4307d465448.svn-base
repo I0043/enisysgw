@@ -1,0 +1,27 @@
+<%= render partial: '/gw/admin/schedules/piece_header', locals: {piece_head_title: @piece_head_title, new: false} %>
+
+<!-- コンテンツここから -->
+<div class="main">
+  <%= div_notice %>
+  <p><%= t("rumi.config_settings.scheduler.import.view_message") %></p>
+
+  <%= form_tag "#{gw_schedule_settings_path}/import_file" , {:method=>:post , :multipart => true} do %>
+    <table class="defaultTable">
+      <tr>
+        <th><%= t("rumi.config_settings.scheduler.import.file") %></th>
+        <td><%= file_field_tag('item[file]' , size: 80) %></td>
+      </tr>
+      <tr>
+        <th><%= t("rumi.config_settings.scheduler.import.file_type") %></th>
+        <td>
+          <%= radio_button_tag('item[file_type]', 'csv',false  ) %><label for="item_file_type_csv" ><%= t("rumi.config_settings.scheduler.import.csv") %></label>
+          <%= radio_button_tag('item[file_type]', 'ical',true  ) %><label for="item_file_type_ical" ><%= t("rumi.config_settings.scheduler.import.ical") %></label><br />
+          <%= Gw.p_required(t("rumi.config_settings.scheduler.import.csv_message")) %>
+          <%= Gw.p_required(t("rumi.config_settings.scheduler.import.ical_message")) %>
+        </td>
+      </tr>
+    </table>
+    <div class="submitters"><%= submit_tag t("rumi.config_settings.scheduler.import.name") %></div>
+  <% end %>
+</div>
+<!-- コンテンツここまで -->

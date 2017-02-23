@@ -1,0 +1,57 @@
+<%
+str_state = ''
+str_state = "?state=#{params[:state]}" unless params[:state].blank?
+%>
+<%= render partial: 'piece_header', locals: {piece_head_title: @piece_head_title} %>
+<!-- コンテンツここから -->
+<div class="main">
+    <div class="notice"><%= flash.now[:notice] %></div>
+    <table class="defaultTable listTable">
+      <tr>
+        <th style="width:5em;"><%= t('rumi.gwboard.list.doc_no') %></th>
+        <th><%= t('rumi.gwboard.list.bbstitle_name') %></th>
+        <th style="width:5em;">&nbsp;</th>
+        <th style="width:6em;"><%= t('rumi.gwboard.list.update_date') %></th>
+        <th style="width:5em;"><%= t('rumi.gwboard.list.sort_no') %></th>
+        <th style="width:5em;"><%= t('rumi.gwboard.list.status') %></th>
+        <th style="width:6em;">&nbsp;</th>
+      </tr>
+
+    <% for item in @items %>
+    <%
+      body_size_capacity = 0
+      body_size_currently = 0
+      body_size_capacity = item.doc_body_size_capacity unless item.doc_body_size_capacity.blank?
+      body_size_currently = item.doc_body_size_currently unless item.doc_body_size_currently.blank?
+      usage = 0
+      usage = body_size_currently.to_f / body_size_capacity.megabytes.to_f unless body_size_capacity.megabytes == 0
+      usage = usage * 100
+      s_color = ''
+      s_color = 'color:red;' if 90 < usage
+    %>
+    <tr>
+      <td><%=item.id %></td>
+      <td style="text-align: left;<%=s_color%>">
+      <%if item.preview_mode%>
+        <%= link_to "#{item.title}" + t('rumi.gwboard.list.show_public_design'), "#{item.docs_path}&preview=true", :target => "_blank" %>
+      <%else%>
+        <%=item.title %>
+      <%end%>
+      </td>
+      <td><%= link_to t('rumi.gwboard.list.detail_show'), "#{gwbbs_maker_path(item)}#{str_state}" %></td>
+      <td><%= I18n.l item.updated_at.to_date if item.updated_at.present? %></td>
+      <td><%= item.sort_no %></td>
+      <td><%= item.status_show %></td>
+      <td><%= link_to t('rumi.gwboard.list.public_display'), item.docs_path %></td>
+    </tr>
+    <% end %>
+  </table>
+  <br />
+  <%= paginate @items %>
+
+  <div class="backlink paginationSingle">
+    <ul>
+      <li><%= link_to t("rumi.back_link.admin"), gw_config_settings_path %></li>
+    </ul>
+  </div>
+</div>

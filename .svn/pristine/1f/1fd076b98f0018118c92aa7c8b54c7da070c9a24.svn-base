@@ -1,0 +1,52 @@
+<%
+  edit = t("rumi.link.edit")
+  delete = t("rumi.link.delete")
+  confirm = t("rumi.message.confirm.delete")
+%>
+<%= render partial: 'piece_header', locals: {new: true} %>
+
+<!-- コンテンツここから -->
+<div class="main">
+  <%= div_notice %>
+  <% if @items.blank? %>
+    <%= Gw.div_notice(t("rumi.message.empty.list")) %>
+  <% else %>
+    <table class="defaultTable">
+      <tr>
+        <th></th>
+        <th></th>
+        <th><%= t("rumi.prop_admin_setting.th.name") %></th>
+        <th><%= t("rumi.prop_admin_setting.th.type") %></th>
+        <th><%= t("rumi.prop_admin_setting.th.span_limit") %></th>
+        <th><%= t("rumi.prop_admin_setting.th.span_hour") %></th>
+        <th><%= t("rumi.prop_admin_setting.th.group") %></th>
+      </tr>
+      <% @items.each do |item| %>
+        <tr>
+          <td><%= link_to edit, edit_gw_prop_admin_setting_path(item.id) %></td>
+          <td><%= link_to delete, gw_prop_admin_setting_path(item.id), data: {confirm: confirm}, method: 'delete' %></td>
+          <td><%= item.name %></td>
+          <td><%= safe{item.prop_type.name} %></td>
+          <% if item.span_limit==1 %>
+            <td><%= t("rumi.prop_admin_setting.th.limitless") %></td>
+          <% else %>
+            <td><%= item.span %><%= t("rumi.prop_admin_setting.th.day") %></td>
+          <% end %>
+          <% if item.time_limit==1 %>
+            <td><%= t("rumi.prop_admin_setting.th.limitless") %></td>
+          <% else %>
+            <td><%= item.span_hour %><%= t("rumi.prop_admin_setting.th.hour") %>
+          <% end %>
+          <td><%= truncate_group_names(item.admin) %></td>
+        </tr>
+      <% end %>
+    </table>
+  <% end %>
+
+  <div class="backlink paginationSingle">
+    <ul>
+      <li><%= link_to t("rumi.back_link.admin"), gw_config_settings_path %></li>
+    </ul>
+  </div>
+</div>
+<!-- コンテンツここまで -->

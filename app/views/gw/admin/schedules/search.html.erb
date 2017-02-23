@@ -1,0 +1,25 @@
+<%
+  mode = 'form'
+  d8_s = Gw.date8_str(@st_date)
+%>
+<%= render partial: '/gw/admin/schedules/piece_header', locals: {piece_head_title: @piece_head_title, new: true} %>
+
+<!-- コンテンツここから -->
+<div class="main">
+  <!-- フォーム切替ボタン等 -->
+  <%= render partial: '/gw/admin/schedules/schedule_bt_box', locals: {d: Date.today, mode: mode} %>
+  <!-- フォーム切替ボタン等ここまで -->
+
+  <table class="defaultTable listTable configTable">
+    <tbody>
+      <% @items.each do |item| %>
+        <tr class="<%= cycle '', 'cycle' %>">
+          <td><%= item[0] %></td>
+          <td><%= link_to(t("rumi.schedule.link.day"), "/gw/schedules/#{d8_s}?gid=#{item[2].id}") %></td>
+          <td><%= link_to(t("rumi.schedule.link.week"), "/gw/schedules/?s_date=#{d8_s}&gid=#{item[2].id}") %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+<!-- コンテンツここまで -->

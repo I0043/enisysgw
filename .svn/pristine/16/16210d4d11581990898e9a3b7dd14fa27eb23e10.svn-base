@@ -1,0 +1,45 @@
+<%
+  owner_u = get_owner_u(params)
+%>
+<%=  hidden_field_tag('init[schedule_props_json]',
+  (params[:item] && params[:item][:schedule_props_json] ? params[:item][:schedule_props_json] : nz(@props_json) )) %>
+
+<%= get_hidden_field_prop(params) %>
+  <tr id="owner_table">
+    <th></th>
+    <td>
+      <%= hidden_field_tag 'item[owner_uid]', owner_u[:id] %>
+      <%= button_tag t("rumi.schedule.th.owner_uid"), {type: 'button', onclick: 'set_owner(); return false;'} %>
+      <%= text_field_tag 'item[owner_udisplayname]', owner_u[:displayname], :readonly=>true %>
+    </td>
+  </tr>
+  <tr id="prop_items_table">
+    <th><%= t("rumi.schedule.th.prop_name") %><%= raw(p_required(t("rumi.schedule_prop.form.add_prop_comment"))) -%></th>
+    <td>
+      <table>
+        <tr>
+          <td>
+            <%= select_tag("item[schedule_props][prop_type_id]", options_from_collection_for_select(@prop_types, :id, :name), :onchange=>'update_prop_cand();') %>
+            <br />
+            <%= select_tag("item[schedule_props][prop_id]", Gw.options_for_select(defalut_props(params), nil), :size=>10, :style => 'width:280px;', :ondblclick => 'add_prop()', :multiple => true) %>
+          </td>
+          <td>
+            <input onclick="add_prop(); return false;" class="addremove" type="button" value="<%= t("rumi.config_settings.user_and_group.add.name") %>" />
+            <br /><br />
+            <input onclick="del_prop(); return false;" class="addremove" type="button" value="<%= t("rumi.config_settings.user_and_group.remove.name") %>" />
+          </td>
+          <td>
+            <%= select_tag("item[schedule_props_add_buf]", '', :size=>10, :style => 'width:280px;', :ondblclick => 'del_prop()', :multiple => true) %>
+            <%= hidden_field_tag 'item[schedule_props_json]', '' -%>
+          </td>
+        </tr>
+      </table>
+      <%= raw(Gw.div_notice '', :id=>'notice_ajax_prop') -%>
+    </td>
+  </tr>
+  <tr id="prop_items_inquire">
+    <th><%= t("rumi.schedule.th.inquire_to") %></th>
+    <td>
+      <%= f.text_field(:inquire_to, :class =>"IMEoff", :style => 'width:17em;') -%>
+    </td>
+  </tr>

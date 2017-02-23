@@ -1,0 +1,20 @@
+<%= raw(required_head) %>
+
+<table class="defaultTable rentDetails inputTable">
+<tr>
+  <th><%= t("rumi.circular.custom_group.th.state") %><%= required %></th>
+  <td>
+    <%= raw(radio f, :state, @item.states, class: 'state') %>
+  </td>
+</tr>
+<tr>
+  <th><%= t("rumi.circular.custom_group.th.sort_no") %><%= required %></th>
+  <td><%= f.text_field :sort_no, class: 'sort_no', size: 5, maxlength: 5 %> <%= t("rumi.message.sort_message") %></td>
+</tr>
+<tr>
+  <th><%= t("rumi.circular.custom_group.th.name") %><%= required %></th>
+  <td><%= f.text_field :name, class: 'name', size: 30, maxlength: 30 %></td>
+</tr>
+</table>
+
+<%= render partial: 'form_users' %>

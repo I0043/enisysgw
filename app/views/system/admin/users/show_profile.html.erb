@@ -1,0 +1,117 @@
+<%
+  edit = t("rumi.button.edit")
+  picture = t("rumi.button.picture")
+%>
+<%= render partial: 'header', locals: {new: false} %>
+
+<!-- コンテンツここから -->
+<div class="main">
+  <%= div_notice %>
+  <div class="area_contentsNav">
+    <div class="navBlock">
+      <div class="contentsNav">
+        <ul>
+          <% if @role_editable_profile && @is_add_column_used %>
+            <li><%= link_to image_tag("/images/icon/add.png", alt: edit) + edit, edit_profile_system_user_path(@item.id) %></li>
+          <% end %>
+          <% if @role_editable_profile %>
+            <li><%= link_to picture, profile_upload_system_user_path(@item.id) %></li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="imgBox<%= @is_profile_image ? "" : " profile_noImage" %>">
+    <% if @is_profile_image %>
+      <%= raw(%Q(<img src="#{@item.user_profile_image.path}" alt="#{@item.user_profile_image.note}" />)) -%>
+    <% end %>
+  </div>
+
+  <table class="defaultTable rentDetails">
+    <tbody>
+      <% if @model.column_used?('name') %>
+        <tr>
+          <th><%= t("rumi.user.th.name") %></th>
+          <td><%= @item.name %></td>
+        </tr>
+      <% end %>
+      <% if @model.column_used?('name_en') %>
+        <tr>
+          <th><%= t("rumi.user.th.name_en") %></th>
+          <td><%= @item.name_en %></td>
+        </tr>
+      <% end %>
+      <% if @model.column_used?('email') %>
+        <tr>
+          <th><%= t("rumi.user.th.email") %></th>
+          <td><%= @item.email %></td>
+        </tr>
+      <% end %>
+      <% if @model.column_used?('official_position') %>
+        <tr>
+          <th><%= t("rumi.user.th.official_position") %></th>
+          <td><%= @item.official_position %></td>
+        </tr>
+      <% end %>
+      <% if @model.column_used?('assigned_job') %>
+      <tr>
+        <th><%= t("rumi.user.th.assigned_job") %></th>
+        <td><%= @item.assigned_job -%></td>
+      </tr>
+      <% end %>
+      <% if @model.column_used?('add_column1') && @model.get_column_name('add_column1').present? %>
+        <tr>
+          <th><%= @model.get_column_name('add_column1') %></th>
+          <td><%= @item.user_profile.try(:add_column1) %></td>
+        </tr>
+      <% end %>
+      <% if @model.column_used?('add_column2') && @model.get_column_name('add_column2').present? %>
+      <tr>
+        <th><%= @model.get_column_name('add_column2') %></th>
+        <td><%= @item.user_profile.try(:add_column2) %></td>
+      </tr>
+      <% end %>
+      <% if @model.column_used?('add_column3') && @model.get_column_name('add_column3').present? %>
+      <tr>
+        <th><%= @model.get_column_name('add_column3') %></th>
+        <td><%= @item.user_profile.try(:add_column3) %></td>
+      </tr>
+      <% end %>
+      <% if @model.column_used?('add_column4') && @model.get_column_name('add_column4').present? %>
+      <tr>
+        <th><%= @model.get_column_name('add_column4') %></th>
+        <td><%= @item.user_profile.try(:add_column4) %></td>
+      </tr>
+      <% end %>
+      <% if @model.column_used?('add_column5') && @model.get_column_name('add_column5').present? %>
+      <tr>
+        <th><%= @model.get_column_name('add_column5') %></th>
+        <td><%= @item.user_profile.try(:add_column5) %></td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <div style="margin: 10px 0;"><%= t("rumi.user.message.affiliation_situation") %></div>
+  <table class="defaultTable rentDetails">
+    <tbody>
+      <tr>
+        <th><%= t("rumi.users_group.th.group") %></th>
+        <th><%= t("rumi.users_group.th.job_order") %></th>
+        <th><%= t("rumi.group.th.parent") %></th>
+      </tr>
+      <% @item.user_groups.without_disable.each do |user_group| %>
+        <%
+          parent_name = user_group.group.blank? ? "" : user_group.group.parent.blank? ? user_group.group.name : user_group.group.parent.name
+        %>
+        <tr>
+          <td><%= user_group.group.display_name %></td>
+          <td><%= System::UsersGroup.job_order_show(user_group.job_order) %></td>
+          <td><%= parent_name %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+<!-- コンテンツここまで -->

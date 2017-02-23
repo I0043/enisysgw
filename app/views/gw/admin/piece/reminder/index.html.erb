@@ -1,0 +1,140 @@
+<h2><%= t("rumi.reminder.name") %></h2>
+<%= form_tag('', {id: "listForm", name: "listForm", method: "post", multipart: true}) do %>
+  <%= hidden_field_tag(:uid, @user_id) %>
+  <%= hidden_field_tag(:ucode, @code) %>
+  <%= hidden_field_tag(:uname, @name) %>
+  <%= hidden_field_tag(:gcode, @group_code) %>
+  <%= hidden_field_tag(:gname, @group_name) %>
+  <% @reminders.each do |category, reminder| %>
+    <% total_count = reminder[:total_count] %>
+    <% titles = reminder[:title].is_a?(Array) ? reminder[:title].join("") : reminder[:title] %>
+    <table class="defaultTable infoTable">
+      <thead>
+        <tr>
+          <th class="head" colspan="3">
+            <img src="<%= get_reminder_image(reminder[:title]) %>" alt="<%= titles %>"/> <%= titles %>
+            <% if @all_seen_category.include?("#{category}") %>
+              <span class="remindAllseen">
+                <%= button_tag(t("rumi.reminder.all_seen"),
+                {:type => "button",
+                :onclick => "return unseen_check();"}) %>
+              </span>
+            <% end %>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th class="del">
+            <% if @all_seen_category.include?("#{category}") %>
+              <div>
+                <input type="checkbox" id="check_all_<%= category %>" onclick="listForm_obj.checkAll('listForm', 'checkd_reminders_<%= category %>', 'check_all_<%= category %>'); return false;">
+              </div>
+            <% end %>
+          </th>
+          <th class="titles">
+            <p><%= t("rumi.reminder.title") %></p>
+            <p class="sortBox">
+              <span>
+                <%= link_to t("rumi.reminder.sort_asc"), root_path(sort_key: "title", order: "asc") %>
+              </span>
+              <span>
+                <%= link_to t("rumi.reminder.sort_desc"), root_path(sort_key: "title", order: "desc") %>
+              </span>
+          </th>
+          <th class="datetime">
+            <p><%= t("rumi.reminder.datetime") %></p>
+            <p class="sortBox">
+              <span>
+                <%= link_to t("rumi.reminder.sort_asc"), root_path(sort_key: "datetime", order: "asc") %>
+              </span>
+              <span>
+                <%= link_to t("rumi.reminder.sort_desc"), root_path(sort_key: "datetime", order: "desc") %>
+              </span>
+          </th>
+        </tr>
+        <% cnt = 0%>
+        <% reminder[:factors].each do |remind| %>
+          <tr>
+            <td class="del">
+              <% if @all_seen_category.include?("#{category}") %>
+                <!-- 一括既読のチェックボックス -->
+                <%= check_box_tag "checkd_reminders_#{category}[#{remind[:id]}]", remind[:id], nil, id: "checked_reminders_#{remind[:id]}", class: "checkd_reminders_#{category}" %>
+              <% end %>
+            </td>
+            <td class="titles">
+              <!-- 概要 -->
+              <% if remind[:action] == 'reply' %>
+                <%= link_to truncate_reply_remind_title(category, remind[:action], remind[:title], reminder[:reply_count][cnt]), remind[:url], class: category %>
+              <% else %>
+                <%= link_to truncate_remind_title(category, remind[:action], remind[:title]), remind[:url], class: category %>
+              <% end %>
+            </td>
+            <td class="datetime">
+              <!-- 日時 -->
+              <%= I18n.l remind[:datetime].to_datetime, format: :time4 rescue "" %>
+            </td>
+          </tr>
+          <% cnt += 1 %>
+        <% end %>
+        <% overflow_count = total_count - Enisys.config.application['gw.reminder_view_size'].to_i %>
+        <% if overflow_count > 0 && reminder[:title] != "メール" %>
+          <!-- 他N件 -->
+          <tr>
+            <td colspan="3"><%= t("rumi.reminder.overflow_count", overflow_count: overflow_count) %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+  <% end %>
+<% end %>
+
+<script type="text/javascript">
+//<![CDATA[
+  listForm_obj = new rumi.listForm();
+//]]>
+</script>
+
+<% if @reminders.blank? %>
+  <span style="color: #080;"><%= t("rumi.message.empty.list") %></span>
+<% end %>
+
+<%
+if @reminders[:mail].blank?
+  mail_count = 0
+else
+  mail_count = @reminders[:mail][:total_count]
+end
+%>
+<%= javascript_tag "rumi.unread.showMailCount(#{mail_count});" %>
+
+
+<script type="text/javascript">
+  function unseen_check() {
+    var frm = document.listForm;
+    var len = frm.elements.length;
+    var chk = 0;
+    for ( var i = 0; i < len; i++) {
+      if (frm.elements[i].checked != true) continue;
+        chk += 1;
+    }
+    if (chk == 0) {
+      alert("<%= t("rumi.message.all_delete_valid") %>");
+       return false;
+    }
+    else {
+      <% all_seen_params = {} %>
+      <% all_seen_params[:controller] =  'gw/admin/piece/reminder' %>
+      <% all_seen_params[:action] = 'all_seen_remind' %>
+      return post('<%=raw escape_javascript  url_for(all_seen_params) %>');
+    }
+  }
+
+  function post(action) {
+    var form = $('listForm');
+    form.action = action;
+    form.submit();
+    return false;
+  }
+</script>

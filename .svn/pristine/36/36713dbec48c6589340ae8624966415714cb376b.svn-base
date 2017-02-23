@@ -1,0 +1,106 @@
+<%= required_head %>
+<%= raw(gw_js_include_full) %>
+
+<table class="defaultTable rentDetails inputTable">
+  <% if params[:action] == "new" || params[:action] == "create" %>
+    <tr>
+      <th><%= t("rumi.user.th.user_id") %><%= required %></th>
+      <td><%= f.text_field :code, class: 'string', style: 'width: 200px;' %></td>
+    </tr>
+  <% else %>
+    <tr>
+      <th><%= t("rumi.user.th.user_id") %></th>
+      <td><%= @item.code %></td>
+    </tr>
+  <% end %>
+  <tr>
+    <th><%= t("rumi.user.th.state") %><%= required %></th>
+    <td><%= radio f, :state, @item.states %></td>
+  </tr>
+  <tr>
+    <th><%= t("rumi.user.th.ldap") %><%= required %></th>
+    <td><%= radio f, :ldap, @item.ldaps %></td>
+  </tr>
+  <tr>
+    <th><%= t("rumi.user.th.name") %><%= required %></th>
+    <td><%= f.text_field :name, class: 'string name', style: 'width: 200px;' %></td>
+  </tr>
+  <tr>
+    <th><%= t("rumi.user.th.kana") %></th>
+    <td><%= f.text_field :kana, class: 'string name', style: 'width: 200px;' %></td>
+  </tr>
+  <tr>
+    <th><%= t("rumi.user.th.name_en") %></th>
+    <td><%= f.text_field :name_en, class: 'string name', style: 'width: 200px;' %></td>
+  </tr>
+  <tr>
+    <th><%= t("rumi.user.th.password") %><%= required %></th>
+    <td><%= f.password_field :password, value: @item.password, class: 'string name', style: 'width: 200px;' %> <%= t("rumi.message.ldap_use_password") %></td>
+  </tr>
+  <tr>
+    <th><%= t("rumi.user.th.email") %></th>
+    <td><%= f.text_field :email, class: 'string email', style: 'width: 400px;' %></td>
+  </tr>
+  <tr>
+    <th><%= t("rumi.user.th.sort_no") %><%= required %></th>
+    <td><%= f.text_field :sort_no, class: "num" %> <%= t("rumi.message.sort_message") %></td>
+  </tr>
+  <tr>
+    <th><%= t("rumi.user.th.official_position") %></th>
+    <td><%= f.text_field :official_position, class: 'string name', style: 'width: 400px;' %></td>
+  </tr>
+  <tr>
+    <th><%= t("rumi.user.th.assigned_job") %></th>
+    <td><%= f.text_field :assigned_job, class: 'string name', style: 'width: 400px;' %></td>
+  </tr>
+</table>
+
+<% if params[:action] == "new" || params[:action] == "create" %>
+  <br />
+  
+  <div><%= t("rumi.user.message.group_select") %></div>
+  <div style="margin-top:5px;"><%=raw t("rumi.user.message.new") %></div>
+  <table class="defaultTable rentDetails inputTable">
+    <tr>
+      <th><%= t("rumi.users_group.th.group") %><%= required %></th>
+      <td>
+        <% selected_group_id = params[:ug].present? ? params[:ug][:group_id] : nil %>
+        <%= select_tag('ug[group_id]', 
+          options_for_select(build_select_parent_groups(@groups),
+          selected: selected_group_id, disabled: @disabled_group_ids), include_blank: true,
+          onchange: %Q!rumi.setDisabledForIncludeList(#{@any_group_ids}, this.value, "input[id^='ug_job_order']");!,
+          class: "single-selector") %>
+      </td>
+    </tr>
+    <tr>
+      <th><%= t("rumi.users_group.th.job_order") %><%= required %></th>
+      <td>
+        <%= radio_button_tag 'ug[job_order]', 0, params[:ug] ? params[:ug][:job_order] == '0' : true %>
+        <%= label_tag 'ug_job_order_0', t("rumi.system.user.job_order_0.name") %>
+
+        <%= radio_button_tag 'ug[job_order]', 1, params[:ug] ? params[:ug][:job_order] == '1' : false %>
+        <%= label_tag 'ug_job_order_1', t("rumi.system.user.job_order_1.name") %>
+      </td>
+    </tr>
+    <tr>
+      <th><%= t("rumi.users_group.th.start_at") %><%= required %></th>
+      <td>
+        <%= text_field_tag 'ug[start_at]', safe{params[:ug] ? params[:ug][:start_at].try(:strftime, t("rumi.strftime.date2")) : Gw.date_str2(Time.now)},
+            onclick: "new CalendarDateSelect( $(this), {time:false, year_range:10} );", style: "ime-mode: disabled", onkeydown: "return rumi.BlockKeyCode(event);", onpaste: "return false", oncontextmenu: "return false" %>
+        <% img = "/images/icon/calendar_bla.png" %>
+        <img src="<%= img %>" alt="Calendar" class="calendar_date_select_popup_icon" onclick="new CalendarDateSelect( $(this).previous(), {time: false, year_range:10} );" style="cursor:pointer;">
+      </td>
+    </tr>
+    <tr>
+      <th><%= t("rumi.users_group.th.end_at") %></th>
+      <td>
+        <%= text_field_tag 'ug[end_at]', safe{params[:ug] ? params[:ug][:end_at].try(:strftime, t("rumi.strftime.date2")) : ''},
+            onclick: "new CalendarDateSelect( $(this), {time:false, year_range:10} );", style: "ime-mode: disabled", onkeydown: "return rumi.BlockKeyCode(event);", onpaste: "return false", oncontextmenu: "return false" %>
+        <% img = "/images/icon/calendar_bla.png" %>
+        <img src="<%= img %>" alt="Calendar" class="calendar_date_select_popup_icon" onclick="new CalendarDateSelect( $(this).previous(), {time: false, year_range:10} );" style="cursor:pointer;">
+      </td>
+    </tr>
+  </table>
+  <%= javascript_tag %Q!rumi.setDisabledForIncludeList(#{@any_group_ids}, '#{selected_group_id.to_s}', "input[id^='ug_job_order']");! %>
+<% end %>
+

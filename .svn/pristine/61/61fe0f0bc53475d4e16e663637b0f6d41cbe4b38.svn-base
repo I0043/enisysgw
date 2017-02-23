@@ -1,0 +1,36 @@
+<div id="sidebar">
+  <p class="sideDate">Today <%= @today %></p>
+  <div class="accordionContainer">
+    <%
+      s_date = params[:s_date] || Time.now.strftime('%Y%m%d')
+      o = "other"
+    %>
+    <% if @side_cg.present? %>
+      <p class="trigger"><%= t("rumi.schedule.side.group") %></p>
+      <ul>
+        <% @side_cg.each do |side_cg| %>
+          <li>
+            <%= link_to side_cg.name, gw_schedules_path(cgid: side_cg.id, s_date: s_date) %>
+          </li>
+        <% end %>
+      </ul>
+    <% end %>
+    <% if @side_prop_type.present? || @side_prop_group.present? %>
+      <p class="trigger"><%= t("rumi.schedule.side.prop") %></p>
+      <ul>
+        <% @side_prop_type.each do |pt| %>
+          <li>
+            <%= link_to pt.name, show_week_gw_schedule_props_path(s_genre: o, cls: o, type_id: "type_" + pt.id.to_s, s_date: s_date) %>
+          </li>
+        <% end %>
+        <li>---------------------------------------</li>
+        <% @side_prop_group.each do |pg| %>
+          <li>
+            <% blank = pg.parent_id != 1 ? "　　" : "" %>
+            <%= link_to blank + pg.name, show_week_gw_schedule_props_path(s_genre: o, cls: o, type_id: "groups_" + pg.id.to_s, s_date: s_date) %>
+          </li>
+        <% end %>
+      </ul>
+    <% end %>
+  </div>
+</div>

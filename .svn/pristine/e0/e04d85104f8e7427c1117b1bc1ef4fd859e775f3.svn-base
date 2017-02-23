@@ -1,0 +1,4 @@
+<!-- コンテンツ内小見出し -->
+<div class="entry_subHeader">
+  <h3><%= @title.title %></h3>
+</div>

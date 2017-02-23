@@ -1,0 +1,59 @@
+<%
+  edit = t("rumi.button.edit")
+  delete = t("rumi.button.delete")
+  copy = t("rumi.button.copy")
+  save = t("rumi.button.save")
+  print = t("rumi.button.print")
+  forward = t("rumi.button.forward")
+  forward_circular = t("rumi.button.forward_circular")
+  forward_mail = t("rumi.button.forward_mail")
+  destroy_confirm = t("rumi.message.confirm.delete")
+  copy_confirm = t("rumi.message.confirm.copy")
+
+  if Time.now <= @item.expiry_date
+    is_editable_dates = true
+  else
+    is_editable_dates = false
+  end
+%>
+
+<div class="area_contentsNav">
+  <div class="notice"><%= flash.now[:notice] %></div>
+  <div class="navBlock">
+    <div class="gwcircularNav">
+      <ul>
+        <% if @is_editable %><!--編集権限あり-->
+          <% unless @title.edit_forbidden %>
+            <% if @gw_admin || (is_editable_dates && @is_editable) %>
+                <li><%= link_to image_tag("/images/icon/pen.png", alt: edit) + edit, "#{edit_gwbbs_doc_path(@item,{:title_id=>@item.title_id})}#{gwbbs_params_set}" %></li>
+            <% end %>
+          <% end %><!--edit_forbidden-->
+          <% unless @title.delete_forbidden %>
+            <li><%= link_to image_tag("/images/icon/dele.png", {alt: delete}) + delete, "#{gwbbs_doc_path(@item,{:title_id=>@item.title_id})}#{gwbbs_params_set}", data: {confirm: destroy_confirm}, :method => 'delete' %></li>
+          <% end %><!--delete_forbidden-->
+        <% end %><!--編集権限あり-->
+        <% url = Enisys::Config.application["webmail.root_url"] %>
+        <% if Core.user.email.present? && url.present? %>
+          <li><%= link_to image_tag("/images/icon/return_mail.png", alt: forward) + forward_mail, "/gwbbs/docs/mail_forward", id: @item.id, class: 'mail_forward', target: '_blank',
+              onclick: "return mailforwardView('#{raw escape_javascript url_for(action: :mail_forward, id: @item.id, title_id: @title.id)}');" %>
+          </li>
+        <% end %> 
+        <li><%= link_to image_tag("/images/icon/return_bbs.png", alt: forward) + forward_circular, "/gwbbs/docs/gwcircular_forward", id: @item.id, class: 'gwcircular_forward', target: '_blank',
+              onclick: "return gwcircularforwardView('#{raw escape_javascript url_for(action: :gwcircular_forward, id: @item.id, title_id: @title.id)}');" %>
+        </li>
+        <% if @is_writable %><!--掲示板に書込権があれば、どの記事でも複製可能-->
+          <% unless @title.addnew_forbidden %>
+            <li><%= link_to image_tag("/images/icon/copy.png", {alt: copy}) + copy, "#{clone_gwbbs_doc_path(@item,{:title_id=>@item.title_id})}#{gwbbs_params_set}", data: {confirm: copy_confirm} %></li>
+          <% end %>
+        <% end %>
+        <li><%= link_to image_tag("/images/icon/download.png", alt: save) + save, "/gwbbs/docs/#{@item.id}?title_id=#{@item.title_id}#{gwbbs_params_set}&download=full_download" %></li>
+      </ul>
+    </div>
+    <!-- // .gwcircularNav -->
+    <div class="print">
+      <%= link_to image_tag("/images/icon/printer.png", { border: '0', alt: print}), "#print", onclick: "window.print(); return false;", class: 'print', title: print %>
+    </div>
+    <!-- // .print -->
+  </div>
+  <!-- // .navBlock -->
+</div>

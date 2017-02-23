@@ -1,0 +1,29 @@
+<%= render partial: 'piece_header', locals: {piece_head_title: @piece_head_title} %>
+<div class="main">
+  <%= render :partial => 'header' %>
+
+  <table class="defaultTable inputTable">
+    <tr>
+      <th><%= t("rumi.gwboard.th.listlines") %></th>
+      <td><%= @item.default_limit %></td>
+    </tr>
+    <tr>
+      <th><%= t("rumi.gwboard.th.default_published") %></th>
+      <td><%= @item.default_published %><%= t("rumi.gwboard.th.between_day") %></td>
+    </tr>
+    <tr>
+      <th><%= t("rumi.gwboard.th.commission_limit") %></th>
+      <td><%= @item.commission_limit %></td>
+    </tr>
+    <tr>
+      <th><%= t("rumi.gwboard.th.expirationdelete") %></th>
+      <td><%= @item.delete_date_setting_states[@item.limit_date] %></td>
+    </tr>
+  </table>
+
+  <div class="backlink paginationSingle">
+    <ul>
+      <li><%=link_to(t('rumi.back_link.admin'), gw_config_settings_path) %></li>
+    </ul>
+  </div>
+</div>

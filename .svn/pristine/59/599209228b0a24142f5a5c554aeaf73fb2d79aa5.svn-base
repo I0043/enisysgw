@@ -1,0 +1,33 @@
+<%= render partial: 'header' %>
+
+<!-- コンテンツここから -->
+<div class="main">
+  <table class="defaultTable listTable configTable">
+    <tr>
+      <th style="width: 40%"><%= @parent ? @parent.ou : t("rumi.ldap.th.group") %></th>
+      <th><%= t("rumi.ldap.th.user") %></th>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">
+        <% @groups.each do |g| %>
+        <% next if (g.ou=="Groups" or g.ou=="People" or g.ou=~ /Special*/) %>
+        <%= link_to g.ou, url_for(:action => :index, :parent => g.ou) %><br />
+        <% end %>
+        <%= t("rumi.message.empty.list") if @groups.size == 0 %>
+      </td>
+      <td style="vertical-align: top;">
+        <% @users.each do |u| %>
+          <%= u.get('cn') %>&nbsp;(<%= u.uid.to_s %>)&nbsp;<%= u.get('mail') %><br />
+        <% end %>
+        <%= t("rumi.message.empty.list") if @users.size == 0 %>
+      </td>
+    </tr>
+  </table>
+
+  <div class="backlink paginationSingle">
+    <ul>
+      <li><%= link_to t("rumi.back_link.admin"), gw_config_settings_path %></li>
+    </ul>
+  </div>
+</div>
+<!-- コンテンツここまで -->

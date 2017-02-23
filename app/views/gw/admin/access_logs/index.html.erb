@@ -1,0 +1,67 @@
+<header class="entryHeader">
+  <h2><%= @piece_head_title %></h2>
+</header>
+
+<!-- コンテンツここから -->
+<div class="main">
+  <%= div_notice %>
+  <%= form_tag '', method: :get, id: 'itemForm' do %>
+    <table class="defaultTable rentDetails inputTable">
+      <tr>
+        <th><%= t("rumi.access_log.th.start_at") %><%= raw(required) %></th>
+        <td>
+          <%= raw(date_picker_prop_switch 'item', 'st_at', mode: :datetime, value: @s_date, minute_interval: '5') %>
+        </td>
+      </tr>
+      <tr>
+        <th><%= t("rumi.access_log.th.end_at") %><%= raw(required) %></th>
+        <td>
+          <%= raw(date_picker_prop_switch 'item', 'ed_at', mode: :datetime, value: @e_date, minute_interval: '5') %>
+        </td>
+      </tr>
+    </table>
+    <%= submit_tag t("rumi.button.update"), name: :submit, onclick: 'return my_submit();', style: 'margin:0px; float:left;' %>
+  <% end %>
+  <%= form_for(:item, url: {action: :export}, html: {method: :post}) do |f| %>
+    <%= hidden_field_tag :s_date, @start_date %>
+    <%= hidden_field_tag :e_date, @end_date %>
+    <%= hidden_field_tag :data_cnt, @data_cnt %>
+    <%= f.submit t("rumi.button.csv"), name: :submit, style: 'margin-left: 5px; float:left;' %>
+  <% end %>
+  
+  <%= render partial: t("rumi.access_log.use_form_at_script") %>
+  
+  <%= high_chart("column-graph", @column_graph) %>
+  
+  <table class="defaultTable listTable configTable">
+    <tr>
+      <th><%= t("rumi.access_log.th.date") %></th>
+      <th><%= t("rumi.access_log.th.ip_address") %></th>
+      <th><%= t("rumi.access_log.th.user_id") %></th>
+      <th><%= t("rumi.access_log.th.user_name") %></th>
+      <th><%= t("rumi.access_log.th.feature_name") %></th>
+    </tr>
+    <% @logs.each do |log| %>
+      <tr>
+        <td><%= I18n.l log.created_at, format: :time3 %></td>
+        <td><%= log.ipaddress %></td>
+        <td><%= log.user_code %></td>
+        <td><%= log.user_name %></td>
+        <td><%= log.feature_name %></td>
+      </tr>
+    <% end %>
+  </table>
+  <%= paginate @logs %>
+
+  <div class="backlink paginationSingle">
+    <ul>
+      <li><%= link_to t("rumi.back_link.admin"), gw_config_settings_path %></li>
+    </ul>
+  </div>
+</div>
+<!-- コンテンツここまで -->
+<script type="text/javascript">
+//<![CDATA[
+  load_at_set();
+//]]>
+</script>

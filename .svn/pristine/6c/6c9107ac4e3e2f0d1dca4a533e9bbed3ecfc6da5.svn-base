@@ -1,0 +1,41 @@
+<script type="text/javascript">
+  function FreezeScreen_on(msg) {
+    scroll(0,0);
+    var outerPane = document.getElementById('FreezePane');
+    var innerPane = document.getElementById('InnerFreezePane');
+    if (outerPane) {
+      outerPane.className = 'FreezePaneOn';
+      var h = Math.max.apply( null, [document.body.clientHeight ,
+                                     document.body.scrollHeight,
+                                     document.documentElement.scrollHeight,
+                                     document.documentElement.clientHeight,
+                                     1100] )  + 'px';
+      outerPane.style.height = h;
+    }
+    if (innerPane) innerPane.innerHTML = msg;
+  }
+  FreezeScreen_on('<%= t("rumi.schedule.freeze_screen.loading") %>');
+</script>
+<%
+  mode = 'form'
+  class_str = "schedule quote"
+%>
+
+<%= render partial: '/gw/admin/schedules/piece_header', locals: {piece_head_title: @piece_head_title, new: true} %>
+
+<!-- コンテンツここから -->
+<div class="main">
+  <!-- フォーム切替ボタン等 -->
+  <%= render partial: '/gw/admin/schedules/schedule_bt_box', locals: {d: Date.today, mode: mode} %>
+  <!-- フォーム切替ボタン等ここまで -->
+  <%= form_for :item,
+        url: gw_schedules_path(s_date: params[:s_date], ref: params[:ref], prop_id: params[:prop_id], s_genre: params[:s_genre], o:params[:o]),
+        html: {class: class_str, id: 'itemForm'} do |f| %>
+    <%= f.error_messages %>
+    <%= render partial: 'form', locals: {f: f} %>
+    <%= quote_attrs(params) %>
+
+    <%= submit_for_create f, class: "mockblock", type: "button", onclick: "my_submit('schedule_new');", id: "item_submit", name: "commit" %>
+  <% end %>
+</div>
+<!-- コンテンツここまで -->

@@ -1,0 +1,24 @@
+<!-- フォーム切替ボタン等 -->
+<!--<div class="area_contentsNav">-->
+  <div class="navBlock">
+    <div class="marker"><%= t('rumi.label.marker_example') %>
+      <span><img src="/images/icon/marker_important.png" width="5" height="14" alt=""/><%= t('rumi.label.marker_important') %></span>
+      <span><img src="/images/icon/marker_link.png" width="12" height="14" alt=""/><%= t('rumi.label.marker_link') %></span>
+      <span><img src="/images/icon/marker_comment.png" width="14" height="14" alt=""/><%= t('rumi.label.marker_comment') %></span>
+    </div>
+  </div>
+  <!-- // .navBlock -->
+<!--</div>-->
+<!-- // .area_contentsNav -->
+<div class="notice"><%= flash.now[:notice] %></div>
+
+<%if params[:state]=='VOID'%>
+  <%if @gw_admin%>
+    <%unless @void_items.blank?%>
+      <div class="editingBox">
+        <span class="btDestroy"><%=link_to t('rumi.button.all_delete'), "#{destroy_void_documents_gwbbs_docs_path({:title_id=>@title.id})}#{gwbbs_params_set}",  data: {confirm: t('rumi.message.confirm.delete')} %></span>
+        <%= "(#{@void_items.length}" + t('rumi.gwbbs.message.delete_description') + ")" %>
+      </div>
+    <%end%>
+  <%end%>
+<%end%>

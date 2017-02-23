@@ -1,0 +1,89 @@
+<%= render partial: 'piece_header', locals: {piece_head_title: @piece_head_title} %>
+<div class="main">
+  <%= render :partial => '/gwcircular/admin/docs/header' %>
+
+  <div class="contentHeader bbs_infoHeader gwcircularHeader">
+    <p>
+      <span><%= t('rumi.gwcircular.th.creator') %></span>
+      <span>
+        <%= @item.createrdivision %>
+        <td class="space"></td>
+        <%= @item.creater %>
+      </span>
+      <span><%= I18n.l @item.created_at %></span>
+    </p>
+    <p>
+      <span><%= t('rumi.gwcircular.th.expiry_date') %></span>
+      <span><%= I18n.l @item.expiry_date unless @item.expiry_date.blank? %></span>
+    </p>
+  </div>
+  <!-- // .contentHeader -->
+
+  <div class="docsInnerBox">
+    <div class="bssTitle"><%= raw(hbr(@item.title)) %></div>
+    <div class="bssEntry"><%= raw(@item.body) %></div>
+    <%= render :partial => '/gwboard/admin/docs/library_index' %>
+  </div>
+  <!-- // .docsInnerBox -->
+
+  <table class="defaultTable bbs_attachlistTable">
+    <tbody>
+      <tr>
+        <th><%= t('rumi.gwcircular.th.spec_config') %></th>
+        <td><%= @item.spec_config_name_status %></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <%=render :partial => 'commissions' %>
+
+  <!-- ページネーション -->
+  <div class="backlink paginationSingle">
+    <ul>
+      <li><%= link_to t('rumi.back_link.return'), "#{@title.menus_path}#{cond_param(params[:cond])}" %></li>
+    </ul>
+  </div>
+</div>
+<!-- // .main -->
+<script type="text/javascript">
+//<![CDATA[
+function mailforwardView(uri) {
+  openMailForm(uri, '<%=raw mail_form_style %>');
+  return false;
+}
+function gwbbsforwardView(uri) {
+  openGwbbsForm(uri, '<%=raw gwbbs_form_style %>');
+  return false;
+}
+function openMailForm(uri){
+  var opt = null;
+  var name = 'mail_form';
+  if (arguments.length > 1) {
+    opt = arguments[1];
+  }
+
+  try {
+    var win = window.open(uri, name, opt);
+    win.focus();
+    return win;
+  } catch(e) {
+    return;
+  }
+}
+function openGwbbsForm(uri){
+  var opt = null;
+  var name = "gwbbs_form_select";
+  if (arguments.length > 1) {
+    opt = arguments[1];
+  }
+
+  try {
+    var win = window.open(uri, name, opt);
+    win.focus();
+    return win;
+  } catch(e) {
+    return;
+  }
+}
+//]]>
+</script>

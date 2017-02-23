@@ -1,0 +1,32 @@
+<%
+  edit = t("rumi.button.edit")
+  delete = t("rumi.button.delete")
+  picture = t("rumi.button.picture")
+  delete_confirm = t("rumi.message.confirm.delete")
+%>
+<% if @gw_admin || @is_other_admin %>
+<div class="area_contentsNav">
+  <div class="navBlock">
+    <div class="contentsNav">
+      <ul>
+        <li><%= link_to image_tag("/images/icon/add.png", alt: edit) + edit, edit_gw_prop_other_path(@item.id) %></li>
+        <% if @gw_admin %>
+          <li><%= link_to image_tag("/images/icon/dele.png", alt: delete) + delete, gw_prop_other_path(@item.id), data: {confirm: delete_confirm, method: :delete} %></li>
+        <% end %>
+        <li><%= link_to picture, upload_gw_prop_other_path(@item.id) %></li>
+      </ul>
+    </div>
+  </div>
+</div>
+<% else %>
+  <div class="area_contentsNav">
+    <div class="navBlock">
+      <div class="contentsNav">
+        <ul>
+          <li><%=link_to t("rumi.schedule.link.day"), gw_schedule_prop_path(Time.now.strftime("%Y%m%d"), s_genre: "other") %></li>
+          <li><%=link_to t("rumi.schedule.link.week"), show_week_gw_schedule_props_path(s_data: Time.now.strftime("%Y%m%d"), s_genre: "other") %></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+<% end %>

@@ -1,0 +1,45 @@
+<%
+  edit = t("rumi.button.edit")
+  delete = t("rumi.button.delete")
+  delete_confirm = t("rumi.message.confirm.delete")
+%>
+<%= render partial: 'piece_header', locals: {new: true} %>
+
+<!-- コンテンツここから -->
+<div class="main">
+  <%= div_notice %>
+  <div class="area_contentsNav">
+    <div class="navBlock">
+      <div class="contentsNav">
+        <ul>
+          <li><%= link_to image_tag("/images/icon/add.png", alt: edit) + edit, edit_gw_prop_group_path(@item.id) %></li>
+          <li><%= link_to image_tag("/images/icon/dele.png", alt: delete) + delete, gw_prop_group_path(@item.id), data: {confirm: delete_confirm, method: :delete} %></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  
+  <table class="defaultTable rentDetails">
+    <tr>
+      <th><%= t("rumi.prop_group.th.name") %></th>
+      <td><%= @item.name %></td>
+    </tr>
+    <tr>
+      <th><%= t("rumi.prop_group.th.parent_group") %></th>
+      <td><%= @parent.name %></td>
+    </tr>
+    <tr>
+      <th><%= t("rumi.prop_group.th.sort_no") %></th>
+      <td><%= @item.sort_no %></td>
+    </tr>
+  </table>
+
+  <div class="backlink paginationSingle">
+    <ul>
+      <li>
+        <%= link_to t("rumi.back_link.return"), gw_prop_groups_path %>
+      </li>
+    </ul>
+  </div>
+</div>
+<!-- コンテンツここまで -->

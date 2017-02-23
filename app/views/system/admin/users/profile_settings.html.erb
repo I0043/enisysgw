@@ -1,0 +1,12 @@
+<%= render partial: 'header', locals: {new: false} %>
+
+<!-- コンテンツここから -->
+<div class="main">
+  <%= div_notice %>
+  <%= form_for :item, url: edit_profile_settings_system_users_path, html: {method: :put} do |f| %>
+    <%= f.error_messages %>
+    <%= render partial: 'form_profile_setting', locals: {f: f} %>
+    <%= submit_for(f, {caption: t("rumi.submit.update")}) %>
+  <% end %>
+</div>
+<!-- コンテンツここまで -->

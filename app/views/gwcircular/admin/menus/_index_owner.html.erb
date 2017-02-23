@@ -1,0 +1,54 @@
+<table summary="回覧板" class="defaultTable listTable">
+  <tr>
+    <th class="article"><%= t("rumi.gwcircular.th.state") %></th>
+    <th class="icon"><img src="/images/icon/marker_important.png" alt=""/></th>
+    <th class="icon"><img src="/images/icon/marker_link.png" alt="<%= t("rumi.gwcircular.th.tmpfile") %>"></th>
+    <th class="titles"><%= t("rumi.gwcircular.th.title") %></th>
+    <th class="view"><%= t("rumi.gwcircular.th.circular_status") %></th>
+    <th class="update"><%= t("rumi.gwcircular.th.circular_limit") %>
+      <p class="sortBox">
+        <span><%= link_to "▲", gwcircular_menus_path(take_params("expiry_date","asc")) %></span>
+        <span><%= link_to "▼", gwcircular_menus_path(take_params("expiry_date","desc")) %></span>
+      </p>
+    </th>
+    <th class="update"><%= t("rumi.gwcircular.th.createdate") %>
+      <p class="sortBox">
+        <span><%= link_to "▲", gwcircular_menus_path(take_params("created_at","asc")) %></span>
+        <span><%= link_to "▼", gwcircular_menus_path(take_params("created_at","desc")) %></span>
+      </p>
+    </th>
+    <th class="update"><%= t("rumi.gwcircular.th.editdate") %>
+      <p class="sortBox">
+        <span><%= link_to "▲", gwcircular_menus_path(take_params("latest_updated_at","asc")) %></span>
+        <span><%= link_to "▼", gwcircular_menus_path(take_params("latest_updated_at","desc")) %></span>
+      </p>
+    </th>
+    <th class="file"><%= t("rumi.gwcircular.th.csv") %></th>
+    <th class="file"><%= t("rumi.gwcircular.th.attachment") %></th>
+  </tr>
+
+  <!-- ループ -->
+  <% for item in @items %>
+    <tr>
+      <td><%= raw(status_name(item)) %></td>
+      <td class="icon">
+        <% if item.importance.present? && item.importance == 0 %>
+          <img src="/images/icon/marker_important.png" alt=""/>
+        <% end %>
+      </td>
+      <td class="icon">
+        <% if item.files.present? %>
+          <img src="/images/icon/marker_link.png" alt="<%= t("rumi.gwcircular.th.tmpfile") %>">
+        <% end %>
+      </td>
+      <td><%= link_to item.title, show_path(item) %></td>
+      <td><%= item.commission_info %></td>
+      <td><%= I18n.l item.expiry_date if item.expiry_date.present? %></td>
+      <td><%= I18n.l item.created_at if item.created_at.present? %></td>
+      <td><%= I18n.l item.latest_updated_at if item.latest_updated_at.present? %></td>
+      <td><%= link_to t("rumi.gwcircular.th.output"), csv_exports_path(item, "owner") %></td>
+      <td><%= link_to t("rumi.gwcircular.th.output"), file_exports_path(item, "owner") %></td>
+    </tr>
+  <% end %>
+  <!-- // ループ -->
+</table>

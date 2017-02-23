@@ -1,0 +1,12 @@
+<!-- 該当ページタイトル -->
+<div class="groupHeader facilities">施設種別選択</div>
+
+<% if @prop_types.present? %>
+  <ul class="groupList facilitiesList">
+    <% @prop_types.each do |prop| %>
+      <li><%= link_to prop.name, select_gw_smart_schedule_props_path(type_id: prop.id) %></li>
+    <% end %>
+  </ul>
+<% else %>
+  <li><%= Gw.div_notice('表示する項目はありません。') -%></li>
+<% end %>

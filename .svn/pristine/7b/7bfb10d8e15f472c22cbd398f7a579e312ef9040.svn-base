@@ -1,0 +1,74 @@
+<%
+  edit = t("rumi.link.edit")
+  delete = t("rumi.link.delete")
+  reply = t("rumi.link.reply")
+  reply_all = t("rumi.link.reply_all")
+  gwcircular_forward = t("rumi.link.gwcircular_forward")
+  gwbbs_forward = t("rumi.link.gwbbs_forward")
+  mail_forward = t("rumi.link.mail_forward")
+  copy = t("rumi.link.copy")
+  download = t("rumi.link.download")
+  print = t("rumi.link.print")
+  d_confirm = t("rumi.message.confirm.delete")
+  s_cond_btn = ''
+  s_cond_btn = '?cond=admin' if params[:cond] == 'admin'
+  s_cond_download = '?download=full_download'
+
+  forward_id = "?" + @item.id.to_s
+  this_path = gwcircular_menus_path
+%>
+
+<div class="area_contentsNav">
+  <div class="notice"><%= flash.now[:notice] %></div>
+  <div class="navBlock">
+    <div class="gwcircularNav">
+      <ul>
+        <% if params[:cond] == 'owner' || params[:cond] == 'admin' %>
+          <li>
+            <%= link_to image_tag("/images/icon/pen.png", {alt: edit}) + edit, edit_gwcircular_menu_path(@item.id) + s_cond_btn %>
+          </li>
+          <li>
+            <%= link_to image_tag("/images/icon/dele.png", {alt: delete}) + delete, "#{this_path}/#{@item.id}#{s_cond_btn}", data: {confirm: d_confirm}, method: 'delete' %>
+          </li>
+        <% end %>
+        <li>
+          <%= link_to image_tag("/images/icon/return.png", {alt: reply}) + reply, reply_gwcircular_menu_path %>
+        </li>
+        <% if params[:cond] == 'owner' || params[:cond] == 'admin' || @item.spec_config != 0 %>
+          <li>
+            <%= link_to image_tag("/images/icon/return.png", {alt: reply_all}) + reply_all, reply_gwcircular_menu_path(all: 1) %>
+          </li>
+        <% end %>
+        <li>
+          <%= link_to image_tag("/images/icon/return.png", {alt: gwcircular_forward}) + gwcircular_forward, new_gwcircular_menu_path(forward_id: @item.id) %>
+        </li>
+        <% url = Enisys::Config.application["webmail.root_url"] %>
+        <% if Core.user.email.present? && url.present? %>
+          <li>
+            <%= link_to image_tag("/images/icon/return_mail.png", alt: mail_forward) + mail_forward, "/gwcircular/docs/mail_forward", id: @item.id, class: 'mail_forward', target: '_blank',
+              onclick: "return mailforwardView('#{raw escape_javascript url_for(action: :mail_forward, id: @item.id)}');" %>
+          </li>
+        <% end %>
+        <li><%= link_to image_tag("/images/icon/return_bbs.png", alt: gwbbs_forward) + gwbbs_forward, "/gwcircular/docs/gwbbs_forward", id: @item.id, class: 'gwbbs_forward', target: '_blank',
+              onclick: "return gwbbsforwardView('#{raw escape_javascript url_for(action: :gwbbs_forward, id: @item.id)}');" %>
+        </li>
+        <li>
+          <%= link_to image_tag("/images/icon/copy.png", {alt: copy}) + copy, new_gwcircular_menu_path(copy_id: @item.id) %>
+        </li>
+        <li>
+          <% if request.path_info.include?('gwcircular/menus') %>
+            <%= link_to image_tag("/images/icon/download.png", {alt: download}) + download, "#{this_path}/#{@item.id}#{s_cond_download}" %>
+          <% else %>
+            <%= link_to image_tag("/images/icon/download.png", {alt: download}) + download, gwcircular_doc_path(@item.id, download: "full_download") %>
+          <% end %>
+        </li>
+      </ul>
+    </div>
+    <!-- // .gwcircularNav -->
+    <div class="print">
+      <%= link_to image_tag("/images/icon/printer.png", { border: '0', alt: print}), "#print", onclick: "window.print(); return false;", class: 'print', title: print %>
+    </div>
+    <!-- // .print -->
+  </div>
+  <!-- // .navBlock -->
+</div>

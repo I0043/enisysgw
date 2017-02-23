@@ -1,0 +1,354 @@
+# encoding: utf-8
+class Gw::Admin::ScheduleListsController < Gw::Controller::Admin::Base
+  include System::Controller::Scaffold
+  layout "admin/template/portal"
+  
+  before_action :set_request_from, only: [:index]
+
+  def set_request_from
+    # 現在のURLを取得
+    session[:request_from] = request.original_url
+  end
+  
+  def initialize_scaffold
+    Page.title = t("rumi.schedule_list.name")
+    @piece_head_title = t("rumi.schedule_list.name")
+    @side = "schedule"
+    get_side_schedule_menu
+  end
+
+  def init_params
+    @js = %w(/_common/js/yui/build/animation/animation-min.js /_common/js/popup_calendar/popup_calendar.js /_common/js/yui/build/calendar/calendar.js /_common/js/dateformat.js)
+
+    @db_name = "gw_schedules"
+    @sp_mode = :list
+
+    @user = Core.user
+    @list_user = @user
+    @uid = Core.user.id
+
+    @list_group = Core.user_group
+    @gid = Core.user_group.id
+
+    @schedule_settings = Gw::Model::Schedule.get_settings 'schedules', {}
+
+    if params[:cgid].blank? && @gid != 'me'
+      x = System::CustomGroup.get_my_view( {:is_default=>1,:first=>1})
+      if x.present?
+        @cgid = x.id
+      end
+    else
+      @cgid = params[:cgid]
+    end
+
+    @params_set = Gw::ScheduleList.params_set(params.dup)
+
+    kd = params['s_date']
+    @st_date = kd =~ /[0-9]{8}/ ? Date.strptime(kd, '%Y%m%d') : Date.today
+
+    @ids_show_flg = params[:action] == 'index'
+  end
+
+  def lists
+    init_params
+
+    item = Gw::Schedule
+
+    now = Time.now
+
+    @s_year = nz(params[:s_year], now.year).to_i
+    @s_month = nz(params[:s_month], 0).to_i
+    @csv_file_name_date = @st_date
+
+    @uid_equal
+
+    if params[:uid].present?
+      @uid_equal = (params[:uid].to_i == @uid)
+      @list_user = System::User.find_by(id: params[:uid])
+      @list_group = @list_user.groups[0]
+      cond = "gw_schedule_users.uid = #{params[:uid]}"
+    else
+      cond = "gw_schedule_users.uid = #{@uid}"
+      @uid_equal = true
+    end
+
+    @first_day = "#{@s_year}-01-01"
+    @this_month = "#{@s_year}-#{now.month}-01"
+    @end_day = "#{@s_year}-12-31"
+
+    if @s_year != 0 && @s_month != 0 && @s_month != 100
+
+      d_1day = Date::new(@s_year, @s_month, 1)
+      end_date = d_1day.end_of_month
+      @first_day = "#{@s_year}-#{"%02d" % @s_month}-01"
+      @end_day = "#{end_date.year}-#{end_date.month}-#{end_date.day}"
+
+      cond += " and #{@db_name}.st_at >= '#{@first_day} 00:00:00'" +
+        " and #{@db_name}.st_at <= '#{@end_day} 23:59:59'"
+
+      @csv_file_name_date = "#{@s_year}#{"%02d" % @s_month}01"
+    end
+
+    if @s_year != 0 && @s_month == 0
+      cond += " and #{@db_name}.st_at >= '#{@first_day} 00:00:00' and #{@db_name}.st_at <= '#{@end_day} 23:59:59'"
+      @csv_file_name_date = "#{@s_year}_all"
+    end
+
+    if @s_year != 0 && @s_month == 100
+      cond += " and #{@db_name}.st_at >= '#{@this_month} 00:00:00' and #{@db_name}.st_at <= '#{@end_day} 23:59:59'"
+      @csv_file_name_date = "#{@this_month}_this_month"
+    end
+
+    if @s_year == 0 && @s_month != 0
+      cond += ""
+    end
+
+    cond += " and #{@db_name}.delete_state = 0"
+
+    @items = item.where(cond).order("#{@db_name}.st_at").joins(:schedule_users)
+  end
+
+  def index
+    @list_pattern = :index
+    lists
+  end
+
+  def csvput
+    # CSV出力
+    @list_pattern = :csv
+    lists
+
+    field = []
+    field << t("rumi.schedule_list.csv.title")
+    field << t("rumi.schedule_list.csv.st_at")
+    field << t("rumi.schedule_list.csv.st_time")
+    field << t("rumi.schedule_list.csv.ed_at")
+    field << t("rumi.schedule_list.csv.ed_time")
+    field << t("rumi.schedule_list.csv.all_day")
+    field << t("rumi.schedule_list.csv.memo")
+    field << t("rumi.schedule_list.csv.place")
+    field << t("rumi.schedule_list.csv.alarm")
+    field << t("rumi.schedule_list.csv.alarm_date")
+    field << t("rumi.schedule_list.csv.alarm_time")
+    csv_field = field.join(",") + "\n"
+
+    csv = ""
+    @items.each_with_index{ | item, cnt |
+      st_at = item.st_at
+      ed_at = item.ed_at
+      title = item.title
+      st_at_day = I18n.l st_at.to_date
+      ed_at_day = I18n.l ed_at.to_date
+      if item.allday.blank?
+        st_at_time = st_at.strftime("%H:%M")
+        ed_at_time = ed_at.strftime("%H:%M")
+        allday = "FALSE"
+      else
+        ed_at_day = I18n.l (st_at.to_date + 1)
+        st_at_time = "00:00"
+        ed_at_time = "23:59"
+        allday = "TRUE"
+      end
+      memo = item.memo
+      place = item.place
+
+      title = title.gsub('"', '""') unless title.blank?
+      memo = memo.gsub('"', '""') unless memo.blank?
+      place = place.gsub('"', '""') unless place.blank?
+
+      csv += "\"#{title}\",\"#{st_at_day}\",\"#{st_at_time}\",\"#{ed_at_day}\",\"#{ed_at_time}\",\"#{allday}\",\"#{memo}\",\"#{place}\"," + '"","",""' + "\n"
+    }
+
+    if params[:nkf].blank?
+      nkf_options = '-Lws'
+    else
+      nkf_options = case params[:nkf]
+      when 'utf8'
+        '-w'
+      when 'sjis'
+        '-Lws'
+      end
+    end
+
+    filename = "schedule_lists_#{@csv_file_name_date}.csv"
+    send_data(NKF::nkf(nkf_options, csv_field + csv), :type => 'text/csv', :filename => filename)
+  end
+
+  def icalput
+    @list_pattern = :ical
+    lists
+    options = { :end_day => @end_day }
+    ical = Gw::Controller::Schedule.convert_ical( @items , options)
+    filename = "schedule_lists_#{@csv_file_name_date}.ics"
+    send_data(ical, :type => 'text/csv', :filename => filename)
+  end
+
+  def user_select
+    init_params
+    lists
+    location = "#{gw_schedule_lists_path}/#{@params_set}"
+
+    if params[:uid].present?
+      @target_user = System::User.find_by(id: params[:uid])
+    else
+      @target_user = System::User.find_by(id: Core.user.id)
+    end
+
+    if params[:user_delete].present?
+      @motion = :user_delete
+    end
+
+    if params[:ids].blank?
+      flash[:notice] = t("rumi.schedule_list.message.no_target")
+      redirect_to location
+      return
+    end
+
+    unless params[:ids].instance_of?(Array)
+      flash[:notice] = t("rumi.schedule_list.message.delete_error")
+      redirect_to location
+      return
+    end
+
+    @ids = params[:ids].dup
+    ids_str = Gw.join(params[:ids], ',')
+    @items = Gw::Schedule.where("#{@db_name}.id in (#{ids_str})").order("#{@db_name}.st_at")
+
+    err_array = Array.new
+
+    past = true
+    @items.each do |item|
+      if item.st_at < Time.now && past == true
+        err_array << t("rumi.schedule_list.message.past_schedule")
+        past = false
+      end
+    end
+
+    if err_array.length > 0
+      err_array << t("rumi.schedule_list.message.retry")
+      flash[:notice] = Gw.join(err_array, "<br />")
+      redirect_to location
+      return
+    end
+  end
+
+  def user_delete
+    init_params
+    location = "#{gw_schedule_lists_path}/#{@params_set}"
+
+    if params[:cancel].present?
+      redirect_to location
+      return
+    end
+
+    if params[:ids].blank?
+      flash[:notice] = t("rumi.schedule_list.message.no_target")
+      redirect_to location
+      return
+    end
+
+    unless params[:ids].instance_of?(Array)
+      flash[:notice] = t("rumi.schedule_list.message.delete_error")
+      redirect_to location
+      return
+    end
+
+    if params[:delete_user_id].blank?
+      flash[:notice] = t("rumi.schedule_list.message.system_error")
+      redirect_to location
+      return
+    end
+
+    @ids = params[:ids].dup
+    ids_str = Gw.join(params[:ids], ',')
+    delete_user = System::User.find_by(id: params[:delete_user_id])
+
+    if delete_user.blank?
+      flash[:notice] = t("rumi.schedule_list.message.show_list")
+      redirect_to location
+      return
+    end
+
+    items = Gw::Schedule.where("#{@db_name}.id in (#{ids_str})").order("#{@db_name}.st_at")
+
+    delete_cnt = 0
+    delete_no_cnt = 0
+    no_editor = false
+    one_user = false
+    items.each do |item|
+
+      delete = false
+
+      _delete = false
+      creator = item.creator_uid == Core.user.id
+
+      participation = Gw::ScheduleUser.where("schedule_id = #{item.id} and class_id = 1 and uid = #{Core.user.id}").first
+
+      if item.schedule_users.blank?
+        user_len = 0
+      else
+        user_len = item.schedule_users.count
+      end
+
+      target = System::ScheduleRole.get_target_uids_schedule_user(Core.user.id, item.id)
+      if target.blank? && user_len > 1
+        delete_user_items = Gw::ScheduleUser.where("schedule_id = #{item.id} and class_id = 1 and uid = #{delete_user.id}").order("id")
+        delete_user_items.each do | delete_user_item |
+          delete_user_item.destroy
+          _delete = true
+        end
+
+        if _delete == true
+          item.updater_uid   = Core.user.id
+          item.updater_ucode = Core.user.code
+          item.updater_uname = Core.user.name
+          item.updater_gid   = Core.user_group.id
+          item.updater_gcode = Core.user_group.code
+          item.updater_gname = Core.user_group.name
+          item.updated_at    = Time.now
+          item.save(:validate => false)
+          delete = true
+
+          unless item.schedule_props.blank?
+            item.schedule_props.each do |schedule_prop|
+              schedule_prop.updated_at = Time.now
+              schedule_prop.save(:validate => false)
+            end
+          end
+
+        end
+
+        item.build_updated_remind if delete
+      end
+
+      delete_cnt += 1    if delete == true
+      delete_no_cnt += 1 if delete == false
+      no_editor = true if target.present? unless no_editor
+      one_user = true if user_len < 2 unless one_user
+    end
+
+    notice = "<p>" + t("rumi.message.notice.delete") + "</p>"
+    notice += "<p>" + "#{items.count}" + t("rumi.schedule_list.message.delete.body") + "#{delete_cnt}" + t("rumi.schedule_list.message.delete.tail") + "</p>"
+
+    if delete_no_cnt > 0
+      notice += "<p>#{delete_no_cnt}" + t("rumi.schedule_list.message.no_delete.message") + "</p>"
+      notice += "<p class='required'>" + t("rumi.schedule_list.message.no_delete.no_editor") + "</p>" if no_editor
+      notice += "<p class='required'>" + t("rumi.schedule_list.message.no_delete.one_user") + "</p>" if one_user
+    end
+    flash[:notice] = notice
+
+    redirect_to location
+  end
+
+  def user_fields
+    users = System::User.get_user_select(params[:gid], nil)
+    html_select = ""
+    users.each do |value , key|
+      html_select << "<option value='#{key}'>#{value}</option>"
+    end
+
+    respond_to do |format|
+      format.csv { render :text => html_select ,:layout=>false ,:locals=>{:f=>@item} }
+    end
+  end
+end

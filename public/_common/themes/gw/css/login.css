@@ -1,0 +1,142 @@
+@charset "utf-8";
+@import "reset.css";
+body {
+  font-family: "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", Meiryo, Osaka, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
+  font-size: 90%;
+}
+html, body {
+  min-height: 100%;
+  height: 100%;
+  width: 100%;
+}
+* { box-sizing: border-box; }
+/*
+** 背景色のみ
+******************************************/
+body { background-color: #f6f6f6; }
+/*
+** 背景画像利用時
+*****************************************
+*/
+body {
+  background: url(/images/bg_login.jpg) no-repeat 50% 50%;
+  background-attachment: fixed;
+  background-size: cover;
+}
+#wrapper {
+  text-align: left;
+  width: 100%;
+  overflow: hidden;
+}
+.formContainer { margin-top: 50px; }
+.logoContainer { margin-top: 20px; }
+.formContainer {
+  background-color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.8);
+}
+form {
+  width: 300px;
+  margin: 0 auto;
+  padding: 30px 0
+}
+.logoContainer img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: auto;
+}
+.submit { padding-left: 90px; }
+.submit input {
+  font-size: 120%;
+  width: 120px;
+  height: 2.4em;
+  text-align: center;
+  vertical-align: middle;
+  border: 0;
+  background-color: #000;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.submit input:hover {
+  background: #c5494c;
+  color: #fff;
+}
+
+@media screen and (min-width: 480px) {
+#wrapper {
+  width: 80%;
+  margin: 0 auto;
+}
+}
+
+@media screen and (min-width: 960px) {
+#wrapper { width: 960px; }
+#wrapper {
+  text-align: left;
+  min-height: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+.formContainer, .logoContainer { float: left; }
+.formContainer { width: 320px; }
+.logoContainer {
+  width: 320px;
+  text-align: center;
+  padding-top: 200px;
+}
+.formContainer {
+  background-color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.8);
+  margin: -1000px 0;
+  padding: 1000px 0;
+}
+form {
+  width: 300px;
+  margin: 0 auto;
+  padding-top: 200px;
+}
+.clientNames {
+  width: 300px;
+  margin: 0 auto 2em;
+}
+}
+
+@media screen and (min-width: 1680px) {
+#wrapper { width: 1500px; }
+.logoContainer { width: 590px; }
+}
+.notice {
+  line-height: 1.5em;
+  color: #f00;
+}
+.fields div {
+  width: 100%;
+  overflow: hidden;
+  margin-bottom: 15px;
+}
+.fields div span {
+  display: block;
+  float: left;
+  width: 90px;
+  line-height: 1.8;
+}
+input#account, input#password {
+  width: 210px;
+  float: left;
+  line-height: 1.8;
+  margin: 0;
+  padding: 0;
+  border: 1px solid #eee;
+  border-radius: 3px;
+  background: #fff;
+  color: #000;
+}
+.submitters { padding-left: 90px; }
+input.login {
+  font-size: 16px;
+  text-align: center;
+  vertical-align: middle;
+  width: 6em;
+  height: 2em;
+}

@@ -1,0 +1,44 @@
+<%
+  param_str  = "?rid=#{@item.id}"
+  unread_comments = Gw::Reminder.where(category: "circular", action: "reply")
+           .where(item_id: @item.id, title_id: @item.title_id)
+           .where("seen_at is null")
+  unread_comment_ids = unread_comments.map(&:sub_category)
+%>
+<% if unread_comments.present? %>
+  <div class="buttonlink">
+    <ul>
+      <li><%= link_to t('rumi.link.comment_seen'), gwcircular_menu_path(@item, comment_read: "comment_read"), class: 'btCommentread' %></li>
+    </ul>
+  </div>
+<% end %>
+
+<table class="defaultTable listTable">
+  <tr>
+    <th><%= t('rumi.gwcircular.th.state') %></th>
+    <th><%= t('rumi.gwcircular.th.target_user') %></th>
+    <th><%= t('rumi.gwcircular.th.comment') %></th>
+    <th class="icon"><%= t('rumi.gwcircular.th.tmpfile') %></th>
+    <th class="update"><%= t('rumi.gwcircular.th.opendocdate') %></th>
+    <th class="update"><%= t('rumi.gwcircular.th.editdate') %></th>
+  </tr>
+  <% for item in @commissions %>
+    <tr>
+      <td><span><%= raw(status_name(item)) %></span></td>
+      <td><%= link_to "#{item.target_user_name}", "#{doc_edit_show_path(item)}#{param_str}#{cond_param(params[:cond],2)}" %></td>
+      <td class="docTitle">
+        <% if unread_comment_ids.find{|x| x == item.id.to_s} %>
+          <span class='new'>new</span>
+        <% end %>
+        <%= item.already_body %>
+      </td>
+      <td class="attach">
+        <% unless item.str_attache_span.blank? %>
+          <img src="/images/icon/marker_link.png" alt=<%= t('rumi.gwcircular.th.tmpfile') %>><%= raw(item.str_attache_span) %>
+        <% end %>
+      </td>
+      <td><%= item.display_opendocdate %></td>
+      <td><%= item.display_editdate  %></td>
+    </tr>
+  <% end %>
+</table>

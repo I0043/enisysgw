@@ -1,0 +1,13 @@
+<%= render(:partial => '/gw/admin/smart_schedule_props/schedule_prop_header', :locals=>{:d=>@st_date, :mode=>'day'}) -%>
+
+<%= raw(div_notice) -%>
+<%
+  date_format_name = 'week'
+%>
+<div class="dayInformation dateShow today">
+  <%= I18n.l @st_date, format: date_format_name == 'week' ? :date2 : :date3 %>
+</div>
+
+<div class="dayInformation dateShow today"><%= @prop.name %></div>
+
+<%= render(:partial => '/gw/admin/smart_schedule_props/show_day') -%>

@@ -1,0 +1,54 @@
+<%= required_head %>
+<div><%=raw t("rumi.user.message.new") %></div>
+
+<table class="defaultTable rentDetails inputTable">
+  <tr>
+    <% case params[:action] %>
+    <% when 'edit', 'update' %>
+      <th><%= t("rumi.users_group.th.user_id") %></th>
+      <td><%= safe{@item.user.name} %><%= f.hidden_field :user_id, :value => @item.user_id %></td>
+    <% else %>
+      <th><%= t("rumi.users_group.th.user_id") %><%= Gw.required %></th>
+      <td>
+        <%= f.select(:user_id, options_for_select(build_select_users(@users), @item.user_id), {
+          include_blank: true }, { class: "single-selector"}) %>
+      </td>
+    <% end %>
+  </tr>
+  <tr>
+    <th><%= t("rumi.users_group.th.group") %><%= Gw.required %></th>
+    <td>
+      <%= f.select(:group_id, 
+        options_for_select(build_select_parent_groups(@groups),
+        selected: @item.group_id, disabled: @disabled_group_ids), { include_blank: true }, {
+          onchange: %Q!rumi.setDisabledForIncludeList(#{@any_group_ids}, this.value, "input[id^='item_job_order']");!,
+          class: "single-selector"
+        }) %>
+    </td>
+  </tr>
+  <tr>
+    <th><%= t("rumi.users_group.th.job_order") %><%= Gw.required %></th>
+    <td><%= f.radio_buttons :job_order, Gw.yaml_to_array_for_select('system_ugs_job_orders') %></td>
+  </tr>
+  <tr>
+    <th><%= t("rumi.users_group.th.start_at") %><%= Gw.required %></th>
+    <td>
+      <%= f.text_field(:start_at, value: @item.start_at.try(:strftime, t("rumi.strftime.date2")), onclick: "new CalendarDateSelect( $(this), {time:false, year_range:10} );", style: "ime-mode: disabled", onkeydown: "return rumi.BlockKeyCode(event);", onpaste: "return false", oncontextmenu: "return false") %>
+      <% img = "/images/icon/calendar_bla.png" %>
+      <img src="<%= img %>" alt="Calendar" class="calendar_date_select_popup_icon" onclick="new CalendarDateSelect( $(this).previous(), {time: false, year_range:10} );" style="cursor:pointer;">
+    </td>
+  </tr>
+  <tr>
+    <th><%= t("rumi.users_group.th.end_at") %></th>
+    <td>
+      <%= f.text_field(:end_at, value: @item.end_at.try(:strftime, t("rumi.strftime.date2")), onclick: "new CalendarDateSelect( $(this), {time:false, year_range:10} );", style: "ime-mode: disabled", onkeydown: "return rumi.BlockKeyCode(event);", onpaste: "return false", oncontextmenu: "return false") %>
+      <% img = "/images/icon/calendar_bla.png" %>
+      <img src="<%= img %>" alt="Calendar" class="calendar_date_select_popup_icon" onclick="new CalendarDateSelect( $(this).previous(), {time: false, year_range:10} );" style="cursor:pointer;">
+    </td>
+  </tr>
+</table>
+
+<%= javascript_tag %Q!rumi.setDisabledForIncludeList(#{@any_group_ids}, '#{@item.group_id.to_s}', "input[id^='item_job_order']");! %>
+
+<%= raw(gw_js_include_full) %>
+

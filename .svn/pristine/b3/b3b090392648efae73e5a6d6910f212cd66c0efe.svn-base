@@ -1,0 +1,44 @@
+<%= render partial: 'header', locals: {new: true} %>
+
+<!-- コンテンツここから -->
+<div class="main">
+  <%= div_notice %>
+  
+  <% if @items.blank? %>
+    <%= Gw.div_notice(t("rumi.message.empty.list")) %>
+  <% else %>
+    <table class="defaultTable listTable configTable">
+      <tr>
+        <th></th>
+        <th><%= t("rumi.group.th.group_id") %></th>
+        <th><%= t("rumi.group.th.state") %></th>
+        <th><%= t("rumi.group.th.ldap") %></th>
+        <th><%= t("rumi.group.th.name") %></th>
+        <th><%= t("rumi.group.th.start_at") %></th>
+        <th><%= t("rumi.group.th.end_at") %></th>
+      </tr>
+      <% @items.each do |item| %>
+        <%
+          is_editable_group = Core.user.editable_group_in_system_users?(item.id)
+          blank = item.level_no > 2 ? "　　" * (item.level_no - 2) : ""
+        %>
+        <tr>
+          <td><%= link_to t("rumi.link.show"), system_group_path(item.id) if is_editable_group %></td>
+          <td><%= item.code %></td>
+          <td><%= System::UsersGroup.state_show(item.state) %></td>
+          <td><%= System::UsersGroup.ldap_show(item.ldap) %></td>
+          <td><%= blank %><%= item.name %></td>
+          <td><%= Gw.date_str2(item.start_at) %></td>
+          <td><%= Gw.date_str2(item.end_at) %></td>
+        </tr>
+      <% end %>
+    </table>
+  <% end %>
+
+  <div class="backlink paginationSingle">
+    <ul>
+      <li><%= link_to t("rumi.back_link.admin"), gw_config_settings_path %></li>
+    </ul>
+  </div>
+</div>
+<!-- コンテンツここまで -->

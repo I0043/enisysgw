@@ -1,0 +1,54 @@
+<%
+  header_each = nz(@header_each, 5).to_i
+  week_first_day = @calendar_first_day
+  p = place == "top" ? "-top-sc" : ""
+  mode = 'week'
+  content_class= place == "top" ? "top-main" : "main"
+%>
+<% unless place == "print" %>
+  <% unless place == "top" %>
+    <%= render partial: '/gw/admin/schedules/piece_header', locals: {piece_head_title: @piece_head_title, new: true} %>
+  <% end %>
+
+  <!-- コンテンツここから -->
+  <div class="<%= content_class %>">
+    <% unless place == "top" %>
+      <!-- フォーム切替ボタン等 -->
+      <%= render partial: '/gw/admin/schedules/schedule_bt_box', locals: {d: @st_date, mode: mode} %>
+      <!-- フォーム切替ボタン等ここまで -->
+    <% end %>
+    <%= render partial: '/gw/admin/schedules/schedule_line_box', locals: {d: @st_date, mode: mode, move_mode: :header} %>
+    <!-- スケジュール詳細 -->
+    <table class="defaultTable scheduleTable scheduleWeekly">
+      <% @users.each_with_index do |user, user_cnt| %>
+        <% if header_each == 0 && user_cnt == 0 || header_each != 0 && user_cnt % header_each == 0 %>
+          <%= render partial: '/gw/admin/schedules/show_week_header', locals: {mode: mode} %>
+        <% end %>
+        <%= render partial: '/gw/admin/schedules/show_week_one', locals: {user: user, week_first_day: week_first_day, user_cnt: 0} %>
+      <% end %>
+    </table>
+    <!-- スケジュール詳細ここまで -->
+
+  </div>
+  <!-- コンテンツここまで -->
+<% else %>
+  <link rel="stylesheet" href="/_common/themes/gw/css/base.css" />
+  <!-- コンテンツここから -->
+  <div class="main">
+    <div style="float:right; margin-top: 5px; margin-bottom: 5px;">
+      <%= button_tag t("rumi.button.print"), type: "button", onclick: "window.print();", style: "margin-right:10px;padding:3px;" %>
+      <%= button_tag t("rumi.button.close"), type: "button", onclick: "window.close();", style: "margin-right:10px;padding:3px;" %>
+    </div>
+  <!-- スケジュール詳細 -->
+    <table summary="<%= t("rumi.schedule.summary") %>" class="defaultTable scheduleTable scheduleWeekly">
+      <% @users.each_with_index do |user, user_cnt| %>
+        <% if header_each == 0 && user_cnt == 0 || header_each != 0 && user_cnt % header_each == 0 %>
+          <%= render partial: '/gw/admin/schedules/show_week_header', locals: {mode: mode} %>
+        <% end %>
+        <%= render partial: '/gw/admin/schedules/show_week_one', locals: {user: user, week_first_day: week_first_day, user_cnt: 0} %>
+      <% end %>
+    </table>
+    <!-- スケジュール詳細ここまで -->
+  </div>
+  <!-- コンテンツここまで -->
+<% end %>

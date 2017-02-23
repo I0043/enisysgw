@@ -1,0 +1,129 @@
+<script type="text/javascript">
+//<![CDATA[
+var my_submit = function(state, action) {
+  supressBeforeUnload = true;
+  var st = $('item_state');
+  st.value = state;
+
+  if(st.value == "close"){
+    window.close();
+    return false;
+  }
+  var item_expiry_date_text = document.getElementById('item_expiry_date').value;
+  if ('<%= I18n.default_locale.to_s %>' == 'ja'){
+    var regex = /^\d{4}[\-\/]\d{1,2}[\-\/]\d{1,2}( +\d{1,2}\:\d{1,2}(:\d{1,2})?)?$/;
+  } else{
+    var regex = /^\d{1,2}[\ \/][A-Za-z]{3}[\ \/]\d{4}( +\d{1,2}\:\d{1,2}(:\d{1,2})?)?$/;
+  }
+
+  // 回覧期限日時の必須チェック
+  if (item_expiry_date_text == "") {
+    alert('<%= t("rumi.gwcircular.message.circular_limit") %>');
+    return false;
+  }
+  // 回覧期限日時の日付チェック
+  if (item_expiry_date_text != "" && !item_expiry_date_text.match(regex)) {
+    alert('<%= t("rumi.gwcircular.message.correct_circular_limit") %>');
+    return false;
+  }
+
+  //配信先有無のチェック。
+  var readg = $('item_reader_groups_json');
+  var read = $('item_readers_json');
+  if ( state == "public" && JSON.parse(readg.value).length == 0 && JSON.parse(read.value).length == 0) {
+    alert('<%= t("rumi.gwcircular.message.no_select_destination") %>');
+    return false;
+  }
+  
+  switch (state) {
+  case "public":
+    if (action == 'edit') {
+      var res = confirm('<%= raw I18n.t('rumi.gwcircular.submit.public_update_confirm') %>');
+    } else {
+      var res = confirm('<%= I18n.t('rumi.gwcircular.submit.public_confirm') %>');
+    }
+    if(res == true ){
+      FreezeScreen('<%= I18n.t('rumi.gwcircular.submit.send') %>');
+    } else {
+      return false;
+    }
+    break;
+  case "draft":
+    var res = confirm('<%= I18n.t('rumi.gwcircular.submit.draft_confirm') %>');
+    if(res == true ){
+      FreezeScreen('<%= I18n.t('rumi.gwcircular.submit.draft') %>');
+    } else {
+      return false;
+    }
+    break;
+  default:
+    FreezeScreen('<%= I18n.t('rumi.freezescreen.default') %>');
+    break;
+  }
+  $('item_submit').disabled = true;
+   if($('item_submit_draft')){
+    $('item_submit_draft').disabled = true;
+  }
+  if($('item_submit_close')){
+    $('item_submit_close').disabled = true;
+  }
+  $('itemForm').submit();
+}
+
+var my_search_submit = function() {
+  var item_startexpirydate = document.getElementById('expirydate_start').value;
+  var item_endexpirydate = document.getElementById('expirydate_end').value;
+  var item_startcreatedate = document.getElementById('createdate_start').value;
+  var item_endcreatedate = document.getElementById('createdate_end').value;
+  if ('<%= I18n.default_locale.to_s %>' == 'ja'){
+    var regex = /^\d{4}[\-\/]\d{1,2}[\-\/]\d{1,2}$/;
+  }else {
+    var regex = /^\d{1,2}[\ \/][A-Za-z]{3}[\ \/]\d{4}$/;
+  }
+
+  // 期限日の日付チェック
+  if (item_startexpirydate != "" && !item_startexpirydate.match(regex)) {
+    alert('<%= t("rumi.gwcircular.message.limit_st_date") %>');
+    return false;
+  }
+  if (item_endexpirydate != "" && !item_endexpirydate.match(regex)) {
+    alert('<%= t("rumi.gwcircular.message.limit_ed_date") %>');
+    return false;
+  }
+  // 作成日の日付チェック
+  if (item_startcreatedate != "" && !item_startcreatedate.match(regex)) {
+    alert('<%= t("rumi.gwcircular.message.create_st_date") %>');
+    return false;
+  }
+  if (item_endcreatedate != "" && !item_endcreatedate.match(regex)) {
+    alert('<%= t("rumi.gwcircular.message.create_ed_date") %>');
+    return false;
+  }
+  return true;
+}
+var BlockEnter = function (evt) {
+    evt = (evt) ? evt : event;
+    var charCode=(evt.charCode) ? evt.charCode :
+          ((evt.which) ? evt.which : evt.keyCode);
+    if ( Number(charCode) == 13 || Number(charCode) == 3) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+function FreezeScreen(msg) {
+  scroll(0,0);
+  var outerPane = document.getElementById('FreezePane');
+  var innerPane = document.getElementById('InnerFreezePane');
+  if (outerPane) {
+    outerPane.className = 'FreezePaneOn';
+    var h = Math.max.apply( null, [document.body.clientHeight ,
+                                   document.body.scrollHeight,
+                                   document.documentElement.scrollHeight,
+                                   document.documentElement.clientHeight] )  + 'px';
+    outerPane.style.height = h;
+  }
+  if (innerPane) innerPane.innerHTML = msg;
+}
+//]]>
+</script>

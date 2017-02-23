@@ -1,0 +1,98 @@
+@charset "utf-8";
+/*
+** ヘッダーブロック
+******************************************/
+#header {
+  background-color: #000;
+  color: #fff;
+}
+.userNames p.logout a {
+  background-color: #c5494c;
+  color: #fff;
+}
+.userNames p.logout a:hover {
+  background-color: #f00;
+  color: #fff;
+}
+.userNames p.user a { color: #fff; }
+.userNames p.user a:hover { color: #f00; }
+/*
+** グローバルナビゲーション
+******************************************/
+.area_gnav { background-color: #333; }
+.gnavContainer a {
+  background-color: transparent;
+  color: #fff;
+}
+.gnavContainer a:hover {
+  background-color: #000;
+  color: #fff;
+}
+.gnavContainer li span {
+  background-color: #c5494c;
+  color: #fff;
+}
+.gnavContainer ul { border-right-color: #666; }
+.gnavContainer li {
+  border-left-color: #666;
+  border-right-color: #000;
+}
+/*
+** コンテンツブロック
+******************************************/
+.entryHeader {
+  background-color: #f9f9f9;
+  color: #000;
+}
+.adminHeader{ background-color: #f4b2ba;}
+/*
+** サイドバーブロック
+******************************************/
+#content, #sidebar { background-color: #f9f9f9; }
+.sideDate {
+  background-color: #666;
+  color: #fff;
+}
+.title {
+  color: #000;
+  border-bottom-color: #ddd;
+}
+.subMenu li a {
+  background-color: #000;
+  color: #fff;
+}
+.subMenu li.masterTop a,
+.subMenu li.setting a{
+  background-image: url(/images/icon/wrench.png);
+  background-repeat: no-repeat;
+  background-position: 10px 50%;
+}
+.subMenu li.noRead a {
+background-color: #c5494c;
+}
+/* current */
+.subMenu li.current a{ background-color: #c5494c;}
+.subMenu li a:hover {
+  background-color: #393939;
+  color: #f00;
+}
+/* アコーディオン */
+.trigger {
+  background: #000 url(/images/arrow_bottom.png) no-repeat 200px 50%;
+  color: #fff;
+}
+.accordionContainer li a {
+  background-color: #000;
+  color: #fff;
+}
+.accordionContainer li a:hover {
+  background-color: #393939;
+  color: #f00;
+}
+/*
+** フッターブロック
+******************************************/
+#footer {
+  background-color: #c5494c;
+  color: #fff;
+}

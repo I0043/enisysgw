@@ -1,0 +1,9 @@
+<%= render partial: 'piece_header', locals: {piece_head_title: @piece_head_title} %>
+<div class="main">
+  <%=render :partial => 'subheader' %>
+  <%=render :partial => 'explain' if @title.form_name  == 'form001' %>
+  <%=render :partial => @title.gwbbs_form_name + 'index' %>
+  <%=render(:partial => 'limit_change') unless @title.form_name  == 'form001'%>
+  <%=paginate @items %>
+  <%=render :partial => 'index_attach_list' %>
+</div>

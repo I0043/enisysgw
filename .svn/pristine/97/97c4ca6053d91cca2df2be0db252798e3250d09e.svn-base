@@ -1,0 +1,27 @@
+<%= render partial: 'piece_header', locals: {piece_head_title: @piece_head_title} %>
+<!-- コンテンツここから -->
+<div class="main">
+  <table class="defaultTable listTable">
+    <tr class="items">
+      <th class="bbstitle"><%= t('rumi.gwboard.list.doclibtitle') %></th>
+      <th class="titles"><%= t('rumi.gwboard.list.titles') %></th>
+      <th class="manager"><%= t('rumi.gwboard.list.manager') %></th>
+      <th class="update"><%= t('rumi.gwboard.list.update') %></th>
+    </tr>
+    <% for item in @items %>
+      <tr>
+        <td class="libraryTitle"><%= link_to item.title, doclibrary_docs_path({:title_id=>item.id}) %></td>
+        <td class="titles"><%= raw(item.caption) %></td>
+        <td class="manager"><%= gwbd_admin_name(item.admingrps_json,item.adms_json, item.dsp_admin_name) %></td>
+        <td class="update"><%= I18n.l item.docslast_updated_at unless item.docslast_updated_at.blank? %></td>
+      </tr>
+      <% if item.special_link.present? %>
+        <tr>
+          <%= index_special_link(item.special_link) %>
+        </tr>
+      <% end %>
+    <% end %>
+  </table>
+  <%= paginate @items unless @items.blank? %>
+</div>
+

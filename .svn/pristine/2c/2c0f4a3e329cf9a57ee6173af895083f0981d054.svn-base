@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <%= render :partial => 'layouts/admin/gw/header_tag' %>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="robots" content="noindex,nofollow" />
+    <link rel="stylesheet" href="/_common/themes/gw/css/base.css" />
+    <link rel="stylesheet" href="/_common/themes/gw/css/color-default.css" />
+    <link rel="apple-touch-icon" href="icon.png" />
+    <link rel="shortcut icon" href="/images/favicon.ico" />
+    <script type="text/jscript" src="/js/prototype.js"></script>
+    <% if @side != "doclibrary" %>
+      <script type="text/jscript" src="/js/jquery-1.11.1.min.js"></script>
+      <script type="text/jscript" src="/js/common.js"></script>
+    <% end %>
+    <script type="text/javascript">
+    //<![CDATA[
+    jQuery.noConflict();
+    //]]>
+    </script>
+  </head>
+  <body id="page-gwcircular-<%= params[:action] -%>">
+    <!-- ここからヘッダー -->
+    <!-- // ここまでヘッダー -->
+    <div id="content">
+      <article role="main">
+        <section>
+          <div class="mainForwardContent">
+            <div id="FreezePane" class="FreezePaneOff">
+              <div id="InnerFreezePane" class="InnerFreezePane"></div>
+            </div>
+            <!-- コンテンツここから -->
+            <%= yield %>
+            <!-- コンテンツここまで -->
+          </div>
+        </section>
+      </article>
+    </div>
+  </body>
+</html>

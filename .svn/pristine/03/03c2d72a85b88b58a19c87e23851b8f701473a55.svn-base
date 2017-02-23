@@ -1,0 +1,6 @@
+<header class="entry_header bg-purple">
+  <h2><%= Page.title %></h2>
+  <%= link_to new_gw_smart_schedule_path(s_genre: "other") do %>
+    <p class='add-new'>予約登録</p>
+  <% end %>
+</header>

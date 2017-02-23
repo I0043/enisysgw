@@ -1,0 +1,15 @@
+<% 7.times do |i| %>
+  <%
+    week_add_day = @calendar_first_day + i
+    day_link = %Q(/gw/smart_schedules/show_day#{@link_params}&s_date=#{(week_add_day).strftime('%Y%m%d')})
+    class_str = smart_create_month_class(week_add_day, @st_date, @holidays, params)
+    user_id = params[:uid].present? ? params[:uid] : Core.user.id
+  %>
+  <dt class="<%= class_str -%>">
+    <span class="scheduleDay"><%= link_to(date_format(@format, week_add_day), day_link) %></span>
+    <span class="add-new"><%= link_to image_tag("/images/btn_add.png", {:border => "0", :alt => "新規作成"}), new_gw_smart_schedule_path(s_date: (week_add_day).strftime('%Y%m%d'), uid: params[:uid]) %></span>
+  </dt>
+  <dd>
+    <%= smart_show_one(i, week_add_day, user_id) %>
+  </dd>
+<% end %>

@@ -1,0 +1,29 @@
+<script type="text/javascript">
+  //<![CDATA[
+    function commentForm(obj,changeObjId) {
+      var display = document.getElementById(changeObjId).style.display;
+      if (display == 'none') {
+        obj.innerHTML = '<%= I18n.t('rumi.gwboard.attach_list.close') %>';
+      } else if (display == '') {
+        obj.innerHTML = '<%= I18n.t('rumi.gwboard.attach_list.open') %>';
+      }
+      Element.toggle($(changeObjId));
+    }
+  //]]>
+</script>
+
+<table class="defaultTable bbs_attachlistTable">
+  <tr>
+    <th class="blueIndex"><%= t("rumi.gwcircular.comment.create") %></th>
+    <td>
+      <a href="#" onclick="commentForm(this,'comment_field_form');return false;"><%= t("rumi.attach_list.open") %></a>
+    </td>
+  </tr>
+</table>
+
+<%= form_for :item, :url => "/gwcircular/docs/#{@item.id}", :html => {:method => :put, :multipart => true, :id => 'comment_field_form', :style => "display: none;"} do |f| %>
+  <%= f.error_messages %>
+
+  <%= render :partial => 'form', :locals => {:f => f} %>
+
+<% end %>

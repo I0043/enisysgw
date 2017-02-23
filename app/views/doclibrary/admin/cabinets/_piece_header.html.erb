@@ -1,0 +1,8 @@
+<header class="entryHeader">
+  <h2><%= piece_head_title %></h2>
+  <span class="navBlock">
+    <%if @gw_admin %>
+      <div class="newEdit"><a href="<%= "#{new_doclibrary_cabinet_path}" %>"><img src="/images/icon/add.png" alt=<%= t('rumi.button.new') %>><%= t('rumi.button.new') %></a></div>
+    <%end%>
+  </span>
+</header>

@@ -1,0 +1,19 @@
+<%
+  edit = t("rumi.link.edit")
+  delete = t("rumi.link.delete")
+  confirm = t("rumi.message.confirm.delete")
+%>
+<div class="area_contentsNav">
+  <div class="navBlock">
+    <div class="contentsNav">
+      <ul>
+        <li>
+          <%= link_to image_tag("/images/icon/add.png", alt: edit) + edit, edit_gw_edit_link_piece_path(@item.id) %>
+        </li>
+        <li>
+          <%= link_to image_tag("/images/icon/dele.png", alt: delete) + delete, gw_edit_link_piece_path(@item.id), data: {confirm: confirm, method: 'delete'} %>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,1893 @@
+en: 
+  # 最終更新日：2016/10/21
+  activerecord: 
+    models: 
+    attributes: 
+    errors:
+      models:
+        system/users_groups_csvdata:
+          attributes:
+            data_type:
+              inclusion: It can be entered only "group", "user"."
+            parent_id:
+              blank: Parent group of group membership or affiliation group can not be found.
+              parent_group_disabled: You can not state of the group membership to be assigned for the "invalid".
+            state:
+              inclusion: It is "Valid", can be entered only "invalid".
+              child_group_enabled: Child group state is "valid" or, if the user that belongs exists Please enter a "valid".
+              parent_group_disabled: Please enter the "invalid" If the status of belonging to a group is ""invalid".
+            ldap:
+              inclusion: The "Synchronous", can be entered only "asynchronous".
+            level_no:
+              inclusion: The "2", can be entered only "3".
+            category:
+              inclusion: It can be entered only "organization", "arbitrary".
+            job_order:
+              inclusion: The "Key role", "concurrently", can be entered only "provisional affiliation".
+              uniqueness: :rumi.system.user.job_order_0.message.unique
+            password:
+              blank: Please be sure to enter if LDAP is "asynchronous".
+            end_at:
+              blank: If the status is "invalid", "yyyy-mm-dd", please enter in the format of "yyyy / mm / dd".
+              invalid: State is left blank in the case of "effective" , after the start date , and please enter the date of today or earlier.
+            start_at:
+              invalid: Please enter today 's date or earlier .
+              blank: Please enter in the format of "yyyy-mm-dd", "yyyy / mm / dd" is.
+      template:
+        header:
+          one: "There is an error in the input content."
+          other: "There is an error in the %{count} number of input content."
+        body: "Please check the following items."
+  activemodel:
+    attributes:
+      rumi_helper/csv_form:
+        nkf: Character code
+        file: File
+    errors:
+      models:
+        rumi_helper/csv_form:
+          attributes:
+            nkf: :activerecord.errors.messages
+            file: :activerecord.errors.messages
+  will_paginate:
+    page_gap: …
+  rumi:
+    button:
+      new: Create new
+      edit: Edit
+      repeat_edit: Repeat edit
+      delete: Delete
+      repeat_delete: Repetitive bulk deletion
+      all_delete: Bulk Delete
+      all_download: Bulk Download
+      quote: Create with reference item
+      read: To read
+      search: Search
+      print: Print
+      picture: To register for a photo
+      update: Update
+      delivery: Delivery
+      draft: Save Draft
+      csv: CSV output
+      calendar: Calendar
+      upload: Upload
+      import: Import
+      reset: Reset
+      cancel: Cancel
+      close: Close
+      copy: Copy
+      save: Save
+      forward: Forward
+      forward_circular: Forward_Msessages
+      forward_bbs: Forward_bbs
+      forward_mail: Forward_mail
+      publish: Disclose
+      recognize: Approval pending
+      draftsave: Draftsave
+    link:
+      new: Create new
+      show: Detail
+      edit: Edit
+      delete: Delete
+      index: List
+      reply: Reply
+      reply_all: Reply to all
+      gwcircular_forward: Forward(Msessages)
+      gwbbs_forward: Forward(Bulletin Board)
+      mail_forward: Forward(Email）
+      copy: Replicate
+      download: Save
+      print: Print
+      open: Deployment
+      publish: DIsclose.
+      close: Private
+      recognize: Approval
+      enabale: Activation
+      disable: Invalidation
+      up: To top
+      sort_asc: ▲
+      sort_desc: ▼
+      comment_seen: The comment to read
+    back_link:
+      return: Back to the list
+      return_show: Back to detail
+      config: Back to the personal setting
+      admin: Back to the administrator setting
+      gwboard_admin: Return to the management list
+      user: Back to user details
+      select: Back to the process selection
+      profile: Back to profile
+      show: Back to detail
+    submit:
+      create: Confirm
+      update: Determine
+      delete: Delete
+      add: add to
+      edit: To edit
+      change: Change
+    state:
+      enabled: Effectiveness
+      disabled: Invalid
+      parmit: Permit
+      improper: Not available
+      synchro: Synchronism
+      asynchro: asynchronous
+      unread: Unread
+      already: Already read
+      open: Disclose.
+      close: Private
+      deleted: Deleted
+      use: Confirm
+      unuse: Cancel
+      internal: Internal
+      external: External
+      view: Display
+      hidden: Hide
+      draft: Save Draft
+      recognize: Approval pending
+      recognized: Public waiting
+      completed: Completion
+      public: Delivery settled
+      public_end: Expiration
+      public_limit: Expired
+      preparation: Non-notification
+      still: It will deliver
+      need: Necessary
+      unneed: Unnecessary
+      optional: Optional
+    search:
+      all: All
+      result: Search Results
+    select:
+      all: :rumi.search.all
+      no_limit: No limit
+    attach_list:
+      open: Open▼
+      close: Close▲
+    calender_date_select:
+      format_js: "format_english.js"
+      locale_js: "en.js"
+    strftime:
+      date2: "%d %b %Y"
+      date3: "%d %b"
+      schedule_weekday_mode: el
+      year: Year
+      month: Month
+      day: Day
+      hour: Time
+      min: Minute
+    week:
+      sun: Sun.
+      mon: Mon.
+      tue: Tues.
+      wed: Wed.
+      thu: Thur.
+      fri: Fri.
+      sat: Sat.
+      sunday: Sunday
+      monday: Monday
+      tuesday: Tuesday
+      wednesday: Wednesday
+      thursday: Thursday
+      friday: Friday
+      saturday: Saturday
+    ajax:
+      message:
+        no_hit: There is no appropriate candidate.
+        error: An unknown error has occurred.
+    message:
+      required: ※ is a required item.
+      confirm:
+        delete: It can not be undone the deletion. Are you sure that you want to delete ?
+        schedule_prop_delete: ※Multiple facilities are reserved . All of the facility reservation will be deleted .
+        other_user_delete: ※This plan is , other than you of the participants have been registered . It will be removed from the schedule of all participants .
+        repeat_delete: ※It should be noted, including this schedule, so will remove all of the schedule registered in [repeat Yes], please note.
+        group_no_select: Affiliation has not been selected.
+        user_no_select: The user has not been selected.
+        board_page_move: If you have not saved , the contents of the editing will be lost .
+        copy: Are you sure you want to duplicate this article
+      notice:
+        create: The registration process has been completed .
+        create_fail: It failed in the registration process .
+        update: Update process has been completed
+        update_fail: It failed to update process .
+        delete: The removal process is now complete .
+        delete_fail: It failed to delete processing .
+        delete_setting: Delete setting has been completed.
+        publish: Publishing process has been completed.
+        publish_fail: It failed in the publishing process.
+        close: Private processing has been completed.
+        close_fail: It failed to private treatment.
+        rebuild: Rebuilding process has been completed.
+        rebuild_fail: It failed to re-build process.
+        recognize: Approval process has been completed.
+        recognize_fail: It failed to approval process.
+        copy_fail: It failed to replicate
+      getting: "It is being acquired."
+      empty:
+        list: There is no content to be displayed.
+      disable_with: Processing
+      all_delete_valid: Please put a check in the object to be read.
+      forward_message:
+        gwcircular:
+          mail_forward_message_1: Transfer (message → E-mail) is being processed.
+          mail_forward_message_2: If there is a file attachment, it may take some time.
+          mail_forward_message_3: Please wait.
+          gwbbs_forward_message_1: Transfer (message → bulletin board) is being processed.
+          gwbbs_forward_message_2: If there is a file attachment, it may take some time.
+          gwbbs_forward_message_3: Please wait.
+          title: Title：
+          create_date: Date and time of creation
+          creator: Author：
+          forward: Forward：
+        gwbbs:
+          gwcircular_forward_message_1: Transfer (bulletin board → message) is being processed.
+          gwcircular_forward_message_2: If there is a file attachment, it may take some time.
+          gwcircular_forward_message_3: Please wait.
+          mail_forward_message_1: Transfer (bulletin board → E-mail) is being processed
+          mail_forward_message_2: If there is a file attachment, it may take some time.
+          mail_forward_message_3: Please wait.
+          title: Title：
+          create_date: Date and time of creation
+          creator: Author：
+          forward: Forward：
+      board_auth:
+        admin1: All of the people to which they belong will be administrator.
+        admin2: The person who is designated will be the administrator.
+        editor1: You can create new / editing of articles .
+        editor2: Automatically viewing rights will also be granted.
+        editor3: Editing rights to the person who is designated is granted.
+        reader1: Viewing rights to the person who is designated is granted.
+      sort_message: ※It will be displayed in ascending order of numerical value.
+      ldap_use_password: ※This is not required if you do LDAP synchronization.
+      incorrect_call: Call is invalid.
+      schedule_header:
+        d_nil: Please set the d / @ st_date before piece_header call
+        s_genre_nil: Please set the params[:s_genre] before piece_header call .
+      freeze_screen:
+        loading: NotesLoading
+      image:
+        no_image: Other than the image can not be uploaded.
+        no_jpeg_image: Other than the jpeg image can not be uploaded.
+        fail_mkdir: Failed to create directory.
+        no_file: Please select the attached image file.
+      site_yml: Please review the setting of site.yml.
+      data_error: Data is abnormal.
+    label:
+      all_check: Select all
+      all_uncheck: Cancel
+      delete: Delete
+      marker_example: Legend：
+      marker_important: Important must-read
+      marker_link: With attachments
+      marker_comment: Comment is allowed
+      admin_group_setting: Management affiliation
+      admin_setting: Administrator
+      editor_group_setting: Edit affiliation
+      editor_setting: Editor
+      reader_group_setting: View affiliation
+      reader_setting: Viewers
+      other: Other
+    paginate:
+      back_page: Previous page
+      next_page: Following page
+    upload:
+      file_select: File designation
+      drag_and_drop_fail_ie8: This feature can not be used in Internet Explorer 8.
+    login:
+      title: Login - ENISYS
+      name: Login
+      th:
+        user_id: User ID
+        password: Password
+      message:
+        login_fail: Please enter a user ID ・ password correctly
+    logout:
+      name: Log out
+    portal:
+      link: Link
+    reminder:
+      name: What's New
+      count: Number
+      total_count: "All %{total_count} results"
+      overflow_count: "Other %{overflow_count} results"
+      delimiter: ・
+      feature:
+        bbs:
+          name: Bulletin Board
+          action:
+            open: It has been published.
+            update: It has been updated.
+            reply:
+              comment: comment has been 
+              add: It has been added.
+        circular:
+          name: Messages
+          action:
+            create: It was created.
+            update: It has been updated.
+            reply:
+              comment: comment has been 
+              add: It has been added.
+        mail:
+          name: Email
+          action:
+            receive: It was received.
+        schedule:
+          name: Event Schedule
+          action:
+            create: It was created.
+            update: It has been updated.
+            delete: It has been deleted.
+        schedule_prop:
+          name: Facility Reservation
+          action:
+            create: It was created.
+            update: It has been updated.
+            delete: It has been deleted.
+        doclibrary:
+          name: Documents
+          action:
+            approve: It was approved.
+            request: I received the approval request.
+      datetime: Date and time
+      title: Overview
+      sort_asc: ▲
+      sort_desc: ▼
+      all_seen: Set all items already-read
+    top_page:
+      name: Top Page
+    link_piece:
+      name: :rumi.config_settings.top_page.link_piece.name
+    link_piece_css:
+      name: Link piece apply CSS editing
+    bbs:
+      name: :rumi.reminder.feature.bbs.name
+      expiry_date_message: If you do not set a public end date and time , please empty the date of the publication end date and time manually .
+      csv_fields:
+        record_id: Record id
+        title: Subject
+        doc_id: Reply id
+        status: Status
+        section_code: Affiliation code
+        section_name: Affiliation name
+        category_code: Classification code
+        category_name: Class name
+    circular:
+      name: :rumi.reminder.feature.circular.name
+      file_notice: The state of the attachment can be saved, even without pressing the "Confirm" button.
+      search_description: Search for items of the selected category(unread, read, etc).
+      comment: comment
+      sort_asc: ▲
+      sort_desc: ▼
+      spec_config_state:
+        only: Do not show the recipient other than the person
+        other_name: Display the names of all the recipients
+        other_all: To view the name and comment content of all recipients
+      csv_fields:
+        parent_id: Messages id
+        title: Title
+        doc_id: Reply id
+        status: Status
+        section_code: Reply Affiliation code
+        section_name: Reply Affiliation name
+        user_code: Reply's code
+        user_name: Reply's name
+        body: Comment
+        editdate: Reply date and time
+      custom_group:
+        name: Message destination list settings
+        message:
+          sort_update_success: Order update process of the destination list is now complete.
+        th:
+          sort_no: Alignment Sequence
+          name: Name
+          last_updated_at: Last Modified
+          state: Status
+          delivery_destination: Delivery destination setting
+    schedule:
+      table_title: User
+      name: :rumi.reminder.feature.schedule.name
+      private: Will there
+      button:
+        day: Day
+        week: Week
+        month: Month
+        list: List
+        print: Print
+        calendar: Calendar
+      link:
+        day: Day View
+        week: Week View
+        month: Month view
+        list: List
+      side:
+        group: Group
+        prop: Facility
+        search: Affiliation Search
+      line_box:
+        last_year: Previous year
+        last_month: Last month
+        last_week: Last week
+        today: Today
+        now_month: This month
+        next_week: Next week
+        next_month: Next month
+        next_year: following year
+      th:
+        st_at: Start date and time
+        ed_at: End date and time
+        title: Subject
+        place: Place
+        memo: Memo
+        creator: Author
+        created_at: Created date
+        updater: Latest Updater
+        updated_at: Last updated
+        inquire_to: Phone number
+        public: Disclose
+        public_group: Target affiliation
+        users: Participant
+        time_tbt: Time TBD
+        undecided: Undecided
+        allday: All day
+        repeat: Repetition period
+        repeat_time: Time
+        prop: :rumi.reminder.feature.schedule_prop.name
+        prop_name: Facility name
+        inquire_to: Phone number
+        owner_uid: Setting the reservation personnel →
+      no_auth:
+        head: Participant
+        tail: Because there is no schedule authority against, you can not do the editing, quote creation and deletion, etc.
+      repeat:
+        head: Repetition is scheduled.
+        body: ～
+        tail: It has been repeated until the 
+      print: Print
+      summary: Schedule details
+      schedule_user:
+        state: Status
+        state_unread: :rumi.state.unread
+        state_already: :rumi.state.already
+        add_user: Participant's name
+        already_at: Confirmation date and time
+      schedule_title:
+        time_no_set: 
+        time_all: All day
+        time_undecided: Time TBD
+      public_group:
+        no_limit: :rumi.select.no_limit
+        delete_group: Delete affiliation
+      public:
+        open: Disclose
+        group: In affiliation (of the participants and target)
+        close: Private (participants only)
+      tooltip:
+        title: Subject
+        place: :rumi.schedule.th.place
+        memo: :rumi.schedule.th.memo
+        inquire_to: Contact information
+        public: Disclosure range
+        users: :rumi.schedule.th.users
+        prop: Facility
+      message:
+        valid: Designation is strange.
+        fraud: Invalid call
+        check_ed_at: Please check the end time before saving.
+        deleted_schedule: This schedule is deleted schedule
+        no_users: No participant is selected
+        no_users_or_props: Participants or Facility has not been selected yet.
+        use_prop_time_select: Please specify the time to book a facility
+        ed_at_vlaid: End date and time, please enter the date and time after the start date and time
+        select_st_at: Please specify a start date and time
+        select_ed_at: Please specify the end date and time
+        blank: There is a free
+        dup: It contains the following schedule
+        repeat_select: Please check the repeat day of the week.
+        rule: Rule
+        multiple:
+          prop: Multiple facilities are reserved
+          prop_edit: Please perform the editing If you do not want to delete all .
+          user: Multiple participants are reserved . Please perform the editing If you do not want to delete all .
+        success:
+          action:
+            create: Item was confirmed.
+            update: Edit the schedule.
+            update_repeat: The repeat schedule was bulk editing .
+            delete: It was deleted appointments .
+            delete_no_auth: For the participants , including the rights of users who need to schedule registration , it does not allow deletion of the plan .
+            delete_repeat: The repeat schedule was bulk delete .
+            delete_repeat_no_auth: To include the rights of users who need to schedule registered participants , can not be performed repeatedly bulk delete appointments .
+            already: It was scheduled to read .
+        address_format: Because the address format is in its own format , it may not be transferred .
+      error_message:
+        prop_other_reservation_conflict_datetime: "End date and time conflicts with another scheduled . Please enter a different schedule time ."
+        prop_other_reservation_conflict_date: "EEnd date will not conflict with other plans . Please enter a different schedule time ."
+      submit:
+        new_confirm: Create a schedule . Is it OK?
+        edit_confirm: Edit the schedule . Is it OK?
+        repeat_edit_confirm: And bulk edit repeat schedule . Is it OK?
+        create: Schedule is being created .
+        edit: Schedule is being edited .
+        repeat_edit: Schedule is in bulk editing .
+      setting_ind:
+        name: Personal Settings menu
+        update: We changed the schedule .
+      import:
+        name: Schedule import
+        value:
+          no_title: No subject
+        message:
+          file: Please enter a file name .
+          no_end_at_repeat: Repeat with no end date specified plan can not be registered .
+          blank_repeat: Recurring event there interval can not be registered .
+          fail_repeat: Every day , repeat schedule other than every week can not be registered .
+          success: The import process is now complete .
+          result: ------results-----
+          invalid_result: ------invalid_results-----
+          effectiveness: Effectiveness
+          invalid: Invalid
+          effectiveness_tail: Register the matter,
+          invalid_tail: It has been ignored
+          ical:
+            not_extname: Extension is different from the one of the ical format . Extension Please specify the file of "ics" it is .
+            not_read: Failed to parse the iCal format
+            not_calendar: Calendar data could not be found .
+            overlap: Already since the same schedule is registered , it can not be registered .
+          csv:
+            not_extname: Extension please be different from the one of the CSV format extension specifies a file of "csv" .
+            create_fail: Line appointments could not be registered is 
+            mismatched: This CSV file is not appropriate to import .
+      use_form_at_script: form_at_script_en
+      use_form_script: form_script_en
+    schedule_list:
+      name: Schedule List
+      search:
+        all: :rumi.search.all
+        later_this_month: All later this month
+        year: 　
+        month: ""
+      list:
+        title: Schedule List
+      output:
+        count: Number of output
+        count_num: Number
+        csv: CSV (MS Outlook) format export
+        ical: iCal format export
+      user_out: Remove from participants
+      th:
+        day: Date
+        st_at: Start time
+        ed_at: Ending time
+        title: Subject
+        public: Disclose
+        memo: Memo
+        place: Place
+        users: Participant
+      public:
+        state_1: Disclose
+        state_2: In affiliation
+        state_3: Private
+      delete_confirm: Remove from the participants of the following schedule .
+      message:
+        no_target: The target has not been selected .
+        delete_error: Can not be deleted . Again , please perform the work .
+        past_schedule: There is a past scheduled .
+        retry: Again , please perform the work .
+        system_error: Please refer to the contact There is a problem with the administrator in the system .
+        show_list: Check from the display of the list.
+        delete:
+          body: of
+          tail: It has been removed from the schedule of 
+        no_delete:
+          message: from the plan of the matter, it was not removed
+          no_editor: ※It can not be removed from the schedule for the schedule unauthorized user .
+          one_user: ※Participants can not be removed from one of the schedule .
+      csv:
+        title: Subject
+        st_at: Start date
+        st_time: Start time
+        ed_at: End date
+        ed_time: Ending time
+        all_day: All-day event
+        memo: Content
+        place: Place
+        alarm: Alarm on / off
+        alarm_date: Alarm date
+        alarm_time: Alarm time
+    schedule_prop:
+      name: :rumi.reminder.feature.schedule_prop.name
+      th:
+        name: Name
+        admin_group: Management affiliation
+      form:
+        add_user_comment: Optional when reserving facility
+        add_prop_comment: We are showing items that can be booked from "end date" to "start date".
+      submit:
+        new_confirm: Confirm the facility reservation.Is it OK?
+        edit_confirm: Edit the facility reservation. Is it OK
+        repeat_edit_confirm: And bulk edit repeat facility reservation . Is it OK?
+        create: This facility reservation registration in .
+        edit: Facility reservation is being edited .
+        repeat_edit: Facility reservation during bulk edit .
+      message:
+        valid: :rumi.schedule.message.valid
+        date_valid: Date is abnormal 
+    schedule_user:
+      view:
+        all: :rumi.search.all
+        user: User
+        group: Affiliation
+    prop: Facility
+    prop_other:
+      name: Master of Facility
+      menu:
+        prop_other: :rumi.prop_other.name
+        prop_other_limit: Facility master number restriction
+        prop_type: Facility type master
+        prop_admin_setting: Setting continuous booking period and time
+        import: Facility master import
+        export: Facility master export
+        prop_group_setting: Facilities group setting
+        prop_group: Facilities group master
+      search:
+        all: :rumi.search.all
+        type_group: Type group
+        admin: Facility management affiliation
+      th:
+        state: Reservation
+        sort_no: Alignment Sequence
+        type: Category
+        name: Name
+        comment: Remarks
+        d_load_st: Use start date
+        d_load_ed: Use end date
+        limit_month: Reservations possible date
+        limit_month_tail: months in advance to be booked
+        created_at: Created date
+        updated_at: Updated Date
+        admin: Facility management affiliation
+        editor: Reservations possible affiliation
+        reader: Introduce possible affiliation
+      upload:
+        message: Attach the image to this facility .
+        file_select: :rumi.upload.file_select
+        file_comment: File Remarks
+        th:
+          image: Image
+          name: File name
+          comment: Remarks
+          type: File type
+          size: Size (width x height)
+      import:
+        message: The import of the CSV file , you can register the facility master .
+        file_select: The target file
+      message:
+        limit_month: ※Until the end of the specified number of months, it will enable reservation.
+        csv:
+          file: Please enter a file name.
+          type_error: Extension please be different from the one of the CSV format extension specifies a file of " csv ".
+          undefined_type: No facility type has been specified .
+          col_count_error: There is an error in the number of items .
+          success: :rumi.schedule.import.message.success
+          result: :rumi.schedule.import.message.result
+          effectiveness: :rumi.schedule.import.message.effectiveness
+          invalid: :rumi.schedule.import.message.invalid
+          effectiveness_tail: :rumi.schedule.import.message.effectiveness_tail
+          invalid_tail: :rumi.schedule.import.message.invalid_tail
+        errors:
+          inport_limit_over: Beyond the limit on the number of per set affiliation I am trying to register . Please increase the limit .
+          input_limit_over: Beyond the limit on the number of per- affiliation , which is set at the facility master number limit has been trying to register . Please register Increase the limit of affiliation (%{group_names}).
+    prop_other_limit:
+      name: :rumi.prop_other.menu.prop_other_limit
+      th:
+        group: Affiliation
+        limit: Limit the number of
+        sum: Total
+      synchro: Synchronous processing
+      message:
+        valid_new: You can not new registration .
+        synchro_success: Synchronization process has ended .
+    prop_type:
+      name: :rumi.prop_other.menu.prop_type
+      th:
+        type: Category
+        sort_no: Alignment Sequence
+    prop_admin_setting:
+      name: :rumi.prop_other.menu.prop_admin_setting
+      th:
+        name: Setting name
+        type: Category
+        span_limit: Continuous online booking period
+        span_hour: Continuous online booking time
+        group: Affiliation
+        limitless: Limitless
+        day: Day
+        hour: Hour
+      message:
+        span_limit: The upper limit of the repetition can be reserved period in a single schedule registration
+        span_hour: The upper limit of the possible time book with 1 schedule
+    prop_group:
+      name: :rumi.prop_other.menu.prop_group
+      th:
+        name: Facility group name
+        parent_group: Parent facility group name
+        sort_no: Alignment Sequence
+    prop_group_setting:
+      name: :rumi.prop_other.menu.prop_group_setting
+      th:
+        name: Name
+        related_facility: Related facility
+    holiday:
+      name: Holiday management
+    user:
+      name: User management
+      th:
+        user_id: User ID
+        ldap: LDAP synchronization
+        state: Status
+        name: Name
+        kana: Phonetic
+        name_en: Name(English)
+        password: Password
+        email: Email address
+        sort_no: Alignment Sequence
+        official_position: Position
+        assigned_job: Responsible
+        group: Affiliation
+      search:
+        condition: Search condition
+        group: :rumi.user.th.group
+        ldap: :rumi.user.th.ldap
+        state: :rumi.user.th.state
+        user_id: :rumi.user.th.user_id
+        name: :rumi.user.th.name
+        email: :rumi.user.th.email
+      message:
+        message: View of user information , to register and edit.
+        destroy: Delete is the state of the user and organization information to "invalid", and the no login .
+        new: :rumi.users_group.message.note
+        affiliation_situation: Current affiliation situation
+        group_select: Please specify the user belongs to be registered .
+      profile:
+        user_profile:
+        name: Profile
+        upload_name: Profile Photo
+        upload_title_name: Profile Upload photos
+        upload_message: Attach the photo to be displayed in this user's profile .<br /> If you have already there is a photo , you replaced the photo .
+        upload_item: File designation：
+        upload_note: File Remarks：
+        upload_size: Size (width x height)
+        success_message:
+          upload_create: Add to was successful .
+          upload_delete: Deleted successfully .
+        th:
+          path: Image
+          file_name: File name
+          note: Remarks
+          type: File type
+          size: Size (width x height)
+    group:
+      name: Affiliation management
+      th:
+        group_id: AffiliationID
+        name: Affiliation name
+        name_en: Affiliation name(English)
+        email: :rumi.user.th.email
+        sort_no: Alignment Sequence
+        category: Organization and any
+        start_at: Application start date
+        end_at: Applicable end date
+        level_no: Hierarchy level
+        ldap: LDAPSynchronism
+        state: Status
+        parent: Higher affiliation
+      message:
+        message: View of affiliation information, to register and edit.
+        destroy: Or delete the user belongs , when there is a valid affiliation at a lower level , you can not . <br /> Also , delete , and set an end date , you only need to change the state to "invalid" . Re- use of the ID can not be . So please be careful .
+        delete_fail: Whether the user is a member, when there is a valid belong to the lower-order, it can not be disabled.
+    users_group:
+      name: User and Affiliation management
+      th:
+        user_id: user
+        group: :rumi.user.th.group
+        official_position: :rumi.user.th.official_position
+        start_at: Assigned start date
+        end_at: Assigned end date
+        job_order: Full - time - concurrently
+        state: Status
+      message:
+        destroy: Delete removes the affiliation information of the user .
+        edit: Editing is but can not be updated affiliation information if the user of the state of a disabled can view the edit screen .
+        note: Is can be user selected in such a schedule, "if the organization group has been assigned to a group of hierarchical level 3" or <br /> "has been assigned to the group of the hierarchy level 2 and 3 if any group." , and the state will only enable the user.
+        unregistered_user: Not registered users
+        unregistered_grup: Unregistered affiliation
+      button:
+        new: Additional affiliation information
+    csv:
+      name: User belongs shelf registration
+      message:
+        message: Do the bulk registration of users and affiliation information in CSV.
+        error_file: Error location postscript
+        import: It has been successfully imported.
+        error: Please unexpected error is to check the file contents and the character code that has occurred .
+        inadequacy: There is a deficiency in the CSV information .
+      th:
+        id: ID
+        level_no: Hierarchy level
+        type: Category
+        ldap: LDAPSynchronism
+        state: Status
+        name: Name
+        name_en: Name(English)
+        parent: :rumi.group.th.group_id
+        category: :rumi.group.th.category
+        job_order: :rumi.users_group.th.job_order
+        password: :rumi.user.th.password
+        email: :rumi.user.th.email
+        sort_no: :rumi.user.th.sort_no
+        official_position: :rumi.user.th.official_position
+        assigned_job: :rumi.user.th.assigned_job
+        start_at: Start date
+        end_at: End date
+        add_column1: additional item1
+        add_column2: additional item2
+        add_column3: additional item3
+        add_column4: additional item4
+        add_column5: additional item5
+      csv_type:
+        utf8: UTF8
+        sjis: SJIS
+      data_type:
+        group: Affiliation
+        user: User
+      feature:
+        output:
+          name: CSVOutput
+          message:
+            note: The output target , please run to select the character code that will be output in the specified character code .
+        input:
+          name: CSV temporary registration
+          message:
+            note: It temporarily registered the CSV data . <br />At this point , will be reflected to the actual data is to run the CSV this registration will not be registered . <br />It should be noted that , when you perform this operation , so will remove all current CSV file and the character code .
+        index:
+          name: CSV provisional data confirmation
+        save:
+          name: CSV registration
+          message:
+            note: For CSV provisional data , and officially registered as a user and group information . Information of the current user and group will be overwritten . <br />In addition , in the current user , users and groups that do not exist in the CSV provisional data
+            help: Register the CSV provisional data as the actual user information . The current user information will be overwritten .
+            errors:
+              not_included_system_admin_user: State is a user with administrator privileges on the valid management screen is not included in the provisional data .
+      file_name: User belonging information
+    user_profile:
+      name: Profile item management
+      message:
+        message: Configure the settings of the profile item .
+    ldap:
+      name: LDAP Reference
+      message:
+        message: Make a reference to the LDAP information that are currently registered .
+        connect: It can be connected , which we confirmed the connection to the LDAP server .
+        connect_fail: Unable to connect to the LDAP server .
+      th:
+        group: Affiliation
+        user: User
+    ldap_temporary:
+      name: LDAPSynchronism
+      menu:
+        temporary: Intermediate data
+        test: Communication test
+        synchro: Synchronous processing
+      th:
+        version: version
+        created_at: Created date
+      message:
+        message: Make the creation of the LDAP synchronization of the intermediate data .
+        connect: :rumi.ldap.message.connect
+        connect_fail: :rumi.ldap.message.connect_fail
+        before_create: You create an intermediate data .
+        create: It has created an intermediate data .
+        delete: The intermediate data has been deleted .
+        synchro_start: To start the synchronization process in the intermediate data you are currently viewing .
+        synchro: The synchronization process has completed .
+    role:
+      name: Administrator user settings
+      setting:
+        name: :rumi.role.name
+        message: Make the administrator user settings .
+      th:
+        user: User
+        group: Affiliation
+      message:
+        overlap: A duplicate of those registered .
+    priv_name:
+      name: Target permission settings
+      th:
+        state: Status
+        display_name: Authority subject name
+        priv_name: Authority code
+        sort_no: Alignment Sequence
+    role_developer:
+      name: Developers authority setting
+      class_id:
+        all: :rumi.select.all
+        user: User
+        group: Affiliation
+    role_name_priv:
+      name: Function permission settings
+    role_name:
+      name: Function name setting
+    custom_group:
+      name: Custom group setting
+      name_admin: Custom group setting(Management)
+      message:
+        sort_update_success: Order process of updating the custom group has been completed .
+        synchro: Synchronization of custom group has been completed .
+      th:
+        state: Status
+        default: Default
+        default_message: To set the default group .
+        name: Name
+        name_en: Name(English)
+        sort_no: Alignment Sequence
+        edit_group: Management affiliation
+        editor: Administrator
+        schedule_read_group: View affiliation
+        schedule_reader: Viewers
+        associate: User to display
+        associate_user:
+          th:
+            sort_no: Alignment Sequence
+            name: Family and First Name
+            delete: Delete
+    item_delete:
+      message:
+        cron: ※To carry out the removal process , you must have the cron settings .
+      th:
+        limit_date: Elimination Target
+      gwcircular:
+        name: Circulation version Delete setting
+        th:
+          limit_date_message: Remove the expiration of the circulation that elapsed .
+      gwbbs:
+        name: Bulletin board article Delete setting
+        th:
+          id: Control number
+          sort_no: Alignment Sequence
+          title: Title
+          status: status
+          view: Display List
+          public: Published Articles
+          void: Expired
+          auto: Auto Delete
+          delete: Delete
+          use: Confirm
+          limit_date_message: Delete the elapsed expired article
+        link:
+          cron: Delete Settings
+          now: Directly Delete
+        message:
+          cron: Set the deletion period .
+          now: Administrator , and then perform the deletion in immediately .
+      schedule:
+        name: Schedule Delete setting
+        th:
+          limit_date_message: Delete the course schedule
+    access_log:
+      name: Access analysis
+      th:
+        start_at: Narrowing the start date and time
+        end_at: Narrowing the end date and time
+        date: Access date and time
+        ip_address: IPaddress
+        user_id: UserID
+        user_name: User name
+        feature_name: Function name
+      category:
+        login: Login
+        logout: Log out
+      at: From
+      functional_access: Functional amount of access
+      date_select_miss: Designation of narrowing the start date and time and narrowing the end date and time is incorrect .
+      use_form_at_script: form_at_script_en
+    login_image:
+      name: Login screen background image settings
+      message: Set the background image of the login screen.
+    config_settings:
+      base:
+        setting:
+          name: Basic configuration
+        ind: Personal Settings
+        admin: Administrator Settings
+        header: Settings
+      mail:
+        header: Mail setting
+        setting:
+          list: Mail list display settings
+          read: Mail Preview settings
+          send: Email transmission settings
+          receive: Email reception setting
+          label: Label Settings
+          sys_address: Organization Address Book Settings
+          private_address: Personal Address Book Setting
+          public_address: Shared Address Book Settings
+          switch_user: Switching user settings
+          admin:
+            addresses: Individual and shared address book settings
+            address_control: Shared address book management authority setting
+            attack_mail: Targeted attack Email settings
+            all_webmail_setting: Incoming mail display settings
+        explain:
+          list: You can change the display method in the e-mail list screen .
+          read: You can change the display format when opening the email .
+          send: You can change the settings at the time of e-mail 
+          receive: You can change the auto- check interval for new mail in the mail receiving screen .
+          sys_address: You can change the order of the organization address book .
+          private_address: You can change the order of the personal address book .
+          public_address: You can change the order of the shared address book .
+          label: You can change or add the label .
+          switch_user: You can make changes and additions of switching users .
+          admin:
+            addresses: You can change the use and display of the list item at the time of contact registration .
+            address_control: You can change the administrator setting of the shared address book .
+            attack_mail: Domain regarded as a targeted attack e-mail , you can set the extension of the attached file .
+            all_webmail_setting: You can change the initial display settings for incoming mail.
+      role:
+        setting:
+          name: :rumi.role.name
+          message: :rumi.role.setting.message
+      admin_message:
+        header: Notifications
+        explain: Notice to be displayed is up to two . When ordering is the same , it will be displayed in descending order of the update date and time .
+        th:
+          view: Display
+          sort_no: Alignment Sequence
+          message: News content
+          updated_at: Updated Date
+        view1: Confirm
+        view2: Cancel
+        sort_no:
+          explain: ※It will be displayed in ascending order of numerical value.
+      edit_link_piece:
+        th:
+          published: Disclose
+          state: Status
+          sort: Alignment Sequence
+          name: Display name
+          link_url: Destination URL
+          class_external: The destination segment
+          class_sso: SSO use
+          field_account: Account item name
+          field_pass: Password item name
+        level_no:
+          l1: TOP
+          l2: piece
+          l3: block
+          l4: Link
+      user_and_group:
+        add:
+          name: add to →
+          smart_name: add to　↓
+        remove:
+          name: ← Delete
+          smart_name: ↑ Delete
+      user_profile_setting:
+        name: Profile item management
+        title_item: item name
+        title_used: Use
+      auto_delete:
+        setting:
+          name: Delete Settings
+        schedule:
+          name: Schedule Delete setting
+          message: It performs automatic deletion setting of past schedule .
+        gwbbs:
+          name: Bulletin board article Delete setting
+          message: It performs automatic deletion setting of expired articles in the bulletin board . Remove Selected the bulletin board is also available .
+        gwcircular:
+          name: Circulation version Delete setting
+          message: It performs automatic deletion setting of expired articles in the message .
+      access_log:
+        setting:
+          name: Access analysis
+          message: It displays the functional access the amount of the specified period .
+      scheduler:
+        holiday:
+          name: Holiday management
+          message: Make a public holiday settings .
+        pref_executive:
+          name: Mayor and Vice Mayor Zaicho display settings
+          message: Make a presence display setting of the mayor , deputy mayor .
+          page_title: Mayor and Vice Mayor attended the display management
+        pref_director:
+          name: Superintendent presence display settings
+          message: Make a presence display settings of education length .
+          page_title: Superintendent presence display management
+        scheduler:
+          name: Schedule settings
+          message: Week the beginning of the change ( Sunday or Monday ) , you can set the presence or absence of the display of the location , the presence or absence of the display at the top page screen , change the display method (the whole display or Fewer ) .
+        schedule:
+          month_start: Month view of the start day of the week
+          view_place: Display location of .
+          view_place_info: Displays in the day, week, month display and tool tip.
+          view: Display
+          not_view: Do not show
+        custom_group:
+          name: Custom group setting
+          message: You can set the group to be displayed in the schedule to each person .
+          admin_message: All agency executives , affiliation executives , etc. , to set the custom group to be used in common .
+        import:
+          name: Import
+          side_name: :rumi.schedule.import.name
+          message: CSV (MS Outlook) format , and the iCalendar format of the file can be imported .
+          view_message: The import of the CSV file , you can re-register if correct the error and outputs the result error in the CSV.
+          file: The target file
+          file_type: file format
+          csv: CSVFormat
+          ical: iCalFormat
+          csv_message: _"CSV format" is, "CSV (MS Outlook) format export" and the schedule list screen , only supports CSV acquired in CSV export of Yahoo! Calendar .
+          ical_message: Extension of "iCal format" is ".ics" .
+        export:
+          name: Export
+          side_name: Schedule export
+          message: You can export the file of iCalendar format .
+          confirm: Are you sure you want to export ?
+        toppage_display_setting:
+          name: Top page display setting 
+          view: Display
+          not_view: Do not show
+        title_display_setting:
+          name: Schedule subject display settings 
+          display_all: Display all
+          display_not_all: Partly Display
+        schedule_role:
+          name: Schedule permission settings
+          message: To set the registration , editing, quote creation and deletion authority of the schedule for the specified user .
+      prop:
+        title: Facility reservation setting 
+        prop_other:
+          name: :rumi.prop_other.menu.prop_other
+          message: Configure the settings of the facility .
+        prop_other_limit:
+          name: :rumi.prop_other.menu.prop_other_limit
+          message: Configure the settings of the facility .
+        prop_type:
+          name: :rumi.prop_other.menu.prop_type
+          message: Configure the settings of the facility type .
+        prop_admin_setting:
+          name: :rumi.prop_other.menu.prop_admin_setting
+          message: To set the continuous booking period and time .
+        import:
+          name: :rumi.prop_other.menu.import
+          message: Object authority is a duplicate of those registered.
+        export:
+          name: :rumi.prop_other.menu.export
+          message: Make the export of the facility master in CSV format.
+        prop_group_setting:
+          name: :rumi.prop_other.menu.prop_group_setting
+          message: Make the setting to associate the facility groups and facilities.
+        prop_group:
+          name: :rumi.prop_other.menu.prop_group
+          message: Configure the settings of the facility group.
+      holiday:
+        table:
+          date: Date
+          name: Holiday name
+      schedule_role:
+        name: Schedule permission settings
+        th:
+          user: Audiences
+          user_group: Who belongs
+          auth_group: Authorization affiliation
+          auth_user: Grantor
+        message:
+          auth_group: All members who belong are set the management authority.
+          auth_user: Selected member will be set the viewing authority. <br /> <br /> ※Who is unnecessary setting
+          disable_user: Invalid user
+          no_select: Authorization affiliation or grantor has not been selected.
+      board:
+        setting:
+          name: Bulletin board set
+      gwbbs:
+        setting:
+          name: Bulletin board set
+          message: Configure the settings of the bulletin board.
+      gwcircular:
+        setting:
+          name: Messages setting
+          message: Configure the settings of the message.
+        custom_group:
+          name: Message destination list settings
+          message: Template of the destination list can be registered for each individual.
+      doclibrary:
+        setting:
+          name: Document management settings
+          message: Make the settings for the document management.
+      custom_group:
+        setting:
+          name: Custom group setting
+          message: You can set the group to be displayed in the destination list of the schedule and the circular to each individual.
+      top_page:
+        name: Top Page Setup
+        message:
+          name: :rumi.config_settings.admin_message.header
+          message: Notice to be displayed and set announcements to be displayed on the top page can be set up to two.
+        link_piece:
+          name: Share link set
+          message: Set up the shared link on the top page screen.
+      user_passwords:
+        name: Login password setting
+        action:
+          edit:
+            name: Change Password
+            message:
+              help: You can change the login password.
+              note: Please log in with a password after the change and transition to do the login screen <br /> password change or more alphanumeric mix of 8 characters
+              errors:
+                confirmation: Confirmation password does not match .
+      config:
+        setting:
+          name: Basic configuration
+    rumi_helper:
+      state:
+        enabled: :rumi.state.enabled
+        disabled: :rumi.state.disabled
+      preview: Preview
+      edit: Edit
+      submit:
+        update: Determine
+      csv_form:
+        file:
+          message:
+            invalid: Please specify the file of csv extension.
+        nkf:
+          message:
+            invalid: Please be the same as the character code of the file.
+    system:
+      user:
+        state:
+          message:
+            invalid: When the user to a non- management group group belongs can not be disabled .
+            has_uneditable_users_group: When the user to a non- management group group belongs can not be disabled .
+        job_order_0:
+          name: Key role
+          message:
+            unique: Please enter the concurrently or provisional affiliation for the user's key role has already been registered.
+        job_order_1:
+          name: Additional post
+        code:
+          message:
+            invalid: Alphanumeric characters, please as a half-period and single-byte underscores only of data.
+      group:
+        state:
+          message:
+            has_enable_child_or_users_group: Whether the user is a member, when there is a valid belong to the lower-order, it can not be disabled.
+      custom_group:
+        view_name: Custom group
+        sort_no: Alignment Sequence
+        name: Name
+        owner_group: Creating affiliation
+        owner_user: Author
+        updater: Latest Updater
+        updated_at: Last Modified
+        state: Status
+        search: Search
+        reset: Reset
+        setting:
+          name: Custom group setting
+        error:
+          head: Custom group
+          tail: It is possible up to 
+          sort: Please enter a numeric value.
+          relation: The order of the relevant user, please enter a number.
+          users: Please select a user to be displayed.
+    gwboard:
+      no_limit:
+        name: :rumi.select.no_limit
+        all_name: All of affiliation
+      message:
+        attached_file_not_found: Attached file could not be found .
+        image_limit: Extension of attachment GIF | is the total capacity of those of PNG | JPG.
+        temp_limit: The total capacity of the attached file except for the image file .
+        image_size_limit: Article is an image file size per one that can be attached to .
+        temp_size_limit: Article is an attached file size per one that can be attached to .
+        order_description: It will be displayed in ascending order of numerical value.
+        attached_word: Please select.
+        admin_choice: Please select a management affiliation , or administrator .
+        editor_choice: Please select the Edit affiliation , or editor .
+        reader_choice: Please select a browse affiliation , or visitors .
+        title_limit: Please enter no more than 140 characters.
+        capacity_message1: "Available capacity is %{capacity} we are about currently %{used} utilization utilization rate is about %{availability}"
+        capacity_message2: We have exceeded the limit . Or delete unwanted files , please contact the administrator .
+        image_capacity_message1: "Available capacity of the image file is %{capacity} . It is currently about %{used} to use . Utilization rate is about %{availability} ."
+        image_capacity_message2: "Available capacity of the image file is %{capacity} . It is currently about %{used} to use ."
+        max_file_message: "You can register up to 1 file %{file_size_max} MB."
+        image_max_file_message: "Image files can be registered up to 1 file %{file_size_max} MB"
+        tmp_capacity_message1: "Available capacity of the attached file is %{capacity}. About currently %{used} use . Utilization rate is about %{availability}."
+        tmp_capacity_message2: "Available capacity of the attached file is %{capacity}. About currently %{used} use ."
+        tmp_max_file_message: "Attachments , can be registered up to 1 file %{file_size_max} MB."
+        packet: ※If you are not in the packet flat-rate service, you may expensive communication charges may apply.
+        for_admin_form: "About currently %{used} use. Utilization rate is about %{availability}."
+      list:
+        bbstitle: Bulletin Board
+        doclibtitle: Document management
+        titles: Description
+        manager: Management affiliation
+        update: Date Modified
+        doc_no: Control number
+        bbstitle_name: Bulletin board title
+        doclibtitle_name: Document management name
+        update_date: Updated Date
+        sort_no: Alignment Sequence
+        status: Status
+        detail_show: Detailed confirmation
+        public_display: Publish screen >>
+        show_public_design: Public design verification >>
+      th:
+        status: Status
+        recognize: Approval function
+        listlines: List the number of rows
+        postperiod: Post period initial value
+        default_published: Circulation expiration date initial value
+        commission_limit: Circulation limited number
+        expirationdelete: Expired Delete setting
+        body_limit: Full article total capacity limit
+        image_limit: Image total capacity limit
+        temp_limit: Attached total capacity limit
+        image_size_limit: Image size limit
+        temp_size_limit: Attachment size limit
+        order: Order designation
+        use_description1: Use description
+        use_description2: (HTML format Allowed)
+        admin_group: Management affiliation
+        admin: Administrator
+        editor_group: Edit affiliation
+        editor: Editor
+        reader_group: View affiliation
+        reader: Viewers
+        between_day: days
+        people: 
+      attach_list:
+        open: :rumi.attach_list.open
+        close: :rumi.attach_list.close
+        upload_item: File designation：
+        upload_note: File Remarks：
+        regist: To register the file
+        message:
+          isIE8: This feature can not be used in Internet Explorer 8.
+    doclibrary:
+      name: :rumi.reminder.feature.doclibrary.name
+      docFileTitle: Document List
+      tmpFileTitle: Attachments List
+      rootfolder: Root folder
+      side:
+        public_list: Table of contents
+        draft_list: Draft List
+        recognize_list: Approval pending
+        recognized_list: Approved
+        keyword: keyword
+        group: Affiliation
+        creator: Author
+        created_at: Created date
+        search_start: From
+        search_end: To
+      th:
+        detail_creator: Author
+        detail_editor: Editor
+        update_at: Date Modified
+        tmpfile: Name of Attachment
+        remarks: Remarks
+        recognizer: Authorizer
+        download: Bulk Download
+        folder_selector: Select Folder
+        public: Disclose
+        foldername: Folder name
+        adminGroup: Affiliation management permission settings
+        adminUser: Personal management authority setting
+        readGroup: Affiliation Views permission settings
+        readUser: Personal viewing authority settings
+        section_code: Issuing affiliation
+        category1_id: folder
+        title: Title
+        description: Description
+        not_recognize: Unapproved
+        recognize_date: Approval date and time
+        line_limit: The number of display lines
+      category_order:
+        folder: Folder order ↓
+        section: Affiliation order ↓
+        date: By date
+      button:
+        new_file: Add File
+        new_folder: Add Folder
+        edit_folder: Folder editing
+        delete_folder: Folder Delete
+        edit_recognize: Approval Yes Edit
+        recognize: Approval
+        open: Disclose
+      submit:
+        public: Disclose
+        draft_save: Save Draft
+        recognize_wait: Approval pending
+        public_confirm: Publish . Is it OK?
+        recognize_confirm: Are you sure you want to accept the request ?
+        draft_confirm: And draft save. Is it OK?
+        f_create_confirm: Are you sure you want to folder registration?
+        f_edit_confirm: Are you sure you want to folder Modify ?
+        send: It is being published.
+        recognize: Approval is being requested .
+        draft: Draft is being saved
+        f_create: It is in the folder registration .
+        f_edit: It is in the folder modification.
+        save: Save Draft
+      file_folder_option:
+        label: File / folder operations
+        move: Move
+        copy: copy
+        open: Deployment
+        status_select:
+          public: Disclose
+          closed: Private
+      message:
+        attached_file_not_selected: Please select a file to download.
+        attached_file_not_found: Attached file could not be found .
+        file_name_too_long: Because the folder name , or file name is too long , it could not be created zip file .
+        cannot_create_zip_file: zip file could not be created .
+        concurrent_editing: Other users could not be updated because it is in editing.
+        private: If you change to "private", it will also be set the lower folders.
+        admin_group: All members who belong are set the management authority.
+        admin_users: To the person who is designated it is set to the management authority .
+        read_group1: To all those who belong it will be set viewing rights .
+        read_group2: It will be viewable unconditionally, If there is no setting.
+        read_user1: Selected member will be set the viewing authority.
+        invalid_user: "%{error_user} is disabled . Either remove , or a valid Please select a user.."
+        validate_title: Please enter.
+        validate_section_code: Please set
+        validate_category1_id: Not found.
+        validate_category_admin: You do not have administrative rights to the 
+        tree_level_limit: "You will not be able to create more than %{tree_level_no hierarchy ."
+        destroy_confirm1: ----------------------------------------------------------\n
+        destroy_confirm2: 【Caution】This can not be undone！\nPlease save the required data is always in advance! \n
+        destroy_confirm3: ----------------------------------------------------------\n\n
+        destroy_confirm4: "Remove the %{parent} folder. \nAre you sure you want will also delete all the files and folders under ?\n\n"
+        destroy_confirm5: ※"If you want to delete the file under the individual is , once ""cancel"" ,\n please click on the "" delete "" button that appears after you click on the title of each file."
+        valid_recognizer: Please select only users with the viewing rights to the
+        valide_admin_auth: Please set group management authority , or a private management authority .
+        valide_reader_auth: Please set group viewing rights , or the individual viewing rights .
+      drag_and_drop:
+        message:
+          move_file: It succeeded to the movement of the file .
+          copy_file: It succeeded to the copy of the file .
+          move_folder: It succeeded to move the folder .
+          copy_folder: It succeeded to a copy of the folder .
+          file_move_error: You could not move the file .
+          file_copy_error: The file could not be copied .
+          folder_move_error: It could not move the folder .
+          folder_copy_error: It was not able to copy the folder .
+          no_authority_to_edit_folder: Do not have editing rights to the folder .
+          src_move_file_not_found: Move the original file was not found .
+          src_move_folder_not_found: Move the original folder was not found .
+          dst_move_folder_not_found: Destination folder could not be found .
+          src_copy_file_not_found: Copy the original file was not found .
+          src_copy_folder_not_found: The source folder was not found .
+          dst_copy_folder_not_found: Destination folder could not be found .
+          attached_file_not_found: Attached file could not be found .
+          has_exceeded_capacity: We have exceeded the available capacity of the file
+          cannot_move_folder: Can not move the folder to the specified folder .
+          cannot_copy_folder: Can not copy the folder to the specified folder .
+          no_movement: The source and destination are the same folder .
+          over_level_move: Can not move for more than the upper limit of that can be created hierarchy .
+          over_level_copy: Can not copy for more than the upper limit of that can be created hierarchy .
+    gwbbs:
+      th:
+        doctitle: Subject
+        docmanager: Issuing affiliation
+        createor_user: Author
+        doccreatedate: Confirmed Date
+        docreleasedate: Publication date and time
+        docupdate: Last Modified
+        comment: Comment created
+        able_date: Disclosure start date and time
+        expiry_date: Disclosure end date and time
+        section_code: Issuing affiliation
+        name_type: Name to be displayed
+        name_editor_section_id: Affiliation to be displayed
+        importance: status
+        tmpfile: Attachment
+        oneline_comment: Single-line comment
+        body: Detail
+        recognize: Approval of the article
+      show:
+        section_code: Issuing affiliation：
+        detail_creator: Author
+        detail_editor: Editor
+        status: status：
+        expiry_date: Disclosure end date：
+        move_show: List
+        comment: comment
+        creator: Registered person
+        creat_date: Confirmed Date
+      side:
+        admin: Administrator
+        general: Settings
+        list_date: Disclosure items List
+        list_draft: Draft List
+        list_never: Pre-Disclose list
+        list_void: Expired
+        search:
+          kwd: keyword
+          group: Affiliation
+          creator: Author
+          startdate: Disclosure date
+      search_start:  from
+      search_end:  to
+      submit:
+        public_confirm: Disclose. Is it OK?
+        public_update_confirm: Recipient of state will return to all unread . \nAre you sure you want to re- published in the edited content ?
+        recognize_confirm: Are you sure you want to accept the request ?
+        draft_confirm: And draft save. Is it OK?
+        send: It is being published.
+        recognize: Approval is being requested .
+        draft: Draft is being saved
+        comment: Comment is being registered .
+      message:
+        delete_description: There is a matter public expired articles .
+        body_limit: This article body total capacity except for the attached file .
+        postperiod_word: months
+        comment: Please enter a comment .
+        regist_comment: It was registered to comment .
+        edit_comment: It was updated comment .
+        validate_num: Please enter one or more in number.
+        invalid_user: "%{error_user} is disabled . Either remove , or a valid Please select a user.."
+        invalid_body_limit: "Delete unnecessary articles article was %{body_size} bytes exceed the capacity limit of the body , please contact the administrator ."
+        validate_title: Please enter a title .
+        validate_title_space: Space only of the title can not be registered .
+        validate_title_limit: Title , please fill in less than 140 characters .
+        validate_category1_id: Please set
+        validate_section_code: Please select.
+        validate_expiry_date: Please check ( expiration date are likely to before the publication date ) 
+        lose_display: If you have not saved , the contents of the editing will be lost .
+        able_date: Please enter the public start date and time .
+        incorrect_able_date: Please enter the public start date and time correctly .
+        not_exist_able_date: Date and time that does not exist in the published start date and time you have is set .
+        expiry_date: Please enter a public end date and time correctly .
+        not_exist_expiry_date: Date and time that does not exist in the published end date and time you have is set .
+        startdate: Please enter publication date ( period start ) correctly .
+        enddate: Please enter publication date ( period end ) correctly .
+        not_exist_startdate: Date that does not exist in the publication date ( period start ) has been set .
+        not_exist_enddate: Date that does not exist in the publication date ( period end ) has been set .
+        not_title: Title is not registered .
+        bbs_fail: Or title is not specified, not the information has been published.
+        use_body_size: Full article usage
+        use_body_capacity : Full article utilization
+        byte: Byte
+        tail_message: is.
+        use_body_limit_near: It is approaching the limit.
+        use_body_limit_over: The limit has been exceeded.
+      select_item:
+        public: Now open
+        private: Private
+        view_show: Confirm
+        view_hide: Cancel
+        category_name: Classification
+        status:
+          importance: Important must-read
+          normal: Usually
+        oneline_comment:
+          use: use
+          unused: do not use
+        display_user:
+          user_name: User name only
+          section_code: Affiliation name only
+          both: User name and organization name
+        limit_line:
+          none: Cancel
+          day_1: 1 day
+          month_1: 1months
+          month_3: 3months
+          month_6: 6months
+          month_9: 9months
+          month_12: 12months
+          month_15: 15months
+          month_18: 18months
+          month_24: 24months
+        recognize_on: Approval Yes
+        recognize_off: Without the approval
+      download:
+        tmpfile: Bulletin board attachment
+      forward:
+        title: Transfer ( from the bulletin board )
+        circular: Forward(Msessages)
+        mail: Forward(Email)
+        entry_header: Destination bulletin board selection
+    gwcircular:
+      link:
+        seen: Confirmed.
+      th:
+        title: Title
+        body: Disclosed item
+        circular_limit: Available deadline date and time
+        importance: status
+        creator: Create item：
+        expiry_date: View deadline：
+        spec_config: Setting of receiver-side display
+        state: Status
+        target_user: Recipient name
+        comment: comment
+        tmpfile: Attachments
+        opendocdate: Confirmation date and time
+        createdate: Date and time of creation
+        editdate: Last Modified
+        charcode: Character code
+        createor_user: Author
+        circular_status: Status
+        csv: CSV file
+        attachment: Attachment
+        output: Output
+      attach_list:
+        list: Attachments List
+        title: Title
+        name: Name of Attachment
+        memo: Remarks
+      csv_export:
+        export: CSV output
+        description1: Please run Select the character code .
+        description2: The output target , and output in the specified character code .
+      file_export:
+        export: Attachments output
+        description1: Please run Select the character code .
+        description2: Each file name that is included in all of the attachments one to collectively output in the Zip format Zip file , and output in the specified character code .
+      search_start: From
+      search_end: To
+      submit:
+        public_confirm: To deliver . Is it OK?
+        public_update_confirm: Recipient of state will return to all unread (comments will remain) .\n Are you sure you want to re- delivered in the edited content ?
+        draft_confirm: And draft save. Is it OK?
+        send: It is being delivered .
+        draft: Draft is being saved
+        comment: Comment is being registered .
+      custom_group:
+        message:
+          blank: Please register the destination list in advance .
+          validate_readers: Please set the delivery destination .
+        states:
+          enabled: Effectiveness
+          disabled: Invalid
+        custom_select: Please register the destination list in advance .
+      message:
+        attached_file_not_found: Attached file could not be found .
+        file_name_too_long: Because the folder name , or file name is too long , it could not be created zip file .
+        cannot_create_zip_file: zip file could not be created .
+        comment: Please enter a comment .
+        already_update_error: Server is busy . Please perform the operation again after waiting for a while .
+        no_export_file: There is no output target of attachment .
+        validate_num: Please enter one or more in number.
+        validate_title: Please enter.
+        validate_title_space: Space only of the title can not be registered .
+        validate_title_limit: Please fill in less than 140 characters .
+        validate_body_limit: Reply content please fill in less than 140 characters .
+        validate_expiry_date: Please confirm. ( Expiration date is earlier than the creation date . )
+        validate_commission_limit: "The destination is set %{cnt} people , but it exceeds the limit value of the circulation number of people . The maximum can be registered up to %{commission_limit} people ."
+        circular_limit: Please enter the circulation deadline date and time .
+        correct_circular_limit: Please enter the circulation deadline date and time correctly .
+        no_presence_circular_limit: It does not exist in the circulation deadline date and time date and time has been set.
+        no_select_destination: The delivery destination has not been selected .
+        limit_st_date: Please enter expiration date ( period start ) correctly .
+        limit_ed_date: Please enter expiration date ( period end ) correctly .
+        create_st_date: Please enter the creation date (the period start ) correctly .
+        create_ed_date: Please enter the creation date (the end of the period ) correctly .
+        no_presence_limit_st_date: Date that does not exist in the expiration date ( period start ) has been set .
+        no_presence_limit_ed_date: Date that does not exist in the expiration date ( period end ) has been set .
+        no_presence_create_st_date: Date that does not exist in the creation date ( period start ) has been set .
+        no_presence_create_ed_date: Date that does not exist in the creation date ( period end ) has been set .
+      download:
+        tmpfile: Message attachment
+      setting:
+        title: Message function settings
+      select_item:
+        default_limit:
+          line_10: 1lines
+          line_20: 2lines
+          line_30: 3lines
+          line_50: 5lines
+          line_100: 10lines
+          line_150: 15lines
+          line_200: 20lines
+          line_250: 25lines
+        delete_date_setting:
+          none: Cancel
+          use: Confirm
+        delivery_status:
+          undelivered: Undelivered
+          public: Delivered
+          draft: Save Draft
+          public_end: Expiration
+          preparation: Non-notification
+          still: It will deliver
+          unread: Unread
+          already: Already read
+          public_limit: Expired
+        status:
+          importance: Important must-read
+          normal: Usually
+        limit_line:
+          none: Cancel
+          day_1: 1 day
+          month_1: 1months
+          month_3: 3months
+          month_6: 6months
+          month_9: 9months
+          month_12: 12months
+          month_15: 15months
+          month_18: 18months
+          month_24: 24months
+      commission:
+        custom_group: Delivery destination setting (destination list)
+        pre_registration: Choose from the destination list that are Confirmed in advance.
+        destination: Delivery destination setting
+        select_user: Message will be delivered to the selected member.
+      comment:
+        create: Comment created
+      doc:
+        attachment_name: Name of Attachment
+      script:
+        start: Messages id, DB name , message plate title , Delete number , ( treatment start )
+        end: Messages expiration article deletion processing end
+        item_no_set: Management information registration there is no end.
+        span_no_set: Period of the setting is not the end.
+        cols_valid: cols is abnormal .
+      side:
+        menu:
+          unread: Unread
+          already: Already-Read
+          owner: Created items
+          admin: Administrator
+        search:
+          message: Search for items of the selected category(unread, read, etc).
+          kwd: keyword
+          grp: Affiliation
+          creator: Author
+          expirydate: Deadline
+          start: From
+          end: To
+          createdate: Created date
+    attachment:
+      message:
+        name_too_long: File name could not be saved because it is too long.
+        exceed_max_size: "File size exceeds the limit - the maximum %{max_size} MB of setting] [%{file_size} You are trying to register the MB of files]"
+        fail_exceed_max_size: "Because the file size exceeds the limit, [is the setting of maximum %{max_size} MB] that the file could not be attached [You are trying to register the file of %{file_size} MB]"
+        exceed_capacity: We have exceeded the available capacity of the file
+        file_memo: Remarks was updated
+        no_file: File has not been specified
+      label:
+        file_name: file name
+        file_size: Size (width x height)
+        insert_link: attach Links
+        insert_image: attach Images
+        notes: Remarks
+        delete: Delete
+    freezescreen:
+      default: In Progress
+    forward:
+      to_gwcircular: Transfer (from Massages)
+    account:
+      not_sso: There is no SSO settings
+      group_error_head: This affiliation setting abnormal
+      group_error_tail: Please contact your administrator
+    memo:
+      same_send: Simultaneous recipient
+      get_at: Contact memo has arrived
+      reception: Reception
+      transmission: Send
+      th:
+        title: Message
+        group: Affiliation / representative / name
+        user: The person in charge
+        ed_at: Time
+        creator: Sender
+    session:
+      auto_delete_start: Session information automatic deletion start
+      auto_elete_end: Session information automatic deletion end
+    sys:
+      message:
+       not_auth: Do not have permission.
+    mail:
+      name: :rumi.reminder.feature.mail.name
+      admin: Management screen
+      error_message_head: I failed to login.
+      error_message_tail: Please try again later.
+      late_error: Please access later. Mail server seems to be delayed.
+      imap_connect_fail: IMAP： Failure to connect
+    smart:
+      login:
+        name: Login
+      logout:
+        name: Log out
+      portal:
+        name: Top Page
+      schedule:
+        name: Event Schedule
+        move_core:
+          last_year: previous year
+          last_month: Last month
+          last_week: Last week
+          yesterday: The day before
+          today: Today
+          this_month: This month
+          tomorrow: Next day
+          following_week: Next week
+          following_month: Next month
+          following_year: following year
+      schedule_prop:
+        name: Facility Reservation
+      pc:
+        name: PC version display
+    error:
+      input: Please enter.
+      select: Please select.
+      date: Please enter the correct date.
+      number: Please enter an integer .
+      number11: Please register in 11 of the within -digit integer .
+      number0_of_6: Please register as an integer of 0 to 6 .
+      not_zero: Please enter a numeric value other than 0 .
+      registration: Please register.
+      registered: It has already been registered.
+      abnormality: It is abnormal.
+      not_email: It is not in the correct E ​​-mail address .
+      undefined_type: Unknown type.
+      schedule:
+        context: The context of the end date is invalid .
+        unimplemented: Other than the update/create is not implemented yet .
+        automatic_correction:  data is abnormal, or does not exist date . Input the contents of the date and time is automatically modified in the immediate vicinity of the normal date and time . Please be careful.
+        authority_user_select: Contains the authority is required the user to schedule registration . Please re- specify the user .
+        user_blank: It has become a blank . Please specify the user .
+        view_only_auth_head: This facility
+        view_only_auth: Can not a reservation can be queried only . To book , please contact the facility management belongs .
+        of: of
+        after_st_date: Please enter a date later than the start date .
+        after_st_at: Please enter a date on or after the start date and time .
+        span_hour_head: The interval until the end date and time from the,
+        span_hour_tail: You are allowed up to hours . Start date and time , please do a review of the end date and time .
+        span_hour_check: Start date and time, please do a review of the end date and time.
+        repeat_head: Period between the end date , the date on which applies to the conditions is 
+        repeat_body: days . Repeat count is 
+        repeat_tail: times the possible. Start date , end date , review and rules , please register again .
+        competition_prop: Duplicate facility
+        reservation_prop: Outside the scope of the facility can not be reserved . ( Appropriate facilities are 
+        unavailable_prop: It is not possible to carry out a previous reservation than     ( Appropriate facilities are 
+      prop_other:
+        d_load_st: Please enter the previous day from the reservation possible end date.
+        with_no_limit_group: It can not simultaneous registration of other affiliation with the "no limit" to.
+      group:
+        parent_disable: Because the top belongs to is "invalid", it can not be "valid".
+        enable_end_at_blank: If the status is "valid" , please as a blank .
+        after_start_at: Please enter a date later than the date of initial application .
+        before_today: Please enter today 's date or earlier .
+      users_group:
+        enable_end_at_blank: If the user of the state is "valid" , please as a blank .
+        after_start_at: Please enter a date later than the assigned start date .
+        before_today: Please enter today 's date or earlier .
+      role_name_priv:
+        registered: Object authority is a duplicate of those registered .

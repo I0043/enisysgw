@@ -1,0 +1,51 @@
+<%= form_tag doclibrary_docs_path({title_id: @title.id}), method: :get do %>
+  <%= render :partial => 'hidden_form' %>
+  <dl>
+    <dt><%= t('rumi.doclibrary.side.keyword')  %></dt>
+    <dd class="kwd">
+      <%= text_field_tag 'kwd', params[:kwd], :size => '10' %>
+    </dd>
+    <dt><%= t('rumi.doclibrary.side.group') %></dt>
+    <dd class="sideGroup">
+      <%= select_tag('gcd' , options_for_select(@piece_group_names, params[:gcd]), :include_blank => true) %>
+    </dd>
+    <dt><%= t('rumi.doclibrary.side.creator')  %></dt>
+    <dd class="creator">
+      <%= text_field_tag 'creator', params[:creator], :size => '10' %>
+    </dd>
+    <dt><%= t('rumi.doclibrary.side.created_at')  %></dt>
+    <dd class="dateTime">
+      <p><%= text_field_tag :term_start, params[:term_start], size: '7', onclick: "new CalendarDateSelect( $(this), {time:false, year_range:10} );", style: "ime-mode: disabled", onkeydown: "return rumi.BlockKeyCode(event);", onpaste: "return false", oncontextmenu: "return false" %> <%= t('rumi.doclibrary.side.search_start')  %><img src="/images/icon/calendar-side.png" alt="カレンダー" class="calendar_date_select_popup_icon" onclick="new CalendarDateSelect( $(this).previous(), {time:false, year_range:10} );"></p>
+      <p><%= text_field_tag :term_finish, params[:term_finish], size: '7', onclick: "new CalendarDateSelect( $(this), {time:false, year_range:10} );", style: "ime-mode: disabled", onkeydown: "return rumi.BlockKeyCode(event);", onpaste: "return false", oncontextmenu: "return false" %> <%= t('rumi.doclibrary.side.search_end')  %><img src="/images/icon/calendar-side.png" alt="カレンダー" class="calendar_date_select_popup_icon" onclick="new CalendarDateSelect( $(this).previous(), {time:false, year_range:10} );"></p>
+    </dd>
+    <dd class="submit">
+      <input name="search" onclick="return my_search_submit();" type="submit" value=<%= t('rumi.button.search') %> />
+      <input name="reset" type="submit" value=<%= t('rumi.button.reset') %> />
+    </dd>
+  </dl>
+<% end %><!--form_tag-->
+  
+<script type="text/javascript">
+//<![CDATA[
+var my_search_submit = function() {
+  var item_startdate_text = document.getElementById('term_start').value;
+  var item_enddate_text = document.getElementById('term_finish').value;
+  if ('<%= I18n.default_locale.to_s %>' == 'ja'){
+    var regex = /^\d{4}[\-\/]\d{1,2}[\-\/]\d{1,2}$/;
+  }else {
+    var regex = /^\d{1,2}[\ \/][A-Za-z]{3}[\ \/]\d{4}$/;
+  }
+
+  // 作成日の日付チェック
+  if (item_startdate_text != "" && !item_startdate_text.match(regex)) {
+    alert('<%= t("rumi.gwcircular.message.create_st_date") %>');
+    return false;
+  }
+  if (item_enddate_text != "" && !item_enddate_text.match(regex)) {
+    alert('<%= t("rumi.gwcircular.message.create_ed_date") %>');
+    return false;
+  }
+  return true;
+}
+//]]>
+</script>

@@ -1,0 +1,164 @@
+<%
+  mail_url = Enisys::Config.application["webmail.root_url"]
+  if @gw_admin
+    ad_ul = "display: block;"
+    in_ul = "display: none;"
+  else
+    ad_ul = "display: none;"
+    in_ul = "display: block;"
+  end
+%>
+<div id="sidebar">
+  <p class="sideDate">Today <%= @today %></p>
+  <div class="accordionContainer">
+    <p class="trigger"><%= t("rumi.config_settings.base.ind") %></p>
+    <ul style="<%= in_ul %>">
+      <li>
+        <%= link_to t("rumi.config_settings.scheduler.scheduler.name"), setting_ind_schedules_gw_schedules_path %>
+      </li>
+      <li>
+        <%= link_to t("rumi.config_settings.scheduler.import.side_name"), import_gw_schedule_settings_path %>
+      </li>
+      <li>
+        <%= link_to t("rumi.config_settings.scheduler.export.side_name"), export_gw_schedule_settings_path %>
+      </li>
+      <li>---</li>
+      <li>
+        <%= link_to t("rumi.config_settings.custom_group.setting.name"), system_custom_groups_path %>
+      </li>
+      <li>---</li>
+      <li>
+        <%= link_to t("rumi.config_settings.user_passwords.action.edit.name"), edit_gw_user_password_path(Core.user.id) %>
+      </li>
+      <% if Core.user.present? && Core.user.try(:email).present? %>
+        <% if mail_url.present? %>
+        <li>---</li>
+        <li><%= link_to t("rumi.config_settings.mail.setting.list"), mail_url + '/_admin/gw/webmail/mail_list/settings', class: 'MailSetting disabledLink' %></li>
+        <li><%= link_to t("rumi.config_settings.mail.setting.read"), mail_url + '/_admin/gw/webmail/mail_detail/settings', class: 'MailSetting disabledLink' %></li>
+        <li><%= link_to t("rumi.config_settings.mail.setting.send"), mail_url + '/_admin/gw/webmail/mail_form/settings', class: 'MailSetting disabledLink' %></li>
+        <li><%= link_to t("rumi.config_settings.mail.setting.receive"), mail_url + '/_admin/gw/webmail/mail_pop/settings', class: 'MailSetting disabledLink'%></li>
+        <li><%= link_to t("rumi.config_settings.mail.setting.label"), mail_url+ '/_admin/gw/webmail/mail_label/settings', class: 'MailSetting disabledLink'%></li>
+        <li><%= link_to t("rumi.config_settings.mail.setting.private_address"), mail_url + '/_admin/gw/webmail/address/settings', class: 'MailSetting disabledLink' %></li>
+        <li><%= link_to t("rumi.config_settings.mail.setting.public_address"), mail_url + '/_admin/gw/webmail/public_address_book/settings', class: 'MailSetting disabledLink' %></li>
+        <li><%= link_to t("rumi.config_settings.mail.setting.switch_user"), mail_url + '/_admin/gw/webmail/switch_user/settings', class: 'MailSetting disabledLink' %></li>
+        <% end %>
+      <% end %>
+    </ul>
+  </div>
+  <% if @gw_admin %>
+    <div class="accordionContainer">
+      <p class="trigger"><%= t("rumi.config_settings.base.admin") %></p>
+      <ul style="<%= ad_ul %>">
+        <li>
+          <%= link_to t("rumi.user.name"), system_users_path %>
+        </li>
+        <li>
+          <%= link_to t("rumi.group.name"), system_groups_path %>
+        </li>
+        <li>
+          <%= link_to t("rumi.csv.name"), csvget_system_users_path %>
+        </li>
+        <li>
+          <%= link_to t("rumi.user_profile.name"), profile_settings_system_users_path %>
+        </li>
+        <li>
+          <%= link_to t("rumi.ldap.name"), system_ldap_groups_path(0) %>
+        </li>
+        <li>
+          <%= link_to t("rumi.ldap_temporary.name"), system_ldap_temporaries_path %>
+        </li>
+        <li>
+          <%= link_to t("rumi.config_settings.role.setting.name"), system_roles_path %>
+        </li>
+        <li>
+          <%= link_to t("rumi.custom_group.name_admin"), system_custom_groups_path(c1: 1) %>
+        </li>
+        <li>
+          <%= link_to t("rumi.login_image.name"), system_login_images_path %>
+        </li>
+        <li>---</li>
+        <li>
+          <%= link_to t("rumi.config_settings.top_page.message.name"), gw_admin_messages_path %>
+        </li>
+        <li>
+          <%= link_to t("rumi.config_settings.top_page.link_piece.name"), gw_edit_link_pieces_path %>
+        </li>
+        <li>---</li>
+        <li>
+          <%= link_to t("rumi.config_settings.gwcircular.setting.name"), gwcircular_basic_path(1) %>
+        </li>
+        <li>
+          <%= link_to t("rumi.config_settings.auto_delete.gwcircular.name"), edit_gwcircular_itemdelete_path(0) %>
+        </li>
+        <li>---</li>
+        <li>
+          <%= link_to t("rumi.config_settings.gwbbs.setting.name"), gwbbs_makers_path %>
+        </li>
+        <li>
+          <%= link_to t("rumi.config_settings.auto_delete.gwbbs.name"), gwbbs_itemdeletes_path %>
+        </li>
+        <li>---</li>
+        <li>
+          <%= link_to t("rumi.config_settings.scheduler.holiday.name"), gw_holidays_path(category: 1) %>
+        </li>
+        <li>
+          <%= link_to t("rumi.config_settings.scheduler.schedule_role.name"), system_schedule_roles_path %>
+        </li>
+        <li>
+          <%= link_to t("rumi.config_settings.auto_delete.schedule.name"), admin_deletes_gw_schedule_settings_path %>
+        </li>
+        <li>---</li>
+        <li>
+          <%= link_to t("rumi.config_settings.prop.prop_other.name"), gw_prop_others_path %>
+        </li>
+        <li>
+          <%= link_to t("rumi.config_settings.prop.prop_other_limit.name"), gw_prop_other_limits_path %>
+        </li>
+        <li>
+          <%= link_to t("rumi.config_settings.prop.prop_type.name"), gw_prop_types_path %>
+        </li>
+        <li>
+          <%= link_to t("rumi.config_settings.prop.prop_admin_setting.name"), gw_prop_admin_settings_path %>
+        </li>
+        <li>
+          <%= link_to t("rumi.config_settings.prop.import.name"), import_gw_prop_others_path %>
+        </li>
+        <li>
+          <%= link_to t("rumi.config_settings.prop.export.name"), export_gw_prop_others_path %>
+        </li>
+        <li>
+          <%= link_to t("rumi.config_settings.prop.prop_group_setting.name"), gw_prop_group_settings_path %>
+        </li>
+        <li>
+          <%= link_to t("rumi.config_settings.prop.prop_group.name"), gw_prop_groups_path %>
+        </li>
+        <li>---</li>
+        <li>
+          <%= link_to t("rumi.config_settings.doclibrary.setting.name"), doclibrary_cabinets_path %>
+        </li>
+        <li>---</li>
+        <li>
+          <%= link_to t("rumi.config_settings.access_log.setting.name"), gw_access_logs_path %>
+        </li>
+        <% if mail_url.present? %>
+          <li>---</li>
+          <li><%= link_to t("rumi.config_settings.mail.setting.admin.addresses"), mail_url + '/_admin/sys/addresses' %></li>
+          <li><%= link_to t("rumi.config_settings.mail.setting.admin.address_control"), mail_url + '/_admin/sys/public_address_book_roles' %></li>
+          <li><%= link_to t("rumi.config_settings.mail.setting.admin.attack_mail"), mail_url + '/_admin/sys/attack_mail_domains' %></li>
+          <li><%= link_to t("rumi.config_settings.mail.setting.admin.all_webmail_setting"), mail_url + '/_admin/sys/all_webmail_settings' %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% else %>
+    <% if @doclibrary_admin %>
+      <div class="accordionContainer">
+        <p class="trigger"><%= t("rumi.config_settings.base.admin") %></p>
+        <ul>
+          <li>
+            <%= link_to t("rumi.config_settings.doclibrary.setting.name"), doclibrary_cabinets_path %>
+          </li>
+        </ul>
+      </div>
+    <% end %>
+  <% end %>
+</div>

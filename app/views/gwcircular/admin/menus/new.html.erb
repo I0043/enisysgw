@@ -1,0 +1,25 @@
+<%= render partial: 'piece_header', locals: {piece_head_title: @piece_head_title} %>
+<%= form_for :item, url: "#{gwcircular_menus_path}/#{@item.id}", html: {method: :put, multipart: true, id: 'itemForm'} do |f| %>
+
+  <!-- コンテンツここから -->
+  <div class="main">
+    <%= f.error_messages %>
+    <!-- コンテンツ内小見出し -->
+    <div class="entry_subHeader">
+      <h3><%= t("rumi.link.new") %></h3>
+    </div>
+
+    <%= render partial: 'form', locals: {f: f} %>
+
+    <div class="submit">
+      <input name="item_submit" onclick="return my_submit('public', 'new');" type="submit" value="<%= t("rumi.button.delivery") %>" />
+      <input name="item_submit_draft" onclick="return my_submit('draft', 'new');" type="submit" value="<%= t("rumi.button.draft") %>" />
+      <% if request.path_info.include?("forward") %>
+        <%= hidden_field_tag :request_path, request.path_info %>
+        <input name="item_submit_close" onclick="return my_submit('close', 'close');" type="submit" value="<%= t("rumi.button.close") %>" />
+      <% end %>
+    </div>
+  
+  </div>
+  <%= hidden_field_tag :message, t("rumi.message.notice.create") %>
+<% end %>

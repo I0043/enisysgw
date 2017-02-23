@@ -1,0 +1,11 @@
+<thead>
+  <tr class="scheduleTableHead">
+    <th style="max-width: 150px; min-width: 150px; text-align:center;">
+      <%= @title %>
+    </th>
+    <% width = (75.0 / @calendar_space_time.size.to_f).to_s %>
+    <% @calendar_space_time.each do |i| %>
+      <th colspan="2" style="width: <%= width + "% !important" %>;"><%= i %></th>
+    <% end %>
+  </tr>
+</thead>

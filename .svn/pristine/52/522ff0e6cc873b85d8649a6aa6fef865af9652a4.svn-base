@@ -1,0 +1,38 @@
+<%
+  csvget = params[:action] == "csvget" ? " current" : ""
+  csvup = params[:action] == "csvup" ? " current" : ""
+  csv = params[:action] == "csv" ? " current" : ""
+  csvset = params[:action] == "csvset" ? " current" : ""
+%>
+<table class="tabtable">
+  <tr>
+    <td class="<%= csvget %>">
+      <% if csvget.present? %>
+        <%= t("rumi.csv.feature.output.name") %>
+      <% else %>
+        <%= link_to t("rumi.csv.feature.output.name"), csvget_system_users_path %>
+      <% end %>
+    </td>
+    <td class="<%= csvup %>">
+      <% if csvup.present? %>
+        <%= t("rumi.csv.feature.input.name") %>
+      <% else %>
+        <%= link_to t("rumi.csv.feature.input.name"), csvup_system_users_path %>
+      <% end %>
+    </td>
+    <td class="<%= csv %>">
+      <% if csv.present? %>
+        <%= t("rumi.csv.feature.index.name") %>
+      <% else %>
+        <%= link_to t("rumi.csv.feature.index.name"), csv_system_users_path %>
+      <% end %>
+    </td>
+    <td class="<%= csvset %>">
+      <% if csvset.present? %>
+        <%= t("rumi.csv.feature.save.name") %>
+      <% else %>
+        <%= link_to t("rumi.csv.feature.save.name"), csvset_system_users_path %>
+      <% end %>
+    </td>
+  </tr>
+</table>

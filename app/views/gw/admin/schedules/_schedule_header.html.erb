@@ -1,0 +1,30 @@
+<%
+  if @sp_mode == :prop
+    raise ArgumentError, t("rumi.schedule.message.schedule_header.d_nil") if d.nil?
+    raise ArgumentError, t("rumi.schedule.message.schedule_header.s_genre_nil") if params[:s_genre].nil?
+  end
+  bt_box =  @sp_mode == :prop ? '/gw/admin/schedule_props/bt_box' : '/gw/admin/schedules/schedule_bt_box'
+%>
+<%= render partial: bt_box, locals: {d: d, mode: mode} %>
+
+<% if @custom_group %>
+<div class="scheduleTableTitle"><%= @custom_group.name %></div>
+<% end %>
+
+<% if @show_flg %>
+  <%= render partial:  '/gw/admin/schedules/schedule_line_box', locals: {d: d, mode: mode, move_mode: :header} %>
+  <% if @line_box.present? %>
+    <%= raw hidden_field_tag('my_url', @schedule_move_url_directive.sub('%q', "#{@schedule_move_qs}")) %>
+  <% end %>
+<% end %>
+<script language = "JavaScript" type="text/javascript">
+//<![CDATA[
+
+var search_group_search_submit = function () {
+  var type_id = $('type_id').value;
+  if (type_id != "-"){
+    document.forms['search'].submit();
+  }
+}
+//]]>
+</script>

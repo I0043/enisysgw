@@ -1,0 +1,11 @@
+<div class="explanation">
+  <% @schedules.each do |schedule| %>
+    <% schedule_id = "sche#{schedule.id}_#{@prop.id}" %>
+    <div class="ind" id="<%= schedule_id -%>">
+      <a class="<%= schedule.get_category_class -%>" href="/gw/smart_schedules/<%= schedule.id -%>/show_one" style="margin-bottom:0px;">
+      <span class="read"></span>
+      <span class="times"><%= schedule.show_time_ellipsis(@st_date) -%></span>
+      <span class="title"><%= truncate(schedule.title, :length => 15) -%></span> </a>
+    </div>
+  <% end %>
+</div>

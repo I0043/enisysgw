@@ -1,0 +1,12 @@
+<%= render partial: 'piece_header', locals: {new: false} %>
+
+<!-- コンテンツここから -->
+<div class="main">
+  <%= div_notice %>
+  <%= form_for :item, url: gwcircular_custom_groups_path, action: :create, html: {method: :post, multipart: true, id: 'itemForm'} do |f| %>
+    <%= f.error_messages %>
+    <%= render partial: 'form', locals: {f: f} %>
+    <%= raw(submit_for_create f, js_submitter: "return my_submit()") %>
+  <% end %>
+</div>
+<!-- コンテンツここまで -->

@@ -1,0 +1,58 @@
+<%
+  delete = t("rumi.button.delete")
+  delete_confirm = t("rumi.message.confirm.delete")
+%>
+<header class="entryHeader">
+  <h2><%= @piece_head_title %></h2>
+</header>
+
+<!-- コンテンツここから -->
+<div class="main">
+  <%= div_notice %>
+  <table class="defaultTable listTable configTable">
+    <tr>
+      <th style="width: 60px; text-align: right;"><%= t("rumi.item_delete.gwbbs.th.id") %></th>
+      <th style="width: 40px; text-align: right;"><%= t("rumi.item_delete.gwbbs.th.sort_no") %></th>
+      <th><%= t("rumi.item_delete.gwbbs.th.title") %></th>
+      <th style="width: 80px; text-align: center;"><%= t("rumi.item_delete.gwbbs.th.status") %></th>
+      <th style="width: 60px; text-align: center;"><%= t("rumi.item_delete.gwbbs.th.view") %></th>
+      <th style="width: 60px; text-align: right;"><%= t("rumi.item_delete.gwbbs.th.public") %></th>
+      <th style="width: 60px; text-align: right;"><%= t("rumi.item_delete.gwbbs.th.void") %></th>
+      <th style="width: 60px; text-align: center;"><%= t("rumi.item_delete.gwbbs.th.auto") %></th>
+      <th style="width: 40px; text-align: center;"><%= t("rumi.item_delete.gwbbs.th.delete") %></th>
+    </tr>
+    <% @items.each do |item| %>
+      <%
+        begin
+        str_auto_del = ''
+        if item.board_limit_date == 'use'
+          str_auto_del = t("rumi.item_delete.gwbbs.th.use")
+        else
+          str_auto_del = item.delete_fix[item.board_limit_date]
+        end unless item.board_limit_date.blank?
+        rescue
+        end
+      %>
+      <tr class="<%= cycle '', 'cycle' %>">
+        <td style="text-align: right;"><%=  item.id %></td>
+        <td style="text-align: right;"><%=  item.board_sort_no %></td>
+        <td style="text-align: left;"><%=  item.board_title %></td>
+        <td style="text-align: center;"><%=  item.board_state %></td>
+        <td style="text-align: center;"><%=  item.board_view_hide %></td>
+        <td style="text-align: right;"><%=  item.public_doc_count %></td>
+        <td style="text-align: right;"><%=  item.void_doc_count %></td>
+        <td style="text-align: center;"><%=  str_auto_del %></td>
+        <td style="text-align: center;"><%= link_to delete, gwbbs_itemdelete_path(item.title_id), data: {confirm: delete_confirm, method: 'delete'} %></td>
+      </tr>
+    <% end %>
+  </table>
+  <%= paginate @items unless @items.blank? %>
+  <div class="backlink paginationSingle">
+    <ul>
+      <li>
+        <%= link_to t("rumi.back_link.select"), gwbbs_itemdeletes_path %>
+      </li>
+    </ul>
+  </div>
+</div>
+<!-- コンテンツここまで -->

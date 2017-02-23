@@ -1,0 +1,8 @@
+<%= render partial: 'header_str', locals: {piece_head_title: @piece_head_title} %>
+
+<!-- コンテンツここから -->
+<div class="main">
+  <%= div_notice %>
+  <%= render :partial => 'index_ind' %>
+</div>
+<!-- コンテンツここまで -->

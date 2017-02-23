@@ -1,0 +1,48 @@
+<%
+raise ArgumentError, 'piece_header 呼び出し前に d/@st_date を設定してください。' if d.nil?
+today = Date.today
+class_str = "dateShow"
+
+class_str.concat " today" if d == today
+if @schedule_move_url_directive.blank?
+  @schedule_move_url_directive = %Q(#{request.path_translated}#{mode == 'day' ? "?s_date=%d&prop_id=#{@prop.id}&%q" : 'list?s_date=%d&%q'})
+
+  @schedule_move_ab = if mode == "week"
+    [
+      [d-7, '前週'],
+      [d-1, '前日'],
+      [Date.today, '今週'],
+      [d+1, '翌日'],
+      [d+7, '翌週']
+    ]
+  else
+    [
+      [d-1, '前日'],
+      [Date.today, '今日'],
+      [d+1, '翌日']
+    ]
+  end
+end
+%>
+<div class="scheduleMove">
+  <div style="margin:0;padding:0;display:inline">
+      <input name="utf8" type="hidden" value="">
+      <input name="authenticity_token" type="hidden" value="">
+  </div>
+  <!-- ページ遷移ボタン -->
+  <div class="headBtn">
+    <% if mode == "day" %>
+      <ul class="headBtn-1">
+        <li><%= link_to '施設予約週表示', list_gw_smart_schedule_prop_path(id: @prop.id) %></li>
+      </ul>
+    <% end %>
+    <ul class="headBtn-5">
+      <%= raw(Gw::Model::Schedule.smart_show_schedule_move_core(@schedule_move_ab, @schedule_move_url_directive, @schedule_move_qs)) -%>
+    </ul>
+
+    <ul class="headBtn-1">
+        <li><%= link_to '別施設の予約状況を見る', gw_smart_schedule_props_path %></li>
+    </ul>
+  </div>
+  <!-- // ページ遷移ボタン -->
+</div>

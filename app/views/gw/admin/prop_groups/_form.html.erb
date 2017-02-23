@@ -1,0 +1,22 @@
+<%= raw Gw.required_head %>
+
+<table class="defaultTable rentDetails inputTable">
+  <tr>
+    <th><%= t("rumi.prop_group.th.name") %><%= required %></th>
+    <td>
+      <%= f.text_field :name, size: 50 %>
+    </td>
+  </tr>
+  <tr>
+    <th><%= t("rumi.prop_group.th.parent_group") %><%= raw(required) %></th>
+    <td>
+      <%= f.select(:parent_id, options_from_collection_for_select(@parent, :id, :name, @item.parent_id)) %>
+    </td>
+  </tr>
+  <tr>
+    <th><%= t("rumi.prop_group.th.sort_no") %><%= required %></th>
+    <td>
+      <%= f.text_field :sort_no, size: 50 %> <%= t("rumi.message.sort_message") %>
+    </td>
+  </tr>
+</table>

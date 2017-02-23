@@ -1,0 +1,94 @@
+<% parent_group_id = Core.user_group.parent_id %>
+<% group_child_groups = build_select_parent_groups(System::Group.child_groups_to_select_option(parent_group_id)) %>
+<% no_limit_group_child_groups = build_select_parent_groups(
+     System::Group.child_groups_to_select_option(System::Group.no_limit_group_id)) %>
+
+<% affiliated_group_id = Core.user_group.id %>
+<% user_child_group = build_select_users(System::UsersGroup.affiliated_users_to_select_option(affiliated_group_id)) %>
+<%
+  adminGroupInfo = '<br />' + t('rumi.message.board_auth.admin1')
+  adminInfo = '<br />' + t('rumi.message.board_auth.admin2')
+  readInfo = '<br />' + t('rumi.message.board_auth.reader1')
+%>
+<table class="defaultTable inputTable">
+  <tr>
+    <th class="blueIndex"><%= t('rumi.label.admin_group_setting') %><%= raw(detail(adminGroupInfo)) %></th>
+    <td>
+      <%= render partial: "shared/select_group", locals: {
+        parent_group_selected: parent_group_id, child_groups: group_child_groups,
+        hidden_item_name: "item[admingrps_json]", values: @item.admingrps_json,
+        ui_mode: ui_mode_groups_default
+      } %>
+    </td>
+  </tr>
+  <tr>
+    <th class="blueIndex"><%= t('rumi.label.admin_setting') %><%= raw(detail(adminInfo)) %></th>
+    <td>
+      <%= render partial: "shared/select_group", locals: {
+        parent_group_selected: affiliated_group_id, child_groups: user_child_group,
+        hidden_item_name: "item[adms_json]", values: @item.adms_json,
+        ui_mode: ui_mode_users_default
+      } %>
+    </td>
+  </tr>
+</table>
+
+<table class="defaultTable inputTable">
+  <tr>
+    <th class="blueIndex"><%= t('rumi.label.reader_group_setting') %></th>
+    <td>
+      <%= render partial: "shared/select_group", locals: {
+        parent_group_selected: System::Group.no_limit_group_id, child_groups: no_limit_group_child_groups,
+        hidden_item_name: "item[readers_json]", values: @item.readers_json,
+        ui_mode: ui_mode_groups_include_no_limit
+      } %>
+    </td>
+  </tr>
+  <tr>
+    <th class="blueIndex"><%= t('rumi.label.reader_setting') %><%= raw(detail(readInfo)) %></th>
+    <td>
+      <%= render partial: "shared/select_group", locals: {
+        parent_group_selected: affiliated_group_id, child_groups: user_child_group,
+        hidden_item_name: "item[sureaders_json]", values: @item.sureaders_json,
+        ui_mode: ui_mode_users_default
+      } %>
+    </td>
+  </tr>
+</table>
+
+<script>
+var my_submit = function() {
+  var admin_g = $('item_admingrps_json');
+  var admin = $('item_adms_json');
+  var reader_g = $('item_readers_json');
+  var reader = $('item_sureaders_json');
+
+  var admin_auth = JSON.parse(admin_g.value).length == 0 && JSON.parse(admin.value).length == 0
+  var reader_auth = JSON.parse(reader_g.value).length == 0 && JSON.parse(reader.value).length == 0
+
+  if (admin_auth) {
+    alert("<%= t("rumi.gwboard.message.admin_choice") %>");
+    return false;
+  }
+  if (reader_auth) {
+    alert("<%= t("rumi.gwboard.message.reader_choice") %>");
+    return false;
+  }
+  
+  var count_reader = 0;
+  var no_limit_reader = false;
+  var read_groups = JSON.parse(reader_g.value);
+  for (var i=0; i< read_groups.length; i++){
+    count_reader += 1;
+    if (read_groups[i][1] == "0"){
+      no_limit_reader = true;
+    }
+  }
+  if (no_limit_reader && count_reader > 1){
+    alert("<%= t('rumi.label.reader_group_setting') %>" + "<%= I18n.t("rumi.error.prop_other.with_no_limit_group") %>");
+    return false;
+  }
+  
+  $('itemForm').submit();
+};
+</script>

@@ -1,0 +1,42 @@
+<%= render partial: 'header', locals: {new: true} %>
+
+<!-- コンテンツここから -->
+<div class="main">
+  <%= div_notice %>
+  <%= render partial: 'search' %>
+
+  <table class="defaultTable listTable configTable">
+    <tbody>
+      <tr>
+        <th></th>
+          <th><%= t("rumi.user.th.user_id") %></th>
+          <th><%= t("rumi.user.th.state") %></th>
+          <th><%= t("rumi.user.th.ldap") %></th>
+          <th><%= t("rumi.user.th.name") %></th>
+          <th><%= t("rumi.user.th.email") %></th>
+          <th><%= t("rumi.user.th.official_position") %></th>
+          <th><%= t("rumi.user.th.group") %></th>
+      </tr>
+      <% @items.each do |item| %>
+        <tr class="<%= cycle '', 'cycle' %>">
+          <td><%= link_to t("rumi.link.show"), system_user_path(item.id) %></td>
+          <td><%= item.code %></td>
+          <td><%= System::UsersGroup.state_show(item.state) %></td>
+          <td><%= System::UsersGroup.ldap_show(item.ldap) %></td>
+          <td><%= item.name %></td>
+          <td><%= item.email %></td>
+          <td><%= item.official_position %></td>
+          <td><%= item.users_show_group_name %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <%= paginate @items %>
+
+  <div class="backlink paginationSingle">
+    <ul>
+      <li><%= link_to t("rumi.back_link.admin"), gw_config_settings_path %></li>
+    </ul>
+  </div>
+</div>
+<!-- コンテンツここまで -->

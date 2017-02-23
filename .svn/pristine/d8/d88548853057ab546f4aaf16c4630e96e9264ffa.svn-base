@@ -1,0 +1,111 @@
+<%
+  admin_values = params[:item] && params[:item][:admin_json] ? params[:item][:admin_json] : nz(@admin_json)
+  editor_values = params[:item] && params[:item][:editors_json] ? params[:item][:editors_json] : nz(@editors_json)
+  reader_values = params[:item] && params[:item][:readers_json] ? params[:item][:readers_json] : nz(@readers_json)
+
+  u = Core.user
+  g = u.groups[0]
+%>
+<%= raw(Gw.required_head) %>
+
+<table class="defaultTable rentDetails inputTable">
+  <tr>
+    <th><%= t("rumi.prop_other.th.state") %></th>
+    <td><%= radio f, 'reserved_state', @item.states %></td>
+  </tr>
+  <tr>
+    <th><%= t("rumi.prop_other.th.sort_no") %></th>
+    <td><%= f.text_field("sort_no", style: 'width:30em;') %> <%= t("rumi.message.sort_message") %></td>
+  </tr>
+  <tr>
+    <th><%= t("rumi.prop_other.th.name") %> <%= raw(required) %></th>
+    <td><%= f.text_field("name", style: 'width:30em;') %></td>
+  </tr>
+  <tr>
+    <th><%= t("rumi.prop_other.th.type") %> <%= raw(required) %></th>
+    <td><%= f.select(:type_id, options_from_collection_for_select(@prop_types, :id, :name, @item.type_id)) %></td>
+  </tr>
+  <tr>
+    <th><%= t("rumi.prop_other.th.comment") %></th>
+    <td><%= form_text_area(f, "comment") %></td>
+  </tr>
+  <tr>
+    <th><%= t("rumi.prop_other.th.d_load_st") %></th>
+    <td>
+      <%= f.text_field("d_load_st", value: @item.d_load_st.try(:strftime, t("rumi.strftime.date2")), style: 'width:140px;ime-mode:disabled;', onclick: "new CalendarDateSelect( $(this), {time:false, year_range:10} );", onkeydown: "return rumi.BlockEnterKeyCode(event);", onpaste: "return false", oncontextmenu: "return false") %>
+      <% img = "/images/icon/calendar_bla.png" %>
+      <img src="<%= img %>" alt="Calendar" class="calendar_date_select_popup_icon" onclick="new CalendarDateSelect( $(this).previous(), {time: false, year_range:10} );" style="cursor:pointer;">
+    </td>
+  </tr>
+  <tr>
+    <th><%= t("rumi.prop_other.th.d_load_ed") %></th>
+    <td>
+      <%= f.text_field("d_load_ed", value: @item.d_load_ed.try(:strftime, t("rumi.strftime.date2")), style: 'width:140px;ime-mode:disabled;', onclick: "new CalendarDateSelect( $(this), {time:false, year_range:10} );", onkeydown: "return rumi.BlockEnterKeyCode(event);", onpaste: "return false", oncontextmenu: "return false") %>
+      <% img = "/images/icon/calendar_bla.png" %>
+      <img src="<%= img %>" alt="Calendar" class="calendar_date_select_popup_icon" onclick="new CalendarDateSelect( $(this).previous(), {time: false, year_range:10} );" style="cursor:pointer;">
+    </td>
+  </tr>
+  <tr>
+    <th><%= t("rumi.prop_other.th.limit_month") %></th>
+    <td><%= f.text_field(:limit_month, style: 'width:3em;') %><%= t("rumi.prop_other.th.limit_month_tail") %>&nbsp;&nbsp;<%= t("rumi.prop_other.message.limit_month") %></td>
+  </tr>
+  <tr>
+    <th><%= t("rumi.prop_other.th.admin") %> <%= raw(required) %></th>
+    <td>
+      <%= render partial: "shared/select_group", locals: {
+        parent_group_selected: @parent_group_id, child_groups: build_select_parent_groups(@group_child_groups),
+        hidden_item_name: "item[admin_json]", values: admin_values,
+        ui_mode: ui_mode_groups_default
+      } %>
+    </td>
+  </tr>
+  <tr>
+    <th><%= t("rumi.prop_other.th.editor") %> <%= raw(required) %></th>
+    <td>
+      <%= render partial: "shared/select_group", locals: {
+        parent_group_selected: @parent_group_id, child_groups: build_select_parent_groups(@group_child_groups),
+        hidden_item_name: "item[editors_json]", values: editor_values,
+        ui_mode: ui_mode_groups_include_no_limit
+      } %>
+    </td>
+  </tr>
+  <tr>
+    <th><%= t("rumi.prop_other.th.reader") %></th>
+    <td>
+      <%= render partial: "shared/select_group", locals: {
+        parent_group_selected: @parent_group_id, child_groups: build_select_parent_groups(@group_child_groups),
+        hidden_item_name: "item[readers_json]", values: reader_values,
+        ui_mode: ui_mode_groups_include_no_limit
+      } %>
+    </td>
+  </tr>
+</table>
+
+<%= hidden_field_tag("item[sub][extra_flag]", @cls) %>
+<%= hidden_field_tag("item[sub][gid]", g.id) %>
+<%= hidden_field_tag("item[sub][uid]", u.id) %>
+
+<script language = "JavaScript" type="text/javascript">
+  <!--
+  // 登録ボタン
+  var my_submit = function() {
+    $('itemForm').submit();
+  }
+
+  var state_radio_onclick = function () {
+    idx = radio_selected('item[state]');
+    if (idx == 0) {
+      $('item_edit_state_0').checked = true;
+      $('item_edit_state_0').disabled = true;
+      $('item_edit_state_1').disabled = true;
+    } else if (idx == 1) {
+      $('item_edit_state_0').disabled = false;
+      $('item_edit_state_1').disabled = false;
+    }
+  }
+  var my_load = function() {
+    state_radio_onclick();
+  }
+  window.onload = my_load;
+  -->
+</script>

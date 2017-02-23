@@ -1,0 +1,30 @@
+<%
+    # 議員控え室　表示用ユーザーアカウント
+    _cond = "class_id=3 and name='pref_only_assembly' and type_name='account' "
+    _order = "class_id desc"
+    only_pref_account   = Gw::UserProperty.where(_cond).order(_order).first
+    if only_pref_account.blank?
+      # 未登録時　or テスト
+      only_assembly_user_account = '502'
+    else
+      only_assembly_user_account = only_pref_account.options
+    end
+    if Core.user.code.to_s == only_assembly_user_account
+      location = "/gw/pref_only_assembly"
+    else
+      location = "/"
+    end
+%>
+<div class="piece"><h1><a href="<%= location %>">Gw</a></h1>
+<div class="personal">
+<% if Core.user %>
+  <% if Core.user.code.to_s == only_assembly_user_account %>
+    <span class="name"><%=Core.user.name %></span>
+  <% else %>
+    <%=raw %Q(<span class="department">#{Core.user_group.name}</span>) unless Core.user_group.nil? %>
+    <span class="name"><%= link_to_show_profile(Core.user.display_name, Core.user.code) %></span>
+  <% end %>
+<% end %>
+</div>
+<div class="logout"><a href="/_admin/logout"><%= t("rumi.logout.name") %></a></div>
+</div>

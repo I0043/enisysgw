@@ -1,0 +1,87 @@
+<script type="text/javascript">
+//<![CDATA[
+var update_item_st_at = function() {
+  year = $('item_st_at_3i').value;
+  month = $('item_st_at_2i').value;
+  day = $('item_st_at_1i').value;
+  hour = $('item_st_at_4i').value;
+  _min = $('item_st_at_5i').value;
+  min = "0" + _min;
+  ymd = year + ' ' + month + ' ' + day;
+  hn = hour + ':' + min.slice(-2);
+
+  ret = ymd + ' ' + hn;
+  $('item_st_at').value = ret;
+}
+var update_item_st_at_from_calendar = function() {
+  value = $('item_st_at').value;
+
+  var match = value.match(/^\s*(\d{1,2}) ([A-Za-z]{3}) (\d{4}) (\d{1,2}):(\d{1,2})\s*$/);
+  for (var i=1; i<=5; i++)
+    $('item_st_at_'+i+'i').selectedIndex = select_options_get_index_by_value($('item_st_at_'+i+'i'), match[i].sub(/^0/, ''));
+
+  ymd = $('item_st_at_1i').value + ' ' + $('item_st_at_2i').value + ' ' + $('item_st_at_3i').value;
+  hn = $('item_st_at_4i').value + ':' + ("0" + $('item_st_at_5i').value).slice(-2);
+
+  ret = ymd + ' ' + hn;
+  $('item_st_at').value = ret;
+}
+//]]>
+</script>
+
+<script type="text/javascript">
+//<![CDATA[
+var update_item_ed_at = function() {
+  ymd = $('item_ed_at_1i').value + ' ' + $('item_ed_at_2i').value + ' ' + $('item_ed_at_3i').value;
+  hn = $('item_ed_at_4i').value + ':' + ("0" + $('item_ed_at_5i').value).slice(-2);
+  ret = ymd + ' ' + hn;
+  $('item_ed_at').value = ret;
+}
+var update_item_ed_at_from_calendar = function() {
+  value = $('item_ed_at').value;
+
+  var match = value.match(/^\s*(\d{1,2}) ([A-Za-z]{3}) (\d{4}) (\d{1,2}):(\d{1,2})\s*$/);
+  for (var i=1; i<=5; i++)
+    $('item_ed_at_'+i+'i').selectedIndex = select_options_get_index_by_value($('item_ed_at_'+i+'i'), match[i].sub(/^0/, ''));
+  ymd = $('item_ed_at_1i').value + ' ' + $('item_ed_at_2i').value + ' ' + $('item_ed_at_3i').value;
+  hn = $('item_ed_at_4i').value + ':' + ("0" + $('item_ed_at_5i').value).slice(-2);
+  ret = ymd + ' ' + hn;
+  $('item_ed_at').value = ret;
+}
+
+var my_submit = function() {
+  month_a = $w("Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec" );
+  var s_year = $('item_st_at_3i').value;
+  var s_month = month_a.indexOf($('item_st_at_2i').value);
+  var s_day = $('item_st_at_1i').value;
+  var s_hour = $('item_st_at_4i').value;
+  var s_min = $('item_st_at_5i').value;
+
+  var e_year = $('item_ed_at_3i').value;
+  var e_month = month_a.indexOf($('item_ed_at_2i').value);
+  var e_day = $('item_ed_at_1i').value;
+  var e_hour = $('item_ed_at_4i').value;
+  var e_min = $('item_ed_at_5i').value;
+  var st_dt = $('item_st_at').value;
+  var ed_dt = $('item_ed_at').value;
+  var st_date = new Date( st_dt );
+  var ed_date = new Date( ed_dt );
+  
+  if ( s_year != st_date.getFullYear() || s_month != st_date.getMonth() || s_day != st_date.getDate() ||
+       e_year != ed_date.getFullYear() || e_month != ed_date.getMonth() || e_day != ed_date.getDate() ||
+       st_date >= ed_date) {
+      alert('<%= t("rumi.access_log.date_select_miss") %>');
+      return false;
+  }
+}
+
+var load_at_set = function() {
+  st_at_day = $('item_st_at_1i').value + ' ' + $('item_st_at_2i').value + ' ' + $('item_st_at_3i').value;
+  st_at_time = $('item_st_at_4i').value + ':' + ("0" + $('item_st_at_5i').value).slice(-2);
+  $('item_st_at').value = st_at_day + ' ' + st_at_time;
+  ed_at_day = $('item_ed_at_1i').value + ' ' + $('item_ed_at_2i').value + ' ' + $('item_ed_at_3i').value;
+  ed_at_time = $('item_ed_at_4i').value + ':' + ("0" + $('item_ed_at_5i').value).slice(-2);
+  $('item_ed_at').value = ed_at_day + ' ' + ed_at_time;
+}
+//]]>
+</script>

@@ -1,0 +1,38 @@
+<%#
+@cabinet_title は、Doclibrary::Public::CabinetsController で初期化しています。
+%>
+<%= render partial: 'piece_header', locals: {piece_head_title: @piece_head_title} %>
+<!-- コンテンツここから -->
+<div class="main">
+  <div class="notice"><%= flash.now[:notice] %></div>
+  <table class="defaultTable listTable">
+    <tr>
+      <th class="blueIndex" style="width: 60px;"><%= t('rumi.gwboard.list.doc_no') %></th>
+      <th class="blueIndex"><%= t('rumi.gwboard.list.doclibtitle_name') %></th>
+      <th class="blueIndex" style="width: 60px;">　</th>
+      <th class="blueIndex" style="width: 80px;"><%= t('rumi.gwboard.list.update_date') %></th>
+      <th class="blueIndex" style="width: 40px;">
+        <%= t('rumi.gwboard.list.sort_no') %>
+      </th>
+      <th class="blueIndex" style="width: 80px;"><%= t('rumi.gwboard.list.status') %></th>
+      <th class="blueIndex" style="width: 80px;">　</th>
+    </tr>
+    <% for item in @items %>
+      <tr class="<%= cycle '', 'cycle' %>">
+        <td><%= item.id %></td>
+        <td><%= item.title %></td>
+        <td><%= link_to t('rumi.gwboard.list.detail_show'), doclibrary_cabinet_path(item, {:state => params[:state]}) %></td>
+        <td><%= I18n.l item.updated_at.to_date if item.updated_at.present? %></td>
+        <td><%= item.sort_no %></td>
+        <td><%= item.status_show %></td>
+        <td><%= link_to t('rumi.gwboard.list.public_display'), doclibrary_docs_path({:title_id => item.id}) %></td>
+      </tr>
+    <% end %>
+  </table>
+  <%= paginate @items unless @items.blank? %>
+  <div class="backlink paginationSingle">
+    <ul>
+      <li><%= link_to t("rumi.back_link.admin"), gw_config_settings_path %></li>
+    </ul>
+  </div>
+</div>

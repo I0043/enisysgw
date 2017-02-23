@@ -1,0 +1,299 @@
+# encoding: utf-8
+class Gw::Admin::SchedulePropsController < Gw::Admin::SchedulesController
+  include System::Controller::Scaffold
+  include Gw::RumiHelper
+  layout "admin/template/portal"
+  
+  before_action :set_request_from, only: [:index, :show, :show_week, :show_month]
+
+  def set_request_from
+    # 現在のURLを取得
+    session[:request_from] = request.original_url
+  end
+  
+  def initialize_scaffold
+    return redirect_to(request.env['PATH_INFO']) if params[:reset]
+    Page.title = t("rumi.schedule_prop.name")
+    @piece_head_title = t("rumi.schedule_prop.name")
+    @side = "schedule_prop"
+    get_side_schedule_menu
+  end
+
+  def init_params
+    @genre = params[:s_genre]
+    @genre = Gw.trim(nz(@genre)).downcase
+    genre = @genre
+
+    @cls = params[:cls]
+
+    case params['action']
+    when 'getajax'
+
+    else
+      raise Gw::ApplicationError, t("rumi.schedule_prop.message.valid") + "(#{genre})" if genre.blank?
+    end
+    @title = t("rumi.prop")
+    @s_genre = "?s_genre=other"
+    @index_order = 'extra_flag, sort_no, gid, name'
+    @js= ['/_common/js/gw_schedules.js'] +
+      %w(gw_schedules popup_calendar/popup_calendar dateformat).collect{|x| "/_common/js/#{x}.js"} +
+      %w(yahoo dom event container menu animation calendar).collect{|x| "/_common/js/yui/build/#{x}/#{x}-min.js"}
+    @css = %w(/_common/js/yui/build/menu/assets/menu.css)
+    @uid = Gw::Model::Schedule.get_uids(params)[0]
+    @gid = nz(params[:gid], Gw::Model::Schedule.get_user(@uid).groups[0].id) rescue Core.user_group.id
+    @state_user_or_group = params[:gid].blank? ? :user : :group
+    @sp_mode = :prop
+
+    a_qs = []
+    a_qs.push "uid=#{params[:uid]}" unless params[:uid].nil?
+    a_qs.push "gid=#{params[:gid]}" unless params[:gid].nil?
+    a_qs.push "cls=#{@cls}"
+    a_qs.push "s_genre=#{@genre}"
+    @schedule_move_qs = a_qs.join('&')
+
+
+    @up_schedules = nz(Gw::Model::UserProperty.get('schedules'.singularize), {})
+
+    gids = []
+    Core.user.groups.each do |group|
+      gids << group.id
+      gids << group.parent_id
+    end
+    @prop_admin = false
+    if gids.present?
+      gids.uniq!
+      search_gids = Gw.join([gids], ',')
+      cond = " auth='admin' and gid in (#{search_gids}) "
+      auth_admin = Gw::PropOtherRole.where(cond)
+      @prop_admin = true if auth_admin.present?
+    end
+
+    @schedule_settings = Gw::Model::Schedule.get_settings 'schedules', {}
+    @s_other_admin_gid = nz(params[:s_other_admin_gid], "0").to_i
+
+    @ie = Gw.ie?(request)
+    @hedder2lnk = 7
+
+    #現状の@prop_typesを施設グループも含めるようにする
+    @prop_types = select_prop_type
+    @prop_types += select_prop_group_tree('partition')
+    prop_type_types = Gw::PropType.where(state: 'public').order(:sort_no, :id).select("id, name")
+
+    if params[:type_id].present?
+      @type_id = params[:type_id]
+    else
+      if prop_type_types.present?
+        @type_id = @prop_types[0]
+        match_type_id = @type_id[1].match(/^type_(\d+)$/)
+        @default_type_id = match_type_id[1]
+      end
+    end
+    @images = Gw::PropOtherImage.order(:parent_id)
+    
+    if params[:prop_id].present?
+      prop = Gw::PropOther.where(id: params[:prop_id]).first
+      @title_view_name = prop.present? ? prop.name : ""
+    else
+      if params[:type_id].present?
+        type = params[:type_id].split("_")
+        prop_type = type[0] == "groups" ? Gw::PropGroup.where(id: type[1]).first : Gw::PropType.where(id: type[1]).first
+        @title_view_name = prop_type.present? ? prop_type.name : ""
+      else
+        prop_type = Gw::PropType.where(id: @default_type_id).first
+        @title_view_name = prop_type.present? ? prop_type.name : ""
+      end
+    end
+  end
+
+  def show
+    init_params
+    @line_box = 1
+    @st_date = Gw.date8_to_date params[:id]
+    @calendar_first_day = @st_date
+    @calendar_end_day = @calendar_first_day
+
+    _props
+    if @prop_edit_ids.length > 0 || @prop_read_ids.length > 0
+      @show_flg = true
+    else
+      @show_flg = false
+    end
+
+    _schedule_data
+    _schedule_day_data
+  end
+
+  def show_wb
+    show
+  end
+
+  def show_week
+    init_params
+    @line_box = 1
+    kd = params['s_date']
+    @st_date = kd =~ /[0-9]{8}/ ? Date.strptime(kd, '%Y%m%d') : Date.today
+    @calendar_first_day = @st_date
+    @calendar_end_day = @calendar_first_day + 6
+    @view = "week"
+    @prop_gid = Gw::PropOther.where(id: params[:prop_id]).first.gid if !params[:prop_id].blank?
+    _props
+    if @prop_edit_ids.length > 0 || @prop_read_ids.length > 0
+      @show_flg = true
+    else
+      @show_flg = false
+    end
+
+    _schedule_data
+  end
+
+  def show_2week
+    init_params
+    @line_box = 1
+    kd = params['s_date']
+    @st_date = kd =~ /[0-9]{8}/ ? Date.strptime(kd, '%Y%m%d') : Date.today
+    @calendar_first_day = @st_date
+    @calendar_end_day = @calendar_first_day + 13
+    @view = "week"
+    @prop_gid = Gw::PropOther.where(id: params[:prop_id]).first.gid if !params[:prop_id].blank?
+    _props
+    if @prop_edit_ids.length > 0 || @prop_read_ids.length > 0
+      @show_flg = true
+    else
+      @show_flg = false
+    end
+
+    _schedule_data
+  end
+
+
+  def _schedule_data
+    if @prop_ids.blank?
+      @schedules = []
+    else
+      @schedules = Gw::Schedule.find_for_show(@prop_ids,
+        @calendar_first_day, @calendar_end_day,Core.user.id)
+    end
+
+    schedule_ids = @schedules.map(&:id)
+    sql_result = []
+    if schedule_ids.present?
+      joined_schedule_ids = schedule_ids.join(',')
+      user_id = Core.user.id
+      sql =<<SQL
+SELECT
+  schedule_users.schedule_id,
+  GROUP_CONCAT(DISTINCT system_users.name separator ', '),
+  GROUP_CONCAT(DISTINCT prop_others.name separator ', ')
+FROM
+  gw_schedule_users AS schedule_users
+INNER JOIN
+  system_users AS system_users ON schedule_users.uid = system_users.id
+INNER JOIN
+  gw_schedules AS schedules ON schedules.id = schedule_users.schedule_id
+INNER JOIN
+  gw_schedule_props AS schedule_props ON schedule_props.schedule_id = schedules.id
+INNER JOIN
+  gw_prop_others AS prop_others ON prop_others.id = schedule_props.prop_id
+WHERE
+  schedule_users.schedule_id IN (#{joined_schedule_ids})
+GROUP BY
+  schedule_users.schedule_id
+SQL
+      sql_result = Gw::Reminder.connection.execute(sql)
+    end
+    @schedule_data = {}
+    sql_result.each {|schedule_id, user_names, prop_names|
+      @schedule_data[schedule_id] = {user_names: user_names, prop_names: prop_names}
+    }
+
+    @holidays = Gw::Holiday.find_by_range_cache(@calendar_first_day, @calendar_end_day)
+  end
+
+  def show_month
+    init_params
+    @line_box = 1
+    kd = params['s_date']
+    @st_date = kd =~ /[0-9]{8}/ ? Date.strptime(kd, '%Y%m%d') : Date.today
+
+    _month_date
+
+    @hedder2lnk = 7
+    @view = "month"
+    @prop = Gw::PropOther.find_by(id: params[:prop_id])
+
+    if @prop.delete_state == 1
+      @read = false
+      @edit = false
+    elsif @gw_admin
+      @read = true
+      @edit = true
+    else
+      edit = Gw::PropOtherRole.is_edit?(params[:prop_id])
+      read = Gw::PropOtherRole.is_read?(params[:prop_id])
+      @edit = edit
+      @read = edit || read
+    end
+    @show_flg = @read
+    @prop_ids = Array.new
+    @prop_ids << params[:prop_id]
+    @schedules = Gw::Schedule.find_for_show(@prop_ids,
+        @calendar_first_day, @calendar_end_day,Core.user.id)
+
+    @holidays = Gw::Holiday.find_by_range_cache(@calendar_first_day, @calendar_end_day)
+  end
+
+  def _props
+    #種別と施設グループで取得する条件を変更する
+    if(params[:type_id]).present?
+      if (match_result = params[:type_id].match(/^groups_(\d+)$/))
+        @props  =  Gw::Model::Schedule.get_props(params, @gw_admin, {:s_other_admin_gid=>@s_other_admin_gid, :prop_group_id => match_result[1]})
+      elsif (match_result = params[:type_id].match(/^type_(\d+)$/))
+        @props  =  Gw::Model::Schedule.get_props(params, @gw_admin, {:s_other_admin_gid=>@s_other_admin_gid, :type_id => match_result[1]})
+      else
+        @props  =  []
+      end
+    else
+      @props  =  Gw::Model::Schedule.get_props(params, @gw_admin, {:s_other_admin_gid=>@s_other_admin_gid, :type_id => @default_type_id})
+    end
+    @prop_ids = @props.map{|x| x.id}
+    if @gw_admin
+      @prop_edit_ids = @prop_ids
+      @prop_read_ids = @prop_ids
+    else
+      @prop_edit_ids = Gw::PropOtherRole.where(prop_id: @prop_ids, gid: search_ids, auth: 'edit').map(&:prop_id)
+      @prop_read_ids = Gw::PropOtherRole.where(prop_id: @prop_ids, gid: search_ids, auth: 'read').map(&:prop_id)
+    end
+    #並び順の昇順でソート
+    @props = @props.sort{|a, b|
+      a.sort_no <=> b.sort_no
+    }
+  end
+
+  def getajax
+    return http_error(404) unless request.xhr?
+    @item = Gw::ScheduleProp.getajax params
+    respond_to do |format|
+      format.json { render :json => @item }
+    end
+  end
+
+  # === 表示切替ボタン（全部表示/一部表示）押下時の処理メソッド
+  def schedule_display
+    ret = Gw::Controller::Schedule.update_schedule_title_display
+
+    s_params = params[:s_params]
+    redirect_to s_params
+  end
+
+  def search_ids
+    groups = Core.user.groups
+    gids = []
+    groups.each do |sg|
+      gids << sg.id
+      gids << sg.parent_id
+    end
+    gids << 0
+    gids.uniq!
+    return gids
+  end
+end

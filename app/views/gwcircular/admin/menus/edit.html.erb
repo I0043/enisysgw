@@ -1,0 +1,22 @@
+<%= render partial: 'piece_header', locals: {piece_head_title: @piece_head_title} %>
+<%= form_for :item, :url => "#{gwcircular_menus_path}/#{@item.id}", html: {method: :put, multipart: true, id: 'itemForm'} do |f| %>
+
+  <div class="main">
+    <%= f.error_messages %>
+    <%= render :partial => 'form', locals: {f: f} %>
+
+    <div class="submit">
+      <% unless @item.state == 'draft' %>
+        <input name="item_submit" onclick="return my_submit('public', 'edit');" type="submit" value="<%= t("rumi.button.delivery") %>" />
+      <% else %>
+        <input name="item_submit" onclick="return my_submit('public', 'new');" type="submit" value="<%= t("rumi.button.delivery") %>" />
+        <input name="item_submit_draft" onclick="return my_submit('draft', 'edit');" type="submit" value="<%= t("rumi.button.draft") %>" />
+        <% if params[:request_path].present? %>
+          <%= hidden_field_tag :request_path, request.path_info.to_s + "?id=" + @item.id.to_s %>
+          <input name="item_submit_close" onclick="return my_submit('close', 'close');" type="submit" value="<%= t("rumi.button.close") %>" />
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+  <%= hidden_field_tag :message, t("rumi.message.notice.update") %>
+<% end %>

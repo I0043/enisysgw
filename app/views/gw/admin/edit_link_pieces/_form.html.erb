@@ -1,0 +1,35 @@
+<%= hidden_field_tag 'limit', @limits %>
+<%= f.hidden_field :class_created  %>
+<%= f.hidden_field :parent_id %>
+<%= f.hidden_field :level_no %>
+<%= f.hidden_field :sort_no %>
+<%= f.hidden_field :class_sso %>
+
+<%= required_head %>
+
+<table class="defaultTable">
+  <tr>
+    <th><%= t("rumi.config_settings.edit_link_piece.th.published") %><%= required('※') %></th>
+    <td><%= radio f, :published ,Gw::EditLinkPiece.published_select ,:class=>'state' %></td>
+  </tr>
+  <tr>
+    <th><%= t("rumi.config_settings.edit_link_piece.th.state") %><%= required('※') %></th>
+    <td><%= radio f, :state ,Gw::EditLinkPiece.state_select ,:class=>'state' %></td>
+  </tr>
+  <tr>
+    <th><%= t("rumi.config_settings.edit_link_piece.th.name") %><%= required('※') %></th>
+    <td><%= f.text_field :name , :size=>20 %></td>
+  </tr>
+  <tr>
+    <th><%= t("rumi.config_settings.edit_link_piece.th.sort") %></th>
+    <td><%= @item.sort_no %></td>
+  </tr>
+  <tr>
+    <th><%= t("rumi.config_settings.edit_link_piece.th.link_url") %><%= required('※') %></th>
+    <td><%= f.text_area :link_url , :rows=>3 , :cols=>80  ,:class=>'IMEoff' %></td>
+  </tr>
+  <tr>
+    <th><%= t("rumi.config_settings.edit_link_piece.th.class_external") %><%= required('※') %></th>
+    <td><%= radio f, :class_external ,Gw::EditLinkPiece.external_select ,:class=>'state' %></td>
+  </tr>
+</table>

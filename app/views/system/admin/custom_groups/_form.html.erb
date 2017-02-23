@@ -1,0 +1,158 @@
+<%= raw(required_head) %>
+
+<%= f.hidden_field :name_en, value: @item.name_en %>
+<%= f.hidden_field :is_default, value: @item.is_default %>
+
+<table class="defaultTable rentDetails inputTable">
+  <% if @action == 'edit' && @gw_admin != true && ( @item.owner_uid != Core.user.id ) %>
+    <tr>
+      <th><%= t("rumi.custom_group.th.state") %><%= raw(required) %></th>
+      <td>
+        <%= raw(radio f, :state, @item.states, class: 'state', disabled: 'disabled') %>
+        <%= f.hidden_field :state , value: @item.state %>
+      </td>
+    </tr>
+    <tr>
+      <th><%= t("rumi.custom_group.th.name") %><%= raw(required) %></th>
+      <td>
+        <%= f.text_field :name, class: 'name', size: 30, maxlength: 30, disabled: 'disabled' %>
+        <%= f.hidden_field :name, value: @item.name %>
+      </td>
+    </tr>
+    <tr>
+      <th><%= t("rumi.custom_group.th.sort_no") %></th>
+      <td>
+        <%= f.text_field :sort_no, class: 'num', size: 5 , maxlength: 4, disabled: 'disabled' %>
+        <%= f.hidden_field :sort_no, value: @item.sort_no %> <%= t("rumi.message.sort_message") %>
+      </td>
+    </tr>
+  <% elsif @gw_admin == true %>
+    <tr>
+      <th><%= t("rumi.custom_group.th.state") %><%= raw(required) %></th>
+      <td><%= raw(radio f, :state, @item.states, class: 'state') %></td>
+    </tr>
+    <tr>
+      <th><%= t("rumi.custom_group.th.name") %><%= raw(required) %></th>
+      <td><%= f.text_field :name , class: 'name', size: 30 , maxlength: 30 %></td>
+    </tr>
+    <tr>
+      <th><%= t("rumi.custom_group.th.sort_no") %></th>
+      <td><%= f.text_field :sort_no, class: 'num', size: 5 , maxlength: 4 %> <%= t("rumi.message.sort_message") %></td>
+    </tr>
+  <% else %>
+    <tr>
+      <th><%= t("rumi.custom_group.th.state") %><%= raw(required) %></th>
+      <td><%= raw(radio f, :state, @item.states, class: 'state') %></td>
+    </tr>
+    <tr>
+      <th><%= t("rumi.custom_group.th.name") %><%= raw(required) %></th>
+      <td><%= f.text_field :name , class: 'name', size: 30 , maxlength: 30 %></td>
+    </tr>
+    <%= f.hidden_field :name_en, value: @item.name_en %>
+    <tr>
+      <th><%= t("rumi.custom_group.th.sort_no") %></th>
+      <td><%= f.text_field :sort_no, class: 'num', size: 5 , maxlength: 4 %></td>
+    </tr>
+  <% end %>
+
+  <tr>
+    <th><%= t("rumi.custom_group.th.edit_group") %></th>
+    <td>
+      <%= render partial: 'form_admin_group_roles', locals: {f: f} %>
+    </td>
+  </tr>
+  <tr>
+    <th><%= t("rumi.custom_group.th.editor") %></th>
+    <td>
+      <%= render partial: 'form_admin_user_roles', locals: {f: f} %>
+    </td>
+  </tr>
+  <tr>
+    <th><%= t("rumi.custom_group.th.schedule_read_group") %></th>
+    <td>
+      <%= render partial: 'form_roles', locals: {f: f} %>
+    </td>
+  </tr>
+  <tr>
+    <th><%= t("rumi.custom_group.th.schedule_reader") %></th>
+    <td>
+      <%= render partial: 'form_read_user_roles', locals: {f: f} %>
+    </td>
+  </tr>
+</table>
+
+<table class="defaultTable rentDetails">
+  <tr>
+    <th><%= t("rumi.custom_group.th.associate") %></th>
+    <td>
+      <%= render partial: 'form_user', locals: {f: f} %>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+//<![CDATA[
+  var add_users = function() {
+    add_list('item_schedule_users_uid', 'item_schedule_users_add_buf')
+  }
+  var del_users = function() {
+    del_list('item_schedule_users_add_buf')
+  }
+  var add_list = function(fr_id, to_id) {
+    var fr = $(fr_id);
+    var idxs = select_options_selected_indexes(fr);
+    var to = $(to_id);
+    for (var i = 0; i < idxs.length; i++)
+      select_options_push(to, fr[idxs[i]].value, fr[idxs[i]].innerHTML, 1);
+  };
+  var del_list = function(fr_id) {
+    var fr = $(fr_id);
+    var vals = select_options_selected_values(fr);
+    for (var i = 0; i < vals.length; i++)
+      select_options_delete(fr, vals[i]);
+  };
+  var set_users_json = function() {
+    var fr = $('item_schedule_users_add_buf');
+    var ary = [];
+    for (var i = 0; i < fr.options.length; i++)
+      ary.push([fr[i].title, fr[i].value, fr[i].innerHTML]);
+    var to = $('item_schedule_users_json');
+    to.value = Object.toJSON(ary);
+  }
+  var my_submit = function() {
+    var fr = $('item_schedule_users_add_buf');
+    var ary = [];
+    for (var i = 0; i < fr.options.length; i++)
+      ary.push([fr[i].title, fr[i].value, fr[i].innerHTML]);
+    var to = $('item_schedule_users_json');
+    to.value = Object.toJSON(ary);
+    fr.selectedIndex = -1; // fr の送信を抑止
+
+    $('itemForm').submit();
+  }
+  var my_load_core = function(mode) {
+    if (mode == "user") {
+      var u = $('init_schedule_users_json');
+      var to = $('item_schedule_users_add_buf');
+    }
+
+    if ( u != undefined && u.value != '') {
+      var roles = eval(u.value);
+      for (var i = 0; i < roles.length; i++) {
+        if (mode == 'user') {
+          select_options_push(to, roles[i][1], roles[i][2], roles[i][0], roles[i][3], roles[i][4], roles[i][5]);
+        } else {
+          select_options_push(to, roles[i][1], roles[i][2], roles[i][0]);
+        }
+      }
+    }
+  }
+
+var my_load = function() {
+  my_load_core('user');
+}
+
+window.onload = my_load;
+//]]>
+</script>
+<%= raw(gw_js_include_full) %>

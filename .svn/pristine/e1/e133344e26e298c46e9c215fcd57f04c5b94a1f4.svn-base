@@ -1,0 +1,19 @@
+<div class="headBtn">
+  <ul class="headBtn-1">
+    <li><%= link_to "施設種別選択", gw_smart_schedule_props_path %></li>
+  </ul>
+</div>
+<!-- // ページ遷移ボタン -->
+
+<!-- 該当ページタイトル -->
+<div class="groupHeader facilities"><%= @prop_type.name %></div>
+
+<% if @props.present? %>
+  <ul class="groupList facilitiesList">
+    <% @props.each do |prop| %>
+      <li><%= link_to prop.name, list_gw_smart_schedule_prop_path(id: prop.id) %></li>
+    <% end %>
+  </ul>
+<% else %>
+  <li><%= Gw.div_notice('表示する項目はありません。') -%></li>
+<% end %>

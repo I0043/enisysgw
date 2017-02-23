@@ -1,0 +1,51 @@
+<%
+  mode = 'return_edit'
+%>
+
+<table class="defaultTable bbs_attachlistTable">
+  <tr>
+    <th><%= t("rumi.circular.comment") %></th>
+  </tr>
+  <tr>
+    <td>
+      <%= f.text_area :body, cols: '140', rows: "1", style: 'width:100%; height:45px'%>
+      <div class="comment_attach"><%= gwcircular_attachments_form(f, @item, mode)%></div>
+      <div class="submitters circularsubmit">
+        <input id="<%= f.object_name %>_submit" name="commit" onclick="return my_comment_submit('already');" type="submit" value="<%= t("rumi.submit.create") %>" />
+        <input id="<%= f.object_name %>_state" name="<%= f.object_name %>[state]" type="hidden" value="" />
+      </div>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+//<![CDATA[
+function chageDisp(obj,changeObjId) {
+  var display = document.getElementById(changeObjId).style.display;
+  if (display == '') {
+    obj.innerHTML = '<%= I18n.t('rumi.attach_list.open') %>';
+  } else if (display == 'none') {
+    obj.innerHTML = '<%= I18n.t('rumi.attach_list.close') %>';
+  }
+  Element.toggle($(changeObjId));
+}
+
+var my_comment_submit = function(state) {
+
+  var st = $('item_state');
+  st.value = state;
+
+  var item_body = document.getElementById('item_body').value;
+  item_body = item_body.gsub(/　|\s/, '');
+  // コメントチェック
+  if (item_body == "") {
+    alert('<%= I18n.t('rumi.gwcircular.message.comment') %>');
+    return false;
+  }
+  
+  FreezeScreen('<%= I18n.t('rumi.gwcircular.submit.comment') %>');
+  
+  $('comment_field_form').submit();
+}
+//]]>
+</script>

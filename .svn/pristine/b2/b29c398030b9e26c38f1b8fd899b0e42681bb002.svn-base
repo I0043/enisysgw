@@ -1,0 +1,117 @@
+<%
+unless params[:controller].include?("menus")
+  params[:state] = @title.default_folder.to_s if params[:state].blank?#フォルダ表示初期値
+
+  strparam = ""
+  strcat = strparam
+  strparam  = "&state=#{params[:state]}#{strparam}" unless params[:state] == 'DRAFT' unless params[:state].blank?
+  strparam += "&cat=#{params[:cat]}" unless params[:cat].blank?
+  strparam  = "?title_id=#{params[:title_id]}#{strparam}"
+  str_state = "&state=#{@title.default_folder.to_s}"
+  str_state = "&state=#{params[:state]}" if params[:state] == 'DATE'
+  str_state = "&state=#{params[:state]}" if params[:state] == 'GROUP'
+  str_state = "&state=#{params[:state]}" if params[:state] == 'CATEGORY'
+
+  str_tab1_class = 'tab'
+  str_tab2_class = 'tab'
+  str_tab3_class = 'tab'
+  str_tab4_class = 'tab'
+
+  str_tab1_class += ' current' if params[:state].blank?
+  str_tab1_class += ' current' if params[:state] == 'DATE'
+  str_tab1_class += ' current' if params[:state] == 'GROUP'
+  str_tab1_class += ' current' if params[:state] == 'CATEGORY'
+  str_tab2_class += ' current' if params[:state] == 'DRAFT'
+  str_tab3_class += ' current' if params[:state] == 'RECOGNIZE'
+  str_tab4_class += ' current' if params[:state] == 'PUBLISH'
+
+  str_limit = ""
+  str_current_cat  = ''
+  str_current_grp  = ''
+  str_current_date = ''
+  str_current_cat  = ' current' if params[:state] == 'CATEGORY'
+  str_current_grp  = ' current' if params[:state] == 'GROUP'
+  str_current_date = ' current' if params[:state] == 'DATE'
+end
+%>
+
+<div id="sidebar">
+  <p class="sideDate">Today <%= @today %></p>
+  <!-- サブメニュー -->
+  <div class="subMenu">
+    <ul>
+      <% unless params[:controller].include?("menus")  %>
+        <% if @has_some_folder_admin %>
+          <li class="<%=str_tab1_class%>"><%=link_to(t('rumi.doclibrary.side.public_list'), "#{doclibrary_docs_path({:title_id=>@title.id})}#{str_state}#{strcat}") %></li>
+          <li class="<%=str_tab2_class%>"><%=link_to(t('rumi.doclibrary.side.draft_list'), "#{doclibrary_docs_path({:title_id=>@title.id})}&state=DRAFT#{strcat}") %></li>
+          <%if @title.use_recognize%>
+            <li class="<%=str_tab3_class%>"><%=link_to(t('rumi.doclibrary.side.recognize_list'), doclibrary_docs_path({:title_id=>@title.id}) + "&state=RECOGNIZE")%></li>
+            <li class="<%=str_tab4_class%>"><%=link_to(t('rumi.doclibrary.side.recognized_list'), doclibrary_docs_path({:title_id=>@title.id}) + "&state=PUBLISH")%></li>
+          <% end %>
+        <% end %>
+      <% end %>
+    </ul>
+  </div>
+  <!-- // .subMenu -->
+
+  <% unless (params[:controller].include?("menus") || params[:controller].include?("folders")) %>
+    <div class="sideSearch">
+      <%= render :partial => 'doclibrary/admin/piece/menus/search' %>
+
+      <%= form_tag '/doclibrary/docs', :method => :get, :id => 'folder_tree_form' do |f| -%>
+        <%= hidden_field_tag(:title_id, params[:title_id]) unless params[:title_id].blank? %>
+        <%= hidden_field_tag(:cat, params[:cat]) unless params[:cat].blank? %>
+        <%= hidden_field_tag(:state, params[:state]) unless params[:state].blank? %>
+        <%= hidden_field_tag(:kwd, params[:kwd]) unless params[:kwd].blank? %>
+        <%= hidden_field_tag(:gcd, params[:gcd]) unless params[:gcd].blank? %>
+        <%= hidden_field_tag(:creator, params[:creator]) unless params[:creator].blank? %>
+        <%= hidden_field_tag(:term_start, params[:term_start]) unless params[:term_start].blank? %>
+        <%= hidden_field_tag(:term_finish, params[:term_finish]) unless params[:term_finish].blank? %>
+        <div id="sideList">
+          <% case params[:state] %>
+          <% when 'GROUP' %>
+            <ul class="section">
+            <% for grp_item in @piece_grp_items %>
+              <%
+                s_children = ''
+                s_children = "#{@group_doc_counts[grp_item.code].total_cnt.to_i}" unless @group_doc_counts[grp_item.code].blank? unless grp_item.code.blank? unless @group_doc_counts.blank?
+                group_name = ''
+                group_name = "#{grp_item.name}(#{s_children})" unless s_children.blank?
+                str_current = ''
+                str_current = 'class="current"'  if grp_item.code.to_s == params[:gcd].to_s
+              %>
+              <% unless group_name.blank? %>
+                <li <%= str_current %>><%= link_to group_name, "#{@title.docs_path}&state=GROUP&gcd=#{grp_item.code}" %></li>
+              <% end %>
+            <% end %>
+            </ul>
+          <% when 'DRAFT', 'RECOGNIZE', 'PUBLISH' %>
+            <ul><li>
+              <ul class="level1">
+                <li class="root folder close">
+                  <div class="someFolder">&nbsp;</div>
+                  <%= link_to @title.category1_name, "#{@title.docs_path}&state=#{params[:state]}",
+                      :class => "folder_name" %>
+                </li>
+              </ul>
+            </li></ul>
+          <% else %>
+            <ul><li>
+              <ul class="level1"><li>
+                <div class="notice">
+                  <%= flash.now[:folder_drag_message] %>
+                  <% flash.now[:folder_drag_message] = nil %>
+                </div>
+              </li></ul>
+            </li></ul>
+            <ul id="folder_trees">
+              <%= render :partial => 'doclibrary/admin/piece/menus/folder_trees', :locals => {:obj => @piece_items} %>
+            </ul>
+          <% end %>
+        </div>
+      <% end %>
+
+    </div>
+    <!-- // .sideSearch -->
+  <% end %>
+</div>

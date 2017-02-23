@@ -1,0 +1,53 @@
+<tbody>
+  <tr class="schedule-body">
+    <th>
+      <p>
+        <%= link_to prop.name, gw_prop_other_path(prop.id, cls: "other") %>
+      </p>
+      <% cnt = 0 %>
+      <% @images.each do |img| %>
+        <% if prop.id == img.parent_id && cnt==0 %>
+          <% cnt = 1 %>
+          <div class="username image"><%= image_tag(img.path, size: "100%xauto") %></div>
+        <% end %>
+      <% end %>
+      <% if cnt == 0 %>
+         <div class="username other" style="background-size: 100% auto;"></div>
+      <% end %>
+      <p>
+        <%= link_to t("rumi.schedule.link.day"), gw_schedule_prop_path(@calendar_first_day.strftime("%Y%m%d"), s_genre: "other", prop_id: prop.id, cls: "other") %>
+        <%= link_to t("rumi.schedule.link.month"), show_month_gw_schedule_props_path(s_genre: "other", s_date: @calendar_first_day.strftime("%Y%m%d"), prop_id: prop.id, cls: "other") %>
+      </p>
+    </th>
+    <% 7.times do |i| %>
+      <%
+        week_add_day = week_first_day + i
+        class_str = create_month_class(week_add_day, @st_date, @holidays, params)
+        if prop.delete_state == 1
+          edit = false
+        elsif @gw_admin
+          edit = true
+        elsif Gw::PropOtherRole.is_admin?(prop.id)
+          edit = true
+        else
+          _edit = Gw::PropOtherRole.is_edit?(prop.id)
+          d_load_st_flg = prop.d_load_st.present? ? prop.d_load_st <= week_add_day.to_time.beginning_of_day : true
+          d_load_ed_flg = prop.d_load_ed.present? ? prop.d_load_ed >= week_add_day.to_time.end_of_day : true
+          reserved_state_flg = prop.reserved_state == 1 ? true : false
+          edit = _edit && d_load_st_flg && d_load_ed_flg && reserved_state_flg && prop.available?(week_add_day)
+        end
+      %>
+      <td class="<%= class_str %>">
+        <% if edit %>
+          <span class="add">
+            <%= raw link_to image_tag("/images/icon/add4.png", alt: "edit"), schedule_new_link(week_add_day, prop_id: prop.id) %>
+          </span>
+        <% end %>
+        <% @schedules.each_with_index do |schedule, j| %>
+          <% schedule_id = "sche#{schedule.id}_#{i}_#{j}_#{i + j + prop_cnt}" %>
+          <%= show_week_one(schedule, week_add_day, schedule_id, nil, prop, @schedule_data[schedule.id]) %>
+        <% end %>
+      </td>
+    <% end %>
+  </tr>
+</tbody>

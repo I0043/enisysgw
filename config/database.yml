@@ -1,0 +1,33 @@
+# Common settings
+common: &common
+  adapter: mysql2
+  encoding: utf8
+  reconnect: false
+  pool: 5
+  socket: /var/lib/mysql/mysql.sock
+
+# Account settings
+development_concern: &development_concern
+  username: enisys
+  password: pass
+  <<: *common
+
+production_concern: &production_concern
+  username: enisys
+  password: pass
+  <<: *common
+
+# Development environment
+development:
+  database: development_enisysgw
+  <<: *development_concern
+
+# Test environment
+test:
+  database: test_enisysgw
+  <<: *development_concern
+
+# Production environment
+production:
+  database: production_enisysgw
+  <<: *production_concern

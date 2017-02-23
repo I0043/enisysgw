@@ -1,0 +1,12 @@
+<%= render partial: 'header_str', locals: {piece_head_title: @piece_head_title} %>
+
+<!-- コンテンツここから -->
+<div class="main">
+  <%= div_notice %>
+  <%= form_for :item, url: "/gw/edit_link_pieces", action: :create, method: :post, html: {id: "itemForm", multipart: true} do |f| %>
+    <%= f.error_messages %>
+    <%= render partial: 'form', locals: {f: f} %>
+    <%= submit_for f, {caption: t("rumi.submit.create")} %>
+  <% end  %>
+</div>
+<!-- コンテンツここまで -->

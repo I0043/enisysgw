@@ -1,0 +1,16 @@
+<header class="entryHeader">
+  <h2><%= @piece_head_title %></h2>
+  <% if new %>
+    <span class="navBlock">
+      <div class="newEdit">
+        <% if @create_flg %>
+          <% if @gw_admin && params[:c1].present? && params[:c1] == "1" %>
+            <%= link_to image_tag("/images/icon/add.png", alt: "#{t("rumi.button.new")}") + " #{t("rumi.button.new")}", new_system_custom_group_path(c1: 1) %>
+          <% else %>
+            <%= link_to image_tag("/images/icon/add.png", alt: "#{t("rumi.button.new")}") + " #{t("rumi.button.new")}", new_system_custom_group_path %>
+          <% end %>
+        <% end %>
+      </div>
+    </span>
+  <% end %>
+</header>

@@ -1,0 +1,14 @@
+<%= render partial: 'piece_header', locals: {piece_head_title: @piece_head_title} %>
+<!-- コンテンツここから -->
+<div class="main">
+  <%= form_for :item, :url => gwbbs_makers_path, :method=>:post, :html => {:multipart => true, :id => 'itemForm'} do |f| %>
+    <%= f.error_messages %>
+
+    <%= render :partial => 'form', :locals => {:f => f} %>
+
+    <%= submit_for(f,{:caption => t("rumi.submit.create"), :js_submitter => "return my_submit()"}) %>
+
+  <% end %>
+</div>
+
+
